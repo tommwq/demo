@@ -1,0 +1,12 @@
+{
+    Node:[
+	{ID: 1, Host: "127.0.0.1", Port: 1011, Role: "a"},
+	{ID: 2, Host: "127.0.0.1", Port: 1012, Role: "a"},
+	{ID: 3, Host: "127.0.0.1", Port: 1013, Role: "a"},
+	{ID: 4, Host: "127.0.0.1", Port: 1014, Role: "a"},
+	{ID: 5, Host: "127.0.0.1", Port: 1015, Role: "a"},
+	{ID: 6, Host: "127.0.0.1", Port: 1016, Role: "p"},
+	{ID: 7, Host: "127.0.0.1", Port: 1017, Role: "p"},
+	{ID: 8, Host: "127.0.0.1", Port: 1018, Role: "p"}
+    ]
+}
