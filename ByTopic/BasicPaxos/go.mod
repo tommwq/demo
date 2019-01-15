@@ -1,1 +1,1 @@
-module basic_paxos
+module paxosdemo

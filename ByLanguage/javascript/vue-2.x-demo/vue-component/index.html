@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="app">
+      <ol>
+	<todo-item
+	  v-for="item in groceryList"
+	  v-bind:todo="item"
+	  v-bind:key="item.id">
+	</todo-item>
+      </ol>
+    </div>
+  </body>
+  <script src="index.js"></script>
+</html>
