@@ -32,7 +32,7 @@ func main() {
 
 	for i := 0; i < size; i++ {
 		if data1[i] != data2[i] {
-			log.Printf("unmatch at %d\n", i)
+			log.Printf("unmatch at %d %x %x\n", i, data1[i], data2[i])
 			return
 		}
 	}
