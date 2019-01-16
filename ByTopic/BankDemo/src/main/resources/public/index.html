@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="app">
+      User <input v-model="username" /> <br/>
+      Password <input v-model="password" /> <br/>
+      <button v-on:click="login">Login</button>
+      <hr />
+      <p>{{message}}</p>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
