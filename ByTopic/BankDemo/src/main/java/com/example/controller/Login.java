@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 public class Login {
 
@@ -21,7 +23,7 @@ public class Login {
         public String password;
     }
 
-    public final static class LoginResult implements Serializable {
+    private final static class LoginResult implements Serializable {
     }
 
     @Autowired
@@ -31,9 +33,9 @@ public class Login {
     Response<LoginResult> login(@RequestBody LoginRequest loginRequest) {
         logger.debug("login request", loginRequest);
 
-        int returnCode = ReturnCode.OK;
-        if (!userManager.authorizeUser(loginRequest.username, loginRequest.password)) {
-            returnCode = ReturnCode.LOGIN_FAILED;
+        int returnCode = ReturnCode.LOGIN_FAILED;
+        if (userManager.authorizeUser(loginRequest.username, loginRequest.password)) {
+            returnCode = ReturnCode.OK;
         }
 
         Response<LoginResult> response = new Response(returnCode, null);
