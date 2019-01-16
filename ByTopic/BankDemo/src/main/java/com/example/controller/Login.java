@@ -1,6 +1,9 @@
 package com.example.controller;
 
 import java.io.Serializable;
+
+import com.example.manager.UserManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-public class LoginController {
+public class Login {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(Login.class);
     
     public final static class LoginRequest {
         public String username;
@@ -19,27 +22,22 @@ public class LoginController {
     }
 
     public final static class LoginResult implements Serializable {
-        public String status;
     }
 
-    public final static class Response<T> implements Serializable {
-        protected Response() {}
-
-        public Response(int errorCode, T result) {
-            this.result = result;
-            this.errorCode = errorCode;
-        }
-            
-        public T result;
-        public int errorCode;
-    }
+    @Autowired
+    UserManager userManager;
 
     @RequestMapping("/login")
     Response<LoginResult> login(@RequestBody LoginRequest loginRequest) {
         logger.debug("login request", loginRequest);
-        LoginResult result = new LoginResult();
-        result.status = "ok";
-        Response<LoginResult> response = new Response(0, result);
+
+        int returnCode = ReturnCode.OK;
+        if (!userManager.authorizeUser(loginRequest.username, loginRequest.password)) {
+            returnCode = ReturnCode.LOGIN_FAILED;
+        }
+
+        Response<LoginResult> response = new Response(returnCode, null);
+
         logger.debug("login response", response);
         return response;
     }
