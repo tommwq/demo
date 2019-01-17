@@ -16,15 +16,8 @@ import java.io.Serializable;
 public class Withdraw {
 
     private static final Logger logger = LoggerFactory.getLogger(Withdraw.class);
-
-    public static final class WithdrawRequest implements Serializable {
-        public Long account;
-        public Double money;
-    }
-
     @Autowired
     HttpSession httpSession;
-
     @Autowired
     AccountManager accountManager;
 
@@ -43,5 +36,10 @@ public class Withdraw {
             logger.error("withdraw", e);
             return new Response(ReturnCode.WITHDRAW_FAILED, null);
         }
+    }
+
+    public static final class WithdrawRequest implements Serializable {
+        public Long account;
+        public Double money;
     }
 }

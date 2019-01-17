@@ -1,6 +1,10 @@
 package com.example.domain;
 
 public class User {
+    private String username;
+    private String password;
+    private Long id;
+
     public User(com.example.repository.User entity) {
 
         if (entity == null) {
@@ -11,10 +15,6 @@ public class User {
         password = entity.password;
         id = entity.id;
     }
-
-    private String username;
-    private String password;
-    private Long id;
 
     public String getUsername() {
         return username;

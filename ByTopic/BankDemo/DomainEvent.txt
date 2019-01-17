@@ -22,13 +22,13 @@ GrantAccountTo
 TransferAccountTo
 
 URL
-/api/login
-/api/logout
+/api/login　ok
+/api/logout ok
 /api/open
-/api/account
+/api/account ok
 /api/{account}/balance
-/api/{accountid}/save
-/api/{accountid}/withdraw
+/api/{accountid}/save ok
+/api/{accountid}/withdraw ok
 /api/{accountid}close
 /api/{accountid}/grant
 /api/{accountid}/transfer

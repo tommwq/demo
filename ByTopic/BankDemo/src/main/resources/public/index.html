@@ -17,8 +17,12 @@
       Money <input v-model="money" /> <br/>
       <button v-on:click="save">Save</button>
       <button v-on:click="withdraw">Withdraw</button>
+      <button v-on:click="balance">Balance</button>
       <hr />
-      <p>{{message}}</p>
+      <button v-on:click="openAccount">Open Account</button>
+      <button v-on:click="closeAccount">Close Account</button>
+      <hr />
+      <div>{{message}}</div>
     </div>
     <script src="index.js"></script>
   </body>

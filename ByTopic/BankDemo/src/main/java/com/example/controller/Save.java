@@ -23,11 +23,6 @@ public class Save {
     @Autowired
     HttpSession httpSession;
 
-    public static final class SaveRequest implements Serializable {
-        public Long account;
-        public Double money;
-    }
-
     @RequestMapping("/{account}/save")
     Response save(@PathVariable Long account, @RequestBody SaveRequest saveRequest) {
         Long userId = (Long) httpSession.getAttribute(SessionAttribute.USERID);
@@ -41,5 +36,10 @@ public class Save {
         } catch (Exception e) {
             return new Response(ReturnCode.SAVE_FAILED, null);
         }
+    }
+
+    public static final class SaveRequest implements Serializable {
+        public Long account;
+        public Double money;
     }
 }

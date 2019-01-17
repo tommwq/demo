@@ -3,6 +3,9 @@ package com.example.controller;
 import java.io.Serializable;
 
 public final class Response<T> implements Serializable {
+    public T result;
+    public int returnCode;
+
     protected Response() {
     }
 
@@ -10,7 +13,4 @@ public final class Response<T> implements Serializable {
         this.result = result;
         this.returnCode = returnCode;
     }
-
-    public T result;
-    public int returnCode;
 }

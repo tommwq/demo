@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,33 +29,28 @@ public class AccountManager {
         return accountRepository.findAllAccountsByUser(user).stream().map(e -> fromEntity(e)).collect(Collectors.toList());
     }
 
+    public Long open(Long userId) {
+        return syncRepository(new Account(null, userId, 0.0)).id;
+    }
+
     public void save(Long userId, Long accountId, Double money) {
-        Optional<com.example.repository.Account> entity = accountRepository.findById(accountId);
-        if (!entity.isPresent()) {
-            throw new IllegalAccountException();
-        }
-
-        Account account = fromEntity(entity.get());
-        account.save(money);
-
-        syncRepository(account);
+        syncRepository(getAccount(accountId).save(money));
     }
 
     public void withdraw(Long userId, Long accountId, Double money) {
-        Optional<com.example.repository.Account> entity = accountRepository.findById(accountId);
-        if (!entity.isPresent()) {
-            throw new IllegalAccountException();
-        }
-
-        Account account = fromEntity(entity.get());
-        account.withdraw(money);
-
-        syncRepository(account);
+        syncRepository(getAccount(accountId).withdraw(money));
     }
 
-    private void syncRepository(Account account) {
-        logger.debug("save account {} {} {}", account.getId(), account.getUser().getId(), account.getBalance());
+    public Double balance(Long userId, Long accountId) {
+        return getAccount(accountId).getBalance();
+    }
+
+    private com.example.repository.Account syncRepository(Account account) {
         accountRepository.save(toEntity(account));
+    }
+
+    protected Account getAccount(Long accountId) {
+        return fromEntity(accountRepository.findById(accountId).get());
     }
 
     private com.example.repository.Account toEntity(Account account) {

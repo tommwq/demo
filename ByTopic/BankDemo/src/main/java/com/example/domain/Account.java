@@ -23,19 +23,21 @@ public class Account {
         return balance;
     }
 
-    public void save(Double money) {
+    public Account save(Double money) {
         if (money <= 0) {
             throw new IllegalArgumentException();
         }
 
         this.balance += money;
+        return this;
     }
 
-    public void withdraw(Double money) {
+    public Account withdraw(Double money) {
         if (money <= 0) {
             throw new IllegalArgumentException();
         }
 
         this.balance -= money;
+        return this;
     }
 }
