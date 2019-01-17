@@ -31,16 +31,12 @@ public class Login {
 
     @RequestMapping("/login")
     Response<LoginResult> login(@RequestBody LoginRequest loginRequest) {
-        logger.debug("login request", loginRequest);
-
         int returnCode = ReturnCode.LOGIN_FAILED;
         if (userManager.authorizeUser(loginRequest.username, loginRequest.password)) {
             returnCode = ReturnCode.OK;
         }
 
         Response<LoginResult> response = new Response(returnCode, null);
-
-        logger.debug("login response", response);
         return response;
     }
 }

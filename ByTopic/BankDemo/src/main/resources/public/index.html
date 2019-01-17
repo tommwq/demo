@@ -10,6 +10,13 @@
       User <input v-model="username" /> <br/>
       Password <input v-model="password" /> <br/>
       <button v-on:click="login">Login</button>
+      <button v-on:click="logout">Logout</button>
+      <button v-on:click="listAccount">List Account</button>
+      <hr/>
+      Account <input v-model="account" /> <br/>
+      Money <input v-model="money" /> <br/>
+      <button v-on:click="save">Save</button>
+      <button v-on:click="withdraw">Withdraw</button>
       <hr />
       <p>{{message}}</p>
     </div>

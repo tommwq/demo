@@ -22,4 +22,20 @@ public class Account {
     public Double getBalance() {
         return balance;
     }
+
+    public void save(Double money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException();
+        }
+
+        this.balance += money;
+    }
+
+    public void withdraw(Double money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException();
+        }
+
+        this.balance -= money;
+    }
 }

@@ -39,6 +39,8 @@ public class Account {
     Response<AccountRequest> account() {
         Long user = (Long) httpSession.getAttribute(SessionAttribute.USERID);
 
+        logger.debug("get user id {} from session {}.", user, httpSession.getId());
+
         if (user == null) {
            return new Response<>(ReturnCode.NOT_LOGGED_IN, null);
         }
