@@ -9,5 +9,6 @@ public class ReturnCode {
             WITHDRAW_FAILED = 4,
             GET_BALANCE_FAILED = 5,
             OPEN_ACCOUNT_FAILED = 6,
+            CLOSE_ACCOUNT_FAILED = 7,
             REVERSED = 999999;
 }

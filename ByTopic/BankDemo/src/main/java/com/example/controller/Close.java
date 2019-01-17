@@ -1,18 +1,17 @@
 package com.example.controller;
 
 import com.example.manager.AccountManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
 @RestController
-public class Open {
-
-    private static final Logger logger = LoggerFactory.getLogger(Open.class);
+public class Close {
 
     @Autowired
     HttpSession httpSession;
@@ -20,21 +19,18 @@ public class Open {
     @Autowired
     AccountManager accountManager;
 
-    public static final class OpenResult {
+    private static final class CloseRequest {
         public Long account;
     }
 
-    @RequestMapping("/account/open")
-    Response<OpenResult> open() {
+    @RequestMapping("/{account}/close")
+    Response close(@PathVariable Long account, @RequestBody CloseRequest closeRequest) {
         try {
             Long user = (Long) httpSession.getAttribute(SessionAttribute.USERID);
-            Long account = accountManager.open(user);
-            OpenResult result = new OpenResult();
-            result.account = account;
-            logger.debug("open account {}", account);
-            return new Response<>(ReturnCode.OK, result);
+            accountManager.close(user, account);
+            return new Response(ReturnCode.OK, null);
         } catch (Exception e) {
-            return new Response<>(ReturnCode.OPEN_ACCOUNT_FAILED, null);
+            return new Response(ReturnCode.CLOSE_ACCOUNT_FAILED, null);
         }
     }
 }

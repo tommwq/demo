@@ -9,6 +9,10 @@ public final class Response<T> implements Serializable {
     protected Response() {
     }
 
+    public Response(int returnCode) {
+        this.returnCode = returnCode;
+    }
+
     public Response(int returnCode, T result) {
         this.result = result;
         this.returnCode = returnCode;

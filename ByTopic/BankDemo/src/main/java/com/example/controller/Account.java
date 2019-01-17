@@ -36,6 +36,7 @@ public class Account {
             AccountResult.AccountItem item = new AccountResult.AccountItem();
             item.id = account.getId();
             item.balance = account.getBalance();
+            item.closed = account.isClosed();
             result.accounts.add(item);
         }
 
@@ -51,6 +52,7 @@ public class Account {
         public static final class AccountItem {
             public Long id;
             public Double balance;
+            public Boolean closed;
         }
     }
 }

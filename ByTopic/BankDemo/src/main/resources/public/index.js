@@ -6,6 +6,7 @@ const ReturnCode = {
     "WITHDRAW_FAILED":4,
     "GET_BALANCE_FAILED":5,
     "OPEN_ACCOUNT_FAILED":6,
+    "CLOSE_ACCOUNT_FAILED":7,
     "REVERSED":999999
 };
 
@@ -17,6 +18,7 @@ const ReturnCodeMessage = {
     4:"WITHDRAW_FAILED",
     5:"GET_BALANCE_FAILED",
     6:"OPEN_ACCOUNT_FAILED",
+    7:"CLOSE_ACCOUNT_FAILED",
     999999:"REVERSED",
 };
 
@@ -110,7 +112,7 @@ var app = new Vue({
     		});
     	},
 	closeAccount: function() {
-    	    axios.post(`http://localhost:8082/{$this.account}/close`, {})
+    	    axios.post(`http://localhost:8082/${this.account}/close`, {})
 		.then(function(result) {
     		    app.callback(result.data);
     		}).catch(function(error) {

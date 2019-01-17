@@ -30,7 +30,15 @@ public class AccountManager {
     }
 
     public Long open(Long userId) {
-        return syncRepository(new Account(null, userId, 0.0)).id;
+        com.example.repository.Account entity = new com.example.repository.Account();
+        entity.balance = 0.0;
+        entity.user = userId;
+        return accountRepository.save(entity).id;
+    }
+
+    public void close(Long userId, Long accountId) {
+        Account account = getAccount(accountId);
+        syncRepository(account.close());
     }
 
     public void save(Long userId, Long accountId, Double money) {
@@ -46,7 +54,7 @@ public class AccountManager {
     }
 
     private com.example.repository.Account syncRepository(Account account) {
-        accountRepository.save(toEntity(account));
+        return accountRepository.save(toEntity(account));
     }
 
     protected Account getAccount(Long accountId) {
@@ -58,10 +66,11 @@ public class AccountManager {
         entity.id = account.getId();
         entity.user = account.getUser().getId();
         entity.balance = account.getBalance();
+        entity.closed = account.isClosed();
         return entity;
     }
 
     private Account fromEntity(com.example.repository.Account entity) {
-        return new Account(entity.id, userManager.getUser(entity.user), entity.balance);
+        return new Account(entity.id, userManager.getUser(entity.user), entity.balance, entity.closed);
     }
 }
