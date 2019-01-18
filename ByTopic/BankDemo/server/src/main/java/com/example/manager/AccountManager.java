@@ -33,6 +33,7 @@ public class AccountManager {
         com.example.repository.Account entity = new com.example.repository.Account();
         entity.balance = 0.0;
         entity.user = userId;
+        entity.closed = false;
         return accountRepository.save(entity).id;
     }
 

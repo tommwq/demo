@@ -50,3 +50,19 @@
 方案3：考虑目标账户无法锁定的情况（比如外部账户）
 方案4：使用事件。
 
+用例9：冻结账户。
+用例10：恢复账户。
+用例11：账户变更需要审批和授权。
+用例12：冻结账户转出。
+用例13：查看账单。
+用例14：大额转账警报。
+
+
+TODO 实现grant和transfer。
+TODO 将异常捕获放到Listener/Filter中。
+TODO 增加请求计时。如果启动参数--debug，开启计时。
+TODO 优化界面。
+TODO 使用WebFlux开发管理接口。
+TODO 总结Spring Boot + SpringMVC开发流程。
+TODO 发布事件
+TODO 使用ElementUI

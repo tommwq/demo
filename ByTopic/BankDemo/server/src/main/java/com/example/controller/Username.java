@@ -12,10 +12,6 @@ public class Username {
     @Autowired
     HttpSession httpSession;
 
-    private static final class UsernameResult {
-        public String username;
-    }
-
     @RequestMapping("/username")
     Response isLoggedIn() {
         String username = (String) httpSession.getAttribute(SessionAttribute.USERNAME);
@@ -26,5 +22,9 @@ public class Username {
         UsernameResult result = new UsernameResult();
         result.username = username;
         return new Response(ReturnCode.OK, result);
+    }
+
+    private static final class UsernameResult {
+        public String username;
     }
 }

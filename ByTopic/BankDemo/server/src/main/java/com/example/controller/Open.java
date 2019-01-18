@@ -20,10 +20,6 @@ public class Open {
     @Autowired
     AccountManager accountManager;
 
-    public static final class OpenResult {
-        public Long account;
-    }
-
     @RequestMapping("/account/open")
     Response<OpenResult> open() {
         try {
@@ -36,5 +32,9 @@ public class Open {
         } catch (Exception e) {
             return new Response<>(ReturnCode.OPEN_ACCOUNT_FAILED, null);
         }
+    }
+
+    public static final class OpenResult {
+        public Long account;
     }
 }

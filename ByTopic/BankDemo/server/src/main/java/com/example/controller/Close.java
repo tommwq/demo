@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.manager.AccountManager;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +18,6 @@ public class Close {
     @Autowired
     AccountManager accountManager;
 
-    private static final class CloseRequest {
-        public Long account;
-    }
-
     @RequestMapping("/{account}/close")
     Response close(@PathVariable Long account, @RequestBody CloseRequest closeRequest) {
         try {
@@ -32,5 +27,9 @@ public class Close {
         } catch (Exception e) {
             return new Response(ReturnCode.CLOSE_ACCOUNT_FAILED, null);
         }
+    }
+
+    private static final class CloseRequest {
+        public Long account;
     }
 }

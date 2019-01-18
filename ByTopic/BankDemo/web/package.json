@@ -1,0 +1,13 @@
+{
+  "name": "BankDemo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "element-ui": "^2.4.11",
+    "gulp": "^4.0.0",
+    "gulp-cli": "^2.0.1",
+    "vue": "^2.5.22",
+    "webpack": "^4.28.4"
+  }
+}
