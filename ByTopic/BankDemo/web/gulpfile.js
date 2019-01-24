@@ -59,7 +59,12 @@ const run = function(cb) {
     });
 };
 
+const develop = function(cb) {
+    gulp.watch(["src/**/**.js", "src/**/**.html"], pack);
+}
+
 module.exports = {
     default: gulp.series(pack, embed),
-    run: run
+    run: run,
+    develop: develop
 }

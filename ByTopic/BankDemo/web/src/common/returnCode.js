@@ -1,5 +1,5 @@
 
-const codeTable = {
+const messageCodePairs = {
     "OK": 0,
     "LOGIN_FAILED":1,
     "NOT_LOGGED_IN":2,
@@ -11,21 +11,19 @@ const codeTable = {
     "REVERSED":999999
 };
 
-var messageTable = {};
-var returnCode = {
-    getMessage: function(returnCode) {
-	return messageTable[returnCode];
-    }
-};
+const unknownReturnCode = "UNKNOWN_RETURN_CODE";
 
 function init() {
-    for (let message in codeTable) {
-	let code = codeTable[message];
-	messageTable[message] = code;
+    let returnCode = {};
+    
+    for (let message in messageCodePairs) {
+	let code = messageCodePairs[message];
 	returnCode[code] = message;
+	returnCode[message] = code;
     }
+
+    return returnCode;
 }
 
-init();
 
-module.exports = returnCode;
+module.exports = init();

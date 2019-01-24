@@ -5,3 +5,7 @@
 /ByTopic/SzseMdgeFlowTest/*.ps1
 /ByTopic/SzseMdgeTcpDataRecorder/*.ps1
 *.ps1
+*.log
+.idea
+*.iml
+target

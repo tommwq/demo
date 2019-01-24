@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script> -->
     <meta charset="UTF-8" />
+    <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
   </head>
   <body>
     <div id="app">
-      User <input v-model="username" /> <br/>
-      Password <input v-model="password" /> <br/>
-      <button v-on:click="login">Login</button>
-      <button v-on:click="logout">Logout</button>
-      <button v-on:click="listAccount">List Account</button>
-      <hr/>
-      Account <input v-model="account" /> <br/>
-      Money <input v-model="money" /> <br/>
-      <button v-on:click="save">Save</button>
-      <button v-on:click="withdraw">Withdraw</button>
-      <button v-on:click="balance">Balance</button>
-      <hr />
-      <button v-on:click="openAccount">Open Account</button>
-      <button v-on:click="closeAccount">Close Account</button>
-      <hr />
-      <div>{{message}}</div>
+      <div v-if="user.isLoggedIn">
+	<!-- <menu> -->
+	  <span>当前用户 {{user.username}}</span> <br/>
+	  <el-button type="primary" v-on:click="logout()">退出登陆</el-button>
+      </div>
+      <div v-else>
+	<login-panel v-on:command-login="login($event.username, $event.password)"></login-panel>
+      </div>
+      
+      <div>
+	<p>{{message}}</p>
+      </div>
+      
+      <!-- User <input v-model="user.username" /> <br/> -->
+      <!-- Password <input v-model="user.password" /> <br/> -->
+      <!-- <button v-on:click="login">Login</button> -->
+      <!-- <button v-on:click="logout">Logout</button> -->
+      <!-- <button v-on:click="listAccount">List Account</button> -->
+      <!-- <hr/> -->
+      <!-- Account <input v-model="account" /> <br/> -->
+      <!-- Money <input v-model="money" /> <br/> -->
+      <!-- <button v-on:click="save">Save</button> -->
+      <!-- <button v-on:click="withdraw">Withdraw</button> -->
+      <!-- <button v-on:click="balance">Balance</button> -->
+      <!-- <hr /> -->
+      <!-- <button v-on:click="openAccount">Open Account</button> -->
+      <!-- <button v-on:click="closeAccount">Close Account</button> -->
+      <!-- <hr /> -->
+      <!-- <div>{{message}}</div> -->
     </div>
     <script src="index.js"></script>
   </body>

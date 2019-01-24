@@ -4,10 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "element-ui": "^2.4.11",
     "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
+    "mockjs": "^1.0.1-beta3",
+    "style-loader": "^0.23.1",
     "vue": "^2.5.22",
-    "webpack": "^4.28.4"
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
+  },
+  "devDependencies": {
+    "css-loader": "^2.1.0",
+    "gulp-livereload": "^4.0.1",
+    "ts-loader": "^5.3.3"
   }
 }
