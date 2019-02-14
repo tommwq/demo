@@ -16,9 +16,13 @@ public class HelloListener extends HttpServlet {
             word = "ok";
             session.setAttribute("ok", word);
         }
+
+        int count = (int) session.getAttribute("count");
+        count += 1;
+        session.setAttribute("count", count);
         
         resp.setContentType("text/text");
         PrintWriter writer = resp.getWriter();
-        writer.println(req.getSession().getAttribute("ok"));
+        writer.println(session.getAttribute("ok") + " " + session.getAttribute("count"));
     }
 }

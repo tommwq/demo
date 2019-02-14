@@ -23,6 +23,7 @@ public class SessionListener implements HttpSessionBindingListener, HttpSessionA
     public void sessionCreated(HttpSessionEvent event) {
         System.out.println("created");
         event.getSession().setAttribute("ok", "haha");
+        event.getSession().setAttribute("count", 1);
     }
 
     public void sessionDestroyed(HttpSessionEvent event) {
