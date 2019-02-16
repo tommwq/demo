@@ -6,6 +6,7 @@ import java.util.concurrent.*;
 public class Manager {
 
     private static boolean started = false;
+    private static Thread checkThread = null;
     private static Map<Thread, Long> map;
 
     static {
@@ -31,25 +32,41 @@ public class Manager {
         for (Map.Entry<Thread,Long> entry: entries) {
             Thread thread = entry.getKey();
             Long startTime = entry.getValue();
-            if (now - startTime > 2000) {
+            if (now - startTime > 100) {
                 thread.interrupt();
             }
         }
     }
 
+    public static void stop() {
+        if (checkThread != null) {
+            checkThread.interrupt();
+        }
+    }
+
     public static void start() {
-        if (started) {
+        if (checkThread != null) {
             return;
         }
+        
+        checkThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (started) {
+                        return;
+                    }
 
-        started = true;
-        try {
-            while (true) {
-                checkTimeout();
-                Thread.sleep(100);
-            }
-        } catch (InterruptedException e) {
-            started = false;            
-        }
+                    started = true;
+                    try {
+                        while (true) {
+                            checkTimeout();
+                            Thread.sleep(100);
+                        }
+                    } catch (InterruptedException e) {
+                        started = false;            
+                    }
+                }
+            });
+        checkThread.start();
     }
 }

@@ -14,7 +14,6 @@ public class TimeoutFilter implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain next) throws IOException, ServletException {
-
         Manager.start();
         Manager.onRequest(Thread.currentThread());
         try {
@@ -26,5 +25,6 @@ public class TimeoutFilter implements Filter {
 
     public void destroy() {
         System.out.println("destroy " + this);
+        Manager.stop();
     }
 }

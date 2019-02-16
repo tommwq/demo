@@ -10,7 +10,7 @@ public class MyServlet extends HttpServlet {
         throws ServletException, IOException {
 
         try {
-            Thread.sleep(4*1000);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
