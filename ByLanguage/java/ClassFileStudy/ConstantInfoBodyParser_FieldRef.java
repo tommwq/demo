@@ -1,0 +1,1 @@
+public class ConstantInfoBodyParser_FieldRef extends ConstantInfoBodyParser_MethodRef {}
