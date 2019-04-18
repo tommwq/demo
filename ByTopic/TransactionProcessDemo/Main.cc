@@ -1,124 +1,51 @@
-#include <vector>
-#include <iostream>
-#include <random>
-#include <chrono>
-#include <thread>
-#include <algorithm>
+const double MessageFailureProbability = 1e-5;
+const double MessageDuplicateProbability = 1e-5;
 
-std::random_device random_device{};
-std::mt19937 generator{random_device()};
-std::uniform_real_distribution<> distribution{0, 1};
+const unsigned long ValueSize = 8192;
+using Value = char[ValueSize];
 
-double random() {
-    return distribution(generator);
-}
-
-double time() {
-    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
-
-const unsigned long Many = 100;
-const unsigned long MaxStoreNumber = Many;
-const unsigned long MaxPageNumber = Many;
-const unsigned long PageSize = 8192;
-using PageValue = char*;
-using Address = unsigned long;
-const double WriteFailureProbability = 1e-6;
-
-struct Page {
+struct Message {
     bool status;
-    char value[PageSize];
+    Message *next;
+    Value value;
 };
 
-struct Store {
-    bool status;
-    Page page[MaxPageNumber];
+using Process_id = unsigned long;
+
+bool message_send(Process_id target, Value value);
+bool message_get(Value *value, bool *status);
+
+
+bool get_message(Value *value) {
+    bool message_status = false;
+    bool message_exist = false;
+
+    // 直到读取一个消息或消息队列为空。
+    while (!message_status) {
+        message_exist = message_get(value, &message_status);
+        // 消息队列为空，退出循环。
+        if (!message_exist) {
+            break;
+        }
+    }
+
+    return message_exist;
+}
+
+const unsigned long MaxProcessNumber = 100000;
+using Process_id = unsigned long;
+
+struct Process_state {
+    char program[ValueSize];
+    char data[ValueSize];
 };
 
-using StoreArray = std::vector<Store>;
-
-StoreArray stores;
-
-bool store_write(Store store, Address address, PageValue value) {
-    // 地址错误。
-    if (address >= MaxStoreNumber) {
-        return false;
-    }
-    
-    // 存储故障。
-    if (!store.status) {
-        return false;
-    }
-
-    // 模拟写失败。
-    if (WriteFailureProbability > random()) {
-        return true;
-    }
-
-    store.page[address].status = true;
-    memcpy(store.page[address].value, value, PageSize);
-    return true;
-}
-
-bool store_read(Store store, Address address, PageValue value) {
-    // 地址错误。
-    if (address >= MaxStoreNumber) {
-        return false;
-    }
-
-    // 存储故障。
-    if (!store.status) {
-        return false;
-    }
-
-    // 页故障。
-    if (!store.page[address].status) {
-        return false;
-    }
-
-    memcpy(value, store.page[address].value, PageSize);
-    return true;
-}
-
-
-const double PageMTTF = 7e5;   // 页平均错误时间
-const double StoreMTTF = 1e8;  // 存储平均错误时间
-
-void store_decay(Store store) {
-    Address address;
-    double pageFailTime = time() - log(PageMTTF * random());
-    double storeFailTime = time() - log(StoreMTTF * random());
-
-    while (true) {
-        unsigned wait_time = std::min(pageFailTime, storeFailTime) - time();
-        std::this_thread::sleep_for(std::chrono::seconds(wait_time));
-
-        if (time() >= pageFailTime) {
-            address = random() * MaxPageNumber;
-            store.page[address].status = false;
-            pageFailTime = time() - log(PageMTTF * random());
-        }
-
-        if (time() >= storeFailTime) {
-            store.status = false;
-            for (address = 0; address < MaxPageNumber; address++) {
-                store.page[address].status = false;
-            }
-            storeFailTime = time() - log(StoreMTTF * random());
-        }
-    }
-}
-
+struct Process {
+    Process_state initial_state;
+    Process_state current_state;
+    Message* message_list;
+};
 
 
 int main() {
-    stores.resize(MaxStoreNumber);
-
-
-    double value = distribution(generator);
-
-    std::cout << value << std::endl;
-    
 }
-
