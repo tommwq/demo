@@ -1,0 +1,9 @@
+megs: 32
+# romimage: file=$BXSHARE/BIOS-bochs-latest, address=0xfffe0000
+romimage: file=$BXSHARE/BIOS-bochs-latest, options=fastboot
+vgaromimage: file=$BXSHARE/VGABIOS-lgpl-latest
+floppya: 1_44=boot.bin, status=inserted
+boot: a
+log: bochs.out
+mouse: enabled=0
+
