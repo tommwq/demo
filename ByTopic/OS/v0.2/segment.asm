@@ -27,5 +27,4 @@
     	iend
     %endmacro
     
-    new_segment_descriptor 1, 1, 1, 1, 1, 1, 1, 1, 1
     
