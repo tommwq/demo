@@ -1,7 +1,6 @@
 ;;; nasm -f bin boot.asm -o boot.bin
 
     bits 16
-    fds
 
     mov ax, 0x07c0
     mov ds, ax
