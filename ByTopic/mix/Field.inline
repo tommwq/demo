@@ -1,0 +1,10 @@
+
+namespace mix {
+    inline std::uint8_t Field::get_left(const Byte& field) {
+        return field.to_unsigned() / 8;
+    }
+
+    inline std::uint8_t Field::get_right(const Byte& field) {
+        return field.to_unsigned() % 8;
+    }
+}

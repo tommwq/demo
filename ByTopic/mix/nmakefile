@@ -1,0 +1,26 @@
+
+objects=Byte.obj Word.obj Instrument.obj Mix.obj Main.obj
+unittests=Byte_test.exe Word_test.exe
+
+all: mix.exe
+
+
+mix.exe: $(objects)
+	$(CXX) /Fe$@ $**
+
+
+.cc.obj:
+	$(CXX) /c /EHsc $? 
+
+clean:
+	del *.obj *.exe
+
+unittest: $(unittests)
+	Byte_test.exe
+	Word_test.exe
+
+Byte_test.exe: Byte_test.cc Byte.cc unittest.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Word_test.exe: Word_test.cc Word.cc unittest.cc Byte.cc
+	$(CXX) /EHsc /Fe$@ $**

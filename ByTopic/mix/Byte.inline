@@ -1,0 +1,36 @@
+
+namespace mix {
+    
+    inline std::uint8_t Byte::get_value() const {
+        return value;
+    }
+
+    inline void Byte::set_value(Byte& value) {
+        this->value = value.value;
+    }
+
+    inline void Byte::set_value(std::uint8_t value) {
+        this->value = truncate(value);
+    }
+
+    inline std::uint8_t Byte::to_unsigned() const {
+        return value;
+    }
+
+    inline Byte& Byte::operator=(const Byte& rhs) {
+        value = rhs.value;
+        return *this;
+    }
+
+    inline bool Byte::operator==(const Byte& rhs) const {
+        return value == rhs.value;
+    }
+
+    inline bool Byte::operator<(const Byte& rhs) const {
+        return value < rhs.value;
+    }
+
+    inline std::uint8_t Byte::truncate(std::uint8_t value) {
+        return value & 0B00111111;
+    }
+}

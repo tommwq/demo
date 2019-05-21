@@ -1,0 +1,37 @@
+
+namespace mix {
+
+    inline bool Word::is_positive() const {
+        return positive;
+    }
+
+    inline bool Word::is_negative() const {
+        return !positive;
+    }
+
+    inline void Word::set_positive() {
+        positive = true;
+    }
+
+    inline void Word::set_negative() {
+        positive = false;
+    }
+
+    inline void Word::set_byte(std::uint8_t position, Byte& value) {
+        if (position == 0 || position > 5) {
+            return;
+        }
+
+        bytes[position-1].set_value(value);
+    }
+    
+    inline Byte Word::get_byte(std::uint8_t position) const {
+        Byte value;
+        if (position == 0 || position > 5) {
+            return value;
+        }
+
+        value = bytes[position - 1];
+        return value;
+    }
+}
