@@ -18,12 +18,20 @@ namespace mix {
     }
 
     inline Byte& Byte::operator=(const Byte& rhs) {
+        if (this == &rhs) {
+	    return *this;
+	}
+	
         value = rhs.value;
         return *this;
     }
 
     inline bool Byte::operator==(const Byte& rhs) const {
         return value == rhs.value;
+    }
+
+    inline bool Byte::operator!=(const Byte& rhs) const {
+        return value != rhs.value;
     }
 
     inline bool Byte::operator<(const Byte& rhs) const {

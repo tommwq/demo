@@ -34,4 +34,42 @@ namespace mix {
         value = bytes[position - 1];
         return value;
     }
+
+    inline Word& Word::operator=(const Word& rhs) {
+        if (this == &rhs) {
+	    return *this;
+	}
+
+	positive = rhs.positive;
+	bytes = rhs.bytes;
+
+        return *this;
+    }
+
+    inline bool Word::operator==(const Word& rhs) {
+        if (this == &rhs) {
+	    return true;
+	}
+
+        if (positive != rhs.positive) {
+	    return false;
+	}
+
+        for (int i = 0; i < 5; i++) {
+	    if (bytes[i] != rhs.bytes[i]) {
+	        return false;
+	    }
+	}
+	
+	return true;
+    }
+
+    inline bool Word::operator!=(const Word& rhs) {
+        return !(*this == rhs);
+    }
+
+    inline void Word::clear() {
+        set_positive();
+	bytes.fill(0);
+    }
 }

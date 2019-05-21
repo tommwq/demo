@@ -1,15 +1,15 @@
 
 namespace mix {
 
-    inline Byte Instrument::get_address_register_index(const Word& encoded_instrument) {
-        return encoded_instrument.get_byte(3);
+    inline Byte Instrument::get_address_register_index() {
+        return get_byte(3);
     }
 
-    inline Byte Instrument::get_field(const Word& encoded_instrument) {
-        return encoded_instrument.get_byte(4);
+    inline Byte Instrument::get_field() {
+        return get_byte(4);
     }
 
-    inline Byte Instrument::get_code(const Word& encoded_instrument) {
-        return encoded_instrument.get_byte(5);
+    inline Byte Instrument::get_code() {
+        return get_byte(5);
     }
 }

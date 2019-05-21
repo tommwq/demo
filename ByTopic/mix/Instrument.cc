@@ -2,10 +2,11 @@
 
 namespace mix {
 
-    Word Instrument::get_address(const Word& encoded_instrument) {
-        Byte high = encoded_instrument.get_byte(1);
-        Byte low = encoded_instrument.get_byte(2);
-        bool negative = encoded_instrument.is_negative();
+    Word Instrument::get_address() {
+        Byte high = get_byte(1);
+        Byte low = get_byte(2);
+        bool negative = is_negative();
+        
         Word address;
         if (negative) {
             address.set_negative();

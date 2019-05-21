@@ -5,14 +5,16 @@
 #include "Machine.hh"
 
 namespace mix {
-    class Instrument {
+    class Instrument: public Word {
     public:
+        Instrument(): Word(){}
+        Instrument(std::initializer_list<int> initializers): Word(initializers){}
         virtual void execute(Machine& machine) = 0;
     public:
-        static Word get_address(const Word& encoded_instrument);
-        static Byte get_address_register_index(const Word& encoded_instrument);
-        static Byte get_field(const Word& encoded_instrument);
-        static Byte get_code(const Word& encoded_instrument);
+        Word get_address();
+        Byte get_address_register_index();
+        Byte get_field();
+        Byte get_code();
     };
 }
 

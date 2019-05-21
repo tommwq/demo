@@ -2,7 +2,7 @@
 
 namespace mix {
 
-    class Toogle {
+    class Toggle {
     public:
         bool is_on() const {
             return on;

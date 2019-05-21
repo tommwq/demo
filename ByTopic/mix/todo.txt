@@ -1,4 +1,10 @@
 1. 分拆文件。ok
-2. 增加单元测试。
+2. 增加单元测试。ok
 3. 编写nmakefile。ok
 4. 增加pch。
+5. 支持将mix状态保存到文件，或从文件恢复。
+   增加vector<uint8_t> Machine::dump()和void Machine.restore(vector<uint8_t>)。
+   增加vector<uint8_t> Mix::dump()和void Mix.restore(vector<uint8_t>)。
+6. 编写Mix::execute()。
+7. 考虑增加程序计数器。
+8. 实现LDA指令。

@@ -1,24 +1,40 @@
 #pragma once
 
+#include <array>
+#include <stdexcept>
+
 #include "Toggle.hh"
 #include "Indicator.hh"
 #include "Word.hh"
 
+
 namespace mix {
     class Machine {
     public:
-        Word& get_ra() {
-            return ra;
-        }
-    
+        Word& get_ra();
+        Word& get_rx();
+        Word& get_rj();
+        Word& get_ri(std::uint8_t index); // index: [1-6];
+        bool is_overflow() const;
+        bool is_less() const;
+        bool is_equal() const;
+        bool is_greater() const;
+        Word read_memory(std::uint32_t real_address);
+        void write_memory(std::uint32_t real_address, const Word& value);
+        Toggle get_overflow_toggle();
+        Indicator get_compare_indicator();
+    private:
+        void check_memory_address(std::uint32_t real_address);
     private:
         Word ra;
         Word rx;
         Word ri[6];
         Word rj;
-        Toogle overflow;
-        Indicator compare;
-        Word memory[4000];
+        Toggle overflow_toggle;
+        Indicator compare_indicator;
+        std::array<Word,4000> memory;
     };
 
 }
+
+#include "Machine.inline"

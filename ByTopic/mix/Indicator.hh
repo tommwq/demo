@@ -4,13 +4,13 @@ namespace mix {
 
     class Indicator {
     public:
-        bool is_equal() {
+        bool is_equal() const {
             return indicate == Indicate::equal;
         }
-        bool is_less() {
+        bool is_less() const {
             return indicate == Indicate::less;
         }
-        bool is_greater() {
+        bool is_greater() const {
             return indicate == Indicate::greater;
         }
         void turn_equal() {

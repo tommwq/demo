@@ -13,6 +13,7 @@ namespace mix {
         std::uint8_t to_unsigned() const;
         Byte& operator=(const Byte& rhs);
         bool operator==(const Byte& rhs) const;
+        bool operator!=(const Byte& rhs) const;
         bool operator<(const Byte& rhs) const;
     public:    
         static const std::uint64_t Max;
