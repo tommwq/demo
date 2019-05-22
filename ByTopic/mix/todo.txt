@@ -7,4 +7,5 @@
    增加vector<uint8_t> Mix::dump()和void Mix.restore(vector<uint8_t>)。
 6. 编写Mix::execute()。
 7. 考虑增加程序计数器。
-8. 实现LDA指令。
+8. 实现LDA指令。ok
+

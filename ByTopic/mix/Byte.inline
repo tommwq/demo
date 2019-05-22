@@ -5,7 +5,7 @@ namespace mix {
         return value;
     }
 
-    inline void Byte::set_value(Byte& value) {
+    inline void Byte::set_value(const Byte& value) {
         this->value = value.value;
     }
 
@@ -19,8 +19,8 @@ namespace mix {
 
     inline Byte& Byte::operator=(const Byte& rhs) {
         if (this == &rhs) {
-	    return *this;
-	}
+            return *this;
+        }
 	
         value = rhs.value;
         return *this;
@@ -40,5 +40,9 @@ namespace mix {
 
     inline std::uint8_t Byte::truncate(std::uint8_t value) {
         return value & 0B00111111;
+    }
+
+    inline void Byte::clear() {
+        value = 0;
     }
 }

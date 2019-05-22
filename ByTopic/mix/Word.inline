@@ -17,7 +17,7 @@ namespace mix {
         positive = false;
     }
 
-    inline void Word::set_byte(std::uint8_t position, Byte& value) {
+    inline void Word::set_byte(std::uint8_t position, const Byte& value) {
         if (position == 0 || position > 5) {
             return;
         }
@@ -25,51 +25,93 @@ namespace mix {
         bytes[position-1].set_value(value);
     }
     
-    inline Byte Word::get_byte(std::uint8_t position) const {
-        Byte value;
+    inline const Byte& Word::get_byte(std::uint8_t position) const {
         if (position == 0 || position > 5) {
-            return value;
+            throw std::runtime_error("invalid operation");
         }
 
-        value = bytes[position - 1];
-        return value;
+        return bytes[position - 1];
+    }
+
+    inline Byte& Word::get_byte(std::uint8_t position) {
+        if (position == 0 || position > 5) {
+            throw std::runtime_error("invalid operation");
+        }
+
+        return bytes[position - 1];
     }
 
     inline Word& Word::operator=(const Word& rhs) {
         if (this == &rhs) {
-	    return *this;
-	}
+            return *this;
+        }
 
-	positive = rhs.positive;
-	bytes = rhs.bytes;
+        positive = rhs.positive;
+        bytes = rhs.bytes;
 
         return *this;
     }
 
-    inline bool Word::operator==(const Word& rhs) {
+    inline bool Word::operator==(const Word& rhs) const {
         if (this == &rhs) {
-	    return true;
-	}
+            return true;
+        }
 
         if (positive != rhs.positive) {
-	    return false;
-	}
+            return false;
+        }
 
         for (int i = 0; i < 5; i++) {
-	    if (bytes[i] != rhs.bytes[i]) {
-	        return false;
-	    }
-	}
+            if (bytes[i] != rhs.bytes[i]) {
+                return false;
+            }
+        }
 	
-	return true;
+        return true;
     }
 
-    inline bool Word::operator!=(const Word& rhs) {
+    inline bool Word::operator!=(const Word& rhs) const {
         return !(*this == rhs);
     }
 
     inline void Word::clear() {
         set_positive();
-	bytes.fill(0);
+        bytes.fill(0);
+    }
+
+    inline void Word::flip_sign() {
+        positive = !positive;
+    }
+
+    inline Word& Word::operator+(const Word& rhs) {
+        assign(to_long() + rhs.to_long());
+        return *this;
+    }
+
+    inline Word& Word::operator+=(const Word& rhs) {
+        assign(to_long() + rhs.to_long());
+        return *this;
+    }
+
+    inline Word& Word::operator-(const Word& rhs) {
+        assign(to_long() - rhs.to_long());
+        return *this;
+    }
+
+    inline Word& Word::operator-=(const Word& rhs) {
+        assign(to_long() - rhs.to_long());
+        return *this;
+    }
+
+    inline void Word::assign(long value) {
+        if (value < 0L) {
+            set_negative();
+            value *= -1;
+        }
+
+        for (int i = 0; i < 5; i++) {
+            bytes[4-i] = (value % 64);
+            value /= 64;
+        }
     }
 }
