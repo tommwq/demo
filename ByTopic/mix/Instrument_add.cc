@@ -16,7 +16,7 @@ namespace mix {
         long op1 = machine.get_ra().to_long();
         long op2 = value.to_long();
         long result = op1 + op2;
-        if (result > Byte::Max5 || result < Byte::Max5) {
+        if (result > Byte::Max5 || result < -Byte::Max5) {
             machine.get_overflow_toggle().turn_on();
         }
 
