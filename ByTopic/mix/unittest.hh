@@ -14,6 +14,7 @@
                                                 __FILE__,   \
                                                 __LINE__,   \
                                                 #value)
+
 #define ExpectFalse(value) unittest::expect_false((value),  \
                                                   __FILE__, \
                                                   __LINE__, \
@@ -22,8 +23,8 @@
 #define Suit(title) unittest::suit(title)
 
 namespace unittest {
-    void expect(long expected,
-                long actural,
+    bool expect(int expected,
+                int actural,
                 char *file,
                 int line,
                 char *expected_expr,
