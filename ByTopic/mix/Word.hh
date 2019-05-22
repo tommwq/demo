@@ -32,6 +32,8 @@ namespace mix {
         void clear();
         void flip_sign();
         void assign(long value);
+    public:
+        static const std::uint64_t Max2 = 1152921504606846976;
     private:
         bool positive = true;
         std::array<Byte, 5> bytes;
