@@ -13,12 +13,15 @@
 #include "Instrument_st_.hh"
 #include "Instrument_stj.hh"
 #include "Instrument_stz.hh"
+#include "Instrument_add.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
         Instrument instrument = encoded_instrument;
         std::uint8_t code = instrument.get_code().to_unsigned();
         switch (code) {
+        case ADD:  return Instrument_add(instrument);
+            
         case LDA:  return Instrument_lda(instrument);
         case LD1:  return Instrument_ld1(instrument);
         case LD2:  return Instrument_ld2(instrument);

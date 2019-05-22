@@ -16,6 +16,8 @@ namespace mix {
         Word& operator=(const Word& rhs);
         bool operator==(const Word& rhs) const;
         bool operator!=(const Word& rhs) const;
+        Word& operator+(const Word& rhs);
+        Word& operator+=(const Word& rhs);
     public:
         long to_long() const;
         bool is_positive() const;
@@ -27,6 +29,7 @@ namespace mix {
         Byte& get_byte(std::uint8_t position);
         void clear();
         void flip_sign();
+        void assign(long value);
     private:
         bool positive = true;
         std::array<Byte, 5> bytes;

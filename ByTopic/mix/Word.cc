@@ -6,15 +6,7 @@ namespace mix {
         :positive(true) {}
 
     Word::Word(long value) {
-        if (value < 0L) {
-            set_negative();
-            value *= -1;
-        }
-
-        for (int i = 0; i < 5; i++) {
-            bytes[4-i] = (value % 64);
-            value /= 64;
-        }
+        assign(value);
     }
 
     Word::Word(const Word& rhs)
