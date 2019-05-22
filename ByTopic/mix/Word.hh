@@ -26,6 +26,7 @@ namespace mix {
         const Byte& get_byte(std::uint8_t position) const;
         Byte& get_byte(std::uint8_t position);
         void clear();
+        void flip_sign();
     private:
         bool positive = true;
         std::array<Byte, 5> bytes;

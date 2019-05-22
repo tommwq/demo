@@ -17,5 +17,13 @@ namespace mix {
         static const std::uint8_t LD5 = 13;
         static const std::uint8_t LD6 = 14;
         static const std::uint8_t LDX = 15;
+        static const std::uint8_t LDAN = 16;       
+        static const std::uint8_t LD1N = 17;
+        static const std::uint8_t LD2N = 18;
+        static const std::uint8_t LD3N = 19;
+        static const std::uint8_t LD4N = 20;
+        static const std::uint8_t LD5N = 21;
+        static const std::uint8_t LD6N = 22;
+        static const std::uint8_t LDXN = 23;
     };
 }

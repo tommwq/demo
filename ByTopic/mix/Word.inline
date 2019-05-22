@@ -78,4 +78,8 @@ namespace mix {
         set_positive();
         bytes.fill(0);
     }
+
+    inline void Word::flip_sign() {
+        positive = !positive;
+    }
 }
