@@ -21,6 +21,7 @@ namespace mix {
         static const std::uint64_t Max2;
         static const std::uint64_t Max3;
         static const std::uint64_t Max4;
+        static const std::uint64_t Max5;
     private:
         static std::uint8_t truncate(std::uint8_t value);
     private:

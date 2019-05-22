@@ -18,6 +18,8 @@ namespace mix {
         bool operator!=(const Word& rhs) const;
         Word& operator+(const Word& rhs);
         Word& operator+=(const Word& rhs);
+        Word& operator-(const Word& rhs);
+        Word& operator-=(const Word& rhs);
     public:
         long to_long() const;
         bool is_positive() const;

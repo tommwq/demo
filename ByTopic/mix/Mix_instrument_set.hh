@@ -10,6 +10,7 @@ namespace mix {
         Instrument get_instrument(const Word& encoded_instrument) override;
     public:
         static const std::uint8_t ADD = 1;
+        static const std::uint8_t SUB = 2;
         
         static const std::uint8_t LDA = 8;       
         static const std::uint8_t LD1 = 9;
