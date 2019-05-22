@@ -16,6 +16,7 @@
 #include "Instrument_add.hh"
 #include "Instrument_sub.hh"
 #include "Instrument_mul.hh"
+#include "Instrument_div.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
@@ -25,6 +26,7 @@ namespace mix {
         case ADD:  return Instrument_add(instrument);
         case SUB:  return Instrument_sub(instrument);
         case MUL:  return Instrument_mul(instrument);
+        case DIV:  return Instrument_div(instrument);
             
         case LDA:  return Instrument_lda(instrument);
         case LD1:  return Instrument_ld1(instrument);

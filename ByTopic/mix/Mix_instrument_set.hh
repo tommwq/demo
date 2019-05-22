@@ -12,6 +12,7 @@ namespace mix {
         static const std::uint8_t ADD = 1;
         static const std::uint8_t SUB = 2;
         static const std::uint8_t MUL = 3;
+        static const std::uint8_t DIV = 4;
         
         static const std::uint8_t LDA = 8;       
         static const std::uint8_t LD1 = 9;
