@@ -6,21 +6,9 @@
 #include "Field.hh"
 
 namespace mix {
-    void Instrument_ldx::execute(Machine& machine) {
-        long base_address = 0;
+    void Instrument_ldx::execute(Machine& machine) const {
         
-        std::uint8_t index = get_address_register_index().to_unsigned();
-        if (index > 0 && index < 6) {
-            base_address = machine.get_ri(index).to_long();
-        }
-
-        long offset = get_address().to_long();
-        long address = base_address + offset;
-        if (address < 0) {
-            throw std::runtime_error("invalid memory address");
-        }
-        
-        Word value = machine.read_memory(static_cast<std::uint32_t>(address));
+        Word value = machine.read_memory(locate(machine));
         Word result;
         std::uint8_t left = Field::get_left(get_field().to_unsigned());
         std::uint8_t right = Field::get_right(get_field().to_unsigned());
@@ -34,6 +22,6 @@ namespace mix {
             result.set_byte(5 + pos - right, value.get_byte(pos));
         }
 
-        machine.get_ra() = result;
+        machine.get_rx() = result;
     }
 }

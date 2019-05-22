@@ -1,15 +1,48 @@
 
 namespace mix {
 
-    inline Byte Instrument::get_address_register_index() {
+    inline Byte Instrument::get_index() const {
         return get_byte(3);
     }
 
-    inline Byte Instrument::get_field() {
+    inline Byte Instrument::get_field() const {
         return get_byte(4);
     }
 
-    inline Byte Instrument::get_code() {
+    inline Byte Instrument::get_code() const {
         return get_byte(5);
     }
+
+    inline std::uint32_t Instrument::locate(const Machine& machine) const {
+        long base_address = 0;
+        
+        std::uint8_t index = get_index().to_unsigned();
+        if (index > 0 && index < 6) {
+            base_address = machine.get_ri(index).to_long();
+        }
+
+        long offset = get_address().to_long();
+        long address = base_address + offset;
+        if (address < 0) {
+            throw std::runtime_error("invalid memory address");
+        }
+
+        return static_cast<std::uint32_t>(address);
+    }
+
+    inline Word Instrument::get_address() const {
+        Byte high = get_byte(1);
+        Byte low = get_byte(2);
+        bool negative = is_negative();
+        
+        Word address;
+        if (negative) {
+            address.set_negative();
+        }
+
+        address.set_byte(4, high);
+        address.set_byte(5, low);
+        return address;
+    }
+
 }

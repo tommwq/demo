@@ -10,12 +10,13 @@ namespace mix {
         Instrument(): Word(){}
         Instrument(const Word& word): Word(word){}
         Instrument(std::initializer_list<int> initializers): Word(initializers){}
-        virtual void execute(Machine& machine){};
+        virtual void execute(Machine& machine) const {};
     public:
-        Word get_address();
-        Byte get_address_register_index();
-        Byte get_field();
-        Byte get_code();
+        Word get_address() const;
+        Byte get_index() const;
+        Byte get_field() const;
+        Byte get_code() const;
+        std::uint32_t locate(const Machine& machine) const;
     };
 }
 

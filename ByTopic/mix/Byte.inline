@@ -41,4 +41,8 @@ namespace mix {
     inline std::uint8_t Byte::truncate(std::uint8_t value) {
         return value & 0B00111111;
     }
+
+    inline void Byte::clear() {
+        value = 0;
+    }
 }

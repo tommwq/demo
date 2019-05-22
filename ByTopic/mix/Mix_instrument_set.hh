@@ -7,9 +7,15 @@
 namespace mix {
     class Mix_instrument_set: public Instrument_set {
     public:
-        Instrument& get_instrument(const Word& encoded_instrument) override;
+        Instrument get_instrument(const Word& encoded_instrument) override;
     public:
-        static const std::uint8_t LDA = 8;
+        static const std::uint8_t LDA = 8;       
+        static const std::uint8_t LD1 = 9;
+        static const std::uint8_t LD2 = 10;
+        static const std::uint8_t LD3 = 11;
+        static const std::uint8_t LD4 = 12;
+        static const std::uint8_t LD5 = 13;
+        static const std::uint8_t LD6 = 14;
         static const std::uint8_t LDX = 15;
     };
 }

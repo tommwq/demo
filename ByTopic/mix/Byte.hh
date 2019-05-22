@@ -11,6 +11,7 @@ namespace mix {
         void set_value(Byte& value);
         void set_value(std::uint8_t value);
         std::uint8_t to_unsigned() const;
+        void clear();
         Byte& operator=(const Byte& rhs);
         bool operator==(const Byte& rhs) const;
         bool operator!=(const Byte& rhs) const;

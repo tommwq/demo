@@ -15,6 +15,10 @@ namespace mix {
         Word& get_rx();
         Word& get_rj();
         Word& get_ri(std::uint8_t index); // index: [1-6];
+        const Word& get_ra() const;
+        const Word& get_rx() const;
+        const Word& get_rj() const;
+        const Word& get_ri(std::uint8_t index) const; // index: [1-6];
         bool is_overflow() const;
         bool is_less() const;
         bool is_equal() const;
