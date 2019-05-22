@@ -22,8 +22,8 @@
 #define Suit(title) unittest::suit(title)
 
 namespace unittest {
-    void expect(int expected,
-                int actural,
+    void expect(long expected,
+                long actural,
                 char *file,
                 int line,
                 char *expected_expr,

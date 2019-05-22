@@ -18,5 +18,5 @@ int main() {
 
     mix::Word ra = machine.get_ra();
     mix::Word expected = {1, 31, 16, 0, 5, 8};
-    ExpectTrue(ra == expected);
+    ExpectTrue(ra.to_long() == expected.to_long());
 }
