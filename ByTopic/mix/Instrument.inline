@@ -21,8 +21,7 @@ namespace mix {
             base_address = machine.get_ri(index).to_long();
         }
 
-        long offset = get_address().to_long();
-        long address = base_address + offset;
+        long address = base_address + get_address().to_long();
         if (address < 0) {
             throw std::runtime_error("invalid memory address");
         }
@@ -31,18 +30,13 @@ namespace mix {
     }
 
     inline Word Instrument::get_address() const {
-        Byte high = get_byte(1);
-        Byte low = get_byte(2);
-        bool negative = is_negative();
-        
         Word address;
-        if (negative) {
+        if (is_negative()) {
             address.set_negative();
         }
-
-        address.set_byte(4, high);
-        address.set_byte(5, low);
+                
+        address.set_byte(4, get_byte(1));
+        address.set_byte(5, get_byte(2));
         return address;
     }
-
 }
