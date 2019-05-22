@@ -34,5 +34,6 @@ namespace mix {
         static const std::uint8_t ST6 = 30;
         static const std::uint8_t STX = 31;
         static const std::uint8_t STJ = 32;
+        static const std::uint8_t STZ = 33;
     };
 }

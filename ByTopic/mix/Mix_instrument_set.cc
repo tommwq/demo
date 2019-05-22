@@ -12,6 +12,7 @@
 #include "Instrument_stx.hh"
 #include "Instrument_st_.hh"
 #include "Instrument_stj.hh"
+#include "Instrument_stz.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
@@ -43,6 +44,7 @@ namespace mix {
         case ST6:  return Instrument_st6(instrument);
         case STX:  return Instrument_stx(instrument);
         case STJ:  return Instrument_stj(instrument);
+        case STZ:  return Instrument_stz(instrument);
         default:   throw std::runtime_error("invalid instrument");
         }
     }
