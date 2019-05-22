@@ -60,4 +60,25 @@ namespace mix {
 
         return result;
     }
+
+    inline void Instrument::store(Machine& machine, const Word& value) const {
+
+        std::uint32_t address = locate(machine);
+        Word result = machine.read_memory(address);
+        
+        std::uint8_t left = Field::get_left(get_field().to_unsigned());
+        std::uint8_t right = Field::get_right(get_field().to_unsigned());
+
+        if (left == 0) {
+            value.is_positive() ? result.set_positive() : result.set_negative();
+            left++;
+        }
+
+        for (std::uint8_t pos = left; pos <= right; pos++) {
+            result.set_byte(pos, value.get_byte(5 - right + pos));
+        }
+
+        machine.write_memory(address, result);
+    }
+
 }

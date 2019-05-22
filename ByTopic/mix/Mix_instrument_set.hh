@@ -25,5 +25,7 @@ namespace mix {
         static const std::uint8_t LD5N = 21;
         static const std::uint8_t LD6N = 22;
         static const std::uint8_t LDXN = 23;
+
+        static const std::uint8_t STA = 31;
     };
 }

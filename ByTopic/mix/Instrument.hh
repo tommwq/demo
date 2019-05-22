@@ -22,6 +22,7 @@ namespace mix {
         std::uint32_t locate(const Machine& machine) const;
         // 读取内存，按照field对齐，并保留符号位。
         Word load(const Machine& machine) const;
+        void store(Machine& machine, const Word& value) const;
     };
 }
 

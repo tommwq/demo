@@ -1,6 +1,6 @@
 
-objects=Byte.obj Word.obj Instrument.obj Mix.obj Main.obj Mix_instrument_set.obj Instrument_lda.obj Instrument_ldx.obj Instrument_ld_.obj Instrument_ldan.obj Instrument_ldxn.obj Instrument_ld_n.obj 
-unittests=Byte_test.exe Word_test.exe Instrument_test.exe
+objects=Byte.obj Word.obj Instrument.obj Mix.obj Main.obj Mix_instrument_set.obj Instrument_lda.obj Instrument_ldx.obj Instrument_ld_.obj Instrument_ldan.obj Instrument_ldxn.obj Instrument_ld_n.obj Instrument_sta.obj
+unittests=Byte_test.exe Word_test.exe Instrument_lda_test.exe Instrument_sta_test.exe
 
 all: mix.exe
 
@@ -18,7 +18,8 @@ clean:
 unittest: $(unittests)
 	Byte_test.exe
 	Word_test.exe
-	Instrument_test.exe
+	Instrument_lda_test.exe
+	Instrument_sta_test.exe
 
 Byte_test.exe: Byte_test.cc Byte.cc unittest.cc
 	$(CXX) /EHsc /Fe$@ $**
@@ -26,5 +27,8 @@ Byte_test.exe: Byte_test.cc Byte.cc unittest.cc
 Word_test.exe: Word_test.cc Word.cc unittest.cc Byte.cc
 	$(CXX) /EHsc /Fe$@ $**
 
-Instrument_test.exe: Instrument_test.cc Instrument.cc unittest.cc Byte.cc Instrument_lda.cc Word.cc
+Instrument_lda_test.exe: Instrument_lda_test.cc Instrument.cc unittest.cc Byte.cc Instrument_lda.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_sta_test.exe: Instrument_sta_test.cc Instrument.cc unittest.cc Byte.cc Instrument_sta.cc Word.cc
 	$(CXX) /EHsc /Fe$@ $**
