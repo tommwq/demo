@@ -23,13 +23,13 @@ namespace mix {
         bool is_less() const;
         bool is_equal() const;
         bool is_greater() const;
-        Word read_memory(std::uint32_t real_address);
+        Word read_memory(std::uint32_t real_address) const;
         void write_memory(std::uint32_t real_address, const Word& value);
-        Toggle get_overflow_toggle();
-        Indicator get_compare_indicator();
+        Toggle& get_overflow_toggle();
+        Indicator& get_compare_indicator();
         void reset();
     private:
-        void check_memory_address(std::uint32_t real_address);
+        void check_memory_address(std::uint32_t real_address) const;
     private:
         Word ra;
         Word rx;

@@ -2,6 +2,7 @@
 
 #include "Byte.hh"
 #include "Word.hh"
+#include "Field.hh"
 #include "Machine.hh"
 
 namespace mix {
@@ -16,7 +17,11 @@ namespace mix {
         Byte get_index() const;
         Byte get_field() const;
         Byte get_code() const;
+    public:
+        // utility functions
         std::uint32_t locate(const Machine& machine) const;
+        // 读取内存，按照field对齐，并保留符号位。
+        Word load(const Machine& machine) const;
     };
 }
 

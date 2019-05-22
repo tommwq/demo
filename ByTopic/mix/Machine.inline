@@ -35,21 +35,21 @@ namespace mix {
         return compare_indicator.is_equal();
     }
 
-    inline Toggle Machine::get_overflow_toggle() {
+    inline Toggle& Machine::get_overflow_toggle() {
         return overflow_toggle;
     }
     
-    inline Indicator Machine::get_compare_indicator() {
+    inline Indicator& Machine::get_compare_indicator() {
         return compare_indicator;
     }
 
-    inline void Machine::check_memory_address(std::uint32_t real_address) {
+    inline void Machine::check_memory_address(std::uint32_t real_address) const {
         if (real_address >= memory.size()) {
             throw std::runtime_error("invalid address");
         }
     }
 
-    inline Word Machine::read_memory(std::uint32_t real_address) {
+    inline Word Machine::read_memory(std::uint32_t real_address) const {
         check_memory_address(real_address);
         return memory[real_address - 1];
     }
