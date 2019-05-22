@@ -19,5 +19,16 @@ int main() {
     Expect(3, w2.get_byte(3).get_value());
     Expect(4, w2.get_byte(4).get_value());
     Expect(5, w2.get_byte(5).get_value());
-    
+
+    mix::Word w3;
+    w3 = w2;
+    ExpectFalse(w2.is_positive());
+    Expect(1, w2.get_byte(1).get_value());
+    Expect(2, w2.get_byte(2).get_value());
+    Expect(3, w2.get_byte(3).get_value());
+    Expect(4, w2.get_byte(4).get_value());
+    Expect(5, w2.get_byte(5).get_value());
+
+    mix::Word w4, w5;
+    ExpectTrue(w4 == w5);
 }

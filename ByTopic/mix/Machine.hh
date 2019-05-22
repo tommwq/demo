@@ -23,6 +23,7 @@ namespace mix {
         void write_memory(std::uint32_t real_address, const Word& value);
         Toggle get_overflow_toggle();
         Indicator get_compare_indicator();
+        void reset();
     private:
         void check_memory_address(std::uint32_t real_address);
     private:

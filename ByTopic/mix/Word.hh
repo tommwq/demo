@@ -2,6 +2,7 @@
 
 #include <array>
 #include "Byte.hh"
+#include <iostream>
 
 namespace mix {
     class Word {
@@ -12,8 +13,8 @@ namespace mix {
         Word(Word&& rhs);
         Word(std::initializer_list<int> initializers);
         Word& operator=(const Word& rhs);
-        bool operator==(const Word& rhs);
-        bool operator!=(const Word& rhs);
+        bool operator==(const Word& rhs) const;
+        bool operator!=(const Word& rhs) const;
     public:
         long to_long() const;
         bool is_positive() const;
@@ -27,6 +28,8 @@ namespace mix {
         bool positive = true;
         std::array<Byte, 5> bytes;
     };
+
+    std::ostream& operator<<(std::ostream& os, const Word& word);
 }
 
 #include "Word.inline"

@@ -2,6 +2,8 @@
 
 #include "Instrument_lda.hh"
 #include <stdexcept>
+#include <iostream>
+#include "Field.hh"
 
 namespace mix {
     void Instrument_lda::execute(Machine& machine) {
@@ -19,7 +21,19 @@ namespace mix {
         }
         
         Word value = machine.read_memory(static_cast<std::uint32_t>(address));
+        Word result;
+        std::uint8_t left = Field::get_left(get_field().to_unsigned());
+        std::uint8_t right = Field::get_right(get_field().to_unsigned());
 
-        machine.get_ra() = value;
+        if (left == 0 && value.is_negative()) {
+            result.set_negative();
+            left++;
+        }
+
+        for (std::uint8_t pos = right; pos >= left; pos--) {
+            result.set_byte(5 + pos - right, value.get_byte(pos));
+        }
+
+        machine.get_ra() = result;
     }
 }

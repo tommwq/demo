@@ -46,7 +46,7 @@ namespace mix {
         return *this;
     }
 
-    inline bool Word::operator==(const Word& rhs) {
+    inline bool Word::operator==(const Word& rhs) const {
         if (this == &rhs) {
 	    return true;
 	}
@@ -64,7 +64,7 @@ namespace mix {
 	return true;
     }
 
-    inline bool Word::operator!=(const Word& rhs) {
+    inline bool Word::operator!=(const Word& rhs) const {
         return !(*this == rhs);
     }
 

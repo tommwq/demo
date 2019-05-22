@@ -22,19 +22,19 @@
 #define Suit(title) unittest::suit(title)
 
 namespace unittest {
-    void expect(int expected,
+    bool expect(int expected,
                 int actural,
                 char *file,
                 int line,
                 char *expected_expr,
                 char *actural_expr);
 
-    void expect_true(bool value,
+    bool expect_true(bool value,
                      char *file,
                      int line,
                      char *expr);
 
-    void expect_false(bool value,
+    bool expect_false(bool value,
                       char *file,
                       int line,
                       char *expr);

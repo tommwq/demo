@@ -44,18 +44,30 @@ namespace mix {
     }
 
     inline void Machine::check_memory_address(std::uint32_t real_address) {
-        if (real_address > memory.size()) {
+        if (real_address >= memory.size()) {
             throw std::runtime_error("invalid address");
         }
     }
 
     inline Word Machine::read_memory(std::uint32_t real_address) {
         check_memory_address(real_address);
-        return memory[real_address];
+        return memory[real_address - 1];
     }
     
     inline void Machine::write_memory(std::uint32_t real_address, const Word& value) {
         check_memory_address(real_address);
-        memory[real_address] = value;
+        memory[real_address - 1] = value;
+    }
+
+    inline void Machine::reset() {
+        ra.clear();
+	rx.clear();
+	rj.clear();
+	for (auto& r: ri) {
+	    r.clear();
+	}
+	overflow_toggle.turn_off();
+	compare_indicator.turn_equal();
+	memory.fill(Word{1, 0, 0, 0, 0});
     }
 }

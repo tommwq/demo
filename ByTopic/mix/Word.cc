@@ -58,4 +58,15 @@ namespace mix {
 
         return value;
     }
+
+    std::ostream& operator<<(std::ostream& os, const Word& word) {
+        os << "Word{"
+           << (word.is_positive() ? "+" : "-") << ", "
+           << static_cast<int>(word.get_byte(0).to_unsigned()) << ", "
+           << static_cast<int>(word.get_byte(1).to_unsigned()) << ", "
+           << static_cast<int>(word.get_byte(2).to_unsigned()) << ", "
+           << static_cast<int>(word.get_byte(3).to_unsigned()) << ", "
+           << static_cast<int>(word.get_byte(4).to_unsigned()) << "}";
+        return os;
+    }
 }
