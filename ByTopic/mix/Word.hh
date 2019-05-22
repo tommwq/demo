@@ -3,6 +3,7 @@
 #include <array>
 #include "Byte.hh"
 #include <iostream>
+#include <stdexcept>
 
 namespace mix {
     class Word {
@@ -21,8 +22,9 @@ namespace mix {
         bool is_negative() const;
         void set_positive();
         void set_negative();
-        void set_byte(std::uint8_t position, Byte& value);
-        Byte get_byte(std::uint8_t position) const;
+        void set_byte(std::uint8_t position, const Byte& value);
+        const Byte& get_byte(std::uint8_t position) const;
+        Byte& get_byte(std::uint8_t position);
         void clear();
     private:
         bool positive = true;

@@ -8,7 +8,7 @@ namespace mix {
         Byte(const Byte& rhs);
     public:    
         std::uint8_t get_value() const;
-        void set_value(Byte& value);
+        void set_value(const Byte& value);
         void set_value(std::uint8_t value);
         std::uint8_t to_unsigned() const;
         void clear();
