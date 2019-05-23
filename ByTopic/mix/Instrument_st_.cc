@@ -7,6 +7,6 @@
 
 namespace mix {
     void Instrument_st_::execute(Machine& machine) const {
-        store(machine, machine.get_ri(get_index().to_unsigned()));
+        store(machine, machine.get_ri(address_register_index));
     }
 }

@@ -8,6 +8,8 @@ namespace mix {
     class Mix_instrument_set: public Instrument_set {
     public:
         Instrument get_instrument(const Word& encoded_instrument) override;
+    private:
+        Instrument get_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field);
     public:
         static const std::uint8_t ADD = 1;
         static const std::uint8_t SUB = 2;
@@ -42,5 +44,12 @@ namespace mix {
         static const std::uint8_t STZ = 33;
 
         static const std::uint8_t ENTA = 48;
+        static const std::uint8_t ENT1 = 49;
+        static const std::uint8_t ENT2 = 50;
+        static const std::uint8_t ENT3 = 51;
+        static const std::uint8_t ENT4 = 52;
+        static const std::uint8_t ENT5 = 53;
+        static const std::uint8_t ENT6 = 54;
+        static const std::uint8_t ENTX = 55;
     };
 }
