@@ -17,11 +17,20 @@
 #include "Instrument_sub.hh"
 #include "Instrument_mul.hh"
 #include "Instrument_div.hh"
+#include "Instrument_enta.hh"
+#include "Instrument_entx.hh"
+#include "Instrument_ent_.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
         Instrument instrument = encoded_instrument;
         std::uint8_t code = instrument.get_code().to_unsigned();
+        std::uint8_t field = instrument.get_field().to_unsigned();
+
+        if (48 <= code && code <= 55) {
+            return get_instrument(encoded_instrument, code, field);
+        }
+        
         switch (code) {
         case ADD:  return Instrument_add(instrument);
         case SUB:  return Instrument_sub(instrument);
@@ -54,7 +63,31 @@ namespace mix {
         case STX:  return Instrument_stx(instrument);
         case STJ:  return Instrument_stj(instrument);
         case STZ:  return Instrument_stz(instrument);
-        default:   throw std::runtime_error("invalid instrument");
+            
+        default: break;
         }
+
+        throw std::runtime_error("invalid instrument");
+    }
+
+    Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field) {
+        switch (field) {
+        case 2:
+            switch (code) {
+            case ENTA: return Instrument_enta(encoded_instrument);
+            case ENT1: return Instrument_ent1(encoded_instrument);
+            case ENT2: return Instrument_ent2(encoded_instrument);
+            case ENT3: return Instrument_ent3(encoded_instrument);
+            case ENT4: return Instrument_ent4(encoded_instrument);
+            case ENT5: return Instrument_ent5(encoded_instrument);
+            case ENT6: return Instrument_ent6(encoded_instrument);
+            case ENTX: return Instrument_entx(encoded_instrument);
+            default: break;
+            }
+            break;
+        default: break;
+        }
+
+        throw std::runtime_error("invalid instrument");
     }
 }
