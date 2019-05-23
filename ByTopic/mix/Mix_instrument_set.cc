@@ -17,11 +17,14 @@
 #include "Instrument_sub.hh"
 #include "Instrument_mul.hh"
 #include "Instrument_div.hh"
+#include "Instrument_enta.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
         Instrument instrument = encoded_instrument;
         std::uint8_t code = instrument.get_code().to_unsigned();
+        std::uint8_t field = instrument.get_field().to_unsigned();
+        
         switch (code) {
         case ADD:  return Instrument_add(instrument);
         case SUB:  return Instrument_sub(instrument);
@@ -54,7 +57,18 @@ namespace mix {
         case STX:  return Instrument_stx(instrument);
         case STJ:  return Instrument_stj(instrument);
         case STZ:  return Instrument_stz(instrument);
-        default:   throw std::runtime_error("invalid instrument");
+
+        case ENTA: {
+            if (field == 2) {
+                return Instrument_enta(instrument);
+            }
+            break;
         }
+            
+        default:
+            break;
+        }
+
+        throw std::runtime_error("invalid instrument");
     }
 }
