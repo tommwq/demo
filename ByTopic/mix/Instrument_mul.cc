@@ -28,8 +28,8 @@ namespace mix {
             machine.get_overflow_toggle().turn_on();
         }
 
-        ra.assign(result / (Byte::Max5 + 1));
-        rx.assign(result % (Byte::Max5 + 1));
+        ra.assign(result >> 30);
+        rx.assign(result & 0x3FFFFFFF);
         if (!is_positive) {
             ra.set_negative();
             rx.set_negative();

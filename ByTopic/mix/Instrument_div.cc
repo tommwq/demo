@@ -16,9 +16,10 @@ namespace mix {
 
         std::int64_t op2 = value.to_long();
         if (op2 == 0) {
+            std::cout << "error" << std::endl;
             throw std::runtime_error("divide by zero");
         }
-        std::int64_t op1 = machine.get_ra().to_long() * std::abs(machine.get_rx().to_long());
+        std::int64_t op1 = (machine.get_ra().to_long() << 30) + std::abs(machine.get_rx().to_long());
 
         bool ra_positive = true;
         bool rx_positive = machine.get_ra().is_positive();
