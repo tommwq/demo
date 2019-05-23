@@ -19,7 +19,7 @@ namespace mix {
         if (result > Byte::Max5 || result < -Byte::Max5) {
             machine.get_overflow_toggle().turn_on();
         }
-
+        
         machine.get_ra().assign(static_cast<std::uint32_t>(result));
     }
 }
