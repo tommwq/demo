@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        <variable name="textViewModel" type="com.tq.livedatabinding.TextViewModel"/>
+        <variable name="authenticationViewModel" type="com.tq.livedatabinding.AuthenticationViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@={textViewModel.content}"
+                android:text="@={authenticationViewModel.content}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

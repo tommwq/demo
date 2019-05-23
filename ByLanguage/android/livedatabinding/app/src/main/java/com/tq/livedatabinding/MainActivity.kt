@@ -14,11 +14,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         var binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.textViewModel = ViewModelProviders.of(this).get(TextViewModel::class.java)
+        binding.authenticationViewModel = ViewModelProviders.of(this).get(AuthenticationViewModel::class.java)
         binding.lifecycleOwner = this
-        binding.getTextViewModel()?.text?.observe(this, object: Observer<TextModel>{
-            override fun onChanged(textModel: TextModel) {
-                Log.d("TEST", textModel.content)
+        binding.getAuthenticationViewModel()?.authenticationInformation?.observe(this, object: Observer<AuthenticationInformation>{
+            override fun onChanged(authenticationInformation: AuthenticationInformation) {
+                Log.d("TEST", authenticationInformation.username)
             }
         })
     }
