@@ -23,6 +23,12 @@
 #include "Instrument_enna.hh"
 #include "Instrument_ennx.hh"
 #include "Instrument_enn_.hh"
+#include "Instrument_inca.hh"
+#include "Instrument_incx.hh"
+#include "Instrument_inc_.hh"
+#include "Instrument_deca.hh"
+#include "Instrument_decx.hh"
+#include "Instrument_dec_.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
@@ -75,6 +81,32 @@ namespace mix {
 
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field) {
         switch (field) {
+        case 0:
+            switch (code) {
+            case INCA: return Instrument_inca(encoded_instrument);
+            case INC1: return Instrument_inc1(encoded_instrument);
+            case INC2: return Instrument_inc2(encoded_instrument);
+            case INC3: return Instrument_inc3(encoded_instrument);
+            case INC4: return Instrument_inc4(encoded_instrument);
+            case INC5: return Instrument_inc5(encoded_instrument);
+            case INC6: return Instrument_inc6(encoded_instrument);
+            case INCX: return Instrument_incx(encoded_instrument);
+            default: break;
+            }
+            break;
+        case 1:
+            switch (code) {
+            case DECA: return Instrument_deca(encoded_instrument);
+            case DEC1: return Instrument_dec1(encoded_instrument);
+            case DEC2: return Instrument_dec2(encoded_instrument);
+            case DEC3: return Instrument_dec3(encoded_instrument);
+            case DEC4: return Instrument_dec4(encoded_instrument);
+            case DEC5: return Instrument_dec5(encoded_instrument);
+            case DEC6: return Instrument_dec6(encoded_instrument);
+            case DECX: return Instrument_decx(encoded_instrument);
+            default: break;
+            }
+            break;
         case 2:
             switch (code) {
             case ENTA: return Instrument_enta(encoded_instrument);

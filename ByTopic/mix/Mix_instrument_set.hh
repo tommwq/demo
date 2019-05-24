@@ -60,5 +60,23 @@ namespace mix {
         static const std::uint8_t ENN5 = 53;
         static const std::uint8_t ENN6 = 54;
         static const std::uint8_t ENNX = 55;
+
+        static const std::uint8_t INCA = 48;
+        static const std::uint8_t INC1 = 49;
+        static const std::uint8_t INC2 = 50;
+        static const std::uint8_t INC3 = 51;
+        static const std::uint8_t INC4 = 52;
+        static const std::uint8_t INC5 = 53;
+        static const std::uint8_t INC6 = 54;
+        static const std::uint8_t INCX = 55;
+
+        static const std::uint8_t DECA = 48;
+        static const std::uint8_t DEC1 = 49;
+        static const std::uint8_t DEC2 = 50;
+        static const std::uint8_t DEC3 = 51;
+        static const std::uint8_t DEC4 = 52;
+        static const std::uint8_t DEC5 = 53;
+        static const std::uint8_t DEC6 = 54;
+        static const std::uint8_t DECX = 55;
     };
 }
