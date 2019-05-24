@@ -1,0 +1,10 @@
+
+psegdes.exe: main.c segment_descriptor.c
+	$(CXX) /Fe$@ $**
+
+clean:
+	del *.obj *.exe
+
+
+test: clean psegdes.exe
+	psegdes.exe 0x4d20000
