@@ -34,3 +34,5 @@ typedef struct SegmentDescriptor SegmentDescriptor;
 int initialize_segment_descriptor(SegmentDescriptor* sd, segment_descriptor_t segment_descriptor);
 //  Õ∑≈sd->internal£¨≤ª Õ∑≈sd°£
 void destroy_segment_descriptor(SegmentDescriptor sd);
+
+const char* segment_description(uint8_t descriptor_type, uint8_t segment_type);

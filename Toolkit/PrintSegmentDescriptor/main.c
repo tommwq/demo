@@ -56,8 +56,9 @@ int main(int argc, char *argv[]) {
     fprintf(stdout, "descriptor type: %s\n",
             (descriptor_type == SYSTEM_DESCRIPTOR)? "system" :
             (descriptor_type == CODE_OR_DATA_DESCRIPTOR)? "code or data" : "invalid");
-    // TODO
-    fprintf(stdout, "segment type:    %d\n", segment_type);
+    fprintf(stdout, "segment type:    %s %d\n",
+            segment_description(descriptor_type, segment_type),
+            segment_type);
     fprintf(stdout, "privilege level: %d\n", descriptor_privilege_level);
     fprintf(stdout, "present:         %d\n", is_present);
     fprintf(stdout, "AVL:             %d\n", available_for_system_software);

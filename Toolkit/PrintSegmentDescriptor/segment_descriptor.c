@@ -60,7 +60,7 @@ static uint8_t _granularity(const struct SegmentDescriptor* sd) {
 }
 
 static uint8_t _is_64bit_code_segment(const struct SegmentDescriptor* sd) {
-   uint64_t descriptor = sd->internal->segment_descriptor;
+    uint64_t descriptor = sd->internal->segment_descriptor;
     return ((descriptor >> 53) & 0x01);
 }
 
@@ -90,4 +90,34 @@ int initialize_segment_descriptor(SegmentDescriptor* sd, segment_descriptor_t se
 
 void destroy_segment_descriptor(SegmentDescriptor sd) {
     free(sd.internal);
+}
+
+const char* segment_description(uint8_t descriptor_type, uint8_t segment_type) {
+    if (descriptor_type == CODE_OR_DATA_DESCRIPTOR) {
+        switch (segment_type) {
+        case 0: return "Data,Read-Only";
+        case 1: return "Data,Read-Only,accessed";
+        case 2: return "Data,Read/Write";
+        case 3: return "Data,Read/Write,accessed";
+        case 4: return "Data,Read-Only,expand-down";
+        case 5: return "Data,Read-Only,expand-down,accessed";
+        case 6: return "Data,Read/Write,expand-down";
+        case 7: return "Data,Read/Write,expand-down,accessed";
+        case 8: return "Code,Read-Only";
+        case 9: return "Code,Read-Only,accessed";
+        case 10: return "Code,Execute/Read";
+        case 11: return "Code,Execute/Read,accessed";
+        case 12: return "Code,Read-Only,conforming";
+        case 13: return "Code,Read-Only,conforming,accessed";
+        case 14: return "Code,Execute/Read-Only,conforming";
+        case 15: return "Code,Execute/Read-Only,conforming,accessed";
+        default: return "invalid";
+        }
+    } else if (descriptor_type == SYSTEM_DESCRIPTOR) {
+        switch (segment_type) {
+        default: return "invalid";
+        }
+    } else {
+        return "invalid";
+    }
 }
