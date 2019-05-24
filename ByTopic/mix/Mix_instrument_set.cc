@@ -20,6 +20,9 @@
 #include "Instrument_enta.hh"
 #include "Instrument_entx.hh"
 #include "Instrument_ent_.hh"
+#include "Instrument_enna.hh"
+#include "Instrument_ennx.hh"
+#include "Instrument_enn_.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
@@ -82,6 +85,19 @@ namespace mix {
             case ENT5: return Instrument_ent5(encoded_instrument);
             case ENT6: return Instrument_ent6(encoded_instrument);
             case ENTX: return Instrument_entx(encoded_instrument);
+            default: break;
+            }
+            break;
+        case 3:
+            switch (code) {
+            case ENNA: return Instrument_enna(encoded_instrument);
+            case ENN1: return Instrument_enn1(encoded_instrument);
+            case ENN2: return Instrument_enn2(encoded_instrument);
+            case ENN3: return Instrument_enn3(encoded_instrument);
+            case ENN4: return Instrument_enn4(encoded_instrument);
+            case ENN5: return Instrument_enn5(encoded_instrument);
+            case ENN6: return Instrument_enn6(encoded_instrument);
+            case ENNX: return Instrument_ennx(encoded_instrument);
             default: break;
             }
             break;

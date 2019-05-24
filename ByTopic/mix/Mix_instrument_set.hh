@@ -51,5 +51,14 @@ namespace mix {
         static const std::uint8_t ENT5 = 53;
         static const std::uint8_t ENT6 = 54;
         static const std::uint8_t ENTX = 55;
+
+        static const std::uint8_t ENNA = 48;
+        static const std::uint8_t ENN1 = 49;
+        static const std::uint8_t ENN2 = 50;
+        static const std::uint8_t ENN3 = 51;
+        static const std::uint8_t ENN4 = 52;
+        static const std::uint8_t ENN5 = 53;
+        static const std::uint8_t ENN6 = 54;
+        static const std::uint8_t ENNX = 55;
     };
 }
