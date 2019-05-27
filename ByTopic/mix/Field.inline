@@ -15,4 +15,24 @@ namespace mix {
         
         return (left << 3) + right;
     }
+
+    inline Field::Field(std::uint8_t encoded)
+        :left(encoded >> 3),
+         right(encoded & 0x7) {
+        if (left > right || right > 5) {
+            throw std::runtime_error("invalid field");
+        }
+    }
+    
+    inline std::uint8_t Field::get_left() const {
+        return left;
+    }
+    
+    inline std::uint8_t Field::get_right() const {
+        return right;
+    }
+    
+    inline bool Field::contains_sign() const {
+        return (left == 0);
+    }
 }

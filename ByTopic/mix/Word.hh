@@ -1,9 +1,11 @@
 #pragma once
 
+#include <cstdint>
 #include <array>
-#include "Byte.hh"
 #include <iostream>
 #include <stdexcept>
+#include "Byte.hh"
+#include "Field.hh"
 
 namespace mix {
     class Word {
@@ -22,6 +24,7 @@ namespace mix {
         Word& operator-=(const Word& rhs);
     public:
         long to_long() const;
+        long to_long(std::uint8_t field) const;
         bool is_positive() const;
         bool is_negative() const;
         void set_positive();

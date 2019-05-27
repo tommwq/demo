@@ -78,5 +78,15 @@ namespace mix {
         static const std::uint8_t DEC5 = 53;
         static const std::uint8_t DEC6 = 54;
         static const std::uint8_t DECX = 55;
+
+        static const std::uint8_t CMPA = 56;
+        static const std::uint8_t CMP1 = 57;
+        static const std::uint8_t CMP2 = 58;
+        static const std::uint8_t CMP3 = 59;
+        static const std::uint8_t CMP4 = 60;
+        static const std::uint8_t CMP5 = 61;
+        static const std::uint8_t CMP6 = 62;
+        static const std::uint8_t CMPX = 63;
+        
     };
 }

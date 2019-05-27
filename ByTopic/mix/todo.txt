@@ -8,4 +8,6 @@
 6. 编写Mix::execute()。
 7. 考虑增加程序计数器。
 8. 实现LDA指令。ok
-
+9. 将使用std::uint8_t表示的field改换为Field类。
+10. 将XXXa、XXXx、XXXi指令合并到一个文件中。
+11. 将XXX_指令改为模板。

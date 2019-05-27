@@ -29,6 +29,7 @@
 #include "Instrument_deca.hh"
 #include "Instrument_decx.hh"
 #include "Instrument_dec_.hh"
+#include "Instrument_cmp_.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
@@ -72,6 +73,15 @@ namespace mix {
         case STX:  return Instrument_stx(instrument);
         case STJ:  return Instrument_stj(instrument);
         case STZ:  return Instrument_stz(instrument);
+
+        case CMPA:  return Instrument_cmpa(instrument);
+        case CMP1:  return Instrument_cmp_<1>(instrument);
+        case CMP2:  return Instrument_cmp_<2>(instrument);
+        case CMP3:  return Instrument_cmp_<3>(instrument);
+        case CMP4:  return Instrument_cmp_<4>(instrument);
+        case CMP5:  return Instrument_cmp_<5>(instrument);
+        case CMP6:  return Instrument_cmp_<6>(instrument);
+        case CMPX:  return Instrument_cmpx(instrument);
             
         default: break;
         }

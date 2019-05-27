@@ -51,6 +51,28 @@ namespace mix {
         return value;
     }
 
+    long Word::to_long(std::uint8_t field) const {
+        std::uint8_t left = Field::get_left(field);
+        std::uint8_t right = Field::get_right(field);
+
+        bool negative = (is_negative() && left == 0);
+
+        if (left == 0) {
+            left++;
+        }
+
+        long result = 0;
+        for (std::uint8_t pos = right; pos >= left; pos--) {
+            result = (result << 6) + get_byte(pos).to_unsigned();
+        }
+
+        if (negative) {
+            result *= -1;
+        }
+
+        return result;
+    }
+
     std::ostream& operator<<(std::ostream& os, const Word& word) {
         os << "Word{"
            << (word.is_positive() ? "+" : "-") << ", "
