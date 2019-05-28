@@ -47,4 +47,4 @@ namespace mix {
 
 }
 
-#include "Machine.inline"
+#include "Machine.it"

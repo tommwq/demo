@@ -23,4 +23,4 @@ namespace mix {
     };
 }
 
-#include "Mix.inline"
+#include "Mix.it"

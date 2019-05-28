@@ -29,4 +29,4 @@ namespace mix {
     };
 }
 
-#include "Byte.inline"
+#include "Byte.it"

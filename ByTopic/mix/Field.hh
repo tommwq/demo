@@ -20,4 +20,4 @@ namespace mix {
     };
 }
 
-#include "Field.inline"
+#include "Field.it"

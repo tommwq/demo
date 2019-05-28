@@ -45,4 +45,4 @@ namespace mix {
     std::ostream& operator<<(std::ostream& os, const Word& word);
 }
 
-#include "Word.inline"
+#include "Word.it"
