@@ -26,4 +26,4 @@ namespace mix {
     };
 }
 
-#include "Instrument.ih"
+#include "Instrument.it"
