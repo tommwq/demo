@@ -1,0 +1,17 @@
+namespace mix {
+
+    template<std::uint32_t Device_number, std::uint32_t Block_size>
+    std::uint32_t SimpleDevice<Device_number, Block_size>::get_block_size() const {
+        return Block_size;
+    }
+
+    template<std::uint32_t Device_number, std::uint32_t Block_size>
+    std::uint32_t SimpleDevice<Device_number, Block_size>::get_device_number() const {
+        return Device_number;
+    }
+
+    template<std::uint32_t Device_number, std::uint32_t Block_size>
+    std::unique_ptr<Block> SimpleDevice<Device_number, Block_size>::read() {
+        return std::make_unique<SimpleBlock<Block_size>>();
+    }    
+}

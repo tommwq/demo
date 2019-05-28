@@ -2,11 +2,12 @@
 
 #include <array>
 #include <stdexcept>
+#include <memory>
 
 #include "Toggle.hh"
 #include "Indicator.hh"
 #include "Word.hh"
-
+#include "Device.hh"
 
 namespace mix {
     class Machine {
@@ -32,6 +33,7 @@ namespace mix {
         std::uint32_t get_program_counter() const;
         std::uint32_t& get_program_counter();
         void reset();
+        std::shared_ptr<Device> get_device(std::uint8_t device_number);
     private:
         void check_memory_address(std::uint32_t real_address) const;
     private:
@@ -43,6 +45,29 @@ namespace mix {
         Toggle overflow_toggle;
         Indicator compare_indicator;
         std::array<Word,4000> memory;
+        std::array<std::shared_ptr<Device>, 21> devices = {
+            std::make_shared<SimpleDevice<0, 100>>(),
+            std::make_shared<SimpleDevice<1, 100>>(),
+            std::make_shared<SimpleDevice<2, 100>>(),
+            std::make_shared<SimpleDevice<3, 100>>(),
+            std::make_shared<SimpleDevice<4, 100>>(),
+            std::make_shared<SimpleDevice<5, 100>>(),
+            std::make_shared<SimpleDevice<6, 100>>(),
+            std::make_shared<SimpleDevice<7, 100>>(),
+            std::make_shared<SimpleDevice<8, 100>>(),
+            std::make_shared<SimpleDevice<9, 100>>(),
+            std::make_shared<SimpleDevice<10, 100>>(),
+            std::make_shared<SimpleDevice<11, 100>>(),
+            std::make_shared<SimpleDevice<12, 100>>(),
+            std::make_shared<SimpleDevice<13, 100>>(),
+            std::make_shared<SimpleDevice<14, 100>>(),
+            std::make_shared<SimpleDevice<15, 100>>(),
+            std::make_shared<SimpleDevice<16, 16>>(),
+            std::make_shared<SimpleDevice<17, 16>>(),
+            std::make_shared<SimpleDevice<18, 24>>(),
+            std::make_shared<SimpleDevice<19, 14>>(),
+            std::make_shared<SimpleDevice<20, 14>>()
+        };
     };
 
 }

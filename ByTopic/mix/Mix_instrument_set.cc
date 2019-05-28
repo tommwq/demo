@@ -16,6 +16,13 @@
 #include "Instrument_dec_.hh"
 #include "Instrument_cmp_.hh"
 #include "Instrument_jmp_.hh"
+#include "Instrument_io_.hh"
+#include "Instrument_sla.hh"
+#include "Instrument_sra.hh"
+#include "Instrument_slax.hh"
+#include "Instrument_srax.hh"
+#include "Instrument_slc.hh"
+#include "Instrument_src.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
@@ -30,6 +37,10 @@ namespace mix {
         if (48 <= code && code <= 55) {
             return get_instrument(encoded_instrument, code, field);
         }
+
+        if (code == 6) {
+            return get_shift_instrument(encoded_instrument, code, field);
+        }
         
         switch (code) {
         case ADD:  return Instrument_add(instrument);
@@ -37,7 +48,6 @@ namespace mix {
         case MUL:  return Instrument_mul(instrument);
         case DIV:  return Instrument_div(instrument);
         case MOVE:  return Instrument_move(instrument);
-            
         case LDA:  return Instrument_lda(instrument);
         case LD1:  return Instrument_ld_<1>(instrument);
         case LD2:  return Instrument_ld_<2>(instrument);
@@ -64,7 +74,7 @@ namespace mix {
         case STX:  return Instrument_stx(instrument);
         case STJ:  return Instrument_stj(instrument);
         case STZ:  return Instrument_stz(instrument);
-
+        case IN:  return Instrument_in(instrument);
         case CMPA:  return Instrument_cmpa(instrument);
         case CMP1:  return Instrument_cmp_<1>(instrument);
         case CMP2:  return Instrument_cmp_<2>(instrument);
@@ -72,8 +82,7 @@ namespace mix {
         case CMP4:  return Instrument_cmp_<4>(instrument);
         case CMP5:  return Instrument_cmp_<5>(instrument);
         case CMP6:  return Instrument_cmp_<6>(instrument);
-        case CMPX:  return Instrument_cmpx(instrument);
-            
+        case CMPX:  return Instrument_cmpx(instrument);            
         default: break;
         }
 
@@ -238,6 +247,19 @@ namespace mix {
             }
         }
         
+        throw std::runtime_error("invalid instrument");
+    }
+
+    Instrument Mix_instrument_set::get_shift_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field) {
+        switch (field) {
+        case 0: return Instrument_sla(encoded_instrument);
+        case 1: return Instrument_sra(encoded_instrument);
+        case 2: return Instrument_slax(encoded_instrument);
+        case 3: return Instrument_srax(encoded_instrument);
+        case 4: return Instrument_slc(encoded_instrument);
+        case 5: return Instrument_src(encoded_instrument);
+        default: break;
+        }
         throw std::runtime_error("invalid instrument");
     }
 }

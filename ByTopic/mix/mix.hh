@@ -13,10 +13,7 @@ namespace mix {
         Mix& operator=(const Mix&) = delete;
         Mix(Mix&&) = delete;
         Mix& operator=(Mix&&) = delete;
-
         Machine make_snapshot() const;
-        
-        
     protected:
         Instrument_set& instrument_set;
         Machine machine;

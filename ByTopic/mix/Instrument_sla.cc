@@ -20,7 +20,7 @@ namespace mix {
             return;
         }
 
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             value.set_byte(i, (i + m <= 5) ? value.get_byte(i + m) : 0);
         }
     }

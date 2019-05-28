@@ -10,6 +10,7 @@ namespace mix {
     private:
         Instrument get_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field);
         Instrument get_jump_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field);
+        Instrument get_shift_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field);
     public:
         static const std::uint8_t NOP = 0;
         static const std::uint8_t ADD = 1;

@@ -103,4 +103,8 @@ namespace mix {
     inline std::uint32_t& Machine::get_program_counter() {
         return program_counter;
     }
+
+    inline std::shared_ptr<Device> Machine::get_device(std::uint8_t device_number) {
+        return devices.at(device_number);
+    }
 }
