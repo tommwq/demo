@@ -11,11 +11,21 @@ namespace mix {
         Instrument get_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field);
         Instrument get_jump_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field);
     public:
+        static const std::uint8_t NOP = 0;
         static const std::uint8_t ADD = 1;
         static const std::uint8_t SUB = 2;
         static const std::uint8_t MUL = 3;
         static const std::uint8_t DIV = 4;
-        
+        static const std::uint8_t HLT = 5;
+        static const std::uint8_t NUM = 5;
+        static const std::uint8_t CHAR = 5;
+        static const std::uint8_t SLA = 6;
+        static const std::uint8_t SRA = 6;
+        static const std::uint8_t SLAX = 6;
+        static const std::uint8_t SRAX = 6;
+        static const std::uint8_t SLC = 6;
+        static const std::uint8_t SRC = 6;
+        static const std::uint8_t MOVE = 7;
         static const std::uint8_t LDA = 8;       
         static const std::uint8_t LD1 = 9;
         static const std::uint8_t LD2 = 10;
@@ -42,7 +52,11 @@ namespace mix {
         static const std::uint8_t STX = 31;
         static const std::uint8_t STJ = 32;
         static const std::uint8_t STZ = 33;
-
+        static const std::uint8_t JBUS = 34;
+        static const std::uint8_t IOC = 35;
+        static const std::uint8_t IN = 36;
+        static const std::uint8_t OUT = 37;
+        static const std::uint8_t JRED = 38;
         static const std::uint8_t JMP = 39;
         static const std::uint8_t JSJ = 39;
         static const std::uint8_t JOV = 39;

@@ -103,6 +103,26 @@ namespace mix {
         return *this;
     }
 
+    inline Word& Word::operator+(long rhs) {
+        assign(to_long() + rhs);
+        return *this;
+    }
+
+    inline Word& Word::operator+=(long rhs) {
+        assign(to_long() + rhs);
+        return *this;
+    }
+
+    inline Word& Word::operator-(long rhs) {
+        assign(to_long() - rhs);
+        return *this;
+    }
+
+    inline Word& Word::operator-=(long rhs) {
+        assign(to_long() - rhs);
+        return *this;
+    }
+
     inline void Word::assign(long value) {
         set_positive();
         if (value < 0L) {

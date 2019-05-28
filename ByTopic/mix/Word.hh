@@ -22,6 +22,10 @@ namespace mix {
         Word& operator+=(const Word& rhs);
         Word& operator-(const Word& rhs);
         Word& operator-=(const Word& rhs);
+        Word& operator+(long rhs);
+        Word& operator+=(long rhs);
+        Word& operator-(long rhs);
+        Word& operator-=(long rhs);
     public:
         long to_long() const;
         long to_long(std::uint8_t field) const;

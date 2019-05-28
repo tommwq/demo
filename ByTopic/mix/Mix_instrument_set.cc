@@ -9,6 +9,7 @@
 #include "Instrument_sub.hh"
 #include "Instrument_mul.hh"
 #include "Instrument_div.hh"
+#include "Instrument_move.hh"
 #include "Instrument_ent_.hh"
 #include "Instrument_enn_.hh"
 #include "Instrument_inc_.hh"
@@ -35,6 +36,7 @@ namespace mix {
         case SUB:  return Instrument_sub(instrument);
         case MUL:  return Instrument_mul(instrument);
         case DIV:  return Instrument_div(instrument);
+        case MOVE:  return Instrument_move(instrument);
             
         case LDA:  return Instrument_lda(instrument);
         case LD1:  return Instrument_ld_<1>(instrument);
