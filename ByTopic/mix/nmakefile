@@ -1,5 +1,5 @@
 
-objects=Byte.obj Word.obj Instrument.obj Mix.obj Main.obj Mix_instrument_set.obj Instrument_ld_.obj Instrument_ld_n.obj Instrument_st_.obj Instrument_add.obj Instrument_sub.obj Instrument_mul.obj Instrument_div.obj Instrument_ent_.obj Instrument_enn_.obj Instrument_inc_.obj Instrument_dec_.obj Instrument_cmp_.obj Instrument_jmp_.obj Instrument_move.obj Instrument_nop.obj Instrument_sla.obj Instrument_sra.obj Instrument_slax.obj Instrument_srax.obj
+objects=Byte.obj Word.obj Instrument.obj Mix.obj Main.obj Mix_instrument_set.obj Instrument_ld_.obj Instrument_ld_n.obj Instrument_st_.obj Instrument_add.obj Instrument_sub.obj Instrument_mul.obj Instrument_div.obj Instrument_ent_.obj Instrument_enn_.obj Instrument_inc_.obj Instrument_dec_.obj Instrument_cmp_.obj Instrument_jmp_.obj Instrument_move.obj Instrument_nop.obj Instrument_sla.obj Instrument_sra.obj Instrument_slax.obj Instrument_srax.obj Instrument_slc.obj Instrument_src.obj
 
 unittests=Byte_test.exe Word_test.exe Instrument_ld__test.exe Instrument_st__test.exe Instrument_add_test.exe Instrument_sub_test.exe Instrument_mul_test.exe Instrument_div_test.exe Instrument_sla_test.exe
 
