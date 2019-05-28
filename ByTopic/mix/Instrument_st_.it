@@ -1,0 +1,6 @@
+namespace mix {
+    template<int Index>
+    void Instrument_st_<Index>::execute(Machine& machine) const {
+        store(machine, machine.get_ri(Index));
+    }
+}

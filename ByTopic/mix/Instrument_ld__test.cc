@@ -1,4 +1,4 @@
-#include "Instrument_lda.hh"
+#include "Instrument_ld_.hh"
 #include "Machine.hh"
 
 #include "unittest.hh"

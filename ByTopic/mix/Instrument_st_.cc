@@ -6,7 +6,20 @@
 #include "Field.hh"
 
 namespace mix {
-    void Instrument_st_::execute(Machine& machine) const {
-        store(machine, machine.get_ri(address_register_index));
+
+    void Instrument_sta::execute(Machine& machine) const {
+        store(machine, machine.get_ra());
+    }
+
+    void Instrument_stj::execute(Machine& machine) const {
+        store(machine, machine.get_rj());
+    }
+
+    void Instrument_stx::execute(Machine& machine) const {
+        store(machine, machine.get_rx());
+    }
+
+    void Instrument_stz::execute(Machine& machine) const {
+        store(machine, {1, 0, 0, 0, 0, 0});
     }
 }

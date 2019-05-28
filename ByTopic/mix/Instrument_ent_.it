@@ -1,0 +1,6 @@
+namespace mix {
+    template<int Index>
+    void Instrument_ent_<Index>::execute(Machine& machine) const {
+        machine.get_ri(Index).assign(locate(machine));
+    }
+}

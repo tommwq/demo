@@ -1,14 +1,6 @@
-1. 分拆文件。ok
-2. 增加单元测试。ok
-3. 编写nmakefile。ok
-4. 增加pch。
-5. 支持将mix状态保存到文件，或从文件恢复。
-   增加vector<uint8_t> Machine::dump()和void Machine.restore(vector<uint8_t>)。
-   增加vector<uint8_t> Mix::dump()和void Mix.restore(vector<uint8_t>)。
-6. 编写Mix::execute()。
-7. 考虑增加程序计数器。
-8. 实现LDA指令。ok
-9. 将使用std::uint8_t表示的field改换为Field类。
-10. 将XXXa、XXXx、XXXi指令合并到一个文件中。
-11. 将XXX_指令改为模板。
-
+增加pch。
+支持将mix状态保存到文件，或从文件恢复。
+将使用std::uint8_t表示的field改换为Field类。
+将XXXa、XXXx、XXXi指令合并到一个文件中。
+将XXX_指令改为模板。
+学习https://github.com/gtryf/MIXWare/blob/master/src/MIXLib/Machine.cs。

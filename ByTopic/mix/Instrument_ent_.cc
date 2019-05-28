@@ -6,7 +6,12 @@
 #include "Field.hh"
 
 namespace mix {
-    void Instrument_ent_::execute(Machine& machine) const {
-        machine.get_ri(address_register_index).assign(locate(machine));
+
+    void Instrument_entx::execute(Machine& machine) const {
+        machine.get_rx().assign(locate(machine));
+    }
+
+    void Instrument_enta::execute(Machine& machine) const {
+        machine.get_ra().assign(locate(machine));
     }
 }

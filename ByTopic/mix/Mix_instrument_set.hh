@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <stdexcept>
-#include "Instrument_lda.hh"
 
 namespace mix {
     class Mix_instrument_set: public Instrument_set {
