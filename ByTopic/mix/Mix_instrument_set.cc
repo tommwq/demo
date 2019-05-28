@@ -30,12 +30,17 @@
 #include "Instrument_decx.hh"
 #include "Instrument_dec_.hh"
 #include "Instrument_cmp_.hh"
+#include "Instrument_jmp_.hh"
 
 namespace mix {
     Instrument Mix_instrument_set::get_instrument(const Word& encoded_instrument) {
         Instrument instrument = encoded_instrument;
         std::uint8_t code = instrument.get_code().to_unsigned();
         std::uint8_t field = instrument.get_field().to_unsigned();
+
+        if (39 <= code && code <= 47) {
+            return get_jump_instrument(encoded_instrument, code, field);
+        }
 
         if (48 <= code && code <= 55) {
             return get_instrument(encoded_instrument, code, field);
@@ -146,6 +151,107 @@ namespace mix {
         default: break;
         }
 
+        throw std::runtime_error("invalid instrument");
+    }
+
+    Instrument Mix_instrument_set::get_jump_instrument(const Word& encoded_instrument, std::uint8_t code, std::uint8_t field) {
+
+        if (code == 39) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_true>(encoded_instrument);
+            case 1: return Instrument_jsj(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_overflow>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_not_overflow>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_less>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_equal>(encoded_instrument);
+            case 6: return Instrument_jump_<Machine_condition_greater>(encoded_instrument);
+            case 7: return Instrument_jump_<Machine_condition_greater_or_equal>(encoded_instrument);
+            case 8: return Instrument_jump_<Machine_condition_not_equal>(encoded_instrument);
+            case 9: return Instrument_jump_<Machine_condition_less_or_equal>(encoded_instrument);
+            default: break;
+            }
+        } else if (code == 40) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_ra_negative>(encoded_instrument);
+            case 1: return Instrument_jump_<Machine_condition_ra_zero>(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_ra_positive>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_ra_not_negative>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_ra_not_zero>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_ra_not_positive>(encoded_instrument);
+            default: break;
+            }
+        } else if (code == 41) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_r__negative<1>>(encoded_instrument);
+            case 1: return Instrument_jump_<Machine_condition_r__zero<1>>(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_r__positive<1>>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_r__not_negative<1>>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_r__not_zero<1>>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_r__not_positive<1>>(encoded_instrument);
+            default: break;
+            }
+        } else if (code == 42) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_r__negative<2>>(encoded_instrument);
+            case 1: return Instrument_jump_<Machine_condition_r__zero<2>>(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_r__positive<2>>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_r__not_negative<2>>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_r__not_zero<2>>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_r__not_positive<2>>(encoded_instrument);
+            default: break;
+            }
+        } else if (code == 43) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_r__negative<3>>(encoded_instrument);
+            case 1: return Instrument_jump_<Machine_condition_r__zero<3>>(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_r__positive<3>>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_r__not_negative<3>>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_r__not_zero<3>>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_r__not_positive<3>>(encoded_instrument);
+            default: break;
+            }
+        } else if (code == 44) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_r__negative<4>>(encoded_instrument);
+            case 1: return Instrument_jump_<Machine_condition_r__zero<4>>(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_r__positive<4>>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_r__not_negative<4>>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_r__not_zero<4>>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_r__not_positive<4>>(encoded_instrument);
+            default: break;
+            }
+        } else if (code == 45) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_r__negative<5>>(encoded_instrument);
+            case 1: return Instrument_jump_<Machine_condition_r__zero<5>>(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_r__positive<5>>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_r__not_negative<5>>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_r__not_zero<5>>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_r__not_positive<5>>(encoded_instrument);
+            default: break;
+            }
+        } else if (code == 46) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_r__negative<6>>(encoded_instrument);
+            case 1: return Instrument_jump_<Machine_condition_r__zero<6>>(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_r__positive<6>>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_r__not_negative<6>>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_r__not_zero<6>>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_r__not_positive<6>>(encoded_instrument);
+            default: break;
+            }
+        } else if (code == 47) {
+            switch (field) {
+            case 0: return Instrument_jump_<Machine_condition_rx_negative>(encoded_instrument);
+            case 1: return Instrument_jump_<Machine_condition_rx_zero>(encoded_instrument);
+            case 2: return Instrument_jump_<Machine_condition_rx_positive>(encoded_instrument);
+            case 3: return Instrument_jump_<Machine_condition_rx_not_negative>(encoded_instrument);
+            case 4: return Instrument_jump_<Machine_condition_rx_not_zero>(encoded_instrument);
+            case 5: return Instrument_jump_<Machine_condition_rx_not_positive>(encoded_instrument);
+            default: break;
+            }
+        }
+        
         throw std::runtime_error("invalid instrument");
     }
 }

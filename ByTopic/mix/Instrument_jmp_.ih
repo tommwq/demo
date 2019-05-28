@@ -1,0 +1,140 @@
+
+namespace mix {
+
+    inline bool Machine_condition_true::is_satisfy(const Machine& machine) const {
+        return true;
+    }
+
+    inline bool Machine_condition_overflow::is_satisfy(const Machine& machine) const {
+        return machine.is_overflow();
+    }
+
+    inline bool Machine_condition_not_overflow::is_satisfy(const Machine& machine) const {
+        return !machine.is_overflow();
+    }
+
+    inline bool Machine_condition_less::is_satisfy(const Machine& machine) const {
+        return machine.is_less();
+    }
+
+    inline bool Machine_condition_greater::is_satisfy(const Machine& machine) const {
+        return machine.is_greater();
+    }
+
+    inline bool Machine_condition_equal::is_satisfy(const Machine& machine) const {
+        return machine.is_equal();
+    }
+
+    inline bool Machine_condition_greater_or_equal::is_satisfy(const Machine& machine) const {
+        return !machine.is_less();
+    }
+
+    inline bool Machine_condition_not_equal::is_satisfy(const Machine& machine) const {
+        return !machine.is_equal();
+    }
+
+    inline bool Machine_condition_less_or_equal::is_satisfy(const Machine& machine) const {
+        return !machine.is_greater();
+    }
+
+    inline bool Machine_condition_ra_negative::is_satisfy(const Machine& machine) const {
+        return machine.get_ra().to_long() < 0;
+    }
+
+    inline bool Machine_condition_ra_not_negative::is_satisfy(const Machine& machine) const {
+        return machine.get_ra().to_long() >= 0;
+    }
+
+    inline bool Machine_condition_ra_zero::is_satisfy(const Machine& machine) const {
+        return machine.get_ra().to_long() == 0;
+    }
+
+    inline bool Machine_condition_ra_not_zero::is_satisfy(const Machine& machine) const {
+        return machine.get_ra().to_long() != 0;
+    }
+
+    inline bool Machine_condition_ra_positive::is_satisfy(const Machine& machine) const {
+        return machine.get_ra().to_long() > 0;
+    }
+
+    inline bool Machine_condition_ra_not_positive::is_satisfy(const Machine& machine) const {
+        return machine.get_ra().to_long() <= 0;
+    }
+
+    inline bool Machine_condition_rx_negative::is_satisfy(const Machine& machine) const {
+        return machine.get_rx().to_long() < 0;
+    }
+
+    inline bool Machine_condition_rx_not_negative::is_satisfy(const Machine& machine) const {
+        return machine.get_rx().to_long() >= 0;
+    }
+
+    inline bool Machine_condition_rx_zero::is_satisfy(const Machine& machine) const {
+        return machine.get_rx().to_long() == 0;
+    }
+
+    inline bool Machine_condition_rx_not_zero::is_satisfy(const Machine& machine) const {
+        return machine.get_rx().to_long() != 0;
+    }
+
+    inline bool Machine_condition_rx_positive::is_satisfy(const Machine& machine) const {
+        return machine.get_rx().to_long() > 0;
+    }
+
+    inline bool Machine_condition_rx_not_positive::is_satisfy(const Machine& machine) const {
+        return machine.get_rx().to_long() <= 0;
+    }
+
+    template<int Index>
+    inline bool Machine_condition_r__negative<Index>::is_satisfy(const Machine& machine) const {
+        return machine.get_ri(Index).to_long() < 0;
+    }
+
+    template<int Index>
+    inline bool Machine_condition_r__not_negative<Index>::is_satisfy(const Machine& machine) const {
+        return machine.get_ri(Index).to_long() >= 0;
+    }
+
+    template<int Index>
+    inline bool Machine_condition_r__zero<Index>::is_satisfy(const Machine& machine) const {
+        return machine.get_ri(Index).to_long() == 0;
+    }
+
+    template<int Index>
+    inline bool Machine_condition_r__not_zero<Index>::is_satisfy(const Machine& machine) const {
+        return machine.get_ri(Index).to_long() != 0;
+    }
+
+    template<int Index>
+    inline bool Machine_condition_r__positive<Index>::is_satisfy(const Machine& machine) const {
+        return machine.get_ri(Index).to_long() > 0;
+    }
+
+    template<int Index>
+    inline bool Machine_condition_r__not_positive<Index>::is_satisfy(const Machine& machine) const {
+        return machine.get_ri(Index).to_long() <= 0;
+    }
+
+    inline void Jump_helper::jump(Machine& machine, const Word& address) {
+        Word aligned = align_address(address);
+        machine.get_rj() = aligned;
+        machine.get_program_counter() = static_cast<std::uint32_t>(aligned.to_long());
+    }
+
+    inline Word Jump_helper::align_address(const Word& address) {
+        Word result = address;
+        result.set_positive();
+        result.set_byte(1, Byte(0));
+        result.set_byte(2, Byte(0));
+        result.set_byte(3, Byte(0));
+        return result;
+    }
+
+    template<typename Condition>
+    void Instrument_jump_<Condition>::execute(Machine& machine) const {
+        if (condition.is_satisfy(machine)) {
+            Jump_helper::jump(machine, load(machine));
+        }
+    }
+}
+

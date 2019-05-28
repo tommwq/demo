@@ -35,10 +35,18 @@ namespace mix {
         return compare_indicator.is_equal();
     }
 
+    inline const Toggle& Machine::get_overflow_toggle() const {
+        return overflow_toggle;
+    }
+    
     inline Toggle& Machine::get_overflow_toggle() {
         return overflow_toggle;
     }
     
+    inline const Indicator& Machine::get_compare_indicator() const {
+        return compare_indicator;
+    }
+
     inline Indicator& Machine::get_compare_indicator() {
         return compare_indicator;
     }
@@ -92,4 +100,7 @@ namespace mix {
         return ri[index - 1];
     }
 
+    inline std::uint32_t& Machine::get_program_counter() {
+        return program_counter;
+    }
 }

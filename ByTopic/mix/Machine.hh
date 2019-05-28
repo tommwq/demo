@@ -25,8 +25,12 @@ namespace mix {
         bool is_greater() const;
         Word read_memory(std::uint32_t real_address) const;
         void write_memory(std::uint32_t real_address, const Word& value);
+        const Toggle& get_overflow_toggle() const;
         Toggle& get_overflow_toggle();
+        const Indicator& get_compare_indicator() const;
         Indicator& get_compare_indicator();
+        std::uint32_t get_program_counter() const;
+        std::uint32_t& get_program_counter();
         void reset();
     private:
         void check_memory_address(std::uint32_t real_address) const;
@@ -35,6 +39,7 @@ namespace mix {
         Word rx;
         Word ri[6];
         Word rj;
+        std::uint32_t program_counter = 0;
         Toggle overflow_toggle;
         Indicator compare_indicator;
         std::array<Word,4000> memory;
