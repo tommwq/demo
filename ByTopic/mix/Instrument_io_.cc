@@ -7,6 +7,10 @@
 #include "Field.hh"
 
 namespace mix {
+    void Instrument_ioc::execute(Machine& machine) const {
+        // TODO
+    }
+
     void Instrument_in::execute(Machine& machine) const {
         std::uint32_t address = locate(machine);
         

@@ -1,0 +1,12 @@
+x	equ	1000
+	orig	3000
+maximum	stj	exit
+init	ent3	0,1
+	jmp	changem
+loop	cmpa	x,3
+	jge	*+3
+changem	ent2	0,3
+	lda	x,3
+	dec3	1
+	j3p	loop
+exit	jmp	*
