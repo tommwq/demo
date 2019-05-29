@@ -12,6 +12,22 @@ namespace mix {
 
     template<std::uint32_t Device_number, std::uint32_t Block_size>
     std::unique_ptr<Block> SimpleDevice<Device_number, Block_size>::read() {
+        // TODO
         return std::make_unique<SimpleBlock<Block_size>>();
+    }    
+
+    template<std::uint32_t Device_number, std::uint32_t Block_size>
+    void SimpleDevice<Device_number, Block_size>::write(std::unique_ptr<Block> block) {
+        // TODO
+    }    
+
+    template<std::uint32_t Device_number, std::uint32_t Block_size>
+    bool SimpleDevice<Device_number, Block_size>::is_ready() const {
+        return status == Device_status::Ready;
+    }    
+
+    template<std::uint32_t Device_number, std::uint32_t Block_size>
+    bool SimpleDevice<Device_number, Block_size>::is_busy() const {
+        return status == Device_status::Busy;
     }    
 }

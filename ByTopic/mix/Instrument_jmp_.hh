@@ -177,6 +177,20 @@ namespace mix {
         Instrument_jsj(std::initializer_list<int> initializers): Instrument(initializers){}
         void execute(Machine& machine) const override;
     };
+
+    class Instrument_jred: public Instrument {
+    public:
+        Instrument_jred(const Word& word): Instrument(word){}
+        Instrument_jred(std::initializer_list<int> initializers): Instrument(initializers){}
+        void execute(Machine& machine) const override;
+    };
+
+    class Instrument_jbus: public Instrument {
+    public:
+        Instrument_jbus(const Word& word): Instrument(word){}
+        Instrument_jbus(std::initializer_list<int> initializers): Instrument(initializers){}
+        void execute(Machine& machine) const override;
+    };
 }
 
 #include "Instrument_jmp_.it"
