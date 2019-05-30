@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TabbedActivity</string>
+    <string name="tab_1_label">Tab 1</string>
+    <string name="tab_2_label">Tab 2</string>
+    <string name="tab_3_label">Tab 3</string>
+    <string name="tab_4_label">Tab 4</string>
+</resources>
