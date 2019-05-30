@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.tq.startup.tabbedactivity.data.AppDatabase
+import com.tq.startup.tabbedactivity.data.QuotationRepository
 import com.tq.startup.tabbedactivity.databinding.FragmentTab2Binding
 import com.tq.startup.tabbedactivity.viewmodel.Tab2ViewModel
+import com.tq.startup.tabbedactivity.viewmodel.Tab2ViewModelFactory
 
 
 class Tab2Fragment : Fragment() {
@@ -28,7 +31,15 @@ class Tab2Fragment : Fragment() {
     }
 
     private fun setupUi(binding: FragmentTab2Binding) {
-        val viewModel = ViewModelProviders.of(this).get(Tab2ViewModel::class.java)
+        val factory =
+            Tab2ViewModelFactory(
+                QuotationRepository.getInstance(
+                    AppDatabase.getInstance(context!!)
+                        .quotationDao()
+                )
+            )
+
+        val viewModel = ViewModelProviders.of(this, factory).get(Tab2ViewModel::class.java)
         binding.viewModel = viewModel
     }
 }
