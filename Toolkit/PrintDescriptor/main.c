@@ -1,20 +1,16 @@
 /**
  *
- * PrintSegmentDescriptor
+ * print_descriptor
  *
- * 打印段描述符。
+ * 打印Intel描述符。
  *
  * 2019年05月24日 Wang Qian
+ * 2019年05月31日 Wang Qian
  */
 
-/**
- * 示例：
- * PrintSegmentDescriptor.exe 0x123456
- */
-
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <string.h>
 
 #include "descriptor.h"
@@ -25,17 +21,25 @@ int main(int argc, const char *argv[]) {
         return -1;
     }
 
-    const char* descriptor_type_string = argv[1];
+    struct {
+        const char* type_name;
+        enum DescriptorType type;
+    } valid_type_table[] = {{"task_gate", TaskGate},
+                            {"interrupt_gate", InterruptGate},
+                            {"trap_gate", TrapGate},
+                            {"segment_descriptor", SegmentDescriptor}};
+
+    const char* type_name = argv[1];
     enum DescriptorType descriptor_type;
-    if (strcmp(descriptor_type_string, "task_gate") == 0) {
-        descriptor_type = TaskGate;
-    } else if (strcmp(descriptor_type_string, "interrupt_gate") == 0) {
-        descriptor_type = InterruptGate;    
-    } else if (strcmp(descriptor_type_string, "trap_gate") == 0) {
-        descriptor_type = TrapGate;    
-    } else if (strcmp(descriptor_type_string, "segment_descriptor") == 0) {
-        descriptor_type = SegmentDescriptor;    
-    } else {
+    int is_valid_type = 0;
+    for (int i = 0; i < sizeof(valid_type_table) / sizeof(valid_type_table[0]); i++) {
+        if (strcmp(type_name, valid_type_table[i].type_name) == 0) {
+            is_valid_type = 1;
+            descriptor_type = valid_type_table[i].type;
+        }
+    }
+
+    if (!is_valid_type) {
         fprintf(stdout, "error: invalid descriptor type.");
         return -1;
     } 
@@ -63,5 +67,6 @@ int main(int argc, const char *argv[]) {
     }
     
     print_descriptor(&descriptor, stdout);
+    
     return 0;
 }
