@@ -213,7 +213,7 @@ void print_segment_descriptor(const struct SegmentDescriptor* segment_descriptor
         "segment present flag:       0x%08x %d\n"
         "available for system:       %s\n"
         "64bit code segment:         %s\n"
-        "D/B flag:                   %s (%s)\n"
+        "D/B flag:                   %s\n"
         "granularity:                %s\n";
                 
     fprintf(file,
@@ -255,7 +255,6 @@ void print_segment_descriptor(const struct SegmentDescriptor* segment_descriptor
             (segment_descriptor->available_for_use_by_system_software == True) ? TrueString : FalseString,
             (segment_descriptor->_64bit_code_segment_flag == True) ? TrueString : FalseString,
             (segment_descriptor->d_b_flag == True) ? SetString : ClearString,
-            "TODO",
             (segment_descriptor->granularity == Size16Bit) ? Size16BitString : Size32BitString);
 }
 
