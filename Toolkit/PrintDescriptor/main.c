@@ -16,6 +16,7 @@
 #include "descriptor.h"
 
 int main(int argc, const char *argv[]) {
+    
     if (argc != 4) {
         fprintf(stdout, "usage: %s [task_gate|interrupt_gate|trap_gate|segment_descriptor] high32bit low32bit\n", argv[0]);
         return -1;
@@ -36,21 +37,22 @@ int main(int argc, const char *argv[]) {
         if (strcmp(type_name, valid_type_table[i].type_name) == 0) {
             is_valid_type = 1;
             descriptor_type = valid_type_table[i].type;
+            break;
         }
     }
 
     if (!is_valid_type) {
-        fprintf(stdout, "error: invalid descriptor type.");
+        fprintf(stdout, "error: invalid descriptor type.\n");
         return -1;
     } 
 
     uint32_t high, low;
     if (sscanf(argv[2], "%x", &high) != 1) {
-        fprintf(stderr, "fail to read high bits. \n");
+        fprintf(stderr, "fail to read high bits.\n");
         return -1;
     }
     if (sscanf(argv[3], "%x", &low) != 1) {
-        fprintf(stderr, "fail to read low bits. \n");
+        fprintf(stderr, "fail to read low bits.\n");
         return -1;
     }
 
