@@ -16,6 +16,9 @@ const char* ClearString = "clear";
 const char* Size16BitString = "16-bit";
 const char* Size32BitString = "32-bit";
 
+enum Mode {
+           _32Bit, IA32e
+};
 
 enum SegmentDescriptorType get_segment_type(uint8_t segment_type, uint8_t descriptor_type) {
     if (descriptor_type == 0) {
@@ -31,48 +34,70 @@ const char* get_segment_type_name(uint8_t segment_type, uint8_t descriptor_type)
     return name_table[get_segment_type(segment_type, descriptor_type)];
 }
 
-const char* get_descriptor_type_name(uint8_t segment_type, uint8_t descriptor_type) {
-    static const char* name_table[2][16] = {{
-                                          "32-Bit: Reserved, IA-32e: Upper 8 byte of an 1G-byte descriptor",
-                                          "32-Bit: 16-bit TSS (Available), IA-32e: Reserved",
-                                          "32-Bit: LDT, IA-32e: LDT",
-                                          "32-Bit: 16-bit TSS (Busy), IA-32e: Reserved",
-                                          "32-Bit: 16-bit Call Gate, IA-32e: Reserved",
-                                          "32-Bit: Task Gate, IA-32e: Reserved",
-                                          "32-Bit: 16-bit Interrupt Gate, IA-32e: Reserved",
-                                          "32-Bit: 16-bit Trap Gate, IA-32e: Reserved",
-                                          "32-Bit: Reserved, IA-32e: Reserved",
-                                          "32-Bit: 32-bit TSS (Available), IA-32e: 64-bit TSS (Available)",
-                                          "32-Bit: Reserved, IA-32e: Reserved",
-                                          "32-Bit: 32-bit TSS (Busy), IA-32e: 64-bit TSS (Busy)",
-                                          "32-Bit: 32-bit Call Gate, IA-32e: 64-bit Call Gate",
-                                          "32-Bit: Reserved, IA-32e: Reserved",
-                                          "32-Bit: 32-bit Interrupt Gate, IA-32e: 64-bit Interrupt Gate",
-                                          "32-Bit: 32-bit Trap Gate, IA-32e: 64-bit Trap Gate",
-                                          }, {
-                                              "Read-Only",
-                                              "Read-Only, accessed",
-                                              "Read/Write",
-                                              "Read/Write, accessed",
-                                              "Read-Only, expand-down",
-                                              "Read-Only, expand-down, accessed",
-                                              "Read/Write, expand-down",
-                                              "Read/Write, expand-down, accessed",
-                                              "Execute-Only",
-                                              "Execute-Only, accessed",
-                                              "Execute/Read",
-                                              "Execute/Read, accessed",
-                                              "Execute-Only, conforming",
-                                              "Execute-Only, conforming, accessed",
-                                              "Execute/Read-Only, conforming",
-                                              "Execute/Read-Only, conforming, accessed",
-                                              }};
+const char* get_descriptor_type_name(uint8_t segment_type, uint8_t descriptor_type, enum Mode mode) {
+    static const char* code_and_date_name[16] =  {"Read-Only",
+                                                  "Read-Only, accessed",
+                                                  "Read/Write",
+                                                  "Read/Write, accessed",
+                                                  "Read-Only, expand-down",
+                                                  "Read-Only, expand-down, accessed",
+                                                  "Read/Write, expand-down",
+                                                  "Read/Write, expand-down, accessed",
+                                                  "Execute-Only",
+                                                  "Execute-Only, accessed",
+                                                  "Execute/Read",
+                                                  "Execute/Read, accessed",
+                                                  "Execute-Only, conforming",
+                                                  "Execute-Only, conforming, accessed",
+                                                  "Execute/Read-Only, conforming",
+                                                  "Execute/Read-Only, conforming, accessed"};
+    
+    static const char* system_name[2][16] = {{"Reserved",
+                                              "16-bit TSS (Available)",
+                                              "LDT",
+                                              "16-bit TSS (Busy)",
+                                              "16-bit Call Gate",
+                                              "Task Gate",
+                                              "16-bit Interrupt Gate",
+                                              "16-bit Trap Gate",
+                                              "Reserved",
+                                              "32-bit TSS (Available)",
+                                              "Reserved",
+                                              "32-bit TSS (Busy)",
+                                              "32-bit Call Gate",
+                                              "Reserved",
+                                              "32-bit Interrupt Gate",
+                                              "32-bit Trap Gate"},
+                                             {"Upper 8 byte of an 1G-byte descriptor",
+                                              "Reserved",
+                                              "LDT",
+                                              "Reserved",
+                                              "Reserved",
+                                              "Reserved",
+                                              "Reserved",
+                                              "Reserved",
+                                              "Reserved",
+                                              "64-bit TSS (Available)",
+                                              "Reserved",
+                                              "64-bit TSS (Busy)",
+                                              "64-bit Call Gate",
+                                              "Reserved",
+                                              "64-bit Interrupt Gate",
+                                              "64-bit Trap Gate"}};
 
-    if (descriptor_type > 3 || descriptor_type == 2 || segment_type > 15) {
+    if (segment_type > 15) {
         return "";
     }
     
-    return name_table[get_segment_type(segment_type, descriptor_type) & 0x01][descriptor_type];
+    switch (descriptor_type) {
+    case System:
+        return system_name[mode & 0x01][segment_type];
+    case Code: // fall through
+    case Data:
+        return code_and_date_name[segment_type];
+    default:
+        return "";
+    }
 }
 
 int parse_task_gate(descriptor_t descriptor, struct TaskGate* task_gate) {
@@ -179,29 +204,50 @@ int parse_segment_descriptor(descriptor_t descriptor, struct SegmentDescriptor* 
 }
 
 void print_segment_descriptor(const struct SegmentDescriptor* segment_descriptor, FILE* file) {
-    static const char* format = "segment descriptor (%s)\n"
+    static const char* format1 = "segment descriptor (%s)\n"
         "segment limit:              0x%08x %d\n"
         "base address:               0x%08x %d\n"
-        "segment type:               %s\n"
-        "descriptor type:            %s\n"
-        "descriptor privilege level: 0x%08x %d\n"
+        "segment type:               %s\n";
+    
+    static const char* format2 = "descriptor privilege level: 0x%08x %d\n"
         "segment present flag:       0x%08x %d\n"
-        "available for use by system software: %s\n"
+        "available for system:       %s\n"
         "64bit code segment:         %s\n"
         "D/B flag:                   %s (%s)\n"
         "granularity:                %s\n";
-
+                
     fprintf(file,
-            format,
+            format1,
             ValidString,
             segment_descriptor->segment_limit,
             segment_descriptor->segment_limit,
             segment_descriptor->base_address,
             segment_descriptor->base_address,
             get_segment_type_name(segment_descriptor->segment_type,
-                                  segment_descriptor->descriptor_type),
-            get_descriptor_type_name(segment_descriptor->segment_type,
-                                     segment_descriptor->descriptor_type),
+                                  segment_descriptor->descriptor_type));
+
+    enum SegmentDescriptorType segment_type = get_segment_type(segment_descriptor->segment_type,
+                                                               segment_descriptor->descriptor_type);
+                
+    if (segment_type == System) {
+        fprintf(file,
+                "descriptor type:            32-bit Mode: %s\n"
+                "                            IA-32e Mode: %s\n",
+                get_descriptor_type_name(segment_descriptor->segment_type,
+                                         segment_descriptor->descriptor_type,
+                                         _32Bit),
+                get_descriptor_type_name(segment_descriptor->segment_type,
+                                         segment_descriptor->descriptor_type,
+                                         IA32e));
+    } else {
+        fprintf(file,
+                "descriptor type:            %s\n",
+                get_descriptor_type_name(segment_descriptor->segment_type,
+                                         segment_descriptor->descriptor_type,
+                                         _32Bit));
+    }
+    
+    fprintf(file, format2, 
             segment_descriptor->descriptor_privilege_level,
             segment_descriptor->descriptor_privilege_level,
             segment_descriptor->segment_present_flag,
