@@ -15,59 +15,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
-#include "segment_descriptor.h"
+#include "descriptor.h"
 
-
-int main(int argc, char *argv[]) {
-    if (argc == 1) {
-        fprintf(stdout, "usage: %s 0x0123456789ABCDEF", argv[0]);
+int main(int argc, const char *argv[]) {
+    if (argc != 4) {
+        fprintf(stdout, "usage: %s [task_gate|interrupt_gate|trap_gate|segment_descriptor] high32bit low32bit\n", argv[0]);
         return -1;
     }
 
-    segment_descriptor_t segment_descriptor;
-    if (sscanf(argv[1], "%llx", &segment_descriptor) != 1) {
-        perror("fail to read segment descriptor");
+    const char* descriptor_type_string = argv[1];
+    enum DescriptorType descriptor_type;
+    if (strcmp(descriptor_type_string, "task_gate") == 0) {
+        descriptor_type = TaskGate;
+    } else if (strcmp(descriptor_type_string, "interrupt_gate") == 0) {
+        descriptor_type = InterruptGate;    
+    } else if (strcmp(descriptor_type_string, "trap_gate") == 0) {
+        descriptor_type = TrapGate;    
+    } else if (strcmp(descriptor_type_string, "segment_descriptor") == 0) {
+        descriptor_type = SegmentDescriptor;    
+    } else {
+        fprintf(stdout, "error: invalid descriptor type.");
+        return -1;
+    } 
+
+    uint32_t high, low;
+    if (sscanf(argv[2], "%x", &high) != 1) {
+        fprintf(stderr, "fail to read high bits. \n");
+        return -1;
+    }
+    if (sscanf(argv[3], "%x", &low) != 1) {
+        fprintf(stderr, "fail to read low bits. \n");
         return -1;
     }
 
+    descriptor_t encoded_descriptor = ((uint64_t)(high) << 32) + ((uint64_t)(low));
+    struct Descriptor descriptor;
 
-    struct SegmentDescriptor sd;
-    int result = initialize_segment_descriptor(&sd, segment_descriptor);
-    if (result == 0) {
-        fprintf(stderr, "fail to create segment descriptor");
+    enum OperationStatus result = initialize_descriptor(&descriptor,
+                                                        encoded_descriptor,
+                                                        descriptor_type);
+
+    if (result == Failure) {
+        fprintf(stderr, "fail to initialize struct Descriptor.\n");
         return -1;
     }
-
-    fprintf(stdout, "segment descriptor\n");
-    uint32_t base_address = sd.base_address(&sd);
-    uint32_t segment_limit = sd.segment_limit(&sd);
-    uint8_t descriptor_type = sd.descriptor_type(&sd);
-    uint8_t segment_type = sd.segment_type(&sd);
-    uint8_t descriptor_privilege_level = sd.descriptor_privilege_level(&sd);
-    uint8_t is_present = sd.is_present(&sd);
-    uint8_t available_for_system_software = sd.available_for_system_software(&sd);
-    uint8_t operation_size = sd.operation_size(&sd);
-    uint8_t granularity = sd.operation_size(&sd);
-    uint8_t is_64bit_code_segment = sd.is_64bit_code_segment(&sd);
     
-    fprintf(stdout, "base address:    0x%08x %d\n", base_address, base_address);
-    fprintf(stdout, "segment limit:   0x%08x %d\n", segment_limit, segment_limit);
-    fprintf(stdout, "descriptor type: %s\n",
-            (descriptor_type == SYSTEM_DESCRIPTOR)? "system" :
-            (descriptor_type == CODE_OR_DATA_DESCRIPTOR)? "code or data" : "invalid");
-    fprintf(stdout, "segment type:    %s %d\n",
-            segment_description(descriptor_type, segment_type),
-            segment_type);
-    fprintf(stdout, "privilege level: %d\n", descriptor_privilege_level);
-    fprintf(stdout, "present:         %d\n", is_present);
-    fprintf(stdout, "AVL:             %d\n", available_for_system_software);
-    fprintf(stdout, "operation size:  %d\n", operation_size);
-    fprintf(stdout, "granularity:     %s\n", (granularity == GRANULARITY_BYTE) ? "byte" :
-            (granularity == GRANULARITY_4KB) ? "4kb" : "invalid");
-    fprintf(stdout, "64 bit code seg: %d\n", is_64bit_code_segment);
-        
-    destroy_segment_descriptor(sd);
-
+    print_descriptor(&descriptor, stdout);
     return 0;
 }

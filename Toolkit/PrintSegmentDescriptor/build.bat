@@ -1,1 +1,2 @@
+cls
 nmake -f nmakefile
