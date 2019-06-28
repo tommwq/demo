@@ -1,0 +1,28 @@
+
+
+BuildPath=Build
+SourcePath=Source
+IncludePath=Include
+ThirdPartyPath=ThirdParty
+ObjectFiles=$(BuildPath)/Main.obj \
+	$(BuildPath)/Config.obj \
+	$(BuildPath)/DebugProxy.obj \
+	$(BuildPath)/Logger.obj 
+
+
+CXXFLAGS=/I$(IncludePath) /I$(ThirdPartyPath) /EHsc /WX
+LINKFLAGS=/DEBUG /SUBSYSTEM:CONSOLE,5.2
+
+DEBUG_CXXFLAGS=/Od /Zi /Zo 
+RELEASE_CXXFLAGS=/Ox
+
+build: prepare debug
+
+debug: $(ObjectFiles)
+	link.exe $(LINKFLAGS) /OUT:$(BuildPath)/DebugProxy.exe $(ObjectFiles) /PDB:$(BuildPath)/DebugProxy.pdb
+
+prepare:
+	-mkdir Build
+
+{$(SourcePath)\}.cpp{$(BuildPath)\}.obj:
+	$(CXX) $(CXXFLAGS) $(DEBUG_CXXFLAGS) $(Flags) /c /Fo$@ $?
