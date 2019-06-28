@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#if defined(__linux__)
+#if defined(__unix__)
 #define OS_LINUX
 #endif
 
