@@ -10,6 +10,8 @@
 #include "PCH.hpp"
 #include "DebugProxy.hpp"
 
+const void* const DebugProxy::ListenSocketKey = nullptr;
+
 DebugProxy& DebugProxy::setProxyPort(unsigned short port) {
     _proxyPort = port;
     return *this;
@@ -58,18 +60,16 @@ void DebugProxy::startProxy() {
         return;
     }
 
-    if (!addToCompletionPort(_listenSocket, nullptr)) {
+    if (!addToCompletionPort(_listenSocket, ListenSocketKey)) {
         return;
     }
-
+    accept();
+    
     _running = true;
     for (int i = 0; i < _threadNumber; i++) {
         std::thread *t = new std::thread(DebugProxy::process, this);
         _threads[i] = t;
     }
-  
-    enterAcceptCycle();
-    cleanup();
 }
 
 bool DebugProxy::initializeThread() {
@@ -95,9 +95,11 @@ bool DebugProxy::initialize() {
     return true;
 }
 
-bool DebugProxy::addToCompletionPort(SOCKET socket, void *key) {
+bool DebugProxy::addToCompletionPort(SOCKET socket, const void *key) {
     HANDLE handle = ::CreateIoCompletionPort(reinterpret_cast<HANDLE>(socket), 
-                                             _iocp, reinterpret_cast<ULONG_PTR>(key), 0);
+                                             _iocp,
+                                             reinterpret_cast<ULONG_PTR>(key),
+                                             0);
 
     if (handle == nullptr) {
         _logger.write(Logger::LogLevel::info, "Fail to add socket to completion port.");
@@ -121,13 +123,12 @@ bool DebugProxy::createListenPort() {
         _logger.write(Logger::LogLevel::info, "Fail to bind socket.");
         return false;
     }
-  
+    setSocketNonBlock(_listenSocket);
     ret = listen(_listenSocket, 10);
     if (ret != 0) {
         _logger.write(Logger::LogLevel::info, "Fail to listen socket.");
         return false;
     }
-  
     return true;
 }
 
@@ -160,6 +161,7 @@ void DebugProxy::cleanup() {
 void DebugProxy::process(DebugProxy *self) {
     self->_logger.write(Logger::LogLevel::info, "Start process thread.");
     if (!self->initializeThread()) {
+        self->_logger.write(Logger::LogLevel::info, "Fail to initialize process thread");
         return;
     }
   
@@ -168,16 +170,24 @@ void DebugProxy::process(DebugProxy *self) {
     OVERLAPPED *overlapped = nullptr;
     DWORD size;
     DWORD flags;
-    while (true) {
+    while (self->isRunning()) {
         ret = ::GetQueuedCompletionStatus(self->_iocp,
                                           &size, 
                                           reinterpret_cast<PULONG_PTR>(&connection), 
-                                          &overlapped, INFINITE);                
+                                          &overlapped,
+                                          INFINITE);
         if (ret == FALSE) {
             self->_logger.write(Logger::LogLevel::debug, "Fail to invoke GetQueuedCompletionStatus");
             self->closeConnection(connection);
             continue;
         }
+
+        if (connection == ListenSocketKey) {
+            self->newConnection(self->acceptSocket, overlapped, size);
+            self->accept();
+            continue;
+        }
+        
         ret = ::WSAGetOverlappedResult(connection->_socket, 
                                        &connection->_receiveBuffer._overlapped, 
                                        &size, TRUE, &flags);
@@ -220,30 +230,33 @@ void DebugProxy::closeConnection(Connection *connection) {
     delete connection;
 }
 
-void DebugProxy::enterAcceptCycle() {
-    struct sockaddr_in address;
-    int addressSize = sizeof(address);
-    std::array<char, 4096> buffer;
-    WSABUF wsaBuffer;
-    wsaBuffer.len = buffer.size();
-    wsaBuffer.buf = buffer.data();
-  
-    while (_running) {
-        SOCKET clientSocket = WSAAccept(_listenSocket, (struct sockaddr*) &address, 
-                                        &addressSize, NULL, NULL);                
-        if (clientSocket == INVALID_SOCKET && GetLastError() == WSAEWOULDBLOCK) {
-            _logger.write(Logger::LogLevel::debug, "Accept pending.");
-            continue;
-        }
-        if (clientSocket == INVALID_SOCKET) {
-            _logger.write(Logger::LogLevel::info, "Fail to invoke WSAAccept.");
-            continue;
-        }
-        newConnection(clientSocket);
+void DebugProxy::accept() {
+    acceptSocket = ::WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
+    if (acceptSocket == INVALID_SOCKET) {
+        _logger.write(Logger::LogLevel::info, "Fail to create socket.");
+        return;
+    }
+
+    BOOL result = AcceptEx(_listenSocket,
+                           acceptSocket,
+                           acceptBuffer._wsabuf.buf,
+                           acceptBuffer._wsabuf.len - 256,
+                           128,
+                           128,
+                           NULL,
+                           &(acceptBuffer._overlapped));
+    if (result == FALSE && GetLastError() == ERROR_IO_PENDING) {
+        _logger.write(Logger::LogLevel::debug, "Accept pending.");
+        return;
+    }
+
+    if (result == FALSE) {
+        _logger.write(Logger::LogLevel::info, "Fail to invoke AcceptEx.");
+        return;
     }
 }
 
-void DebugProxy::newConnection(SOCKET clientSocket) {
+void DebugProxy::newConnection(SOCKET clientSocket, OVERLAPPED* overlapped, DWORD size) {
     _logger.write(Logger::LogLevel::debug, "New connection.");
     static int connectionPairId = 0;
 
@@ -259,31 +272,54 @@ void DebugProxy::newConnection(SOCKET clientSocket) {
         
     SOCKET forwardSocket = INVALID_SOCKET;
     do {
+
+        DWORD flags = 0;
+        BOOL result = ::WSAGetOverlappedResult(clientSocket,
+                                       overlapped,
+                                       &size,
+                                       TRUE,
+                                       &flags);
+        
+        if (result != TRUE) {
+            _logger.write(Logger::LogLevel::debug, "Fail to invoke WSAGetOverlappedResult.");
+            break;
+        }
+        
         setSocketNonBlock(clientSocket);
         if (!addToCompletionPort(clientSocket, clientConnection)) {
             _logger.write(Logger::LogLevel::info, "Fail to add client socket to completion port.");
             break;
         }
+        _logger.write(Logger::LogLevel::debug, "Add client socket to completion port.");
         if ((forwardSocket = newForwardSocket()) == INVALID_SOCKET) {
             _logger.write(Logger::LogLevel::info, "Fail to create forward socket.");
             break;
         }
+        _logger.write(Logger::LogLevel::debug, "Create forward socket.");
         if (!addToCompletionPort(forwardSocket, forwardConnection)) {
             _logger.write(Logger::LogLevel::info, "Fail to add forward socket to completion port.");
             break;
         }
-
+        _logger.write(Logger::LogLevel::debug, "add forward socket to completion port.");
+        
         forwardConnection->_socket = forwardSocket;
         forwardConnection->_peerSocket = clientSocket;
         clientConnection->_socket = clientSocket;
         clientConnection->_peerSocket = forwardSocket;
 
+        char const *buffer = acceptBuffer._wsabuf.buf;
+        std::string tag = forwardConnection->tag();
+        recordPackage(tag, buffer, size);
+        sendToPeer(forwardConnection);
+
         if (!receive(clientConnection)) {
             break;
         }
+        _logger.write(Logger::LogLevel::debug, "receive client connection.");
         if (!receive(forwardConnection)) {
             break;
         }
+        _logger.write(Logger::LogLevel::debug, "receive forward connection.");
         return;
     } while (false);
     ::closesocket(clientSocket);
@@ -294,8 +330,13 @@ void DebugProxy::newConnection(SOCKET clientSocket) {
 
 bool DebugProxy::sendToPeer(Connection *connection) {
     DWORD size;
-    int ret = ::WSASend(connection->_peerSocket, &connection->_receiveBuffer._wsabuf, 1, 
-                        &size, 0, NULL, NULL);
+    int ret = ::WSASend(connection->_peerSocket,
+                        &connection->_receiveBuffer._wsabuf,
+                        1, 
+                        &size,
+                        0,
+                        NULL,
+                        NULL);
     return (ret == TRUE);
 }
 
@@ -303,8 +344,13 @@ bool DebugProxy::receive(Connection *connection) {
     DWORD size;
     DWORD flags = 0;
     connection->_receiveBuffer.reset();
-    int ret = ::WSARecv(connection->_socket, &connection->_receiveBuffer._wsabuf, 1, 
-                        &size, &flags, &connection->_receiveBuffer._overlapped, NULL);
+    int ret = ::WSARecv(connection->_socket,
+                        &connection->_receiveBuffer._wsabuf,
+                        1, 
+                        &size,
+                        &flags,
+                        &connection->_receiveBuffer._overlapped,
+                        NULL);
     if (ret != 0 && ::WSAGetLastError() != WSA_IO_PENDING) {
         _logger.write(Logger::LogLevel::info, "Fail to invoke WSARecv.");
         return false;
@@ -332,8 +378,13 @@ SOCKET DebugProxy::newForwardSocket() {
         address.sin_family = AF_INET;
         address.sin_port = ::htons(_serverPort);
         address.sin_addr.s_addr = ::inet_addr(_serverHost.c_str());
-        int ret = ::WSAConnect(socket, (struct sockaddr*) &address, sizeof(address), 
-                               NULL, NULL, NULL, NULL);
+        int ret = ::WSAConnect(socket,
+                               (struct sockaddr*) &address,
+                               sizeof(address), 
+                               NULL,
+                               NULL,
+                               NULL,
+                               NULL);
         if (ret != 0) {
             _logger.write(Logger::LogLevel::info, "Fail to connect to forward server.");
             break;
@@ -402,4 +453,13 @@ void DebugProxy::recordPackage(std::string const& tag, char const *buffer, size_
     }
 
     _logger.write(Logger::LogLevel::info, stream.str());
+}
+
+void DebugProxy::stopProxy() {
+    _running = false;
+    cleanup();
+}
+
+bool DebugProxy::isRunning() const {
+    return _running;
 }

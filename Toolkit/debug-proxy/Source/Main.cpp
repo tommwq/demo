@@ -3,7 +3,7 @@
  * DebugProxy程序入口。
  *
  * 建立日期：2015-11-24
- * 最后修改：2016-09-30
+ * 最后修改：2019年06月28日
  */
 
 #include "PCH.hpp"
@@ -11,15 +11,26 @@
 #include "DebugProxy.hpp"
 
 #pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "Mswsock.lib")
+    
+using namespace std::chrono_literals;
 
 [[noreturn]] void showUsageThenExit(char const *programName);
+
+DebugProxy proxy;
+Logger &logger(Logger::logger());
+
+BOOL WINAPI userStopProxy(DWORD ctrlType) {
+    proxy.stopProxy();
+    logger.write(Logger::LogLevel::info, "ctrl c");
+    return TRUE;
+}
 
 int main(int argc, char **argv) {
         if (argc == 1) {
                 showUsageThenExit(argv[0]);
         }
 
-        Logger &logger(Logger::logger());
         logger.setLogLevel(Logger::LogLevel::debug);
 
         logger.write(Logger::LogLevel::info, "Loading config.");
@@ -32,13 +43,19 @@ int main(int argc, char **argv) {
         logger.setLogLevel(logger.levelFromString(config.logLevel()));
         logger.write(Logger::LogLevel::info, "Config loaded.");
 
-        DebugProxy proxy;
         proxy.setProxyPort(config.proxyPort())
                 .setServerPort(config.serverPort())
                 .setServerHost(config.serverHost());
 
+        SetConsoleCtrlHandler(userStopProxy, TRUE);
+        
         logger.write(Logger::LogLevel::info, "Starting proxy.");
         proxy.startProxy();
+
+        while (proxy.isRunning()) {
+            std::this_thread::sleep_for(1s);
+        }
+        
         logger.write(Logger::LogLevel::info, "Proxy stopped.");
         return 0;
 }

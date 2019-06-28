@@ -22,8 +22,10 @@ public:
     unsigned short getProxyPort() const;
     unsigned short getServerPort() const;
     std::string getServerHost() const;
+    bool isRunning() const;
+    void stopProxy();
     
-private:
+public:
     class SocketBuffer {
     public:
         SocketBuffer();
@@ -82,12 +84,12 @@ private:
     bool initializeThread();
     bool createCompletionPort();
     bool createListenPort();
-    bool addToCompletionPort(SOCKET socket, void *key);
+    bool addToCompletionPort(SOCKET socket, const void *key);
     void cleanup();
-    void enterAcceptCycle();
+    void accept();
     static void process(DebugProxy *self);
     void releaseConnection(SOCKET clientSocket);
-    void newConnection(SOCKET clientSocket);
+    void newConnection(SOCKET clientSocket, OVERLAPPED* overlapped, DWORD size);
     SOCKET newForwardSocket();
     void setSocketNonBlock(SOCKET socket) const;
     bool receive(Connection *connection);
@@ -96,6 +98,7 @@ private:
     void closeConnection(Connection *conn);
 private:
     static int const _threadNumber = 4;
+    static const void* const ListenSocketKey;
     unsigned short _proxyPort;
     unsigned short _serverPort;
     std::string _serverHost;
@@ -103,7 +106,9 @@ private:
     SOCKET _listenSocket;
     HANDLE _iocp;
     std::array<std::thread*, _threadNumber> _threads;
-    bool _running;
+    volatile bool _running;
     std::map<SOCKET, Connection*> _connections;
+    SocketBuffer acceptBuffer;
+    SOCKET acceptSocket;
 };
 

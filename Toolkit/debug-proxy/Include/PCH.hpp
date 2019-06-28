@@ -4,7 +4,7 @@
  * 预编译头文件。
  *
  * 建立日期：2015-11-25
- * 最后编辑：2016-09-29
+ * 最后编辑：2019年06月28日
  */
 #pragma once
 #pragma warning(disable: 4819)
@@ -26,4 +26,6 @@
 #define WIN32_MEAN_AND_LEAN
 #include <WinSock2.h>
 #include <Windows.h>
+#include <Mswsock.h>
+
 #include "logger.hpp"
