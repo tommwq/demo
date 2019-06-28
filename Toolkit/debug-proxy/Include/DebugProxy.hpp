@@ -4,7 +4,7 @@
  * 定义DebugProxy类。DebugProxy类是一个代理，将转发的数据记录下来，用来分析通信协议。
  *
  * 建立日期：2015-11-24
- * 最后编辑：2016-09-30
+ * 最后编辑：2019年06月28日
  */
 
 #pragma once
@@ -59,6 +59,8 @@ private:
                 void close() {
                         ::closesocket(_socket);
                         _closed = true;
+                        _sendBuffer.reset();
+                        _receiveBuffer.reset();
                 }
                 bool closed() const {
                         return _closed;
