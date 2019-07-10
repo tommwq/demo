@@ -1,3 +1,11 @@
+/*
+ * inline.cpp
+ *
+ * 展示内联用法。
+ *
+ * 2019年01月06日 建立文件。
+ */
+
 #include <iostream>
 #include <chrono>
 
