@@ -8,43 +8,48 @@ package common;
 
 import "google/protobuf/any.proto";
 
-// location for a service instance or client
+// id for a service instance or client
 message InstanceId {
-    uint32 ip = 1;
-    uint32 port = 2;
-    uint32 start_time = 3;
-    uint32 pid = 4;
+    int32 ip = 1;
+    int32 port = 2;
+    int32 start_time = 3;
+    int32 pid = 4;
+}
+
+message Header {
+    InstanceId source = 1;
+    InstanceId target = 2;    
 }
 
 // request to a service
 message Request {
-    string service_name = 1;
-    InstanceId service_location = 2;
-    string version = 3;
-    google.protobuf.Any payload = 4;
-    string client_id = 5;
-    InstanceId client_location = 6;
+    Header header = 1;
+    string service_name = 2;
+    google.protobuf.Any payload = 3;
 }
 
 // service response
 message Response {
-    string service_name = 1;
-    InstanceId service_location = 2;
-    string version = 3;
+    Header header = 1;
+    string service_name = 2;
+    int32 code = 3;
     google.protobuf.Any payload = 4;
-    uint32 result = 5;
-    string message = 6;
 }
 
 // subscribe to some message
 message Subscribe {
-    string subject = 1;
-    uint32 expired_time = 2;
+    Header header = 1;
+    string subject = 2;
+}
+
+message Unsubscribe {
+    Header header = 1;
+    string subject = 2;
 }
 
 // broadcast and notice
 message Notice {
     string subject = 1;
     google.protobuf.Any payload = 2;
-    repeated uint32 client_id = 3;
+    repeated int32 source = 3;
 }

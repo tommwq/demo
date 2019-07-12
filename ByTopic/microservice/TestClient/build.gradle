@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.google.protobuf' version "0.8.9"
+}
+
+repositories {
+    maven {url 'http://maven.aliyun.com/nexus/content/groups/public' }
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation 'io.grpc:grpc-netty-shaded:1.21.0'
+    implementation 'io.grpc:grpc-protobuf:1.21.0'
+    implementation 'io.grpc:grpc-stub:1.21.0'
+
+    compile project(":Common")
+
+    testImplementation 'junit:junit:4.12'
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.7.1'
+    }
+
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.21.0"
+        }
+    }
+
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+sourceSets {
+    main {
+        proto {
+            srcDir "../Common/src/main/proto"
+            srcDir "../InstanceRegisterService/src/main/proto"
+        }
+    }
+}
+
+mainClassName = 'com.tq.microservice.client.TestClientApp'
