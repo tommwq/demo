@@ -1,3 +1,3 @@
-include 'Common'
+include 'Protocol'
 include 'InstanceRegisterService'
 include 'TestClient'

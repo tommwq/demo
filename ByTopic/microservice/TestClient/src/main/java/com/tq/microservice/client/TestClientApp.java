@@ -9,10 +9,13 @@ import java.util.logging.Logger;
 
 import com.google.protobuf.Any;
 
-import com.tq.microservice.common.Request;
-import com.tq.microservice.common.Response;
-import com.tq.microservice.instanceregisterservice.RegisterRequest;
-import com.tq.microservice.instanceregisterservice.RegisterResponse;
+import com.tq.microservice.common.InstanceId;
+import com.tq.microservice.instanceregisterservice.RegisterInstanceRequest;
+import com.tq.microservice.instanceregisterservice.RegisterInstanceResponse;
+import com.tq.microservice.instanceregisterservice.QueryServiceRequest;
+import com.tq.microservice.instanceregisterservice.QueryServiceResponse;
+import com.tq.microservice.instanceregisterservice.QueryServiceCatalogRequest;
+import com.tq.microservice.instanceregisterservice.QueryServiceCatalogResponse;
 import com.tq.microservice.instanceregisterservice.InstanceRegisterServiceGrpc;
 
 public class TestClientApp {
@@ -36,27 +39,45 @@ public class TestClientApp {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
-    public void greet(String name) {
-        RegisterRequest payload = RegisterRequest.newBuilder()
+    public void registerService() {
+        RegisterInstanceRequest request = RegisterInstanceRequest.newBuilder()
             .setServiceName("client")
+            .setServiceVersion("1.0")
+            .setInstanceId(InstanceId.newBuilder()
+                         .setIp(1234)
+                         .setPort(4321)
+                         .setPid(123)
+                         .setStartTime(321)
+                         .build())
             .build();
         
-        Request request = Request.newBuilder()
-            .setPayload(Any.pack(payload))
-            .build();
+        RegisterInstanceResponse response = instanceRegisterService.registerInstance(request);
+        logger.info("response: " + response);
+    }
 
-        //        try {
-            Response response = instanceRegisterService.registerInstance(request);
-            logger.info("ok" + response);
-        // } catch (Exception e) {
-        //     logger.info(e.getMessage());
-        // }
+    public void queryService() {
+        QueryServiceRequest request = QueryServiceRequest.newBuilder()
+            .setServiceName("client")
+            .setServiceVersion("1.0")
+            .build();
+        
+        QueryServiceResponse response = instanceRegisterService.queryService(request);
+        logger.info("response: " + response);
+    }
+
+    public void queryServiceCatalog() {
+        QueryServiceCatalogRequest request = QueryServiceCatalogRequest.newBuilder().build();
+        QueryServiceCatalogResponse response = instanceRegisterService.queryServiceCatalog(request);
+        logger.info("response: " + response);
     }
     
     public static void main(String[] args) {
         final TestClientApp app = new TestClientApp("localhost", 50051);
         try {
-            app.greet("world");
+            app.registerService();
+            app.queryService();
+            app.queryServiceCatalog();
+            
             app.shutdown();
         } catch (Exception e) {
             logger.info(e.getMessage());

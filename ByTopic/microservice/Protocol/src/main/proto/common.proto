@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.tq.microservice.common";
+option java_outer_classname = "CommonProto";
+
+package common;
+
+import "google/protobuf/any.proto";
+
+// id for a service instance or client
+message InstanceId {
+    int32 ip = 1;
+    int32 port = 2; // 0 for ignore this field
+    int32 start_time = 3; // 0 for ignore this field
+    int32 pid = 4; // 0 for ignore this field
+}
+
+// common error code
+enum Error {
+    NO_ERROR = 0;
+    INVALID_REQUEST = 1;
+    INSTANCE_NOT_FOUND = 2;
+}
+
+// common header
+message ProxyHeader {
+    InstanceId source = 1;
+    InstanceId target = 2;    
+}
+
+// request to a service
+message ProxyRequest {
+    ProxyHeader header = 1;
+    string service_name = 2;
+    string service_version = 3;
+    google.protobuf.Any payload = 4;
+}
+
+// service response
+message ProxyResponse {
+    ProxyHeader header = 1;
+    string service_name = 2;
+    string service_version = 3;
+    Error error = 4;
+    google.protobuf.Any payload = 5;
+}
+
+// subscribe to some message
+// message Subscribe {
+//     Header header = 1;
+//     string subject = 2;
+// }
+
+// message Unsubscribe {
+//     Header header = 1;
+//     string subject = 2;
+// }
+
+// broadcast and notice
+// message Notice {
+//     string subject = 1;
+//     google.protobuf.Any payload = 2;
+//     repeated int32 source = 3;
+// }
