@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/*
+
+  1. 寻找gradle打包文件的方法。
+  2. 启动时判断操作系统，找到对应的编译器。
+  3. 调用编译器，生成java文件。
+  4. 编译java。
+  5. 加载类。
+
+ */
+
 public class A {
 
     static String protoRoot = "D:/Workspace/project/demo/ByTopic/microservice/Protocol/src/main/proto/";
