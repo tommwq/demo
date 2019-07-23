@@ -81,3 +81,5 @@ AL 传输的扇区数
 
 http://blog.sina.com.cn/s/blog_5028978101008wk2.html
 https://www.cnblogs.com/magic-cube/archive/2011/10/19/2217676.html
+
+现存地址是0x0a0000-0x0affff。
