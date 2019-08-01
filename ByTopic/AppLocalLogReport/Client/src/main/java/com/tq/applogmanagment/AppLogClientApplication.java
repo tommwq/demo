@@ -9,17 +9,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppLogClientApplication implements CommandLineRunner {
 
-  public static void main(String[] args) {
-    SpringApplication.run(AppLogClientApplication.class, args);
-  }
+    private Logger logger = new Logger();
 
-  @Override
-  public void run(String... args) throws Exception {
-      AppLogClient client = new AppLogClient("172.24.20.112", 50051);
-      try {
-          client.report();
-      } finally {
-          client.shutdown();
-      }
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(AppLogClientApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        join("a","b","c");
+                
+        AppLogClient client = new AppLogClient("172.24.20.112", 50051);
+        try {
+            client.report();
+        } finally {
+            client.shutdown();
+        }
+    }
+
+    private String join(String... texts) {
+        logger.enter(texts);
+        String result = String.join(",", texts);
+        // logger.leave(result);
+        return result;
+    }
 }

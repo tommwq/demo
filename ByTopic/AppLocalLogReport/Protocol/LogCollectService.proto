@@ -44,9 +44,10 @@ message LogReport {
     string module = 4;
     string source_file_name = 5;
     int32 source_line_number = 6;
-    string method_name = 7;
-    repeated MethodParameter input_parameter = 8;
-    string result = 9;
+    string class_name = 7;
+    string method_name = 8;
+    repeated MethodParameter input_parameter = 9;
+    string result = 10;
 }
 
 service LogCollectService {

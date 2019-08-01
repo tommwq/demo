@@ -11,6 +11,7 @@ import com.tq.applogmanagement.LogCollectServiceProtos.LogReportResult;
 import com.tq.applogmanagement.LogCollectServiceProtos.MethodParameter;
 
 public class MainActivity extends AppCompatActivity {
+    private final LocalLogger logger = new LocalLogger();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +25,6 @@ public class MainActivity extends AppCompatActivity {
                     new MyTask(MainActivity.this).execute();
                 }
             });
+
     }
 }
