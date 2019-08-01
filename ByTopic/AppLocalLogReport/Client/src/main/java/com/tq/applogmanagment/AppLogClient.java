@@ -1,9 +1,10 @@
 package com.tq.applogmanagement;
 
 import com.tq.applogmanagement.LogCollectServiceProtos.LogLevel;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogReport;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogReportResult;
-import com.tq.applogmanagement.LogCollectServiceProtos.MethodParameter;
+import com.tq.applogmanagement.LogCollectServiceProtos.LogRecord;
+import com.tq.applogmanagement.LogCollectServiceProtos.LogRecordArray;
+import com.tq.applogmanagement.LogCollectServiceProtos.LogQueryCommand;
+import com.tq.applogmanagement.LogCollectServiceProtos.ModuleVersion;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -29,9 +30,9 @@ public class AppLogClient {
     }
 
     public void report() throws InterruptedException {
-        StreamObserver<LogReport> reportStream = stub.reportLog(new StreamObserver<LogReportResult>() {
+        StreamObserver<LogRecordArray> recordStream = stub.report(new StreamObserver<LogQueryCommand>() {
                 @Override
-                public void onNext(LogReportResult result) {
+                public void onNext(LogQueryCommand command) {
                 }
                 
                 @Override
@@ -44,11 +45,9 @@ public class AppLogClient {
                 }
             });
 
-        LogReport x = LogReport.newBuilder()
-            .setHeartbeat(true)
-            .build();
-        reportStream.onNext(x);
-        reportStream.onCompleted();
+        LogRecordArray x = LogRecordArray.newBuilder().build();
+        recordStream.onNext(x);
+        recordStream.onCompleted();
         latch.countDown();
         latch.await();
     }
