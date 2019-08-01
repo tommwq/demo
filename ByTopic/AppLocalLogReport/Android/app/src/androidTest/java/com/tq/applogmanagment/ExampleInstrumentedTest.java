@@ -1,4 +1,4 @@
-package com.tq.demo;
+package com.tq.applogmanagment;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.tq.demo", appContext.getPackageName());
+        assertEquals("com.tq.applogmanagment", appContext.getPackageName());
     }
 }

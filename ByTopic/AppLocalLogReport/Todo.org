@@ -1,0 +1,8 @@
+* TODO 将JVM Client拆分为sdk和client两个项目。
+* TODO 增加Android访问gRPC的功能。
+** TODO 编写示例。
+** TODO 拆分sdk。
+* TODO 增加iOS项目。
+** TODO 编写示例。
+** TODO 拆分sdk。
+* TODO 测试失败场景。

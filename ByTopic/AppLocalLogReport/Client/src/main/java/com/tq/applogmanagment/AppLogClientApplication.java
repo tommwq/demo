@@ -7,17 +7,19 @@ import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 @Component
-public class AppLogManagementApplication implements CommandLineRunner {
+public class AppLogClientApplication implements CommandLineRunner {
 
   public static void main(String[] args) {
-    SpringApplication.run(AppLogManagementApplication.class, args);
+    SpringApplication.run(AppLogClientApplication.class, args);
   }
 
   @Override
   public void run(String... args) throws Exception {
-      final LogCollectServer server = new LogCollectServer();
-      server.start();
-      server.blockUntilShutdown();
-      System.out.println("ok");
+      AppLogClient client = new AppLogClient("172.24.20.112", 50051);
+      try {
+          client.report();
+      } finally {
+          client.shutdown();
+      }
   }
 }

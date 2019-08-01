@@ -1,4 +1,4 @@
-package com.tq.demo;
+package com.tq.applogmanagment;
 
 import org.junit.Test;
 

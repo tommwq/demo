@@ -32,9 +32,10 @@ public class LogCollectServer {
       
       underlyingServer = ServerBuilder.forPort(port)
         .addService(new LogCollectService())
-        .build()
-        .start();
+          .build();
       
+      underlyingServer.start();
+      success = true;
     } finally {
       if (!success) {
         underlyingServer = null;

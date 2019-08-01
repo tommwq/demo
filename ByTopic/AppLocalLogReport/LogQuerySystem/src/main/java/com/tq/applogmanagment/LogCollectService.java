@@ -10,7 +10,8 @@ public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceIm
     return new StreamObserver<LogReport>() {
       @Override
       public void onNext(LogReport report) {
-        // TODO
+          System.out.println(report.getHeartbeat());
+          System.out.println(report.getModule());
       }
 
       @Override
