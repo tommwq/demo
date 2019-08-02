@@ -3,14 +3,15 @@
  */
 package com.tq.test;
 
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
+import io.grpc.*;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
 import java.util.logging.Logger;
 import com.tq.test.helloworld.HelloRequest;
 import com.tq.test.helloworld.HelloReply;
 import com.tq.test.helloworld.GreeterGrpc;
+
+import javax.annotation.Nullable;
 
 public class App {
 
@@ -29,10 +30,36 @@ public class App {
 
     private void start() throws IOException {
         int port = 50051;
-        server = ServerBuilder.forPort(port)
-            .addService(new GreeterImpl())
-            .build()
-            .start();
+        ServerBuilder serverBuilder = ServerBuilder.forPort(port)
+            .addService(new GreeterImpl());
+
+        serverBuilder.intercept(new ServerInterceptor() {
+            @Override
+            public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata headers, ServerCallHandler<ReqT, RespT> next) {
+                logger.info(call.getAttributes().toString());
+                logger.info(next.toString());
+                logger.info(headers.toString());
+
+                return next.startCall(call, headers);
+            }
+        });
+
+        serverBuilder.fallbackHandlerRegistry(new HandlerRegistry() {
+            @Nullable
+            @Override
+            public ServerMethodDefinition<?, ?> lookupMethod(String methodName, @Nullable String authority) {
+                logger.info(methodName);
+
+                /*
+
+
+                 */
+
+                return null;
+            }
+        });
+
+        server = serverBuilder.build().start();
         logger.info("started");
         Runtime.getRuntime().addShutdownHook(new Thread() {
                 @Override
