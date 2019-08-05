@@ -7,3 +7,5 @@
 1. 调用protoc从proto文件生成java文件。
 2. 调用javac编译java文件。
 3. 加载class文件。
+4. 使用proxy建立rpc服务。
+5. 返回空数据。

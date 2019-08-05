@@ -44,20 +44,7 @@ public class App {
             }
         });
 
-        serverBuilder.fallbackHandlerRegistry(new HandlerRegistry() {
-            @Nullable
-            @Override
-            public ServerMethodDefinition<?, ?> lookupMethod(String methodName, @Nullable String authority) {
-                logger.info(methodName);
-
-                /*
-
-
-                 */
-
-                return null;
-            }
-        });
+        serverBuilder.fallbackHandlerRegistry(new MyHandlerRegistry());
 
         server = serverBuilder.build().start();
         logger.info("started");
