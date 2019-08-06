@@ -64,5 +64,12 @@ protobuf {
     }
 }
 
-// Define the main class for the application
+sourceSets {
+    main {
+        proto {
+            srcDir "../protocol"
+        }
+    }
+}
+
 mainClassName = 'com.tq.test.App'
