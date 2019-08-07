@@ -7,23 +7,26 @@ option java_outer_classname = "HelloWorldProto";
 package helloworld;
 
 message HelloRequest {
-    string name = 1;
+  string name = 1;
 }
 
 message HelloReply {
-    string message = 1;
+  string message = 1;
 }
 
 service Greeter {
-    rpc SayHello(HelloRequest) returns (HelloReply) {}
+  rpc SayHello1(HelloRequest) returns (HelloReply) {}
+  rpc SayHello2(stream HelloRequest) returns (HelloReply) {}
+  rpc SayHello3(stream HelloRequest) returns (stream HelloReply) {}
+  rpc SayHello4(HelloRequest) returns (stream HelloReply) {}
 }
 
 message ByeRequest {
-    string name = 1;
+  string name = 1;
 }
 
 message ByeReply {
-    string message = 1;
+  string message = 1;
 }
 
 service Fareweller {

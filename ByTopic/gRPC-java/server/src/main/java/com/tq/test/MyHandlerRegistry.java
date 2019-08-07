@@ -16,16 +16,17 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
-
+import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 public class MyHandlerRegistry extends HandlerRegistry {
+
+  private static final Logger logger = Logger.getLogger(MyHandlerRegistry.class.getName());
+  
   @Nullable
   @Override
   public ServerMethodDefinition<?, ?> lookupMethod(String methodName, @Nullable String authority) {
-
-
-
+    logger.info("lookupMethod: " + methodName);
     return null;
   }
 }
