@@ -68,7 +68,7 @@ public class App {
 
   static class GreeterImpl extends GreeterGrpc.GreeterImplBase {
     @Override
-    public void sayHello(HelloRequest req, StreamObserver<HelloReply> observer) {
+    public void sayHello1(HelloRequest req, StreamObserver<HelloReply> observer) {
       HelloReply reply = HelloReply.newBuilder()
         .setMessage("Hello " + req.getName())
         .build();

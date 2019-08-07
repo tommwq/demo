@@ -4,7 +4,7 @@ option java_multiple_files = true;
 option java_package = "com.tq.test.helloworld";
 option java_outer_classname = "HelloWorldProto";
 
-package helloworld;
+package com.tq.test.helloworld;
 
 message HelloRequest {
   string name = 1;
@@ -12,6 +12,11 @@ message HelloRequest {
 
 message HelloReply {
   string message = 1;
+}
+
+message Foo {
+  HelloRequest request = 1;
+  repeated string name = 2;
 }
 
 service Greeter {

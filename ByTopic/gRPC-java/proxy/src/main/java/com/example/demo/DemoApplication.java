@@ -1,11 +1,51 @@
+/*
+  # 进入主目录
+  cd "d:/workspace/project/demo/ByTopic/gRPC-java/dynamic-load/"
+
+  # 清理
+  Remove-Item output/* -Recurse
+  Clear-Host
+
+  # 生成java
+  protoc --proto_path=. --proto_path="D:\Program Files\protoc-3.6.1-win32\include\google\protobuf" --java_out=output helloworld.proto
+
+  protoc --plugin="protoc-gen-grpc-java=C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\protoc-gen-grpc-java\1.22.1\e0f304c1f3a7892543de91a3b6d7be4f0409257f\protoc-gen-grpc-java-1.22.1-windows-x86_64.exe" --grpc-java_out=output helloworld.proto 
+
+
+  # 生成文件列表
+  cd output
+  Get-ChildItem *.java -Recurse | ForEach-Object { Out-File -FilePath a.txt -Append -InputObject ($_.FullName -Replace "\\", "/") -Encoding ascii }
+
+  New-Item -Type Directory -Name classes
+
+  # 编译
+  &"C:\Program Files (x86)\Java\jdk1.8.0_192\bin\javac.exe" "@a.txt" -d classes -classpath ".;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java/3.7.1/protobuf-java-3.7.1.jar;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java-util/3.7.1/protobuf-java-util-3.7.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-api\1.22.1\77311e5735c4097c5cce57f0f4d0847c51db63bb\grpc-api-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-context\1.22.1\1a074f9cf6f367b99c25e70dc68589f142f82d11\grpc-context-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-core\1.22.1\f8b6f872b7f069aaff1c3380b2ba7f91f06e4da1\grpc-core-1.22.1.jar;D:\workspace\project\study\grpc-java\netty\build\libs\grpc-netty-1.21.0-SNAPSHOT.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-protobuf\1.21.0\ac92a46921f9bf922e76b46e5731eaf312545acb\grpc-protobuf-1.21.0.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-stub\1.22.1\910550293aab760b706827c5f71c80551e5490f3\grpc-stub-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\27.0.1-jre\bd41a290787b5301e63929676d792c507bbc00ae\guava-27.0.1-jre.jar;D:\workspace\project\study\bazel\third_party\javax_annotations\javax.annotation-api-1.3.2.jar"
+
+  # 打包
+  jar cf a.jar -C classes com
+
+  cd ..
+
+  gradle bootRun
+
+  # 加载
+  # 寻找服务接口。
+  # helloworld.Fareweller/SayGoodBye
+  # option java_package = "com.tq.test.helloworld";
+  # option java_outer_classname = "HelloWorldProto";
+*/
+
+
 package com.example.demo;
 
 import java.io.Console;
 import java.io.IOException;
 import java.io.File;
+import java.nio.file.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -19,6 +59,16 @@ import java.util.stream.Collectors;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import com.sun.tools.javac.main.Main;
+
+import io.grpc.*;
+import io.grpc.stub.StreamObserver;
+import java.io.*;
+import java.util.logging.Logger;
+
+import javax.annotation.Nullable;
+
+import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
 
 
 @SpringBootApplication
@@ -74,8 +124,6 @@ public class DemoApplication implements CommandLineRunner {
     return result;
   }
 
-  
-
   public static void createDirectoryInNeed(String path) {
     File file = new File(path);
     if (file.exists() && !file.isDirectory()) {
@@ -118,6 +166,8 @@ public class DemoApplication implements CommandLineRunner {
                                           protocolDirectory,
                                           "--proto_path",
                                           protoCompilerRootDirectory + "/include/google/protobuf",
+                                          "--descriptor_set_out",
+                                          buildDirectory + "/a.d",
                                           "--java_out=" + buildDirectory),
                             recurseListProtocolFileNames(new File(protocolDirectory)))).waitFor();
 
@@ -161,7 +211,7 @@ public class DemoApplication implements CommandLineRunner {
                             .collect(Collectors.toList()))).waitFor();
   }
 
-  private void loadGrpcService(String jarFileName) {
+  private ClassLoader loadGrpcService(String jarFileName) {
 
     List<String> jarList = Arrays.asList(jarFileName,
                                          "C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java/3.7.1/protobuf-java-3.7.1.jar",
@@ -197,23 +247,16 @@ public class DemoApplication implements CommandLineRunner {
       String serviceName = "Greeter";
       String className = String.format("%s.%sGrpc$%sImplBase", packageName, serviceName, serviceName);
 
-      Class serviceClass = classLoader.loadClass(className); // Class.forName(className, false, classLoader);
-      Method[] serviceMethods = serviceClass.getDeclaredMethods();
+      // Class serviceClass = classLoader.loadClass(className);
+      // Method[] serviceMethods = serviceClass.getDeclaredMethods();
 
-      Stream.of(serviceMethods)
-        .filter((method) -> not(method.getName().equals("bindService")))
-        // .forEach((method) -> {
-        //     System.out.println(method.getName());
-        //     System.out.println(method.getReturnType().getName());
-
-        //     Stream.of(method.getParameterTypes())
-        //       .forEach((type) -> {
-        //           System.out.println(type.getName());
-        //         });
-        //   });
-        .forEach(method -> printGrpcMethod(method));
+      // Stream.of(serviceMethods)
+      //   .filter((method) -> not(method.getName().equals("bindService")))
+      //   .forEach(method -> printGrpcMethod(method));
+      return classLoader;
     } catch (Exception e) {
       e.printStackTrace();
+      throw e;
     }
   }
 
@@ -243,61 +286,162 @@ public class DemoApplication implements CommandLineRunner {
 
     String protocolDirectory = config.protocolDirectory;
 
-    String buildDirectory = config.buildDirectory;
-    createDirectoryInNeed(buildDirectory);
+    // String buildDirectory = config.buildDirectory;
+    // createDirectoryInNeed(buildDirectory);
     compileGrpcFiles(config.protoCompilerRootDirectory,
-                      config.protocolDirectory,
-                      config.buildDirectory,
-                      config.grpcPluginPath);
-
-    compileJavaFiles(config.javaCompilerPath,
+                     config.protocolDirectory,
                      config.buildDirectory,
-                     config.buildDirectory + "/classes",
-                     config.classPath);
+                     config.grpcPluginPath);
 
-    packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
-                      config.buildDirectory + "/a.jar",
-                      config.buildDirectory + "/classes");
+    // compileJavaFiles(config.javaCompilerPath,
+    //                  config.buildDirectory,
+    //                  config.buildDirectory + "/classes",
+    //                  config.classPath);
+
+    // packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
+    //                   config.buildDirectory + "/a.jar",
+    //                   config.buildDirectory + "/classes");
                       
-    loadGrpcService(config.buildDirectory + "/a.jar");
+    ClassLoader classLoader = loadGrpcService(config.buildDirectory + "/a.jar");
     
-    /*
-      # 进入主目录
-      cd "d:/workspace/project/demo/ByTopic/gRPC-java/dynamic-load/"
 
-      # 清理
-      Remove-Item output/* -Recurse
-      Clear-Host
+    int port = 50051;
+    ServerBuilder serverBuilder = ServerBuilder.forPort(port);
+    serverBuilder.fallbackHandlerRegistry(new HandlerRegistry() {
+        @Override
+        public ServerMethodDefinition<?,?> lookupMethod(String methodName, String authority) {
 
-      # 生成java
-      protoc --proto_path=. --proto_path="D:\Program Files\protoc-3.6.1-win32\include\google\protobuf" --java_out=output helloworld.proto
+          int index = methodName.indexOf("/");
+          if (index == -1) {
+            return null;
+          }
 
-      protoc --plugin="protoc-gen-grpc-java=C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\protoc-gen-grpc-java\1.22.1\e0f304c1f3a7892543de91a3b6d7be4f0409257f\protoc-gen-grpc-java-1.22.1-windows-x86_64.exe" --grpc-java_out=output helloworld.proto 
+          String fullClassName = methodName.substring(0, index);
+          String classMethodName = methodName.substring(index + 1);
+          String packageName = "";
+          String className = fullClassName;
+          index = fullClassName.lastIndexOf(".");
+          if (index != -1){
+            packageName = fullClassName.substring(0, index);
+            className = fullClassName.substring(index + 1);
+          }
+
+          String implClassName = String.format("%s.%sGrpc.%sImplBase", packageName, className, className);
+
+          String sourceCode = String.format("package %s;import %s;public class %s extends %s {}", packageName, implClassName, className, implClassName);
+          // System.out.println(sourceCode);
+          String sourceFileName = config.buildDirectory + "/gen/src/" + packageName.replace(".", "/") + "/" + className + ".java";
+          // System.out.println(sourceFileName);
+
+          try {
+            File sourceFile = new File(sourceFileName);
+            if (sourceFile.exists() && !sourceFile.isFile()) {
+              System.out.println("error: source file path is a directory.");
+              return null;
+            }
+
+            File sourceFileParent = sourceFile.getParentFile();
+            if (!sourceFileParent.exists() && !sourceFileParent.mkdirs()) {
+              System.out.println("error: cannot create source file directory.");
+              return null;
+            }
+
+            if (!sourceFile.exists() && !sourceFile.createNewFile()) {
+              System.out.println("error: cannot create source file.");
+              return null;
+            }
+
+            FileOutputStream outputStream = new FileOutputStream(sourceFile);
+            outputStream.write(sourceCode.getBytes());
+            outputStream.close();
+
+            compileJavaFiles(config.javaCompilerPath,
+                             config.buildDirectory + "/gen/src",
+                             config.buildDirectory + "/gen/classes",
+                             config.classPath + ";" + config.buildDirectory + "/a.jar");
+
+            packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
+                              config.buildDirectory + "/gen/" + fullClassName + ".jar",
+                              config.buildDirectory + "/gen/classes");
+
+            ClassLoader newClassLoader = new URLClassLoader(new URL[]{
+                new File(config.buildDirectory + "/gen/" + fullClassName + ".jar").toURI().toURL()
+              }, classLoader);
 
 
-      # 生成文件列表
-      cd output
-      Get-ChildItem *.java -Recurse | ForEach-Object { Out-File -FilePath a.txt -Append -InputObject ($_.FullName -Replace "\\", "/") -Encoding ascii }
+            // System.out.println(fullClassName);
+            // getAllInterfaces(newClassLoader.loadClass(fullClassName))
+            //   .stream()
+            //   .forEach(System.out::println);
 
-      New-Item -Type Directory -Name classes
+            BindableService proxy = (BindableService) Proxy.newProxyInstance(newClassLoader,
+                                                                             getAllInterfaces(newClassLoader.loadClass(fullClassName)).toArray(new Class[]{}),
+                                                                             new InvocationHandler() {
+                                                                               private BindableService realService = (BindableService) newClassLoader.loadClass(fullClassName).newInstance();
+                                                                               @Override
+                                                                               public Object invoke(Object proxy, Method method, Object[] args) {
+                                                                                 if (method.getName().equals("bindService")) {
+                                                                                   return realService.bindService();
+                                                                                 }
+                                                                                 
+                                                                                 System.err.println(method.getName());
+                                                                                 return null;
+                                                                               }
+                                                                             });
 
-      # 编译
-      &"C:\Program Files (x86)\Java\jdk1.8.0_192\bin\javac.exe" "@a.txt" -d classes -classpath ".;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java/3.7.1/protobuf-java-3.7.1.jar;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java-util/3.7.1/protobuf-java-util-3.7.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-api\1.22.1\77311e5735c4097c5cce57f0f4d0847c51db63bb\grpc-api-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-context\1.22.1\1a074f9cf6f367b99c25e70dc68589f142f82d11\grpc-context-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-core\1.22.1\f8b6f872b7f069aaff1c3380b2ba7f91f06e4da1\grpc-core-1.22.1.jar;D:\workspace\project\study\grpc-java\netty\build\libs\grpc-netty-1.21.0-SNAPSHOT.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-protobuf\1.21.0\ac92a46921f9bf922e76b46e5731eaf312545acb\grpc-protobuf-1.21.0.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-stub\1.22.1\910550293aab760b706827c5f71c80551e5490f3\grpc-stub-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\27.0.1-jre\bd41a290787b5301e63929676d792c507bbc00ae\guava-27.0.1-jre.jar;D:\workspace\project\study\bazel\third_party\javax_annotations\javax.annotation-api-1.3.2.jar"
+            return proxy.bindService().getMethod(methodName);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+          return null;
+        }
+      });
 
-      # 打包
-      jar cf a.jar -C classes com
+    // System.out.println("start");
+    // Server server = serverBuilder.build().start();
 
-      cd ..
+    // Runtime.getRuntime().addShutdownHook(new Thread() {
+    //     @Override
+    //     public void run() {
+    //       server.shutdown();
+    //     }
+    //   });
+    
+    // server.awaitTermination();
 
-      gradle bootRun
+    String descriptorSetFileName = config.buildDirectory + "/a.d";
+    FileDescriptorSet descriptors = FileDescriptorSet.parseFrom(Files.readAllBytes(Paths.get(descriptorSetFileName)));
 
-      # 加载
-      # 寻找服务接口。
-      # helloworld.Fareweller/SayGoodBye
-      # option java_package = "com.tq.test.helloworld";
-      # option java_outer_classname = "HelloWorldProto";
-    */
+    descriptors.getFileList()
+      .stream()
+      .forEach(fd -> {
+          System.out.println("file: " + fd.getName());
+          fd.getMessageTypeList()
+            .stream()
+            .forEach(md -> {
+                System.out.println("message: " + md.getName());
+              });
 
+          fd.getServiceList()
+            .stream()
+            .forEach(sd -> {
+                System.out.println("service: " + sd.getName());
+                sd.getMethodList()
+                  .stream()
+                  .forEach(mtd -> {
+                      System.out.println("method: " + mtd.getName() + " " + mtd.getInputType() + " " + mtd.getOutputType());
+                      // hasClientStreaming hasServerStreaming
+                    });
+              });
+        });
+  }
 
+  List<Class> getAllInterfaces(Class clazz) {
+    if (clazz == null) {
+      return new ArrayList<Class>();
+    }
+
+    return mergeList(Arrays.asList(clazz.getInterfaces()),
+                     getAllInterfaces(clazz.getSuperclass()));
   }
 }

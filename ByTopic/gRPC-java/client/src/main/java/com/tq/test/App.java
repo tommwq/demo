@@ -41,7 +41,7 @@ public class App {
       .build();
 
     try {
-      HelloReply response = blockingStub.sayHello(request);
+      HelloReply response = blockingStub.sayHello1(request);
       logger.info(response.getMessage());
     } catch (Exception e) {
       logger.info(e.getMessage());
@@ -65,7 +65,7 @@ public class App {
     final App app = new App("localhost", 50051);
     try {
       app.greet("world");
-      app.bye("world");
+      // app.bye("world");
       app.shutdown();
     } catch (Exception e) {
       logger.info(e.getMessage());

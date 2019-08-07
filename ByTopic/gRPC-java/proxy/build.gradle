@@ -16,4 +16,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation 'io.grpc:grpc-netty-shaded:1.21.0'
+    implementation 'io.grpc:grpc-protobuf:1.21.0'
+    implementation 'io.grpc:grpc-stub:1.21.0'
+    compile files("C:/Program Files/Java/jdk1.8.0_192/lib/tools.jar")
 }
