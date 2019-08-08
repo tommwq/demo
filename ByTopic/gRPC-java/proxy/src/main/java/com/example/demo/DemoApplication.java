@@ -286,21 +286,21 @@ public class DemoApplication implements CommandLineRunner {
 
     String protocolDirectory = config.protocolDirectory;
 
-    // String buildDirectory = config.buildDirectory;
-    // createDirectoryInNeed(buildDirectory);
+    String buildDirectory = config.buildDirectory;
+    createDirectoryInNeed(buildDirectory);
     compileGrpcFiles(config.protoCompilerRootDirectory,
                      config.protocolDirectory,
                      config.buildDirectory,
                      config.grpcPluginPath);
 
-    // compileJavaFiles(config.javaCompilerPath,
-    //                  config.buildDirectory,
-    //                  config.buildDirectory + "/classes",
-    //                  config.classPath);
+    compileJavaFiles(config.javaCompilerPath,
+                     config.buildDirectory,
+                     config.buildDirectory + "/classes",
+                     config.classPath);
 
-    // packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
-    //                   config.buildDirectory + "/a.jar",
-    //                   config.buildDirectory + "/classes");
+    packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
+                      config.buildDirectory + "/a.jar",
+                      config.buildDirectory + "/classes");
                       
     ClassLoader classLoader = loadGrpcService(config.buildDirectory + "/a.jar");
     
@@ -408,32 +408,6 @@ public class DemoApplication implements CommandLineRunner {
     //   });
     
     // server.awaitTermination();
-
-    String descriptorSetFileName = config.buildDirectory + "/a.d";
-    FileDescriptorSet descriptors = FileDescriptorSet.parseFrom(Files.readAllBytes(Paths.get(descriptorSetFileName)));
-
-    descriptors.getFileList()
-      .stream()
-      .forEach(fd -> {
-          System.out.println("file: " + fd.getName());
-          fd.getMessageTypeList()
-            .stream()
-            .forEach(md -> {
-                System.out.println("message: " + md.getName());
-              });
-
-          fd.getServiceList()
-            .stream()
-            .forEach(sd -> {
-                System.out.println("service: " + sd.getName());
-                sd.getMethodList()
-                  .stream()
-                  .forEach(mtd -> {
-                      System.out.println("method: " + mtd.getName() + " " + mtd.getInputType() + " " + mtd.getOutputType());
-                      // hasClientStreaming hasServerStreaming
-                    });
-              });
-        });
   }
 
   List<Class> getAllInterfaces(Class clazz) {

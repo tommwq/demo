@@ -5,13 +5,54 @@ package test;
 
 import com.google.protobuf.DescriptorProtos.DescriptorProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
+import com.google.protobuf.DescriptorProtos.ServiceDescriptorProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto;
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.io.File;
+import java.io.IOException;
+
+class SourceFile {
+  public String sourceCode = "";
+  public String fileName = "";
+
+  public SourceFile() {
+  }
+
+  public SourceFile(String aFileName, String aSourceCode) {
+    fileName = aFileName;
+    sourceCode = aSourceCode;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("<SourceCode: fileName=%s,sourceCode=...>", fileName);
+  }
+
+  public void write() throws IOException {
+    Path path = Paths.get(fileName);
+    File parent = path.getParent().toFile();
+    if (!parent.exists() && !parent.mkdirs()) {
+      throw new RuntimeException("cannot create output directory");
+    }
+    
+    Files.write(path, sourceCode.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+  }
+}
 
 public class App {
+
+  public static String adjustClassName(String className) {
+    if (className.startsWith(".")) {
+      return className.substring(1);
+    }
+
+    return className;
+  }
 
   public static void main(String[] args) throws Exception {
     String descriptorSetFileName = "d:/workspace/project/demo/ByTopic/gRPC-java/build/a.d";
@@ -21,55 +62,80 @@ public class App {
     fileDescriptorSet.getFileList()
       .stream()
       .forEach(App::processFile);
-        
   }
 
   public static void processFile(FileDescriptorProto file) {
 
+    String outputDirectory = "d:/workspace/project/demo/ByTopic/gRPC-java/build/";
+
     file.getMessageTypeList()
       .stream()
-      .forEach(message -> processMessage(message, file.getPackage()));
+      .forEach(message -> {
+          SourceFile sourceFile = generatePojoSourceFile(message, file, outputDirectory);
+          try {
+            sourceFile.write();
+          } catch(IOException e) {
+            e.printStackTrace();
+          }
+        });
 
     file.getServiceList()
       .stream()
       .forEach(service -> {
-
-          StringBuilder stringBuilder = new StringBuilder();
-          String implClassName = String.format("%sGrpc.%sImplBase", service.getName(), service.getName());
-          stringBuilder.append("package " + file.getPackage() + ";\n")
-            .append("public class " + service.getName() + " extends " + implClassName + " {\n");
-
-          System.out.println(service.getName());
-          service.getMethodList()
-            .stream()
-            .forEach(method -> {
-                String inputType = "void";
-                String outputType = "void";
-
-                if (!method.hasClientStreaming() && !method.hasServerStreaming()) {
-                  inputType = method.getInputType() + " request, " + method.getOutputType() + " response";
-                  outputType = "void";
-                } else if (method.hasClientStreaming() && !method.hasServerStreaming()) {
-                  inputType = String.format("io.grpc.stub.StreamObserver<%s>", method.getInputType());
-                  outputType = String.format("io.grpc.stub.StreamObserver<%s> response", method.getOutputType());
-                } else if (method.hasClientStreaming() && method.hasServerStreaming()) {
-                  inputType = String.format("io.grpc.stub.StreamObserver<%s>", method.getInputType());
-                  outputType = String.format("io.grpc.stub.StreamObserver<%s> response", method.getOutputType());
-                } else {
-                  inputType = method.getInputType() + " request, " + method.getOutputType() + " response";
-                  outputType = "void";
-                }
-                
-                stringBuilder.append(String.format("  public %s %s(%s) {}\n", outputType, method.getName(), inputType));
-              });
-
-          stringBuilder.append("}\n");
-          System.out.println(stringBuilder.toString());
+          try {
+            generateServiceSourceFile(service, file, outputDirectory).write();
+          } catch(IOException e) {
+            e.printStackTrace();
+          }
         });
   }
 
-  public static void processMessage(DescriptorProto message, String packageName) {
+  public static SourceFile generateServiceSourceFile(ServiceDescriptorProto service, FileDescriptorProto file, String rootPath) {
+    String fileName = rootPath + "/" + file.getPackage().replace(".", "/") + "/" + service.getName() + ".java";
+    
+    StringBuilder stringBuilder = new StringBuilder();
+    String implClassName = String.format("%sGrpc.%sImplBase", service.getName(), service.getName());
+    stringBuilder.append("package " + file.getPackage() + ";\n")
+      .append("public class " + service.getName() + " extends " + implClassName + " {\n");
+
+    service.getMethodList()
+      .stream()
+      .forEach(method -> {
+          String parameterList = "void";
+          String returnType = "void";
+          String methodBody = "";
+          String inputType = adjustClassName(method.getInputType());
+          String outputType = adjustClassName(method.getOutputType());
+
+          if (!method.hasClientStreaming() && !method.hasServerStreaming()) {
+            parameterList = inputType + " request, io.grpc.stub.StreamObserver<" + outputType + "> response";
+            returnType = "void";
+          } else if (method.hasClientStreaming() && !method.hasServerStreaming()) {
+            parameterList = String.format("io.grpc.stub.StreamObserver<%s> responseStream", outputType);
+            returnType = String.format("io.grpc.stub.StreamObserver<%s>", inputType);
+            methodBody = String.format("    return new io.grpc.stub.StreamObserver<%s>() {\n  @Override\n  public void onNext(%s value) {}\n  @Override\n  public void onError(Throwable t) {}\n  @Override\n  public void onCompleted() {}\n  };", inputType, inputType);
+          } else if (method.hasClientStreaming() && method.hasServerStreaming()) {
+            parameterList = String.format("io.grpc.stub.StreamObserver<%s> responseStream", outputType);
+            returnType = String.format("io.grpc.stub.StreamObserver<%s>", inputType);
+            methodBody = String.format("    return new io.grpc.stub.StreamObserver<%s>() {\n  @Override\n  public void onNext(%s value) {}\n  @Override\n  public void onError(Throwable t) {}\n  @Override\n  public void onCompleted() {}\n  };", inputType, inputType);
+          } else {
+            parameterList = inputType + " request, io.grpc.stub.StreamObserver<" + outputType + "> response";
+            returnType = "void";
+          }
+                
+          stringBuilder.append(String.format("  public %s %s(%s) {\n%s\n  }\n", returnType, method.getName(), parameterList, methodBody));
+        });
+
+    stringBuilder.append("}\n");
+    String sourceCode = stringBuilder.toString();
+
+    return new SourceFile(fileName, sourceCode);
+  }
+
+  public static SourceFile generatePojoSourceFile(DescriptorProto message, FileDescriptorProto file, String rootPath) {
+    String packageName = file.getPackage() + ".http";
     String fullName = packageName + "." + message.getName();
+    String fileName = rootPath + "/" + fullName.replace(".", "/") + ".java";
 
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("package " + packageName + ";\n")
@@ -82,7 +148,9 @@ public class App {
         });
 
     stringBuilder.append("}\n");
-    System.out.println(stringBuilder.toString());
+    String sourceCode = stringBuilder.toString();
+
+    return new SourceFile(fileName, sourceCode);
   }
 
   public static void processField(FieldDescriptorProto field, String message) {
@@ -112,7 +180,7 @@ public class App {
     case Type.TYPE_INT64_VALUE:
       return "long";
     case Type.TYPE_MESSAGE_VALUE:
-      return field.getTypeName().startsWith(".") ? field.getTypeName().substring(1) : field.getTypeName();
+      return adjustClassName(field.getTypeName());
     case Type.TYPE_SFIXED32_VALUE:
       return "int";
     case Type.TYPE_SFIXED64_VALUE:
@@ -122,7 +190,7 @@ public class App {
     case Type.TYPE_SINT64_VALUE:
       return "long";
     case Type.TYPE_STRING_VALUE:
-      return "string";
+      return "String";
     case Type.TYPE_UINT32_VALUE:
       return "int";
     case Type.TYPE_UINT64_VALUE:
