@@ -26,7 +26,7 @@ public class App {
   }
 
   private void start() throws IOException {
-    int port = 50051;
+    int port = 50052;
     ServerBuilder serverBuilder = ServerBuilder.forPort(port)
       .addService(new GreeterImpl());
 

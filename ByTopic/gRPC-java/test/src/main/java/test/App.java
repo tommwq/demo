@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 class SourceFile {
   public String sourceCode = "";
@@ -44,8 +46,17 @@ class SourceFile {
   }
 }
 
+enum MethodType {
+  Unary,
+  ClientStream,
+  ServerStream,
+  BidirectionStream;
+}
+
 public class App {
 
+
+  
   public static String adjustClassName(String className) {
     if (className.startsWith(".")) {
       return className.substring(1);
@@ -91,12 +102,24 @@ public class App {
   }
 
   public static SourceFile generateServiceSourceFile(ServiceDescriptorProto service, FileDescriptorProto file, String rootPath) {
-    String fileName = rootPath + "/" + file.getPackage().replace(".", "/") + "/" + service.getName() + ".java";
+    String serviceName = service.getName();
+    String fileName = rootPath + "/" + file.getPackage().replace(".", "/") + "/" + serviceName + ".java";
+    String implClassName = serviceName + "Grpc." + serviceName + "ImplBase";
     
-    StringBuilder stringBuilder = new StringBuilder();
-    String implClassName = String.format("%sGrpc.%sImplBase", service.getName(), service.getName());
-    stringBuilder.append("package " + file.getPackage() + ";\n")
-      .append("public class " + service.getName() + " extends " + implClassName + " {\n");
+    ArrayList<String> sourceLines = new ArrayList<String>(Arrays.asList("package " + file.getPackage() + ";",
+                                                                        "import io.grpc.ManagedChannel;",
+                                                                        "import io.grpc.ManagedChannelBuilder;",
+                                                                        "import io.grpc.StatusRuntimeException;",
+                                                                        "public class " + serviceName + " extends " + implClassName + " {",
+                                                                        "  private final ManagedChannel channel;",
+                                                                        "  private final " + serviceName + "Grpc." + serviceName + "BlockingStub blockingStub;",
+                                                                        "  public " + serviceName + "() {",
+                                                                        // TODO 
+                                                                        "    channel = ManagedChannelBuilder.forAddress(\"localhost\", 50052)",
+                                                                        "      .usePlaintext()",
+                                                                        "      .build();",
+                                                                        "    blockingStub = " + serviceName + "Grpc.newBlockingStub(channel);",
+                                                                        "  }"));
 
     service.getMethodList()
       .stream()
@@ -106,30 +129,59 @@ public class App {
           String methodBody = "";
           String inputType = adjustClassName(method.getInputType());
           String outputType = adjustClassName(method.getOutputType());
-
-          if (!method.hasClientStreaming() && !method.hasServerStreaming()) {
-            parameterList = inputType + " request, io.grpc.stub.StreamObserver<" + outputType + "> response";
-            returnType = "void";
+          String javaMethodName = grpcMethodNameToJava(method.getName());
+          MethodType methodType = MethodType.Unary;
+          
+          if (method.hasClientStreaming() && method.hasServerStreaming()) {
+            methodType = MethodType.BidirectionStream;
           } else if (method.hasClientStreaming() && !method.hasServerStreaming()) {
-            parameterList = String.format("io.grpc.stub.StreamObserver<%s> responseStream", outputType);
-            returnType = String.format("io.grpc.stub.StreamObserver<%s>", inputType);
-            methodBody = String.format("    return new io.grpc.stub.StreamObserver<%s>() {\n  @Override\n  public void onNext(%s value) {}\n  @Override\n  public void onError(Throwable t) {}\n  @Override\n  public void onCompleted() {}\n  };", inputType, inputType);
-          } else if (method.hasClientStreaming() && method.hasServerStreaming()) {
-            parameterList = String.format("io.grpc.stub.StreamObserver<%s> responseStream", outputType);
-            returnType = String.format("io.grpc.stub.StreamObserver<%s>", inputType);
-            methodBody = String.format("    return new io.grpc.stub.StreamObserver<%s>() {\n  @Override\n  public void onNext(%s value) {}\n  @Override\n  public void onError(Throwable t) {}\n  @Override\n  public void onCompleted() {}\n  };", inputType, inputType);
+            methodType = MethodType.ClientStream;
+          } else if (!method.hasClientStreaming() && !method.hasServerStreaming()) {
+            methodType = MethodType.Unary;
+          } else if (!method.hasClientStreaming() && method.hasServerStreaming()) {
+            methodType = MethodType.ServerStream;
+          }
+          
+          if (methodType == MethodType.ClientStream || methodType == MethodType.BidirectionStream) {
+            parameterList = "io.grpc.stub.StreamObserver<" + outputType + "> responseStream";
+            returnType = "io.grpc.stub.StreamObserver<" + inputType + ">";
+            methodBody = String.join("\n", Arrays.asList("    return new io.grpc.stub.StreamObserver<" + inputType + ">() {",
+                                                         "    @Override",
+                                                         "    public void onNext(" + inputType + " value) {}",
+                                                         "    @Override",
+                                                         "    public void onError(Throwable t) {}",
+                                                         "    @Override",
+                                                         "    public void onCompleted() {}",
+                                                         "  };"));
           } else {
             parameterList = inputType + " request, io.grpc.stub.StreamObserver<" + outputType + "> response";
             returnType = "void";
+            methodBody = String.join("\n", Arrays.asList("    response.onNext(blockingStub." + javaMethodName + "(request));",
+                                                         "    response.onCompleted();"));
           }
-                
-          stringBuilder.append(String.format("  public %s %s(%s) {\n%s\n  }\n", returnType, method.getName(), parameterList, methodBody));
+
+          if (methodType == MethodType.ServerStream) {
+            methodBody = "";
+          }
+
+          sourceLines.add("  @Override");
+          sourceLines.add("  public " + returnType + " " + javaMethodName + "(" + parameterList + ") {");
+          sourceLines.add(methodBody);
+          sourceLines.add("  }");
         });
 
-    stringBuilder.append("}\n");
-    String sourceCode = stringBuilder.toString();
+    sourceLines.add("}\n");
 
+    String sourceCode = String.join("\n", sourceLines);
     return new SourceFile(fileName, sourceCode);
+  }
+
+  public static String grpcMethodNameToJava(String grpcServiceName) {
+    if (grpcServiceName == null || grpcServiceName.isEmpty()) {
+      return "";
+    }
+
+    return grpcServiceName.substring(0, 1).toLowerCase() + grpcServiceName.substring(1);
   }
 
   public static SourceFile generatePojoSourceFile(DescriptorProto message, FileDescriptorProto file, String rootPath) {

@@ -286,12 +286,12 @@ public class DemoApplication implements CommandLineRunner {
 
     String protocolDirectory = config.protocolDirectory;
 
-    String buildDirectory = config.buildDirectory;
-    createDirectoryInNeed(buildDirectory);
-    compileGrpcFiles(config.protoCompilerRootDirectory,
-                     config.protocolDirectory,
-                     config.buildDirectory,
-                     config.grpcPluginPath);
+    // String buildDirectory = config.buildDirectory;
+    // createDirectoryInNeed(buildDirectory);
+    // compileGrpcFiles(config.protoCompilerRootDirectory,
+    //                  config.protocolDirectory,
+    //                  config.buildDirectory,
+    //                  config.grpcPluginPath);
 
     compileJavaFiles(config.javaCompilerPath,
                      config.buildDirectory,
@@ -327,69 +327,71 @@ public class DemoApplication implements CommandLineRunner {
           }
 
           String implClassName = String.format("%s.%sGrpc.%sImplBase", packageName, className, className);
-
           String sourceCode = String.format("package %s;import %s;public class %s extends %s {}", packageName, implClassName, className, implClassName);
-          // System.out.println(sourceCode);
           String sourceFileName = config.buildDirectory + "/gen/src/" + packageName.replace(".", "/") + "/" + className + ".java";
-          // System.out.println(sourceFileName);
 
           try {
-            File sourceFile = new File(sourceFileName);
-            if (sourceFile.exists() && !sourceFile.isFile()) {
-              System.out.println("error: source file path is a directory.");
-              return null;
-            }
+            // File sourceFile = new File(sourceFileName);
+            // if (sourceFile.exists() && !sourceFile.isFile()) {
+            //   System.out.println("error: source file path is a directory.");
+            //   return null;
+            // }
 
-            File sourceFileParent = sourceFile.getParentFile();
-            if (!sourceFileParent.exists() && !sourceFileParent.mkdirs()) {
-              System.out.println("error: cannot create source file directory.");
-              return null;
-            }
+            // File sourceFileParent = sourceFile.getParentFile();
+            // if (!sourceFileParent.exists() && !sourceFileParent.mkdirs()) {
+            //   System.out.println("error: cannot create source file directory.");
+            //   return null;
+            // }
 
-            if (!sourceFile.exists() && !sourceFile.createNewFile()) {
-              System.out.println("error: cannot create source file.");
-              return null;
-            }
+            // if (!sourceFile.exists() && !sourceFile.createNewFile()) {
+            //   System.out.println("error: cannot create source file.");
+            //   return null;
+            // }
 
-            FileOutputStream outputStream = new FileOutputStream(sourceFile);
-            outputStream.write(sourceCode.getBytes());
-            outputStream.close();
+            // FileOutputStream outputStream = new FileOutputStream(sourceFile);
+            // outputStream.write(sourceCode.getBytes());
+            // outputStream.close();
 
-            compileJavaFiles(config.javaCompilerPath,
-                             config.buildDirectory + "/gen/src",
-                             config.buildDirectory + "/gen/classes",
-                             config.classPath + ";" + config.buildDirectory + "/a.jar");
+            // compileJavaFiles(config.javaCompilerPath,
+            //                  config.buildDirectory + "/gen/src",
+            //                  config.buildDirectory + "/gen/classes",
+            //                  config.classPath + ";" + config.buildDirectory + "/a.jar");
 
-            packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
-                              config.buildDirectory + "/gen/" + fullClassName + ".jar",
-                              config.buildDirectory + "/gen/classes");
+            // packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
+            //                   config.buildDirectory + "/gen/" + fullClassName + ".jar",
+            //                   config.buildDirectory + "/gen/classes");
 
-            ClassLoader newClassLoader = new URLClassLoader(new URL[]{
-                new File(config.buildDirectory + "/gen/" + fullClassName + ".jar").toURI().toURL()
-              }, classLoader);
-
+            // ClassLoader newClassLoader = new URLClassLoader(new URL[]{
+            //     new File(config.buildDirectory + "/gen/" + fullClassName + ".jar").toURI().toURL()
+            //   }, classLoader);
 
             // System.out.println(fullClassName);
             // getAllInterfaces(newClassLoader.loadClass(fullClassName))
             //   .stream()
             //   .forEach(System.out::println);
 
-            BindableService proxy = (BindableService) Proxy.newProxyInstance(newClassLoader,
-                                                                             getAllInterfaces(newClassLoader.loadClass(fullClassName)).toArray(new Class[]{}),
-                                                                             new InvocationHandler() {
-                                                                               private BindableService realService = (BindableService) newClassLoader.loadClass(fullClassName).newInstance();
-                                                                               @Override
-                                                                               public Object invoke(Object proxy, Method method, Object[] args) {
-                                                                                 if (method.getName().equals("bindService")) {
-                                                                                   return realService.bindService();
-                                                                                 }
+            // BindableService proxy = (BindableService) Proxy.newProxyInstance(newClassLoader,
+            //                                                                  getAllInterfaces(newClassLoader.loadClass(fullClassName)).toArray(new Class[]{}),
+            //                                                                  new InvocationHandler() {
+            //                                                                    private BindableService realService = (BindableService) newClassLoader.loadClass(fullClassName).newInstance();
+            //                                                                    @Override
+            //                                                                    public Object invoke(Object proxy, Method method, Object[] args) {
+            //                                                                      if (method.getName().equals("bindService")) {
+            //                                                                        return realService.bindService();
+            //                                                                      }
                                                                                  
-                                                                                 System.err.println(method.getName());
-                                                                                 return null;
-                                                                               }
-                                                                             });
+            //                                                                      System.err.println(method.getName());
+            //                                                                      return null;
+            //                                                                    }
+            //                                                                  });
 
-            return proxy.bindService().getMethod(methodName);
+            String serviceClassName = packageName + "." + className;
+            BindableService serviceInstance = (BindableService) classLoader.loadClass(serviceClassName).newInstance();
+            System.out.println(serviceClassName);
+            return serviceInstance.bindService().getMethod(methodName);
+            // return proxy.bindService().getMethod(methodName);
+
+            // return null;
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -397,17 +399,17 @@ public class DemoApplication implements CommandLineRunner {
         }
       });
 
-    // System.out.println("start");
-    // Server server = serverBuilder.build().start();
+    System.out.println("start");
+    Server server = serverBuilder.build().start();
 
-    // Runtime.getRuntime().addShutdownHook(new Thread() {
-    //     @Override
-    //     public void run() {
-    //       server.shutdown();
-    //     }
-    //   });
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+        @Override
+        public void run() {
+          server.shutdown();
+        }
+      });
     
-    // server.awaitTermination();
+    server.awaitTermination();
   }
 
   List<Class> getAllInterfaces(Class clazz) {
