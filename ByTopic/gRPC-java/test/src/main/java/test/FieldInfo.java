@@ -1,5 +1,8 @@
 package test;
 
+/**
+ * Record type and name of field generated for pojo class.
+ */
 public class FieldInfo {
   private String type;
   private String name;

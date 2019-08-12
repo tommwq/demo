@@ -1,41 +1,3 @@
-/*
-  # 进入主目录
-  cd "d:/workspace/project/demo/ByTopic/gRPC-java/dynamic-load/"
-
-  # 清理
-  Remove-Item output/* -Recurse
-  Clear-Host
-
-  # 生成java
-  protoc --proto_path=. --proto_path="D:\Program Files\protoc-3.6.1-win32\include\google\protobuf" --java_out=output helloworld.proto
-
-  protoc --plugin="protoc-gen-grpc-java=C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\protoc-gen-grpc-java\1.22.1\e0f304c1f3a7892543de91a3b6d7be4f0409257f\protoc-gen-grpc-java-1.22.1-windows-x86_64.exe" --grpc-java_out=output helloworld.proto 
-
-
-  # 生成文件列表
-  cd output
-  Get-ChildItem *.java -Recurse | ForEach-Object { Out-File -FilePath a.txt -Append -InputObject ($_.FullName -Replace "\\", "/") -Encoding ascii }
-
-  New-Item -Type Directory -Name classes
-
-  # 编译
-  &"C:\Program Files (x86)\Java\jdk1.8.0_192\bin\javac.exe" "@a.txt" -d classes -classpath ".;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java/3.7.1/protobuf-java-3.7.1.jar;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java-util/3.7.1/protobuf-java-util-3.7.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-api\1.22.1\77311e5735c4097c5cce57f0f4d0847c51db63bb\grpc-api-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-context\1.22.1\1a074f9cf6f367b99c25e70dc68589f142f82d11\grpc-context-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-core\1.22.1\f8b6f872b7f069aaff1c3380b2ba7f91f06e4da1\grpc-core-1.22.1.jar;D:\workspace\project\study\grpc-java\netty\build\libs\grpc-netty-1.21.0-SNAPSHOT.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-protobuf\1.21.0\ac92a46921f9bf922e76b46e5731eaf312545acb\grpc-protobuf-1.21.0.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-stub\1.22.1\910550293aab760b706827c5f71c80551e5490f3\grpc-stub-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\27.0.1-jre\bd41a290787b5301e63929676d792c507bbc00ae\guava-27.0.1-jre.jar;D:\workspace\project\study\bazel\third_party\javax_annotations\javax.annotation-api-1.3.2.jar"
-
-  # 打包
-  jar cf a.jar -C classes com
-
-  cd ..
-
-  gradle bootRun
-
-  # 加载
-  # 寻找服务接口。
-  # helloworld.Fareweller/SayGoodBye
-  # option java_package = "com.tq.test.helloworld";
-  # option java_outer_classname = "HelloWorldProto";
-*/
-
-
 package com.example.demo;
 
 import java.io.Console;
@@ -160,7 +122,6 @@ public class DemoApplication implements CommandLineRunner {
                                 String grpcPluginPath)
     throws IOException, InterruptedException {
     // TODO 处理操作系统是Linux的情况。
-
     createProcess(mergeList(Arrays.asList(protoCompilerRootDirectory + "/bin/protoc.exe",
                                           "--proto_path",
                                           protocolDirectory,
@@ -246,13 +207,6 @@ public class DemoApplication implements CommandLineRunner {
       String outerClassName = "HelloWorldProto";
       String serviceName = "Greeter";
       String className = String.format("%s.%sGrpc$%sImplBase", packageName, serviceName, serviceName);
-
-      // Class serviceClass = classLoader.loadClass(className);
-      // Method[] serviceMethods = serviceClass.getDeclaredMethods();
-
-      // Stream.of(serviceMethods)
-      //   .filter((method) -> not(method.getName().equals("bindService")))
-      //   .forEach(method -> printGrpcMethod(method));
       return classLoader;
     } catch (Exception e) {
       e.printStackTrace();
@@ -286,12 +240,12 @@ public class DemoApplication implements CommandLineRunner {
 
     String protocolDirectory = config.protocolDirectory;
 
-    // String buildDirectory = config.buildDirectory;
-    // createDirectoryInNeed(buildDirectory);
-    // compileGrpcFiles(config.protoCompilerRootDirectory,
-    //                  config.protocolDirectory,
-    //                  config.buildDirectory,
-    //                  config.grpcPluginPath);
+    String buildDirectory = config.buildDirectory;
+    createDirectoryInNeed(buildDirectory);
+    compileGrpcFiles(config.protoCompilerRootDirectory,
+                     config.protocolDirectory,
+                     config.buildDirectory,
+                     config.grpcPluginPath);
 
     compileJavaFiles(config.javaCompilerPath,
                      config.buildDirectory,
@@ -331,67 +285,10 @@ public class DemoApplication implements CommandLineRunner {
           String sourceFileName = config.buildDirectory + "/gen/src/" + packageName.replace(".", "/") + "/" + className + ".java";
 
           try {
-            // File sourceFile = new File(sourceFileName);
-            // if (sourceFile.exists() && !sourceFile.isFile()) {
-            //   System.out.println("error: source file path is a directory.");
-            //   return null;
-            // }
-
-            // File sourceFileParent = sourceFile.getParentFile();
-            // if (!sourceFileParent.exists() && !sourceFileParent.mkdirs()) {
-            //   System.out.println("error: cannot create source file directory.");
-            //   return null;
-            // }
-
-            // if (!sourceFile.exists() && !sourceFile.createNewFile()) {
-            //   System.out.println("error: cannot create source file.");
-            //   return null;
-            // }
-
-            // FileOutputStream outputStream = new FileOutputStream(sourceFile);
-            // outputStream.write(sourceCode.getBytes());
-            // outputStream.close();
-
-            // compileJavaFiles(config.javaCompilerPath,
-            //                  config.buildDirectory + "/gen/src",
-            //                  config.buildDirectory + "/gen/classes",
-            //                  config.classPath + ";" + config.buildDirectory + "/a.jar");
-
-            // packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
-            //                   config.buildDirectory + "/gen/" + fullClassName + ".jar",
-            //                   config.buildDirectory + "/gen/classes");
-
-            // ClassLoader newClassLoader = new URLClassLoader(new URL[]{
-            //     new File(config.buildDirectory + "/gen/" + fullClassName + ".jar").toURI().toURL()
-            //   }, classLoader);
-
-            // System.out.println(fullClassName);
-            // getAllInterfaces(newClassLoader.loadClass(fullClassName))
-            //   .stream()
-            //   .forEach(System.out::println);
-
-            // BindableService proxy = (BindableService) Proxy.newProxyInstance(newClassLoader,
-            //                                                                  getAllInterfaces(newClassLoader.loadClass(fullClassName)).toArray(new Class[]{}),
-            //                                                                  new InvocationHandler() {
-            //                                                                    private BindableService realService = (BindableService) newClassLoader.loadClass(fullClassName).newInstance();
-            //                                                                    @Override
-            //                                                                    public Object invoke(Object proxy, Method method, Object[] args) {
-            //                                                                      if (method.getName().equals("bindService")) {
-            //                                                                        return realService.bindService();
-            //                                                                      }
-                                                                                 
-            //                                                                      System.err.println(method.getName());
-            //                                                                      return null;
-            //                                                                    }
-            //                                                                  });
-
             String serviceClassName = packageName + "." + className;
             BindableService serviceInstance = (BindableService) classLoader.loadClass(serviceClassName).newInstance();
             System.out.println(serviceClassName);
             return serviceInstance.bindService().getMethod(methodName);
-            // return proxy.bindService().getMethod(methodName);
-
-            // return null;
           } catch (Exception e) {
             e.printStackTrace();
           }

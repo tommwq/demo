@@ -1,5 +1,8 @@
 package test;
 
+/**
+ * Generated method body.
+ */
 public class MethodInfo {
   private String body;
 
