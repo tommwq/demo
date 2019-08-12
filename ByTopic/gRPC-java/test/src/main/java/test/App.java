@@ -18,6 +18,16 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import java.io.ByteArrayOutputStream;
+
+
 class SourceFile {
   public String sourceCode = "";
   public String fileName = "";
@@ -46,16 +56,15 @@ class SourceFile {
   }
 }
 
-enum MethodType {
-  Unary,
-  ClientStream,
-  ServerStream,
-  BidirectionStream;
-}
-
 public class App {
 
+  public static String renderTemplate(Configuration config, String templateName, Map<String,Object> values) throws Exception {
 
+    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+    OutputStreamWriter writer = new OutputStreamWriter(buffer);
+    config.getTemplate(templateName).process(values, writer);
+    return new String(buffer.toByteArray());
+  }
   
   public static String adjustClassName(String className) {
     if (className.startsWith(".")) {
@@ -105,74 +114,63 @@ public class App {
     String serviceName = service.getName();
     String fileName = rootPath + "/" + file.getPackage().replace(".", "/") + "/" + serviceName + ".java";
     String implClassName = serviceName + "Grpc." + serviceName + "ImplBase";
+    ArrayList<MethodInfo> methodList = new ArrayList<>();
+
+    String sourceCode = "";
+    try {
     
-    ArrayList<String> sourceLines = new ArrayList<String>(Arrays.asList("package " + file.getPackage() + ";",
-                                                                        "import io.grpc.ManagedChannel;",
-                                                                        "import io.grpc.ManagedChannelBuilder;",
-                                                                        "import io.grpc.StatusRuntimeException;",
-                                                                        "public class " + serviceName + " extends " + implClassName + " {",
-                                                                        "  private final ManagedChannel channel;",
-                                                                        "  private final " + serviceName + "Grpc." + serviceName + "BlockingStub blockingStub;",
-                                                                        "  public " + serviceName + "() {",
-                                                                        // TODO 
-                                                                        "    channel = ManagedChannelBuilder.forAddress(\"localhost\", 50052)",
-                                                                        "      .usePlaintext()",
-                                                                        "      .build();",
-                                                                        "    blockingStub = " + serviceName + "Grpc.newBlockingStub(channel);",
-                                                                        "  }"));
+      Configuration config = new Configuration(Configuration.VERSION_2_3_28);
+      config.setDirectoryForTemplateLoading(new File("d:/workspace/project/demo/ByTopic/gRPC-java/test/tmpl/"));
 
-    service.getMethodList()
-      .stream()
-      .forEach(method -> {
-          String parameterList = "void";
-          String returnType = "void";
-          String methodBody = "";
-          String inputType = adjustClassName(method.getInputType());
-          String outputType = adjustClassName(method.getOutputType());
-          String javaMethodName = grpcMethodNameToJava(method.getName());
-          MethodType methodType = MethodType.Unary;
-          
-          if (method.hasClientStreaming() && method.hasServerStreaming()) {
-            methodType = MethodType.BidirectionStream;
-          } else if (method.hasClientStreaming() && !method.hasServerStreaming()) {
-            methodType = MethodType.ClientStream;
-          } else if (!method.hasClientStreaming() && !method.hasServerStreaming()) {
-            methodType = MethodType.Unary;
-          } else if (!method.hasClientStreaming() && method.hasServerStreaming()) {
-            methodType = MethodType.ServerStream;
-          }
-          
-          if (methodType == MethodType.ClientStream || methodType == MethodType.BidirectionStream) {
-            parameterList = "io.grpc.stub.StreamObserver<" + outputType + "> responseStream";
-            returnType = "io.grpc.stub.StreamObserver<" + inputType + ">";
-            methodBody = String.join("\n", Arrays.asList("    return new io.grpc.stub.StreamObserver<" + inputType + ">() {",
-                                                         "    @Override",
-                                                         "    public void onNext(" + inputType + " value) {}",
-                                                         "    @Override",
-                                                         "    public void onError(Throwable t) {}",
-                                                         "    @Override",
-                                                         "    public void onCompleted() {}",
-                                                         "  };"));
-          } else {
-            parameterList = inputType + " request, io.grpc.stub.StreamObserver<" + outputType + "> response";
-            returnType = "void";
-            methodBody = String.join("\n", Arrays.asList("    response.onNext(blockingStub." + javaMethodName + "(request));",
-                                                         "    response.onCompleted();"));
-          }
+      service.getMethodList()
+        .stream()
+        .forEach(method -> {
+            String inputType = adjustClassName(method.getInputType());
+            String outputType = adjustClassName(method.getOutputType());
+            String javaMethodName = grpcMethodNameToJava(method.getName());
+            String templateName;
+            HashMap<String, Object> values = new HashMap<>();
+            values.put("methodName", javaMethodName);
+            values.put("inputType", inputType);
+            values.put("outputType", outputType);
+            String methodBody = "";
+              
+            if (method.hasClientStreaming() && method.hasServerStreaming()) {
+              templateName = "BidirectionStreamMethod.ftlh";
+              values.put("stubObjectName", "blockingStub");
+            } else if (method.hasClientStreaming() && !method.hasServerStreaming()) {
+              templateName = "ClientStreamMethod.ftlh";
+              values.put("stubObjectName", "blockingStub");
+            } else if (!method.hasClientStreaming() && !method.hasServerStreaming()) {
+              templateName = "UnaryMethod.ftlh";
+              values.put("stubObjectName", "blockingStub");
+            } else {
+              templateName = "ServerStreamMethod.ftlh";
+              values.put("stubObjectName", "blockingStub");
+            }
 
-          if (methodType == MethodType.ServerStream) {
-            methodBody = "";
-          }
+            try {
+              methodBody = renderTemplate(config, templateName, values);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
 
-          sourceLines.add("  @Override");
-          sourceLines.add("  public " + returnType + " " + javaMethodName + "(" + parameterList + ") {");
-          sourceLines.add(methodBody);
-          sourceLines.add("  }");
-        });
+            methodList.add(new MethodInfo(methodBody));
+          });
 
-    sourceLines.add("}\n");
+      HashMap<String,Object> root = new HashMap<>();
+      root.put("package", file.getPackage());
+      root.put("service", serviceName);
+      root.put("methods", methodList);
+      Template tmpl = config.getTemplate("ServiceClass.ftlh");
+      ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+      OutputStreamWriter out = new OutputStreamWriter(buffer);
+      tmpl.process(root, out);
+      sourceCode = new String(buffer.toByteArray());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-    String sourceCode = String.join("\n", sourceLines);
     return new SourceFile(fileName, sourceCode);
   }
 
@@ -189,18 +187,30 @@ public class App {
     String fullName = packageName + "." + message.getName();
     String fileName = rootPath + "/" + fullName.replace(".", "/") + ".java";
 
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("package " + packageName + ";\n")
-      .append("public class " + message.getName() + "{\n");
+    ArrayList<FieldInfo> fieldList = new ArrayList<>(); 
 
     message.getFieldList()
       .stream()
       .forEach(field -> {
-          stringBuilder.append("  public " + translateType(field) + " " + field.getName() + ";\n");
+          fieldList.add(new FieldInfo(translateType(field), field.getName()));
         });
 
-    stringBuilder.append("}\n");
-    String sourceCode = stringBuilder.toString();
+    String sourceCode = "";
+    try {
+      Configuration config = new Configuration(Configuration.VERSION_2_3_28);
+      config.setDirectoryForTemplateLoading(new File("d:/workspace/project/demo/ByTopic/gRPC-java/test/tmpl/"));
+      HashMap<String,Object> root = new HashMap<>();
+      root.put("package", packageName);
+      root.put("class", message.getName());
+      root.put("fields", fieldList);
+      Template tmpl = config.getTemplate("pojo.ftlh");
+      ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+      OutputStreamWriter out = new OutputStreamWriter(buffer);
+      tmpl.process(root, out);
+      sourceCode = new String(buffer.toByteArray());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     return new SourceFile(fileName, sourceCode);
   }

@@ -1,0 +1,5 @@
+使用freemarker作为模板。ok
+生成的服务类提供stream方法。ok
+把test/App.java项目重构为一个类。
+将模板打包到程序中。
+生成的服务类提供两个构造函数，一个传入Channel，另一个传入ChannelSelector。
