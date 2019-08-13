@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.tq.gateway;
 
 import java.io.Console;
 import java.io.IOException;
@@ -21,41 +21,32 @@ import java.util.stream.Collectors;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import com.sun.tools.javac.main.Main;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import io.grpc.*;
 import io.grpc.stub.StreamObserver;
 import java.io.*;
 import java.util.logging.Logger;
-
 import javax.annotation.Nullable;
-
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
-
+import com.tq.gateway.service.builder.ProxyServiceBuilder;
 
 @SpringBootApplication
-public class DemoApplication implements CommandLineRunner {
+public class GatewayServiceApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+  @Autowired
+  GatewayConfig gatewayConfig;
+  
+  public static void main(String[] args) {
+    SpringApplication.run(GatewayServiceApplication.class, args);
+  }
 
   @Override
   public void run(String... args) throws Exception {
+    System.out.println(gatewayConfig.toString());
 
-    // 配置
-    GrpcServiceBuilder.Config config = new GrpcServiceBuilder.Config();
-    config.protocolDirectory = "d:/workspace/project/demo/ByTopic/gRPC-java/protocol";
-    config.buildDirectory = "d:/workspace/project/demo/ByTopic/gRPC-java/build";
-    config.protoCompilerRootDirectory = "D:/Program Files/protoc-3.6.1-win32";
-    config.grpcPluginPath = "C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/protoc-gen-grpc-java/1.22.1/e0f304c1f3a7892543de91a3b6d7be4f0409257f/protoc-gen-grpc-java-1.22.1-windows-x86_64.exe";
-    config.javaCompilerPath = "C:/Program Files (x86)/Java/jdk1.8.0_192/bin/javac.exe";
-    config.classPath = ".;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java/3.7.1/protobuf-java-3.7.1.jar;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java-util/3.7.1/protobuf-java-util-3.7.1.jar;C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-api/1.22.1/77311e5735c4097c5cce57f0f4d0847c51db63bb/grpc-api-1.22.1.jar;C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.22.1/1a074f9cf6f367b99c25e70dc68589f142f82d11/grpc-context-1.22.1.jar;C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.22.1/f8b6f872b7f069aaff1c3380b2ba7f91f06e4da1/grpc-core-1.22.1.jar;D:/workspace/project/study/grpc-java/netty/build/libs/grpc-netty-1.21.0-SNAPSHOT.jar;C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-protobuf/1.21.0/ac92a46921f9bf922e76b46e5731eaf312545acb/grpc-protobuf-1.21.0.jar;C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-stub/1.22.1/910550293aab760b706827c5f71c80551e5490f3/grpc-stub-1.22.1.jar;C:/Users/guosen/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/27.0.1-jre/bd41a290787b5301e63929676d792c507bbc00ae/guava-27.0.1-jre.jar;D:/workspace/project/study/bazel/third_party/javax_annotations/javax.annotation-api-1.3.2.jar";
+    ClassLoader classLoader = new ProxyServiceBuilder().build(gatewayConfig);
 
-
-    ClassLoader classLoader = new GrpcServiceBuilder().build(config);
-
-    int port = 50051;
+    int port = gatewayConfig.getPort();
     ServerBuilder serverBuilder = ServerBuilder.forPort(port);
     serverBuilder.fallbackHandlerRegistry(new HandlerRegistry() {
         @Override
@@ -78,7 +69,7 @@ public class DemoApplication implements CommandLineRunner {
 
           String implClassName = String.format("%s.%sGrpc.%sImplBase", packageName, className, className);
           String sourceCode = String.format("package %s;import %s;public class %s extends %s {}", packageName, implClassName, className, implClassName);
-          String sourceFileName = config.buildDirectory + "/gen/src/" + packageName.replace(".", "/") + "/" + className + ".java";
+          String sourceFileName = gatewayConfig.getBuildDirectory() + "/gen/src/" + packageName.replace(".", "/") + "/" + className + ".java";
 
           try {
             String serviceClassName = packageName + "." + className;
@@ -104,5 +95,4 @@ public class DemoApplication implements CommandLineRunner {
     
     server.awaitTermination();
   }
-
 }

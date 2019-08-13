@@ -11,6 +11,7 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -19,8 +20,7 @@ dependencies {
     implementation 'io.grpc:grpc-protobuf:1.21.0'
     implementation 'io.grpc:grpc-stub:1.21.0'
     implementation 'org.springframework.boot:spring-boot-starter'
-    
+    implementation 'org.freemarker:freemarker:2.3.28'
     compile files("C:/Program Files/Java/jdk1.8.0_192/lib/tools.jar")
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

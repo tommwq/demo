@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.tq.gateway.service.builder;
 
 import java.io.Console;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
-import com.sun.tools.javac.main.Main;
+//import com.sun.tools.javac.main.Main;
 import io.grpc.*;
 import io.grpc.stub.StreamObserver;
 import java.io.*;
@@ -26,24 +26,18 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
 
+import com.tq.utility.OSUtils;
+import com.tq.utility.Utils;
+import com.tq.utility.CollectionUtils;
+import com.tq.gateway.GatewayConfig;
 
-public class GrpcServiceBuilder {
-
-  public static class Config {
-    public String protocolDirectory = "";
-    public String buildDirectory = "";
-    public String protoCompilerRootDirectory = "";
-    public String grpcPluginPath = "";
-    public String javaCompilerPath = "";
-    public String classPath = "";
-  }
+public class ProxyServiceBuilder {
 
   private void compileGrpcFiles(String protoCompilerRootDirectory,
                                 String protocolDirectory,
                                 String buildDirectory,
                                 String grpcPluginPath)
     throws IOException, InterruptedException {
-    // TODO 处理操作系统是Linux的情况。
     OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(protoCompilerRootDirectory + "/bin/protoc.exe",
                                                                   "--proto_path",
                                                                   protocolDirectory,
@@ -136,26 +130,26 @@ public class GrpcServiceBuilder {
     }
   }
 
-  public ClassLoader build(Config config) throws Exception {
-    String protocolDirectory = config.protocolDirectory;
+  public ClassLoader build(GatewayConfig config) throws Exception {
+    String protocolDirectory = config.getProtocolDirectory();
 
-    String buildDirectory = config.buildDirectory;
+    String buildDirectory = config.getBuildDirectory();
     OSUtils.createDirectoryInNeed(buildDirectory);
-    compileGrpcFiles(config.protoCompilerRootDirectory,
-                     config.protocolDirectory,
-                     config.buildDirectory,
-                     config.grpcPluginPath);
+    compileGrpcFiles(config.getProtoCompilerRootDirectory(),
+                     config.getProtocolDirectory(),
+                     config.getBuildDirectory(),
+                     config.getGrpcPluginPath());
 
-    compileJavaFiles(config.javaCompilerPath,
-                     config.buildDirectory,
-                     config.buildDirectory + "/classes",
-                     config.classPath);
+    compileJavaFiles(config.getJavaCompilerPath(),
+                     config.getBuildDirectory(),
+                     config.getBuildDirectory() + "/classes",
+                     config.getClassPath());
 
     packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
-                      config.buildDirectory + "/a.jar",
-                      config.buildDirectory + "/classes");
+                      config.getBuildDirectory() + "/a.jar",
+                      config.getBuildDirectory() + "/classes");
                       
-    ClassLoader classLoader = loadGrpcService(config.buildDirectory + "/a.jar");
+    ClassLoader classLoader = loadGrpcService(config.getBuildDirectory() + "/a.jar");
     return classLoader;
   }
 }
