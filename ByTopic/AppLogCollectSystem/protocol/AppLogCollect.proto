@@ -45,6 +45,7 @@ message LogRecord {
   string method_name = 11;
   repeated string method_parameters = 12;
   string method_result = 13;
+  string device_id = 14;
 }
 
 // message Empty {}

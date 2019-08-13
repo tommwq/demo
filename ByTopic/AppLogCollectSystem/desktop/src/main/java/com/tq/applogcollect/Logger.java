@@ -1,14 +1,17 @@
-package com.tq.applogmanagement;
+package com.tq.applogcollect;
 
-import com.tq.applogmanagement.LogCollectServiceProtos.LogLevel;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogRecord;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogQueryCommand;
-import com.tq.applogmanagement.LogCollectServiceProtos.ModuleVersion;
+import com.tq.applogcollect.AppLogCollectProto.LogLevel;
+import com.tq.applogcollect.AppLogCollectProto.LogRecord;
+import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
+import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.TreeMap;
+import java.util.ArrayList;
 
 class Logger {
+
+  public static ArrayList<LogRecord> logBuffer = new ArrayList<>();
 
   // TODO make it singletong
   // TODO mutex
@@ -25,11 +28,11 @@ class Logger {
     return log(2, 0, parameters);
   }
 
-  public long leave(long pairSequence, Object... parameters) {
-    return log(2, pairSequence, parameters);
+  public long leave(long associatedSequence, Object... parameters) {
+    return log(2, associatedSequence, parameters);
   }
   
-  private long log(int stackDepth, long pairSequence, Object... parameters) {
+  private long log(int stackDepth, long associatedSequence, Object... parameters) {
 
     String fileName = "unknown";
     int lineNumber = -1;
@@ -57,7 +60,7 @@ class Logger {
 
     long lsn = sequence++;
     LogRecord record = newLogRecord(lsn,
-           pairSequence,
+           associatedSequence,
            Level.Debug.ordinal(),
            System.currentTimeMillis(),
            packageName,
@@ -70,12 +73,13 @@ class Logger {
 
     // TODO 将record投递到后台线程。
     System.out.println(record);
+    logBuffer.add(record);
 
     return lsn;
   }
 
   private LogRecord newLogRecord(long sequence,
-                      long pairSequence,
+                      long associatedSequence,
                       int level,
                       long localTime,
                       String packageName,
@@ -88,7 +92,7 @@ class Logger {
 
     return LogRecord.newBuilder()
       .setSequence(sequence)
-      .setPairSequence(pairSequence)
+      .setAssociatedSequence(associatedSequence)
       // .setLogLevel()
       .setLocalTime(localTime)
       .setAppVersion(appVersion)
@@ -100,32 +104,8 @@ class Logger {
       .setMethodName(methodName)
       // .setMethodParameters()
       .setMethodResult(result)
+      .setDeviceId("abc")
       .build();
-
     
-    
-    // String message = String.join("\n", Stream.of("sequence",
-    //                                              sequence,
-    //                                              "level",
-    //                                              level,
-    //                                              "time",
-    //                                              localTime,
-    //                                              "package",
-    //                                              packageName,
-    //                                              "file",
-    //                                              fileName,
-    //                                              "line",
-    //                                              lineNumber,
-    //                                              "class",
-    //                                              className,
-    //                                              "method",
-    //                                              methodName,
-    //                                              "input",
-    //                                              parameterValues,
-    //                                              "output",
-    //                                              result)
-    //                              .map(StringUtils::stringify)
-    //                              .collect(Collectors.toList()));
-    // System.out.println(message);
   }
 }

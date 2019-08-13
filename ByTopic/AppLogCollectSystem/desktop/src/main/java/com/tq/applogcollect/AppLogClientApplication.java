@@ -1,9 +1,10 @@
-package com.tq.applogmanagement;
+package com.tq.applogcollect;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
+import io.grpc.stub.StreamObserver;
 
 @SpringBootApplication
 @Component
@@ -29,12 +30,9 @@ public class AppLogClientApplication implements CommandLineRunner {
         logger.leave(lsn);
       });
                 
-    // AppLogClient client = new AppLogClient("172.24.20.112", 50051);
-    // try {
-    //     client.report();
-    // } finally {
-    //     client.shutdown();
-    // }
+    AppLogClient client = new AppLogClient("localhost", 50051);
+    client.report();
+    Thread.sleep(10 * 1000);
   }
 
   private void execute(Executor executor) {
