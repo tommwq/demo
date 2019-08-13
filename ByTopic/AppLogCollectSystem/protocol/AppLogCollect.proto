@@ -1,25 +1,17 @@
 syntax = "proto3";
 
-package com.tq.applogmanagement;
+package com.tq.applogcollect;
 
-option java_package = "com.tq.applogmanagement";
-option java_outer_classname ="LogCollectServiceProtos";
+option java_package = "com.tq.applogcollect";
+option java_outer_classname ="AppLogCollectProto";
 
 // 服务器向App发出命令，要求App上报日志。
 // TODO 重新审定协议。
 message LogQueryCommand {
-
-  enum LogLocateMethod {
-    SEQUENCE = 0;
-    TIME = 1;
-  }
-
   string package_name = 1;
-  LogLocateMethod locate_method = 2;
-  int64 start_sequence = 3;
-  int64 start_time = 4;
-  int32 log_count = 5;
-  bool include_subpackage = 6;
+  int64 last_sequence = 2; // 0 表示从最新一条日志开始
+  int32 count = 3;
+  bool include_sub_package = 4;
 }
 
 // 模块版本信息。
@@ -41,7 +33,7 @@ enum LogLevel {
 // App上报给服务器的日志。
 message LogRecord {
   int64 sequence = 1;
-  int64 pair_sequence = 2;
+  int64 associated_sequence = 2;
   LogLevel log_level = 3;
   int64 local_time = 4;
   string app_version = 5;
@@ -55,14 +47,10 @@ message LogRecord {
   string method_result = 13;
 }
 
-message LogRecordArray {
-  repeated LogRecord log_records = 1;
-}
-
-message Empty {
-}
+// message Empty {}
 
 service LogCollectService {
-  rpc Report (stream LogRecordArray) returns (stream LogQueryCommand);
-  rpc Heartbeat (stream Empty) returns (stream Empty);
+  rpc Report (stream LogRecord) returns (stream LogQueryCommand);
+  // 需要心跳吗？
+  // rpc Heartbeat (stream Empty) returns (stream Empty);
 }

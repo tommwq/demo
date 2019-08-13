@@ -1,4 +1,4 @@
-package com.tq.applogmanagement;
+package com.tq.applogcollect;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 @Component
-public class AppLogManagementApplication implements CommandLineRunner {
+public class AppLogCollectApplication implements CommandLineRunner {
 
   public static void main(String[] args) {
-    SpringApplication.run(AppLogManagementApplication.class, args);
+    SpringApplication.run(AppLogCollectApplication.class, args);
   }
 
   @Override

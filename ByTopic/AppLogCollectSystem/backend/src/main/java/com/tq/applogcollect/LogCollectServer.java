@@ -1,4 +1,4 @@
-package com.tq.applogmanagement;
+package com.tq.applogcollect;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
