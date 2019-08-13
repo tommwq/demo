@@ -1,4 +1,4 @@
   @Override
-  public void ${methodName}(${inputType} request, io.grpc.stub.StreamObserver<${outputType}> outputStream) {
-    stub.${methodName}(request, outputStream);
+  public void ${methodName}(${inputType} input, io.grpc.stub.StreamObserver<${outputType}> outputStream) {
+    stub.${methodName}(input, outputStream);
   }

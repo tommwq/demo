@@ -5,7 +5,10 @@
 从文件读取配置。ok
 将模板打包到程序中。ok
 将依赖类加入到jar包中。ok
-将依赖的程序（Win/Linux）加入到jar包中，启动时增加一个参数--install，将程序解压缩到目录。
-生成的服务类提供两个构造函数，一个传入Channel，另一个传入ChannelSelector。
-尝试去掉classPath配置。
+尝试去掉classPath配置。ok
 将ProtoCompiler配置拆分成protocompiler和googleproto。
+生成的服务类提供两个构造函数，一个传入Channel，另一个传入ChannelSelector。
+将模板中的硬编码提取出来。
+将UnaryMethod改为异步。
+设计registry。
+将依赖的程序（Win/Linux）加入到jar包中，启动时增加一个参数--install，将程序解压缩到目录。

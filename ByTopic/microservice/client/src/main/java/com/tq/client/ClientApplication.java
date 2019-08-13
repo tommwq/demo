@@ -97,7 +97,7 @@ public class ClientApplication {
   }
 
   public static void main(String[] args) throws Exception {
-    ClientApplication app = new ClientApplication("localhost", 50052);
+    ClientApplication app = new ClientApplication("localhost", 50051);
     app.greet1("John");
     app.greet2("John");
     app.greet3("John");

@@ -139,7 +139,6 @@ public class ProxyServiceBuilder {
                                    .map(URL::getFile)
                                    .collect(Collectors.toList()));
 
-    System.out.println(classPath);
     compileJavaFiles(config.getJavaCompilerPath(),
                      config.getBuildDirectory(),
                      config.getBuildDirectory() + "/classes",

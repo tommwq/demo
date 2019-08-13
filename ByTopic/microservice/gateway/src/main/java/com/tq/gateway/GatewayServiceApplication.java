@@ -24,10 +24,6 @@ public class GatewayServiceApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    // TODO use logging
-    // System.out.println(gatewayConfig.toString());
-    // java.net.URLClassLoader loader = (java.net.URLClassLoader) Thread.currentThread().getContextClassLoader();
-    // java.util.Arrays.asList(loader.getURLs()).stream().forEach(System.err::println);
 
     Server server = ServerBuilder.forPort(gatewayConfig.getPort())
       .fallbackHandlerRegistry(new UnregisteredServiceRegistry(new ProxyServiceBuilder().build(gatewayConfig)))

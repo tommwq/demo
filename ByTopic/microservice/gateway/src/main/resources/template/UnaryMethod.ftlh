@@ -1,6 +1,5 @@
   @Override
-  public void ${methodName}(${inputType} request, io.grpc.stub.StreamObserver<${outputType}> responseStream) {
-    ${outputType} realResponse = blockingStub.${methodName}(request);
-    responseStream.onNext(realResponse);
-    responseStream.onCompleted();
+  public void ${methodName}(${inputType} input, io.grpc.stub.StreamObserver<${outputType}> outputStream) {
+    outputStream.onNext(blockingStub.${methodName}(input));
+    outputStream.onCompleted();
   }

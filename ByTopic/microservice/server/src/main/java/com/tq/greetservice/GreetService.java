@@ -22,25 +22,20 @@ public class GreetService extends GreetServiceGrpc.GreetServiceImplBase {
   public StreamObserver<GreetRequest> greet2(StreamObserver<GreetReply> outputStream) {
     return new StreamObserver<GreetRequest>() {
 
-      private ArrayList<GreetRequest> buffer = new ArrayList();
+      private GreetRequest last = null;
       
       @Override
       public void onNext(GreetRequest request) {
-        buffer.add(request);
+        last = request;
       }
 
       @Override
-      public void onError(Throwable t) {
-        outputStream.onCompleted();
-      }
+      public void onError(Throwable t) {}
 
       @Override
       public void onCompleted() {
-        for (GreetRequest request: buffer) {
-          outputStream.onNext(GreetReply.newBuilder().setMessage("Greet2 " + request.getName()).build());      
-        }
-
-        buffer.clear();
+        outputStream.onNext(GreetReply.newBuilder().setMessage("Greet2 " + last.getName()).build());
+        outputStream.onCompleted();
       }
     };
   }
@@ -56,12 +51,11 @@ public class GreetService extends GreetServiceGrpc.GreetServiceImplBase {
       }
 
       @Override
-      public void onError(Throwable t) {
-        outputStream.onCompleted();
-      }
+      public void onError(Throwable t) {}
 
       @Override
       public void onCompleted() {
+        outputStream.onCompleted();
       }
     };
   }

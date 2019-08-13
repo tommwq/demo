@@ -1,10 +1,10 @@
 spring.main.banner-mode=off
 logging.level.root=WARN
 
-gateway.protocolDirectory=c:/Users/WangQian/Workspace/Project/demo/ByTopic/microservice/protocol
-gateway.buildDirectory=c:/Users/WangQian/Workspace/Project/demo/ByTopic/microservice/build
-gateway.protoCompilerRootDirectory=C:/Users/WangQian/Workspace/Go/src/tq/quote/tool/protoc-3.0.0-win32/
-gateway.grpcPluginPath=C:/Users/WangQian/.gradle/caches/modules-2/files-2.1/io.grpc/protoc-gen-grpc-java/1.21.0/ef1f14c28fa997233b9da470b1281b7d26a90fcc/protoc-gen-grpc-java-1.21.0-windows-x86_64.exe
+gateway.protocolDirectory=d:/workspace/project/demo/ByTopic/microservice/protocol
+gateway.buildDirectory=d:/workspace/project/demo/ByTopic/microservice/build
+gateway.protoCompilerRootDirectory=D:/Program Files/protoc-3.6.1-win32
+gateway.grpcPluginPath=C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/protoc-gen-grpc-java/1.22.1/e0f304c1f3a7892543de91a3b6d7be4f0409257f/protoc-gen-grpc-java-1.22.1-windows-x86_64.exe
 gateway.javaCompilerPath=C:/Program Files (x86)/Java/jdk1.8.0_192/bin/javac.exe
 gateway.jarPath=C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe
 
