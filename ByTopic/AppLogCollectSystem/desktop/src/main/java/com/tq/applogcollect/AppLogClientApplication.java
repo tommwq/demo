@@ -32,7 +32,7 @@ public class AppLogClientApplication implements CommandLineRunner {
                 
     AppLogClient client = new AppLogClient("localhost", 50051);
     client.report();
-    Thread.sleep(10 * 1000);
+    Thread.sleep(10 * 60 * 1000);
   }
 
   private void execute(Executor executor) {

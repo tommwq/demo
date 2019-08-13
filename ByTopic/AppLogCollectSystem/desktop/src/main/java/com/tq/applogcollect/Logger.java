@@ -72,7 +72,6 @@ class Logger {
            StringUtils.stringify(result));
 
     // TODO 将record投递到后台线程。
-    System.out.println(record);
     logBuffer.add(record);
 
     return lsn;

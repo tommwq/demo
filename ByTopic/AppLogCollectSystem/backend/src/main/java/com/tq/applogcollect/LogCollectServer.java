@@ -4,55 +4,36 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.DisposableBean;
 
+@Component
 public class LogCollectServer {
   private int port = 50051;
   private Server underlyingServer = null;
+
+  public LogCollectService service;
 
   public int port() {
     return port;
   }
 
-  public void changePort(int aPort) {
-    if (underlyingServer != null) {
-      throw new RuntimeException("cannot change port when server is running");
-    }
+  public LogCollectServer() throws Exception {
+    service = new LogCollectService();
+    underlyingServer = ServerBuilder.forPort(port)
+      .addService(service)
+      .build();
 
-    port = aPort;
+    underlyingServer.start();
   }
 
-  public void start() throws IOException {
-    boolean success = false;
-    try {
-      Runtime.getRuntime().addShutdownHook(new Thread() {
-          @Override
-          public void run() {
-            LogCollectServer.this.stop();
-          }});
-      
-      underlyingServer = ServerBuilder.forPort(port)
-        .addService(new LogCollectService())
-          .build();
-      
-      underlyingServer.start();
-      success = true;
-    } finally {
-      if (!success) {
-        underlyingServer = null;
-      }
-    }
-  }
-
-  public void stop() {
+  public void destroy() {
     if (underlyingServer != null) {
       underlyingServer.shutdown();
-      underlyingServer = null;
-    }
-  }
-
-  public void blockUntilShutdown() throws InterruptedException {
-    if (underlyingServer != null) {
-      underlyingServer.awaitTermination();
     }
   }
 }

@@ -53,9 +53,6 @@ public class AppLogClient {
   private void send() {
     Logger.logBuffer
       .stream()
-      .forEach(logRecord -> {
-          System.out.println("sending " + logRecord);
-          inputStream.onNext(logRecord);
-        });
+      .forEach(logRecord -> inputStream.onNext(logRecord));
   }
 }
