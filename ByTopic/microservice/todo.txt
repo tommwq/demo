@@ -2,8 +2,10 @@
 生成的服务类提供stream方法。ok
 把test/App.java项目重构为一个类。ok
 将test/App.java合并到proxy中。ok
-从文件读取配置。
-将模板打包到程序中。
+从文件读取配置。ok
+将模板打包到程序中。ok
+将依赖类加入到jar包中。ok
+将依赖的程序（Win/Linux）加入到jar包中，启动时增加一个参数--install，将程序解压缩到目录。
 生成的服务类提供两个构造函数，一个传入Channel，另一个传入ChannelSelector。
-将依赖类加入到jar包中。
-将依赖的程序（Win/Linux）加入到jar包中。
+尝试去掉classPath配置。
+将ProtoCompiler配置拆分成protocompiler和googleproto。

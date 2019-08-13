@@ -18,7 +18,6 @@ import java.util.function.Predicate;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
-//import com.sun.tools.javac.main.Main;
 import io.grpc.*;
 import io.grpc.stub.StreamObserver;
 import java.io.*;
@@ -31,7 +30,17 @@ import com.tq.utility.Utils;
 import com.tq.utility.CollectionUtils;
 import com.tq.gateway.GatewayConfig;
 
+import com.tq.gateway.generator.ProxyServiceGenerator;
+import freemarker.template.Configuration;
+
+
 public class ProxyServiceBuilder {
+
+  public static final String DESCRIPTOR_SET_FILE_NAME = "descriptor_set.pbb";
+
+  private String getDescriptorSetFileName(String buildDirectory) {
+    return buildDirectory + "/" + DESCRIPTOR_SET_FILE_NAME;
+  }
 
   private void compileGrpcFiles(String protoCompilerRootDirectory,
                                 String protocolDirectory,
@@ -44,7 +53,7 @@ public class ProxyServiceBuilder {
                                                                   "--proto_path",
                                                                   protoCompilerRootDirectory + "/include/google/protobuf",
                                                                   "--descriptor_set_out",
-                                                                  buildDirectory + "/a.d",
+                                                                  getDescriptorSetFileName(buildDirectory),
                                                                   "--java_out=" + buildDirectory),
                                                     OSUtils.recurseListProtocolFileNames(new File(protocolDirectory)))).waitFor();
 
@@ -76,7 +85,8 @@ public class ProxyServiceBuilder {
 
   private static void packageClassFiles(String jarPath,
                                         String outputFilename,
-                                        String classFileDirectory) throws IOException, InterruptedException {
+                                        String classFileDirectory)
+    throws IOException, InterruptedException {
   
     OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(jarPath,
                                                                   "cf",
@@ -88,68 +98,58 @@ public class ProxyServiceBuilder {
                                                     .collect(Collectors.toList()))).waitFor();
   }
 
-  private ClassLoader loadGrpcService(String jarFileName) {
+  private ClassLoader createProxyServiceLoader(String jarFileName) throws Exception {
 
-    List<String> jarList = Arrays.asList(jarFileName,
-                                         "C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java/3.7.1/protobuf-java-3.7.1.jar",
-                                         "C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java-util/3.7.1/protobuf-java-util-3.7.1.jar",
-                                         "C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java/3.7.1/protobuf-java-3.7.1.jar",
-                                         "C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java-util/3.7.1/protobuf-java-util-3.7.1.jar",
-                                         "C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-api/1.22.1/77311e5735c4097c5cce57f0f4d0847c51db63bb/grpc-api-1.22.1.jar",
-                                         "C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.22.1/1a074f9cf6f367b99c25e70dc68589f142f82d11/grpc-context-1.22.1.jar",
-                                         "C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.22.1/f8b6f872b7f069aaff1c3380b2ba7f91f06e4da1/grpc-core-1.22.1.jar",
-                                         "D:/workspace/project/study/grpc-java/netty/build/libs/grpc-netty-1.21.0-SNAPSHOT.jar",
-                                         "C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-protobuf/1.21.0/ac92a46921f9bf922e76b46e5731eaf312545acb/grpc-protobuf-1.21.0.jar",
-                                         "C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-stub/1.22.1/910550293aab760b706827c5f71c80551e5490f3/grpc-stub-1.22.1.jar",
-                                         "C:/Users/guosen/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/27.0.1-jre/bd41a290787b5301e63929676d792c507bbc00ae/guava-27.0.1-jre.jar",
-                                         "D:/workspace/project/study/bazel/third_party/javax_annotations/javax.annotation-api-1.3.2.jar"
-      );
-       
-    try {
-      URLClassLoader classLoader = new URLClassLoader(jarList.stream()
-                                                      .map((fileName) -> {
-                                                          try {
-                                                            return new File(fileName).toURI().toURL();
-                                                          } catch (MalformedURLException e) {
-                                                            return null;
-                                                          }
-                                                        })
-                                                      .filter((url) -> url != null)
-                                                      .collect(Collectors.toList())
-                                                      .toArray(new URL[]{}),
-                                                      Thread.currentThread().getContextClassLoader());
+    List<String> jarList = Arrays.asList(jarFileName);
+    URLClassLoader classLoader = new URLClassLoader(jarList.stream()
+                                                    .map(Utils::fileNameToUrl)
+                                                    .filter(Utils::notNull)
+                                                    .collect(Collectors.toList())
+                                                    .toArray(new URL[]{}),
+                                                    Thread.currentThread().getContextClassLoader());
+    return classLoader;
+  }
 
-      String packageName = "com.tq.test.helloworld";
-      String outerClassName = "HelloWorldProto";
-      String serviceName = "Greeter";
-      String className = String.format("%s.%sGrpc$%sImplBase", packageName, serviceName, serviceName);
-      return classLoader;
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw e;
-    }
+  private void generateProxySourceFiles(String outputDirectory, String descriptorSetFileName) throws Exception {
+    Configuration freemarkerConfig = new Configuration(Configuration.VERSION_2_3_27);
+    freemarkerConfig.setClassLoaderForTemplateLoading(Thread.currentThread().getContextClassLoader(), "/template");
+    
+    ProxyServiceGenerator.newBuilder()
+      .setOutputDirectory(outputDirectory)
+      .setFreemarkerConfiguration(freemarkerConfig)
+      .setDescriptorSetFileName(descriptorSetFileName)
+      .build()
+      .generate();
   }
 
   public ClassLoader build(GatewayConfig config) throws Exception {
-    String protocolDirectory = config.getProtocolDirectory();
 
     String buildDirectory = config.getBuildDirectory();
-    OSUtils.createDirectoryInNeed(buildDirectory);
+    OSUtils.createDirectoryInNeed(config.getBuildDirectory());
+    
     compileGrpcFiles(config.getProtoCompilerRootDirectory(),
                      config.getProtocolDirectory(),
                      config.getBuildDirectory(),
                      config.getGrpcPluginPath());
 
+    generateProxySourceFiles(config.getBuildDirectory(), getDescriptorSetFileName(buildDirectory));
+
+    String classPath = String.join(";", Arrays.asList(((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs())
+                                   .stream()
+                                   .map(URL::getFile)
+                                   .collect(Collectors.toList()));
+
+    System.out.println(classPath);
     compileJavaFiles(config.getJavaCompilerPath(),
                      config.getBuildDirectory(),
                      config.getBuildDirectory() + "/classes",
-                     config.getClassPath());
+                     classPath);
 
-    packageClassFiles("C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe",
-                      config.getBuildDirectory() + "/a.jar",
+    packageClassFiles(config.getJarPath(),
+                      config.getBuildDirectory() + "/generated.jar",
                       config.getBuildDirectory() + "/classes");
                       
-    ClassLoader classLoader = loadGrpcService(config.getBuildDirectory() + "/a.jar");
+    ClassLoader classLoader = createProxyServiceLoader(config.getBuildDirectory() + "/generated.jar");
     return classLoader;
   }
 }

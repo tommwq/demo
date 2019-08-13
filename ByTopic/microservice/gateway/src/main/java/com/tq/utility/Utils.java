@@ -9,15 +9,68 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.File;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Utils {
+
+  public static <T,R> R call(Emitter<T,R> emitter, T... args) {
+    return call(null, emitter, args);
+  }
+
+  public static <T,R> R call(Emitter<Throwable,R> errorHandler, Emitter<T,R> emitter, T... args) {
+    try {
+      return emitter.call(args);
+    } catch (Exception error) {
+      if (errorHandler == null) {
+        return null;
+      }
+      
+      try {
+        return errorHandler.call(error);
+      } catch (Exception fatalError) {
+        throw new RuntimeException(fatalError);
+      }
+    }
+  }
+
+  public static <T> void run(Procedure<T> procedure, T... args) {
+    run(null, procedure, args);
+  }
+
+  public static <T> void run(Procedure<Throwable> errorHandler, Procedure<T> procedure, T... args) {
+    try {
+      procedure.call(args);
+    } catch (Exception error) {
+      if (errorHandler == null) {
+        return;
+      }
+      
+      try {
+        errorHandler.call(error);
+      } catch (Exception fatalError) {
+        throw new RuntimeException(fatalError);
+      }
+    }
+  }
+
+  public static Boolean notNull(Object object) {
+    return not(object == null);
+  }
+  
+  public static URL fileNameToUrl(String fileName) {
+    return call(name -> new File(name[0]).toURI().toURL(), fileName);
+  }
+  
   public static String renderTemplate(Configuration config,
                                       String templateName,
                                       Map<String, Object> values)

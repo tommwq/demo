@@ -167,7 +167,7 @@ public class ProxyServiceGenerator {
     root.put("package", packageName);
     root.put("class", message.getName());
     root.put("fields", fieldList);
-    sourceCode = Utils.renderTemplate(config.freemarkerConfiguration, "pojo.ftlh", root);
+    sourceCode = Utils.renderTemplate(config.freemarkerConfiguration, "POJOClass.ftlh", root);
 
     return new SourceFile(fileName, sourceCode);
   }

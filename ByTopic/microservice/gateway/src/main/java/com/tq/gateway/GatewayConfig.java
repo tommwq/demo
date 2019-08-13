@@ -11,6 +11,7 @@ public class GatewayConfig {
   private String protoCompilerRootDirectory = "";
   private String grpcPluginPath = "";
   private String javaCompilerPath = "";
+  private String jarPath = "";
   private String classPath = "";
   private int port = 50051;
   // TODO host, port, ...
@@ -71,6 +72,14 @@ public class GatewayConfig {
     classPath = value;
   }
 
+  public String getJarPath() {
+    return jarPath;
+  }
+  
+  public void setJarPath(String value) {
+    jarPath = value;
+  }
+
   @Override
   public String toString() {
     return String.join("\n", new String[] {
@@ -80,6 +89,7 @@ public class GatewayConfig {
         "gateway.grpcPluginPath=" + grpcPluginPath,
         "gateway.javaCompilerPath=" + javaCompilerPath,
         "gateway.classPath=" + classPath,
+        "gateway.jarPath=" + jarPath,
         "gateway.port=" + port,
       });
   }
