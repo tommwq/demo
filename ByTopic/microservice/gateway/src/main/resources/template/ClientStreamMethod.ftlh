@@ -1,5 +1,5 @@
   @Override
-  public io.grpc.stub.StreamObserver<${inputType}> ${methodName}(io.grpc.stub.StreamObserver<${outputType}> responseStream) {
+  public io.grpc.stub.StreamObserver<${inputType}> ${methodName}(io.grpc.stub.StreamObserver<${outputType}> outputStream) {
     return new io.grpc.stub.StreamObserver<${inputType}>() {
       @Override
       public void onNext(${inputType} value) {

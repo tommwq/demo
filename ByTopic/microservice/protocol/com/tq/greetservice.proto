@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.tq.greetservice";
+option java_outer_classname = "GreetServiceProto";
+
+package com.tq.greetservice;
+
+message GreetRequest {
+  string name = 1;
+}
+
+message GreetReply {
+  string message = 1;
+}
+
+service GreetService {
+  rpc Greet1(GreetRequest) returns (GreetReply) {}
+  rpc Greet2(stream GreetRequest) returns (GreetReply) {}
+  rpc Greet3(stream GreetRequest) returns (stream GreetReply) {}
+  rpc Greet4(GreetRequest) returns (stream GreetReply) {}
+}
+

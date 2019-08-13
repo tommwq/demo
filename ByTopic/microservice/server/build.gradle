@@ -44,4 +44,4 @@ sourceSets {
     }
 }
 
-mainClassName = 'com.tq.test.App'
+mainClassName = 'com.tq.greetservice.GreetServiceApplication'

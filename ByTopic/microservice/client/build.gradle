@@ -72,4 +72,4 @@ sourceSets {
     }
 }
 
-mainClassName = 'com.tq.test.App'
+mainClassName = 'com.tq.client.ClientApplication'
