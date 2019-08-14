@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    Log <br />
+    日志 <hr/>
     <#list logs as log>
       ${log} <br />
     </#list>

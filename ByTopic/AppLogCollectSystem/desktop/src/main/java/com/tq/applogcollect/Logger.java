@@ -4,16 +4,15 @@ import com.tq.applogcollect.AppLogCollectProto.LogLevel;
 import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
 import com.tq.applogcollect.AppLogCollectProto.LogRecord;
 import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Logger {
-
-  public static enum Level {
-    Debug, Info, Warn, Error, Fatal;
-  }
 
   public static class Config {
     private String appVersion = "";
@@ -52,6 +51,9 @@ public class Logger {
   private static ArrayList<LogRecord> logBuffer = new ArrayList<>();
   
   private Logger() {}
+
+  public static void backgroundWriteRoutine() {
+  }
 
   public static Logger instance() {
     return instance;
@@ -103,7 +105,7 @@ public class Logger {
     long lsn = sequence++;
     LogRecord record = newLogRecord(lsn,
                                     associatedSequence,
-                                    Level.Debug.ordinal(),
+                                    LogLevel.DEBUG.ordinal(),
                                     System.currentTimeMillis(),
                                     packageName,
                                     fileName,
@@ -114,14 +116,13 @@ public class Logger {
                                     StringUtils.stringify(result));
 
     logBuffer.add(record);
-    System.err.println(record);
     return lsn;
   }
   
   public LogRecord newEmptyLogRecord() {
     return newLogRecord(0,
                         0,
-                        Level.Debug.ordinal(),
+                        LogLevel.DEBUG.ordinal(),
                         System.currentTimeMillis(),
                         "",
                         "",
@@ -144,24 +145,33 @@ public class Logger {
                                  String[] parameters,
                                  String result) {
 
-    Level logLevel = Level.Debug;
-    if (level <= Level.Debug.ordinal() && Level.Fatal.ordinal() <= level) {
-      logLevel = Level.values()[level];
+    LogLevel logLevel = LogLevel.DEBUG;
+    if (level <= LogLevel.FATAL.ordinal() || LogLevel.TRACE.ordinal() <= level) {
+      logLevel = LogLevel.values()[level];
     }
-    
+
     return LogRecord.newBuilder()
       .setSequence(sequence)
       .setAssociatedSequence(associatedSequence)
-      //.setLogLevel(logLevel)
+      .setLogLevel(logLevel)
       .setLocalTime(localTime)
       .setAppVersion(config.getAppVersion())
-      //.setModuleVersions(config.getModule)
+      .addAllModuleVersions(
+        config.getModuleVersions()
+        .entrySet()
+        .stream()
+        .map(entry -> ModuleVersion.newBuilder()
+             .setModuleName(entry.getKey())
+             .setModuleVersion(entry.getValue())
+             .build())
+        .collect(Collectors.toList()))
       .setSourceFile(fileName)
       .setLineNumber(lineNumber)
       .setPackageName(packageName)
       .setClassName(className)
       .setMethodName(methodName)
-      //.setMethodParameters()
+      .addAllMethodParameters(Stream.of(parameters)
+                              .collect(Collectors.toList()))
       .setMethodResult(result)
       .setDeviceId(config.getDeviceId())
       .build();

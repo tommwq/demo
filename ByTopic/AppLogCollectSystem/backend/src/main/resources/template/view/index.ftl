@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
   <body>
-    Hello! <br />
-    ${onlineDeviceSet?size}
-    <br />
+    在线设备数：${onlineDeviceSet?size} <hr/>
     <ol>
     <#list onlineDeviceSet as device>
-      <li>${device}</li>
+      <li><a href="/log/${device}">${device}</a></li>
     </#list>
     </ol>
   </body>

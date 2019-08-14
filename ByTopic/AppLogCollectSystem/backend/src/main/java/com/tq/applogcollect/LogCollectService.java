@@ -19,7 +19,7 @@ public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceIm
   public static class LogRecordInputStream implements StreamObserver<LogRecord> {
     private String deviceId = null;
     StreamObserver<LogQueryCommand> outputStream = null;
-    public ArrayList<String> logBuffer = new ArrayList<>();
+    public ArrayList<LogRecord> logBuffer = new ArrayList<>();
     Logger logger = LoggerFactory.getLogger(LogRecordInputStream.class);
     
     public LogRecordInputStream(StreamObserver<LogQueryCommand> aOutputStream) {
@@ -27,15 +27,18 @@ public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceIm
     }
       
     @Override
-    public void onNext(LogRecord report) {
-      deviceId = report.getDeviceId();
+    public void onNext(LogRecord newLog) {
+      deviceId = newLog.getDeviceId();
       logger.warn(deviceId);
       if (!onlineDevices.containsKey(deviceId)) {
-        logger.warn("ADD " + deviceId);
         onlineDevices.put(deviceId, this);
       }
-      
-      logBuffer.add(report.toString());
+
+      if (logBuffer.stream()
+          .filter(record -> record.getSequence() == newLog.getSequence())
+          .count() == 0) {
+        logBuffer.add(newLog);
+      }
     }
     
     @Override

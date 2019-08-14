@@ -1,14 +1,17 @@
 package com.tq.applogcollect.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import com.tq.applogcollect.LogCollectService;
+import com.tq.applogcollect.AppLogCollectProto.LogRecord;
 import com.tq.applogcollect.LogCollectServer;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.tq.applogcollect.LogCollectService;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class IndexController {
@@ -20,28 +23,28 @@ public class IndexController {
   
   @RequestMapping(value="/")
   public String index(Model model) {
-
-    server.service.onlineDevices.keySet().stream().forEach(x -> logger.debug("|" + x + "|"));
     
     model.addAttribute("onlineDeviceSet", LogCollectService.onlineDevices.keySet());
     return "view/index";
   }
 
-  @RequestMapping(value="/log")
-  public String log(Model model) throws Exception {
+  @RequestMapping(value="/log/{deviceId}")
+  public ModelAndView log(@PathVariable("deviceId") String deviceId) throws Exception {
+    ModelAndView modelAndView = new ModelAndView();
 
-    logger.warn("size: " + server.service.onlineDevices.keySet().size());
-    server.service.onlineDevices.keySet().stream().forEach(x -> logger.warn("|" + x + "|"));
-
-    LogCollectService.LogRecordInputStream stream = server.service.onlineDevices.get("test_client");
-    logger.warn("" + stream);
+    LogCollectService.LogRecordInputStream stream = server.service.onlineDevices.get(deviceId);
     if (stream != null) {
       stream.command();
-      model.addAttribute("logs", stream.logBuffer);      
-      return "view/log";
+      modelAndView.addObject("logs", stream.logBuffer
+                             .stream()
+                             .map(record -> record.toString())
+                             .collect(Collectors.toList()));
+      modelAndView.setViewName("view/log");
+    } else {
+      modelAndView.addObject("onlineDeviceSet", LogCollectService.onlineDevices.keySet());
+      modelAndView.setViewName("view/index");
     }
-    
-    model.addAttribute("onlineDeviceSet", LogCollectService.onlineDevices.keySet());
-    return "view/index";
+
+    return modelAndView;
   }
 }
