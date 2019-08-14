@@ -8,13 +8,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class GatewayConfig {
   private String protocolDirectory = "";
   private String buildDirectory = "";
-  private String protoCompilerRootDirectory = "";
+  private String protoCompilerPath = "";
+  private String protoIncludeDirectory = "";
   private String grpcPluginPath = "";
   private String javaCompilerPath = "";
   private String jarPath = "";
-  private String classPath = "";
   private int port = 50051;
-  // TODO host, port, ...
 
   public int getPort() {
     return port;
@@ -40,12 +39,12 @@ public class GatewayConfig {
     buildDirectory = value;
   }
 
-  public String getProtoCompilerRootDirectory() {
-    return protoCompilerRootDirectory;
+  public String getProtoCompilerPath() {
+    return protoCompilerPath;
   }
   
-  public void setProtoCompilerRootDirectory(String value) {
-    protoCompilerRootDirectory = value;
+  public void setProtoCompilerPath(String value) {
+    protoCompilerPath = value;
   }
 
   public String getGrpcPluginPath() {
@@ -64,14 +63,6 @@ public class GatewayConfig {
     javaCompilerPath = value;
   }
 
-  public String getClassPath() {
-    return classPath;
-  }
-  
-  public void setClassPath(String value) {
-    classPath = value;
-  }
-
   public String getJarPath() {
     return jarPath;
   }
@@ -80,15 +71,23 @@ public class GatewayConfig {
     jarPath = value;
   }
 
+  public String getProtoIncludeDirectory() {
+    return protoIncludeDirectory;
+  }
+
+  public void setProtoIncludeDirectory(String value) {
+    protoIncludeDirectory = value;
+  }
+
   @Override
   public String toString() {
     return String.join("\n", new String[] {
         "gateway.protocolDirectory=" + protocolDirectory,
         "gateway.buildDirectory=" + buildDirectory,
-        "gateway.protoCompilerRootDirectory=" + protoCompilerRootDirectory,
+        "gateway.protoCompilerPath=" + protoCompilerPath,
+        "gateway.protoIncludeDirectory=" + protoIncludeDirectory,
         "gateway.grpcPluginPath=" + grpcPluginPath,
         "gateway.javaCompilerPath=" + javaCompilerPath,
-        "gateway.classPath=" + classPath,
         "gateway.jarPath=" + jarPath,
         "gateway.port=" + port,
       });

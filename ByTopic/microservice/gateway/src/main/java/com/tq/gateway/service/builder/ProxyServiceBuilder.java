@@ -42,26 +42,27 @@ public class ProxyServiceBuilder {
     return buildDirectory + "/" + DESCRIPTOR_SET_FILE_NAME;
   }
 
-  private void compileGrpcFiles(String protoCompilerRootDirectory,
+  private void compileGrpcFiles(String protoCompilerPath,
+                                String protoIncludeDirectory,
                                 String protocolDirectory,
                                 String buildDirectory,
                                 String grpcPluginPath)
     throws IOException, InterruptedException {
-    OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(protoCompilerRootDirectory + "/bin/protoc.exe",
+    OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(protoCompilerPath,
                                                                   "--proto_path",
                                                                   protocolDirectory,
                                                                   "--proto_path",
-                                                                  protoCompilerRootDirectory + "/include/google/protobuf",
+                                                                  protoIncludeDirectory,
                                                                   "--descriptor_set_out",
                                                                   getDescriptorSetFileName(buildDirectory),
                                                                   "--java_out=" + buildDirectory),
                                                     OSUtils.recurseListProtocolFileNames(new File(protocolDirectory)))).waitFor();
 
-    OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(protoCompilerRootDirectory + "/bin/protoc.exe",
+    OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(protoCompilerPath,
                                                                   "--proto_path",
                                                                   protocolDirectory,
                                                                   "--proto_path",
-                                                                  protoCompilerRootDirectory + "/include/google/protobuf",
+                                                                  protoIncludeDirectory,
                                                                   "--grpc-java_out=" + buildDirectory,
                                                                   "--plugin=protoc-gen-grpc-java=" + grpcPluginPath),
                                                     OSUtils.recurseListProtocolFileNames(new File(protocolDirectory)))).waitFor();
@@ -127,7 +128,8 @@ public class ProxyServiceBuilder {
     String buildDirectory = config.getBuildDirectory();
     OSUtils.createDirectoryInNeed(config.getBuildDirectory());
     
-    compileGrpcFiles(config.getProtoCompilerRootDirectory(),
+    compileGrpcFiles(config.getProtoCompilerPath(),
+                     config.getProtoIncludeDirectory(),
                      config.getProtocolDirectory(),
                      config.getBuildDirectory(),
                      config.getGrpcPluginPath());
