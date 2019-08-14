@@ -6,9 +6,13 @@
 将模板打包到程序中。ok
 将依赖类加入到jar包中。ok
 尝试去掉classPath配置。ok
-将ProtoCompiler配置拆分成protocompiler和googleproto。
-生成的服务类提供两个构造函数，一个传入Channel，另一个传入ChannelSelector。
+将ProtoCompiler配置拆分成protocompiler和googleproto。ok
+设计registry。cancel
+生成的服务类提供两个构造函数，一个传入Channel，另一个传入ChannelSelector。cancel
+编写NameResolver，封装Consul。
+编写LoadBalancer，采用本地最优策略进行负载均衡。
 将模板中的硬编码提取出来。
+支持SSL。
+编写ConfigCenter。
 将UnaryMethod改为异步。
-设计registry。
 将依赖的程序（Win/Linux）加入到jar包中，启动时增加一个参数--install，将程序解压缩到目录。
