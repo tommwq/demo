@@ -9,49 +9,49 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class AppLogClient {
+public class LogCollectAgent {
 
   private final ManagedChannel channel;
   private final LogCollectServiceGrpc.LogCollectServiceStub stub;
-  private final CountDownLatch latch = new CountDownLatch(2);
-
-  public AppLogClient(String host, int port) {
+  private StreamObserver<LogRecord> inputStream = null;
+  
+  public LogCollectAgent(String host, int port) {
     channel = ManagedChannelBuilder.forAddress(host, port)
       .usePlaintext()
       .build();
-    stub = LogCollectServiceGrpc.newStub(channel);
+
+      stub = LogCollectServiceGrpc.newStub(channel);
   }
 
   public void shutdown() throws InterruptedException {
     channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
   }
 
-  private StreamObserver<LogRecord> inputStream = null;
-  public void report() throws InterruptedException {
+  public void start() throws InterruptedException {
+    
     inputStream = stub.report(new StreamObserver<LogQueryCommand>() {
         @Override
         public void onNext(LogQueryCommand command) {
-          send();
+          sendLogRecords();
         }
                 
         @Override
-        public void onError(Throwable error) {
-        }
+        public void onError(Throwable error) {}
                 
         @Override
         public void onCompleted() {
           inputStream.onCompleted();
+          inputStream = null;
         }
       });
 
-    inputStream.onNext(LogRecord.newBuilder().build());
+    inputStream.onNext(Logger.instance().newEmptyLogRecord());
   }
 
-  private void send() {
-    Logger.logBuffer
+  private void sendLogRecords() {
+    Logger.getLogBuffer()
       .stream()
       .forEach(logRecord -> inputStream.onNext(logRecord));
   }

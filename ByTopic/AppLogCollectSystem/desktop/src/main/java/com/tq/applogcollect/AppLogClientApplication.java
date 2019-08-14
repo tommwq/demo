@@ -4,45 +4,33 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
-import io.grpc.stub.StreamObserver;
 
 @SpringBootApplication
 @Component
 public class AppLogClientApplication implements CommandLineRunner {
 
-  @FunctionalInterface
-  private interface Executor {
-    void run();
-  }
-  
-  private Logger logger = new Logger();
-
   public static void main(String[] args) {
+    Logger.Config config = new Logger.Config();
+    config.setAppVersion("0.1.0");
+    config.setModuleVersion("client", "0.1.0");
+    config.setDeviceId("test_client");
+    Logger.changeConfig(config);
+    
     SpringApplication.run(AppLogClientApplication.class, args);
   }
 
   @Override
   public void run(String... args) throws Exception {
-    join("a","b","c");
-
-    execute(() -> {
-        long lsn = logger.enter();
-        logger.leave(lsn);
-      });
-                
-    AppLogClient client = new AppLogClient("localhost", 50051);
-    client.report();
-    Thread.sleep(10 * 60 * 1000);
+    new LogCollectAgent("localhost", 50051).start();
+    
+    while (true) {
+      process();               
+      Thread.sleep(5 * 1000);
+    }
   }
 
-  private void execute(Executor executor) {
-    executor.run();
-  }
-
-  private String join(String... texts) {
-    long lsn = logger.enter(texts);
-    String result = String.join(",", texts);
-    logger.leave(lsn, result);
-    return result;
+  private void process() {
+    long lsn = Logger.instance().enter();
+    Logger.instance().leave(lsn);
   }
 }

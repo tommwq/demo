@@ -29,22 +29,24 @@ public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceIm
     @Override
     public void onNext(LogRecord report) {
       deviceId = report.getDeviceId();
-      System.err.println(deviceId);
-      logger.warn("onNext");
       logger.warn(deviceId);
       if (!onlineDevices.containsKey(deviceId)) {
+        logger.warn("ADD " + deviceId);
         onlineDevices.put(deviceId, this);
       }
+      
       logBuffer.add(report.toString());
     }
     
     @Override
     public void onError(Throwable throwable) {
+      logger.warn("ERR " + deviceId);
       onlineDevices.remove(deviceId);
     }
-
+    
     @Override
     public void onCompleted() {
+      logger.warn("COMPLETE " + deviceId);
       onlineDevices.remove(deviceId);
       outputStream.onCompleted();
     }

@@ -4,14 +4,13 @@ import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
 /**
- * 字符串工具类。
+ * Utility functions for string.
  */
 public class StringUtils {
 
   /**
-   * 将对象转换为字符串。
+   * Dump object to string, support primitive type, Object and array.
    *
-   * 只适用与原生类型、对象和数组。
    */
   public static String stringify(Object object) {
     if (object == null) {
@@ -27,7 +26,7 @@ public class StringUtils {
   }
 
   /**
-   * 将数组转换为字符串数组。
+   * Dump array to string.
    */
   public static String[] stringify(Object[] objects) {
     if (objects == null) {

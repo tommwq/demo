@@ -1,27 +1,68 @@
 package com.tq.applogcollect;
 
 import com.tq.applogcollect.AppLogCollectProto.LogLevel;
-import com.tq.applogcollect.AppLogCollectProto.LogRecord;
 import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
+import com.tq.applogcollect.AppLogCollectProto.LogRecord;
 import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
-import java.util.stream.Stream;
-import java.util.stream.Collectors;
-import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-class Logger {
-
-  public static ArrayList<LogRecord> logBuffer = new ArrayList<>();
-
-  // TODO make it singletong
-  // TODO mutex
-  private static long sequence = 1;
-  // TODO add setter
-  private static String appVersion = "";
-  private static TreeMap<String,String> moduleVersions = new TreeMap<>();
+public class Logger {
 
   public static enum Level {
-    Debug;
+    Debug, Info, Warn, Error, Fatal;
+  }
+
+  public static class Config {
+    private String appVersion = "";
+    private TreeMap<String,String> moduleVersions = new TreeMap<>();
+    private String deviceId = "";
+
+    public String getAppVersion() {
+      return appVersion;
+    }
+    
+    public void setAppVersion(String aVersion) {
+      appVersion = aVersion;
+    }
+
+    public Map<String, String> getModuleVersions() {
+      return moduleVersions;
+    }
+
+    public void setModuleVersion(String module, String version) {
+      moduleVersions.put(module, version);
+    }
+
+    public String getDeviceId() {
+      return deviceId;
+    }
+
+    public void setDeviceId(String aDeviceId) {
+      deviceId = aDeviceId;
+    }
+  }
+
+  // TODO consider concurrency
+  private static Config config = new Config();
+  private static long sequence = 1;
+  private static Logger instance = new Logger();
+  private static ArrayList<LogRecord> logBuffer = new ArrayList<>();
+  
+  private Logger() {}
+
+  public static Logger instance() {
+    return instance;
+  }
+
+  public static void changeConfig(Config aConfig) {
+    config = aConfig;
+  }
+
+  public static List<LogRecord> getLogBuffer() {
+    return logBuffer;
   }
     
   public long enter(Object... parameters) {
@@ -51,6 +92,7 @@ class Logger {
       packageName = "";
       methodName = stack.getMethodName();
       className = stack.getClassName();
+
       int classNamePosition = className.lastIndexOf('.');
       if (classNamePosition != -1) {
         packageName = className.substring(0, classNamePosition);
@@ -60,51 +102,68 @@ class Logger {
 
     long lsn = sequence++;
     LogRecord record = newLogRecord(lsn,
-           associatedSequence,
-           Level.Debug.ordinal(),
-           System.currentTimeMillis(),
-           packageName,
-           fileName,
-           lineNumber,
-           className,
-           methodName,
-           StringUtils.stringify(parameters),
-           StringUtils.stringify(result));
+                                    associatedSequence,
+                                    Level.Debug.ordinal(),
+                                    System.currentTimeMillis(),
+                                    packageName,
+                                    fileName,
+                                    lineNumber,
+                                    className,
+                                    methodName,
+                                    StringUtils.stringify(parameters),
+                                    StringUtils.stringify(result));
 
-    // TODO 将record投递到后台线程。
     logBuffer.add(record);
-
+    System.err.println(record);
     return lsn;
   }
-
+  
+  public LogRecord newEmptyLogRecord() {
+    return newLogRecord(0,
+                        0,
+                        Level.Debug.ordinal(),
+                        System.currentTimeMillis(),
+                        "",
+                        "",
+                        0,
+                        "",
+                        "",
+                        new String[]{""},
+                        "");
+  }
+  
   private LogRecord newLogRecord(long sequence,
-                      long associatedSequence,
-                      int level,
-                      long localTime,
-                      String packageName,
-                      String fileName,
-                      int lineNumber,
-                      String className,
-                      String methodName,
-                      String[] parameters,
-                      String result) {
+                                 long associatedSequence,
+                                 int level,
+                                 long localTime,
+                                 String packageName,
+                                 String fileName,
+                                 int lineNumber,
+                                 String className,
+                                 String methodName,
+                                 String[] parameters,
+                                 String result) {
 
+    Level logLevel = Level.Debug;
+    if (level <= Level.Debug.ordinal() && Level.Fatal.ordinal() <= level) {
+      logLevel = Level.values()[level];
+    }
+    
     return LogRecord.newBuilder()
       .setSequence(sequence)
       .setAssociatedSequence(associatedSequence)
-      // .setLogLevel()
+      //.setLogLevel(logLevel)
       .setLocalTime(localTime)
-      .setAppVersion(appVersion)
-      //.setModuleVersions()
+      .setAppVersion(config.getAppVersion())
+      //.setModuleVersions(config.getModule)
       .setSourceFile(fileName)
       .setLineNumber(lineNumber)
       .setPackageName(packageName)
       .setClassName(className)
       .setMethodName(methodName)
-      // .setMethodParameters()
+      //.setMethodParameters()
       .setMethodResult(result)
-      .setDeviceId("abc")
+      .setDeviceId(config.getDeviceId())
       .build();
-    
   }
 }

@@ -11,11 +11,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.DisposableBean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 public class LogCollectServer {
   private int port = 50051;
   private Server underlyingServer = null;
-
   public LogCollectService service;
 
   public int port() {
