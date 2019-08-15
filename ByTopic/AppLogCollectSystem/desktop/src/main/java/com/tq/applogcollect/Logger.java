@@ -4,10 +4,14 @@ import com.tq.applogcollect.AppLogCollectProto.LogLevel;
 import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
 import com.tq.applogcollect.AppLogCollectProto.LogRecord;
 import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.LinkedTransferQueue;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,7 +22,34 @@ public class Logger {
     private String appVersion = "";
     private TreeMap<String,String> moduleVersions = new TreeMap<>();
     private String deviceId = "";
+    private String fileName = "";
+    private int blockCount = 16;
+    private int blockSize = 4096;
 
+    public int getBlockSize() {
+      return blockSize;
+    }
+
+    public void setBlockSize(int size) {
+      blockSize = size;
+    }
+
+    public int getBlockCount() {
+      return blockCount;
+    }
+
+    public void setBlockCount(int count) {
+      blockCount = count;
+    }
+
+    public String getFileName() {
+      return fileName;
+    }
+
+    public void setFileName(String aFileName) {
+      fileName = aFileName;
+    }
+    
     public String getAppVersion() {
       return appVersion;
     }
@@ -44,33 +75,63 @@ public class Logger {
     }
   }
 
-  // TODO consider concurrency
-  private static Config config = new Config();
-  private static long sequence = 1;
   private static Logger instance = new Logger();
-  private static ArrayList<LogRecord> logBuffer = new ArrayList<>();
+
+  private Config config = new Config();
+  private long sequence = 1;
+  private LinkedTransferQueue<LogRecord> logQueue = new LinkedTransferQueue<>();
+  private Thread backgroundWriteThread = null;
+  private LoggerStorage storage;
   
   private Logger() {}
 
-  public static void backgroundWriteRoutine() {
+  private static class BackgroundWriteRoutine implements Runnable {
+    @Override
+    public void run() {
+      try {
+        while (true) {
+          LogRecord log = instance.logQueue.take();
+          try {
+            instance.write(log);
+          } catch (IOException e) {
+            // TODO
+          }
+        }
+      } catch (InterruptedException e) {
+        ArrayList<LogRecord> tails = new ArrayList<>();
+        tails.addAll(instance.logQueue);
+        tails.stream().forEach(log -> {try {instance.write(log);} catch (Exception ex){}});
+      }
+    }
   }
 
   public static Logger instance() {
     return instance;
   }
 
-  public static void changeConfig(Config aConfig) {
+  public void open(Config aConfig) throws IOException, FileNotFoundException {
     config = aConfig;
-  }
 
-  public static List<LogRecord> getLogBuffer() {
-    return logBuffer;
-  }
+    storage = new LoggerStorage(new SimpleBlockStorage(Paths.get(config.getFileName()),
+                                                       config.getBlockCount(),
+                                                       config.getBlockSize()));
 
-  public static LogRecord lastLog() {
-    return logBuffer.isEmpty() ? null : logBuffer.get(logBuffer.size() - 1);
-  }
+    storage.open();
     
+    backgroundWriteThread = new Thread(new BackgroundWriteRoutine());
+    backgroundWriteThread.start();
+  }
+
+  public void close() {
+    if (backgroundWriteThread != null) {
+      backgroundWriteThread.interrupt();
+    }
+  }
+
+  private void write(LogRecord log) throws IOException {
+    storage.write(log);
+  }
+
   public long enter(Object... parameters) {
     return log(2, 0, parameters);
   }
@@ -80,7 +141,6 @@ public class Logger {
   }
   
   private long log(int stackDepth, long associatedSequence, Object... parameters) {
-
     String fileName = "unknown";
     int lineNumber = -1;
     String packageName = "unknown";
@@ -119,7 +179,7 @@ public class Logger {
                                     StringUtils.stringify(parameters),
                                     StringUtils.stringify(result));
 
-    logBuffer.add(record);
+    logQueue.offer(record);
     return lsn;
   }
   

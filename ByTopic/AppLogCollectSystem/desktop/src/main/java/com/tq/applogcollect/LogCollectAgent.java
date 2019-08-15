@@ -51,8 +51,8 @@ public class LogCollectAgent {
   }
 
   private void sendLogRecords() {
-    Logger.getLogBuffer()
-      .stream()
-      .forEach(logRecord -> inputStream.onNext(logRecord));
+    // Logger.getLogBuffer()
+    //   .stream()
+    //   .forEach(logRecord -> inputStream.onNext(logRecord));
   }
 }

@@ -212,8 +212,6 @@ public class LoggerStorage implements BlockStorage {
 
     long expect = getCheckSum(block);
     long actural = ByteBuffer.wrap(block).order(ByteOrder.LITTLE_ENDIAN).getLong();
-
-    System.err.println("VERIFY " + expect + " " + actural);
     
     return expect == actural;
   }

@@ -13,10 +13,13 @@ public class SimpleBlockStorage implements BlockStorage {
   private int fileLength;
   private RandomAccessFile randomAccessFile;
   private int blockCount;
+  private int blockSize;
 
-  public SimpleBlockStorage(Path aFilePath, int aFileLength) {
+  public SimpleBlockStorage(Path aFilePath, int aBlockCount, int aBlockSize) {
     filePath = aFilePath;
-    fileLength = aFileLength;
+    blockCount = aBlockCount;
+    blockSize = aBlockSize;
+    fileLength = blockCount * blockSize;
   }
 
   /**
@@ -46,7 +49,7 @@ public class SimpleBlockStorage implements BlockStorage {
 
   @Override
   public int blockSize() {
-    return 4096;
+    return blockSize;
   }
 
   @Override
