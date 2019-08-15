@@ -10,11 +10,10 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-public class LoggerStorage extends BlockStorage {
-
+public class LoggerStorage implements BlockStorage {
+  
   private static class Block {
     int crc;
-    
   }
   
   private static class AnchorBlock extends Block {
@@ -25,16 +24,41 @@ public class LoggerStorage extends BlockStorage {
   }
 
   private byte[] tmp;
-  
-  public LoggerStorage(Path aFilePath, int aFileLength) {
-    super(aFilePath, aFileLength);
+  private BlockStorage storage;
+
+    public LoggerStorage(BlockStorage storage) {
     tmp = new byte[blockSize()];
   }
 
-  public void open() {
-    super.open();
-
+  @Override
+  public void open() throws IOException, FileNotFoundException {
+    storage.open();
     setupAnchor();
+  }
+
+  @Override
+  public void close() throws IOException {
+    storage.close();
+  }
+
+  @Override
+  public int blockSize() {
+    return storage.blockSize();
+  }
+
+  @Override
+  public int blockCount() {
+    return storage.blockCount();
+  }
+
+  @Override
+  public byte[] read(int blockNumber) throws IOException {
+    return storage.read(blockNumber);
+  }
+
+  @Override
+  public void write(int blockNumber, byte[] data) throws IOException {
+    storage.write(blockNumber, data);
   }
 
   private void setupAnchor() {
@@ -48,7 +72,7 @@ public class LoggerStorage extends BlockStorage {
     // TODO 处理日志
   }
 
-  public List<LogRecord> read(int64 sequence, int count) {
+  public List<LogRecord> read(long sequence, int count) {
     return null;
   }
 }

@@ -27,7 +27,7 @@ public class AppLogClientApplication implements CommandLineRunner {
   public void run(String... args) throws Exception {
     new LogCollectAgent("localhost", 50051).start();
 
-    BlockStorage storage = new BlockStorage(new File("blk").toPath(), 16 * 1024 * 1024);
+    BlockStorage storage = new SimpleBlockStorage(new File("blk").toPath(), 16 * 1024 * 1024);
     storage.open();
     storage.write(0, "hello".getBytes());
     storage.close();
