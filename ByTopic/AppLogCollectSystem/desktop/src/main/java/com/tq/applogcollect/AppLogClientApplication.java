@@ -27,16 +27,27 @@ public class AppLogClientApplication implements CommandLineRunner {
   public void run(String... args) throws Exception {
     new LogCollectAgent("localhost", 50051).start();
 
-    BlockStorage storage = new SimpleBlockStorage(new File("blk").toPath(), 16 * 1024 * 1024);
+    LoggerStorage storage = new LoggerStorage(new SimpleBlockStorage(new File("blk").toPath(), 2 * 1024 * 1024));
     storage.open();
-    storage.write(0, "hello".getBytes());
+    
+    long lsn = Logger.instance().enter();
+    storage.write(Logger.lastLog());
+    Logger.instance().leave(lsn);
+    storage.write(Logger.lastLog());
+
+    long seq = storage.maxSequence();
+    System.err.println(seq);
+    
+    storage.read(seq, (int) seq)
+      .forEach(System.err::println);
+
     storage.close();
 
-    int count = 12;
-    while (count-- > 0) {
-      process();               
-      Thread.sleep(5 * 1000);
-    }
+    // int count = 12;
+    // while (count-- > 0) {
+    //   process();               
+    //   Thread.sleep(5 * 1000);
+    // }
   }
 
   private void process() {

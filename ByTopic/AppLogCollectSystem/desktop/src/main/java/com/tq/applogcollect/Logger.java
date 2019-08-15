@@ -66,6 +66,10 @@ public class Logger {
   public static List<LogRecord> getLogBuffer() {
     return logBuffer;
   }
+
+  public static LogRecord lastLog() {
+    return logBuffer.isEmpty() ? null : logBuffer.get(logBuffer.size() - 1);
+  }
     
   public long enter(Object... parameters) {
     return log(2, 0, parameters);
