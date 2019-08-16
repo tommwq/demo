@@ -1,6 +1,7 @@
 package com.tq.utility;
 
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto;
+import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
@@ -140,17 +141,25 @@ public class Utils {
     typeTranslateTable.put(Type.TYPE_UINT32_VALUE, "int");
     typeTranslateTable.put(Type.TYPE_UINT64_VALUE, "long");
   }
+  
   public static String translateType(FieldDescriptorProto field) {
+
+    String javaTypeName = "Object";
     int type = field.getType().getNumber();
     if (typeTranslateTable.containsKey(type)) {
-      return typeTranslateTable.get(type);
+      javaTypeName = typeTranslateTable.get(type);
     }
 
     if (type == Type.TYPE_MESSAGE_VALUE) {
-      return adjustClassName(field.getTypeName());
+      javaTypeName = adjustClassName(field.getTypeName());
     }
-    
-    return "Object";
+
+    int label = field.getLabel().getNumber();
+    if (label == Label.LABEL_REPEATED_VALUE) {
+      javaTypeName = String.format("java.util.List<%s>", javaTypeName);
+    }
+
+    return javaTypeName;
   }
 
   public static String grpcMethodNameToJava(String grpcServiceName) {
