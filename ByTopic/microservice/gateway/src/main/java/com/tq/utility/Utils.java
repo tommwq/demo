@@ -82,7 +82,10 @@ public class Utils {
     config.getTemplate(templateName).process(values, writer);
     return new String(buffer.toByteArray());
   }
-  
+
+  /**
+   * Remove leading dot(.) from class name.
+   */
   public static String adjustClassName(String className) {
     if (className.startsWith(".")) {
       return className.substring(1);
@@ -141,6 +144,49 @@ public class Utils {
     typeTranslateTable.put(Type.TYPE_UINT32_VALUE, "int");
     typeTranslateTable.put(Type.TYPE_UINT64_VALUE, "long");
   }
+
+  /**
+   * Get codec class name from field type name.
+   */
+  public static String toCodecClassName(String fieldTypeName) {
+    String javaTypeName = adjustClassName(fieldTypeName);
+    int index = javaTypeName.lastIndexOf(".");
+      if (index == -1) {
+        javaTypeName = "http.codec" + javaTypeName;
+      } else {
+        javaTypeName = javaTypeName.substring(0, index) + ".http.codec" + javaTypeName.substring(index);
+      }
+
+      javaTypeName += "Codec";
+      
+      return javaTypeName;
+  }
+
+  public static String toPojoClassName(FieldDescriptorProto field) {
+
+    String javaTypeName = "Object";
+    int type = field.getType().getNumber();
+    if (typeTranslateTable.containsKey(type)) {
+      javaTypeName = typeTranslateTable.get(type);
+    }
+
+    if (type == Type.TYPE_MESSAGE_VALUE) {
+      javaTypeName = adjustClassName(field.getTypeName());
+      int index = javaTypeName.lastIndexOf(".");
+      if (index == -1) {
+        javaTypeName = "http." + javaTypeName;
+      } else {
+        javaTypeName = javaTypeName.substring(0, index) + ".http" + javaTypeName.substring(index);
+      }
+    }
+
+    int label = field.getLabel().getNumber();
+    if (label == Label.LABEL_REPEATED_VALUE) {
+      javaTypeName = String.format("java.util.List<%s>", javaTypeName);
+    }
+
+    return javaTypeName;
+  }
   
   public static String translateType(FieldDescriptorProto field) {
 
@@ -181,5 +227,13 @@ public class Utils {
 
   public static boolean not(boolean condition) {
     return !condition;
+  }
+
+  public static String toPascalCase(String camelCase) {
+    if (camelCase.isEmpty()) {
+      return camelCase;
+    }
+
+    return camelCase.substring(0, 1).toUpperCase() + camelCase.substring(1);
   }
 }

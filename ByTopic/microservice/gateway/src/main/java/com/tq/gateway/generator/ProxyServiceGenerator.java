@@ -4,6 +4,7 @@ import com.google.protobuf.DescriptorProtos.DescriptorProto;
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
+import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 import com.google.protobuf.DescriptorProtos.MethodDescriptorProto;
 import com.google.protobuf.DescriptorProtos.ServiceDescriptorProto;
@@ -92,6 +93,7 @@ public class ProxyServiceGenerator {
       .forEach(message -> {
           try {
             generatePojoSourceFile(message, file).write();
+            generateCodecSourceFile(message, file).write();
           } catch (Exception e) {
             throw new RuntimeException(e);
           }
@@ -153,14 +155,14 @@ public class ProxyServiceGenerator {
   private SourceFile generatePojoSourceFile(DescriptorProto message, FileDescriptorProto file)
     throws TemplateException, TemplateNotFoundException, IOException, MalformedTemplateNameException {
     String rootPath = config.outputDirectory;
-    String packageName = file.getPackage() + ".http";
+    String packageName = file.getPackage().isEmpty() ? "http" : file.getPackage() + ".http";
     String fullName = packageName + "." + message.getName();
     String fileName = rootPath + "/" + fullName.replace(".", "/") + ".java";
     ArrayList<FieldInfo> fieldList = new ArrayList<>(); 
 
     message.getFieldList()
       .stream()
-      .forEach(field -> fieldList.add(new FieldInfo(Utils.translateType(field), field.getName())));
+      .forEach(field -> fieldList.add(new FieldInfo(Utils.toPojoClassName(field), field.getName())));
 
     String sourceCode = "";
     HashMap<String,Object> root = new HashMap<>();
@@ -169,6 +171,60 @@ public class ProxyServiceGenerator {
     root.put("fields", fieldList);
     sourceCode = Utils.renderTemplate(config.freemarkerConfiguration, "POJOClass.ftlh", root);
 
+    return new SourceFile(fileName, sourceCode);
+  }
+
+  /**
+   * Generate Pojo2Proto codec.
+   */
+  private SourceFile generateCodecSourceFile(DescriptorProto message, FileDescriptorProto file) 
+    throws TemplateException, TemplateNotFoundException, IOException, MalformedTemplateNameException {
+
+    String rootPath = config.outputDirectory;
+    String packageName = file.getPackage();
+    String messageName = message.getName();
+    ArrayList<String> protoSetStat = new ArrayList<>();
+    ArrayList<String> pojoSetStat = new ArrayList<>();
+
+    message.getFieldList()
+      .stream()
+      .forEach(field -> {
+          String fieldName = field.getName();
+          String protoSetter = "";
+          String protoParam = "";
+          String pojoSetter = "";
+          String pojoParam = "";
+          String pascalCase = Utils.toPascalCase(fieldName);
+          
+          protoSetter = "set" + pascalCase;
+          pojoSetter = "set" + pascalCase;
+          if (field.getType().getNumber() == Type.TYPE_MESSAGE_VALUE) {
+            protoParam = Utils.toCodecClassName(field.getTypeName()) + ".toProto(pojo.get" + pascalCase + "())";
+            pojoParam = Utils.toCodecClassName(field.getTypeName()) + ".toPojo(proto.get" + pascalCase + "())";
+          } else {
+            protoParam = "pojo.get" + pascalCase + "()";
+            pojoParam = "proto.get" + pascalCase + "()";
+          }
+
+          if (field.getLabel().getNumber() == Label.LABEL_REPEATED_VALUE) {
+            protoSetter = "addAll" + pascalCase;
+            protoParam = "pojo.get" + pascalCase + "()";
+            pojoSetter = "set" + pascalCase;
+            pojoParam = "proto.get" + pascalCase + "List()";
+          }
+
+          protoSetStat.add(String.format(".%s(%s)", protoSetter, protoParam));
+          pojoSetStat.add(String.format("pojo.%s(%s);", pojoSetter, pojoParam));
+        });
+
+    HashMap<String,Object> values = new HashMap<>();
+    values.put("package", packageName);
+    values.put("message", messageName);
+    values.put("protoSetStat", String.join("\n", protoSetStat));
+    values.put("pojoSetStat", String.join("\n", pojoSetStat));
+    
+    String sourceCode = Utils.renderTemplate(config.freemarkerConfiguration, "CodecClass.ftlh", values);
+    String fileName = rootPath + "/" + packageName.replace(".", "/") + "/http/codec/" + messageName + "Codec.java";
     return new SourceFile(fileName, sourceCode);
   }
 
