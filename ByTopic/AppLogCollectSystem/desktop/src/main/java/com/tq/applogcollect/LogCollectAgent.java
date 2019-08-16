@@ -26,7 +26,7 @@ public class LogCollectAgent {
       .usePlaintext()
       .build();
 
-      stub = LogCollectServiceGrpc.newStub(channel);
+    stub = LogCollectServiceGrpc.newStub(channel);
   }
 
   public void shutdown() throws InterruptedException {
@@ -53,12 +53,26 @@ public class LogCollectAgent {
         }
                 
         @Override
-        public void onError(Throwable error) {}
+        public void onError(Throwable error) {
+          System.err.println("error: " + error);
+          // error.printStackTrace(System.err);
+          inputStream.onCompleted();
+          new Thread(() -> {
+              try {
+                Thread.sleep(10 * 1000);
+                LogCollectAgent.this.start();
+              } catch (InterruptedException e) {
+                // ignore
+              }
+          }).start();
+          // TODO 开始尝试重连。
+        }
                 
         @Override
         public void onCompleted() {
           inputStream.onCompleted();
           inputStream = null;
+          System.err.println("complete");
         }
       });
 
