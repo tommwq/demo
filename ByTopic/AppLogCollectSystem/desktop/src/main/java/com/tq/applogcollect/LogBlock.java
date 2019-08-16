@@ -51,20 +51,26 @@ public class LogBlock {
     return logList.get(logList.size() - 1).getSequence();
   }
 
+  public void updateDataLength() {
+    dataLength = logList.stream()
+      .mapToInt(log -> log.getSerializedSize())
+      .map(rawLength -> rawLength + LOGLENGTH_SIZE + SEQUENCE_SIZE)
+      .sum() + DATALENGTH_SIZE;
+  }
+
   public int dataLength() {
     return dataLength;
   }
   
   public void clear() {
-    dataLength = DATALENGTH_SIZE;
     logList.clear();
+    updateDataLength();
   }
 
   public boolean tryInsertLog(LogRecord log) {
-    int newLength = logList.stream()
-      .mapToInt(l -> l.getSerializedSize())
-      .sum() + DATALENGTH_SIZE + log.getSerializedSize();
-
+    updateDataLength();
+    int newLength = dataLength + log.getSerializedSize();
+        
     if (newLength < blockSize) {
       logList.add(log);
       return true;
@@ -82,9 +88,10 @@ public class LogBlock {
 
     int remainDataLength = dataLength - DATALENGTH_SIZE;
     while (remainDataLength > 0) {
-      buffer.position(ADLER32_SIZE + DATALENGTH_SIZE + remainDataLength - LOGLENGTH_SIZE - SEQUENCE_SIZE);
+      int offset = ADLER32_SIZE + DATALENGTH_SIZE + remainDataLength - LOGLENGTH_SIZE - SEQUENCE_SIZE;
+      buffer.position(offset);
       short logLength = buffer.getShort();
-      LogRecord log = LogRecord.parser().parseFrom(block, ADLER32_SIZE + DATALENGTH_SIZE + remainDataLength - LOGLENGTH_SIZE - logLength - SEQUENCE_SIZE, logLength);
+      LogRecord log = LogRecord.parser().parseFrom(block, offset - logLength, logLength);
       logList.add(log);
       remainDataLength -= (LOGLENGTH_SIZE + SEQUENCE_SIZE + logLength);
     }
@@ -95,10 +102,8 @@ public class LogBlock {
   public void dump(byte[] block) {
     ByteBuffer buffer = ByteBuffer.wrap(block).order(ByteOrder.LITTLE_ENDIAN);
     buffer.position(ADLER32_SIZE);
-    buffer.putShort((short) (logList.stream()
-                             .mapToInt(log -> log.getSerializedSize())
-                             .map(rawLength -> rawLength + LOGLENGTH_SIZE + SEQUENCE_SIZE)
-                             .sum() + DATALENGTH_SIZE));
+    updateDataLength();
+    buffer.putShort((short) dataLength);
       
     logList.stream()
       .forEach(log -> buffer.put(log.toByteArray())

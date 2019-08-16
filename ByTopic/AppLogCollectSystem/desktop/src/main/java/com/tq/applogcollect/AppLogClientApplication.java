@@ -29,8 +29,12 @@ public class AppLogClientApplication implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     new LogCollectAgent("localhost", 50051).start();
-    
-    long lsn = Logger.instance().enter();
-    Logger.instance().leave(lsn);
+
+    for (int i = 1; i < 100; i++) {
+      long lsn = Logger.instance().enter();
+      Logger.instance().leave(lsn);
+    }
+
+    // Logger.instance().close();
   }
 }

@@ -55,7 +55,10 @@ public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceIm
     }
 
     public void command() {
-      outputStream.onNext(LogQueryCommand.newBuilder().build());
+      outputStream.onNext(LogQueryCommand.newBuilder()
+                          .setSequence(0)
+                          .setCount(0)
+                          .build());
     }
   }
   

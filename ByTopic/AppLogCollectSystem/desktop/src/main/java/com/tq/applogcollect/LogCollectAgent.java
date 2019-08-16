@@ -10,6 +10,10 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
+import static com.tq.applogcollect.Constant.DEFAULT_LOG_COUNT;
+import static com.tq.applogcollect.Constant.INVALID_COUNT;
+import static com.tq.applogcollect.Constant.INVALID_SEQUENCE;
 
 public class LogCollectAgent {
 
@@ -34,7 +38,18 @@ public class LogCollectAgent {
     inputStream = stub.report(new StreamObserver<LogQueryCommand>() {
         @Override
         public void onNext(LogQueryCommand command) {
-          sendLogRecords();
+          long sequence = command.getSequence();
+          int count = command.getCount();
+
+          if (sequence == INVALID_SEQUENCE) {
+            sequence = Logger.instance().maxSequence();
+          }
+
+          if (count == INVALID_COUNT) {
+            count = sequence < DEFAULT_LOG_COUNT ? (int) sequence : DEFAULT_LOG_COUNT;
+          }
+
+          reportLog(Logger.instance().queryLog(sequence, count));
         }
                 
         @Override
@@ -50,9 +65,8 @@ public class LogCollectAgent {
     inputStream.onNext(Logger.instance().newEmptyLogRecord());
   }
 
-  private void sendLogRecords() {
-    // Logger.getLogBuffer()
-    //   .stream()
-    //   .forEach(logRecord -> inputStream.onNext(logRecord));
+  private void reportLog(List<LogRecord> logs) {
+    logs.stream()
+      .forEach(logRecord -> inputStream.onNext(logRecord));
   }
 }

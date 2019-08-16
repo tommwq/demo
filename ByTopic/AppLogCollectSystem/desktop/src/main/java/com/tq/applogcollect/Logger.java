@@ -80,7 +80,7 @@ public class Logger {
   private Config config = new Config();
   private long sequence = 1;
   private LinkedTransferQueue<LogRecord> logQueue = new LinkedTransferQueue<>();
-  private Thread backgroundWriteThread = null;
+  protected Thread backgroundWriteThread = null;
   private LoggerStorage storage;
   
   private Logger() {}
@@ -101,6 +101,8 @@ public class Logger {
         ArrayList<LogRecord> tails = new ArrayList<>();
         tails.addAll(instance.logQueue);
         tails.stream().forEach(log -> {try {instance.write(log);} catch (Exception ex){}});
+      } finally {
+        Logger.instance().backgroundWriteThread = null;
       }
     }
   }
@@ -117,6 +119,22 @@ public class Logger {
                                                        config.getBlockSize()));
 
     storage.open();
+
+    Thread.UncaughtExceptionHandler next = Thread.currentThread().getUncaughtExceptionHandler();
+    Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+        @Override
+        public void uncaughtException(Thread location, Throwable error) {
+          instance().error(location, error);
+          
+          if (next != null) {
+            next.uncaughtException(location, error);
+          }
+        }
+      });
+
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+          instance().close();
+    }));
     
     backgroundWriteThread = new Thread(new BackgroundWriteRoutine());
     backgroundWriteThread.start();
@@ -136,8 +154,32 @@ public class Logger {
     return log(2, 0, parameters);
   }
 
-  public long leave(long associatedSequence, Object... parameters) {
-    return log(2, associatedSequence, parameters);
+  public void leave(long associatedSequence, Object... parameters) {
+    log(2, associatedSequence, parameters);
+  }
+
+  public void error(Object... parameters) {
+    log(2, 0, parameters);
+  }
+  
+  public void warn(Object... parameters) {
+    log(2, 0, parameters);
+  }
+  
+  public void info(Object... parameters) {
+    log(2, 0, parameters);
+  }
+  
+  public void debug(Object... parameters) {
+    log(2, 0, parameters);
+  }
+
+  public List<LogRecord> queryLog(long sequence, int count) {
+    return storage.read(sequence, count);
+  }
+
+  public long maxSequence() {
+    return storage.maxSequence();
   }
   
   private long log(int stackDepth, long associatedSequence, Object... parameters) {

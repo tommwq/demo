@@ -9,7 +9,7 @@ option java_outer_classname ="AppLogCollectProto";
 // TODO 重新审定协议。
 message LogQueryCommand {
   string package_name = 1;
-  int64 last_sequence = 2; // 0 表示从最新一条日志开始
+  int64 sequence = 2; // 0 表示从最新一条日志开始
   int32 count = 3;
   bool include_sub_package = 4;
 }
