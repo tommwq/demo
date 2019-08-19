@@ -162,6 +162,19 @@ public class Utils {
       return javaTypeName;
   }
 
+  public static String toPojoClassName(String protoMessageName) {
+
+    String javaTypeName = adjustClassName(protoMessageName);
+    int index = javaTypeName.lastIndexOf(".");
+    if (index == -1) {
+      javaTypeName = "http." + javaTypeName;
+    } else {
+      javaTypeName = javaTypeName.substring(0, index) + ".http" + javaTypeName.substring(index);
+    }
+
+    return javaTypeName;
+  }
+
   public static String toPojoClassName(FieldDescriptorProto field) {
 
     String javaTypeName = "Object";
@@ -235,5 +248,13 @@ public class Utils {
     }
 
     return camelCase.substring(0, 1).toUpperCase() + camelCase.substring(1);
+  }
+
+  public static String toCamelCase(String pascalCase) {
+    if (pascalCase.isEmpty()) {
+      return pascalCase;
+    }
+
+    return pascalCase.substring(0, 1).toLowerCase() + pascalCase.substring(1);
   }
 }

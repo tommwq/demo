@@ -14,6 +14,7 @@ public class GatewayConfig {
   private String javaCompilerPath = "";
   private String jarPath = "";
   private int port = 50051;
+  private String classPath = "";
 
   public int getPort() {
     return port;
@@ -71,6 +72,14 @@ public class GatewayConfig {
     jarPath = value;
   }
 
+  public String getClassPath() {
+    return classPath;
+  }
+  
+  public void setClassPath(String value) {
+    classPath = value;
+  }
+
   public String getProtoIncludeDirectory() {
     return protoIncludeDirectory;
   }
@@ -90,6 +99,7 @@ public class GatewayConfig {
         "gateway.javaCompilerPath=" + javaCompilerPath,
         "gateway.jarPath=" + jarPath,
         "gateway.port=" + port,
+        "gateway.classPath=" + classPath,
       });
   }
 }

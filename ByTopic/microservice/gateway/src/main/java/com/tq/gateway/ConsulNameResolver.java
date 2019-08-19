@@ -19,7 +19,7 @@ public class ConsulNameResolver extends NameResolver {
 
     @Override
     public String getDefaultScheme() {
-      return "service";
+      return "";
     }
 
     @Override
