@@ -25,6 +25,8 @@ public class GatewayServiceApplication implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 
+    System.err.println(gatewayConfig);
+
     Server server = ServerBuilder.forPort(gatewayConfig.getPort())
       .fallbackHandlerRegistry(new UnregisteredServiceRegistry(new ProxyServiceBuilder().build(gatewayConfig)))
       .build()

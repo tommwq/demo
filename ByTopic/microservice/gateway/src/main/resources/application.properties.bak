@@ -3,7 +3,8 @@ logging.level.root=WARN
 
 gateway.protocolDirectory=d:/workspace/project/demo/ByTopic/microservice/protocol
 gateway.buildDirectory=d:/workspace/project/demo/ByTopic/microservice/build
-gateway.protoCompilerRootDirectory=D:/Program Files/protoc-3.6.1-win32
+gateway.protoCompilerPath=D:/Program Files/protoc-3.6.1-win32/bin/protoc.exe
+gateway.protoIncludeDirectory=D:/Program Files/protoc-3.6.1-win32/include/google/protobuf
 gateway.grpcPluginPath=C:/Users/guosen/.gradle/caches/modules-2/files-2.1/io.grpc/protoc-gen-grpc-java/1.22.1/e0f304c1f3a7892543de91a3b6d7be4f0409257f/protoc-gen-grpc-java-1.22.1-windows-x86_64.exe
 gateway.javaCompilerPath=C:/Program Files (x86)/Java/jdk1.8.0_192/bin/javac.exe
 gateway.jarPath=C:/Program Files (x86)/Java/jdk1.8.0_192/bin/jar.exe

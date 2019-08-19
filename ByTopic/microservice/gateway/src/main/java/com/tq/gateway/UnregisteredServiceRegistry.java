@@ -2,7 +2,10 @@ package com.tq.gateway;
 
 import io.grpc.BindableService;
 import io.grpc.HandlerRegistry;
+import io.grpc.NameResolver;
 import io.grpc.ServerMethodDefinition;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import javax.annotation.Nullable;
 
 /**
@@ -40,7 +43,8 @@ public class UnregisteredServiceRegistry extends HandlerRegistry {
 
    try {
       String serviceClassName = packageName + "." + className;
-      BindableService service = (BindableService) classLoader.loadClass(serviceClassName).newInstance();
+      Constructor constructor = classLoader.loadClass(serviceClassName).getConstructor(NameResolver.Factory.class);
+      BindableService service = (BindableService) constructor.newInstance(new ConsulNameResolver.Factory());
       return service.bindService().getMethod(methodName);
     } catch (ClassNotFoundException e) {
       // TODO use logging
@@ -49,6 +53,12 @@ public class UnregisteredServiceRegistry extends HandlerRegistry {
       // TODO use logging
       e.printStackTrace(System.err);
     } catch (IllegalAccessException e) {
+      // TODO use logging
+      e.printStackTrace(System.err);
+    } catch (NoSuchMethodException e) {
+      // TODO use logging
+      e.printStackTrace(System.err);
+    } catch (InvocationTargetException e) {
       // TODO use logging
       e.printStackTrace(System.err);
     }
