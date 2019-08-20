@@ -10,6 +10,8 @@
 生成的服务类提供两个构造函数，一个传入Channel，另一个传入ChannelSelector。cancel
 编写NameResolver，封装Consul。ok
 编写ConfigurationService。ok
+支持enum。通过forNumber(int)构建。ok
+支持下划线命名。ok
 让ConfigurationService支持Consul。
 让ConfigurationService支持ZooKeeper。
 让ConfigurationService支持Etcd3。

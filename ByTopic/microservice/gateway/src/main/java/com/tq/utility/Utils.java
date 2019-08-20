@@ -12,15 +12,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.File;
 import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 public class Utils {
 
@@ -242,7 +241,18 @@ public class Utils {
     return !condition;
   }
 
-  public static String toPascalCase(String camelCase) {
+  public static String underlineToCamelCase(String underline) {
+    return pascalCaseToCamelCase(underlineToPascalCase(underline));
+  }
+
+  public static String underlineToPascalCase(String underline) {
+    return Stream.of(underline.split("_"))
+      .map(str -> camelCaseToPascalCase(str))
+      .reduce(String::concat)
+      .get();
+  }
+
+  public static String camelCaseToPascalCase(String camelCase) {
     if (camelCase.isEmpty()) {
       return camelCase;
     }
@@ -250,7 +260,7 @@ public class Utils {
     return camelCase.substring(0, 1).toUpperCase() + camelCase.substring(1);
   }
 
-  public static String toCamelCase(String pascalCase) {
+  public static String pascalCaseToCamelCase(String pascalCase) {
     if (pascalCase.isEmpty()) {
       return pascalCase;
     }

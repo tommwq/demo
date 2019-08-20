@@ -123,7 +123,7 @@ public class ProxyServiceBuilder {
       .generate();
   }
 
-  public ClassLoader build(GatewayConfig config) throws Exception {
+  public void compile(GatewayConfig config) throws Exception {
 
     String buildDirectory = config.getBuildDirectory();
     OSUtils.createDirectoryInNeed(config.getBuildDirectory());
@@ -150,7 +150,10 @@ public class ProxyServiceBuilder {
     packageClassFiles(config.getJarPath(),
                       config.getBuildDirectory() + "/generated.jar",
                       config.getBuildDirectory() + "/classes");
-                      
+  }
+
+  public ClassLoader build(GatewayConfig config) throws Exception {
+    compile(config);
     ClassLoader classLoader = createProxyServiceLoader(config.getBuildDirectory() + "/generated.jar");
     return classLoader;
   }

@@ -162,7 +162,7 @@ public class ProxyServiceGenerator {
 
     message.getFieldList()
       .stream()
-      .forEach(field -> fieldList.add(new FieldInfo(Utils.toPojoClassName(field), field.getName())));
+      .forEach(field -> fieldList.add(new FieldInfo(Utils.toPojoClassName(field), Utils.underlineToPascalCase(field.getName()))));
 
     String sourceCode = "";
     HashMap<String,Object> root = new HashMap<>();
@@ -194,21 +194,25 @@ public class ProxyServiceGenerator {
           String protoParam = "";
           String pojoSetter = "";
           String pojoParam = "";
-          String pascalCase = Utils.toPascalCase(fieldName);
+          String pascalCase = Utils.underlineToPascalCase(fieldName);
+          int fieldType = field.getType().getNumber();
+          String fieldTypeName = Utils.adjustClassName(field.getTypeName());
           
           protoSetter = "set" + pascalCase;
           pojoSetter = "set" + pascalCase;
-          if (field.getType().getNumber() == Type.TYPE_MESSAGE_VALUE) {
-            protoParam = Utils.toCodecClassName(field.getTypeName()) + ".toProto(pojo.get" + pascalCase + "())";
-            pojoParam = Utils.toCodecClassName(field.getTypeName()) + ".toPojo(proto.get" + pascalCase + "())";
-          } else {
-            protoParam = "pojo.get" + pascalCase + "()";
-            pojoParam = "proto.get" + pascalCase + "()";
+          protoParam = "pojo.get" + pascalCase + "()";
+          pojoParam = "proto.get" + pascalCase + "()";
+
+          if (fieldType == Type.TYPE_MESSAGE_VALUE) {
+            protoParam = Utils.toCodecClassName(fieldTypeName) + ".toProto(pojo.get" + pascalCase + "())";
+            pojoParam = Utils.toCodecClassName(fieldTypeName) + ".toPojo(proto.get" + pascalCase + "())";
+          } else if (fieldType == Type.TYPE_ENUM_VALUE) {
+            protoParam = fieldTypeName + ".forNumber(pojo.get" + pascalCase + "())";
+            pojoParam = "proto.get" + pascalCase + "().getNumber()";
           }
 
           if (field.getLabel().getNumber() == Label.LABEL_REPEATED_VALUE) {
             protoSetter = "addAll" + pascalCase;
-            protoParam = "pojo.get" + pascalCase + "()";
             pojoSetter = "set" + pascalCase;
             pojoParam = "proto.get" + pascalCase + "List()";
           }

@@ -62,7 +62,7 @@ public class DefaultController {
                        @RequestParam Map<String, String> body) throws Exception {
 
     String className = service;
-    String javaMethodName = Utils.toCamelCase(method);
+    String javaMethodName = Utils.pascalCaseToCamelCase(method);
     ClassLoader classLoader = new ProxyServiceBuilder().build(gatewayConfig);
             
     Method javaMethod = Stream.of(classLoader.loadClass(className).getMethods())
