@@ -38,7 +38,7 @@ repositories {
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
-    compile "com.ecwid.consul:consul-api:1.4.2"
+
     compile 'io.grpc:grpc-netty-shaded:1.21.0'
     compile 'io.grpc:grpc-protobuf:1.21.0'
     compile 'io.grpc:grpc-stub:1.21.0'

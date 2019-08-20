@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.tq.constant";
+option java_outer_classname = "ConstantProto";
+
+package com.tq.constant;
+
+
+enum Result {
+  OK = 0;
+  UNKNOWN_ERROR = 1;
+}

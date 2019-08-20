@@ -1,8 +1,10 @@
 package com.tq.client;
 
-import com.tq.greetservice.GreetRequest;
-import com.tq.greetservice.GreetReply;
-import com.tq.greetservice.GreetServiceGrpc;
+import com.tq.configurationservice.QueryConfigurationRequest;
+import com.tq.configurationservice.QueryConfigurationReply;
+import com.tq.configurationservice.PostConfigurationRequest;
+import com.tq.configurationservice.PostConfigurationReply;
+import com.tq.configurationservice.ConfigurationServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -15,46 +17,43 @@ public class ClientApplication {
 
   private static final Logger logger = Logger.getLogger(ClientApplication.class.getName());
   private final ManagedChannel channel;
-  private final GreetServiceGrpc.GreetServiceBlockingStub blockingStub;
-  private final GreetServiceGrpc.GreetServiceStub stub;
-  public Foo foo = new Foo();
+  private final ConfigurationServiceGrpc.ConfigurationServiceBlockingStub blockingStub;
+  private final ConfigurationServiceGrpc.ConfigurationServiceStub stub;
 
   private ClientApplication(String host, int port) {
-    channel = ManagedChannelBuilder.forTarget("abc://foo")
-      .nameResolverFactory(foo)
+    channel = ManagedChannelBuilder.forAddress(host, port)
       .usePlaintext()
       .build();
-    blockingStub = GreetServiceGrpc.newBlockingStub(channel);
-    stub = GreetServiceGrpc.newStub(channel);
-  }
-
-  public void foo() {
-    try {
-      GreetReply response = blockingStub.greet1(GreetRequest.newBuilder()
-                                                .setName("ok")
-                                                .build());
-      logger.info(response.getMessage());
-    } catch (Exception e) {
-      e.printStackTrace(System.err);
-    }
+    blockingStub = ConfigurationServiceGrpc.newBlockingStub(channel);
+    stub = ConfigurationServiceGrpc.newStub(channel);
   }
 
   public void shutdown() throws InterruptedException {
     channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
   }
 
+  public void test() throws Exception {
+    
+    System.out.println(blockingStub.postConfiguration(PostConfigurationRequest.newBuilder()
+                                                      .setServiceName("com.tq.foo")
+                                                      .setServiceVersion("1.0")
+                                                      .setConfigurationVersion("")
+                                                      .setConfigurationContent("XYZ")
+                                                      .build())
+                       .getResult()
+                       .toString());
+
+    System.out.println(blockingStub.queryConfiguration(QueryConfigurationRequest.newBuilder()
+                                                       .setServiceName("com.tq.foo")
+                                                       .setServiceVersion("1.0")
+                                                       .setConfigurationVersion("")
+                                                       .build())
+                       .getConfigurationContent());
+  }
 
   public static void main(String[] args) throws Exception {
-    ClientApplication app = new ClientApplication("localhost", 50051);
-    app.foo();
-    app.foo();
-
-    app.foo.bar.refresh();
-    app.foo();
-
-    app = new ClientApplication("localhost", 50051);
-    app.foo();
-
-    Thread.sleep(1000);
+    ClientApplication app = new ClientApplication("localhost", 12345);
+    app.test();
+    app.shutdown();
   }  
 }

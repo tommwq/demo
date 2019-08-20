@@ -1,34 +1,6 @@
-  # 进入主目录
-  cd "d:/workspace/project/demo/ByTopic/gRPC-java/dynamic-load/"
+ 从查询角度看，配置服务是一个函数，将<服务名,服务版本号,配置版本号>映射为配置内容。从更新角度看，配置服务将<服务名,服务版本号,配置版本号,配置内容>应为为结果{0,1}。为了优化使用，可以预定义两个版本号：默认版本和最新版本。
 
-  # 清理
-  Remove-Item output/* -Recurse
-  Clear-Host
+注册中心也是两个函数：写函数是<服务名,服务版本,服务地址>->{0,1}，读函数是<服务名,服务版本>->地址列表
 
-  # 生成java
-  protoc --proto_path=. --proto_path="D:\Program Files\protoc-3.6.1-win32\include\google\protobuf" --java_out=output helloworld.proto
-
-  protoc --plugin="protoc-gen-grpc-java=C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\protoc-gen-grpc-java\1.22.1\e0f304c1f3a7892543de91a3b6d7be4f0409257f\protoc-gen-grpc-java-1.22.1-windows-x86_64.exe" --grpc-java_out=output helloworld.proto 
-
-
-  # 生成文件列表
-  cd output
-  Get-ChildItem *.java -Recurse | ForEach-Object { Out-File -FilePath a.txt -Append -InputObject ($_.FullName -Replace "\\", "/") -Encoding ascii }
-
-  New-Item -Type Directory -Name classes
-
-  # 编译
-  &"C:\Program Files (x86)\Java\jdk1.8.0_192\bin\javac.exe" "@a.txt" -d classes -classpath ".;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java/3.7.1/protobuf-java-3.7.1.jar;C:/Users/guosen/.m2/repository/com/google/protobuf/protobuf-java-util/3.7.1/protobuf-java-util-3.7.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-api\1.22.1\77311e5735c4097c5cce57f0f4d0847c51db63bb\grpc-api-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-context\1.22.1\1a074f9cf6f367b99c25e70dc68589f142f82d11\grpc-context-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-core\1.22.1\f8b6f872b7f069aaff1c3380b2ba7f91f06e4da1\grpc-core-1.22.1.jar;D:\workspace\project\study\grpc-java\netty\build\libs\grpc-netty-1.21.0-SNAPSHOT.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-protobuf\1.21.0\ac92a46921f9bf922e76b46e5731eaf312545acb\grpc-protobuf-1.21.0.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-stub\1.22.1\910550293aab760b706827c5f71c80551e5490f3\grpc-stub-1.22.1.jar;C:\Users\guosen\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\27.0.1-jre\bd41a290787b5301e63929676d792c507bbc00ae\guava-27.0.1-jre.jar;D:\workspace\project\study\bazel\third_party\javax_annotations\javax.annotation-api-1.3.2.jar"
-
-  # 打包
-  jar cf a.jar -C classes com
-
-  cd ..
-
-  gradle bootRun
-
-  # 加载
-  # 寻找服务接口。
-  # helloworld.Fareweller/SayGoodBye
-  # option java_package = "com.tq.test.helloworld";
-  # option java_outer_classname = "HelloWorldProto";
+Gateway: Request -> Response
+Server: Request -> Response
