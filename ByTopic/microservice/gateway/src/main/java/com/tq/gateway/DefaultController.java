@@ -61,9 +61,20 @@ public class DefaultController {
                        @PathVariable("method") String method,
                        @RequestParam Map<String, String> body) throws Exception {
 
+    ProxyServiceBuilder.Config proxyServiceBuilderConfig = new ProxyServiceBuilder.Config();
+    proxyServiceBuilderConfig.setProtocolDirectory(gatewayConfig.getProtocolDirectory());
+    proxyServiceBuilderConfig.setBuildDirectory(gatewayConfig.getBuildDirectory());
+    proxyServiceBuilderConfig.setProtoCompilerPath(gatewayConfig.getProtoCompilerPath());
+    proxyServiceBuilderConfig.setProtoIncludeDirectory(gatewayConfig.getProtoIncludeDirectory());
+    proxyServiceBuilderConfig.setGrpcPluginPath(gatewayConfig.getGrpcPluginPath());
+    proxyServiceBuilderConfig.setJavaCompilerPath(gatewayConfig.getJavaCompilerPath());
+    proxyServiceBuilderConfig.setJarPath(gatewayConfig.getJarPath());
+    proxyServiceBuilderConfig.setClassPath(gatewayConfig.getClassPath());
+
+    
     String className = service;
     String javaMethodName = Utils.pascalCaseToCamelCase(method);
-    ClassLoader classLoader = new ProxyServiceBuilder().build(gatewayConfig);
+    ClassLoader classLoader = new ProxyServiceBuilder().build(proxyServiceBuilderConfig);
             
     Method javaMethod = Stream.of(classLoader.loadClass(className).getMethods())
       .filter(m -> m.getName().equals(javaMethodName))

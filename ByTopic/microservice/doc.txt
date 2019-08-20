@@ -1,6 +1,52 @@
- 从查询角度看，配置服务是一个函数，将<服务名,服务版本号,配置版本号>映射为配置内容。从更新角度看，配置服务将<服务名,服务版本号,配置版本号,配置内容>应为为结果{0,1}。为了优化使用，可以预定义两个版本号：默认版本和最新版本。
+从查询角度看，配置服务是一个函数，将<服务名,服务版本号,配置版本号>映射为配置内容。从更新角度看，配置服务将<服务名,服务版本号,配置版本号,配置内容>应为为结果{0,1}。为了优化使用，可以预定义两个版本号：默认版本和最新版本。
 
-注册中心也是两个函数：写函数是<服务名,服务版本,服务地址>->{0,1}，读函数是<服务名,服务版本>->地址列表
+注册中心模型：
+写模型：<服务名,服务版本,服务地址>->{0,1}
+读模型：<服务名,服务版本>->[]<地址,端口>
 
 Gateway: Request -> Response
 Server: Request -> Response
+
+配置中心后端存储模型：
+读模型：() -> []<服务名,服务版本,配置版本,配置内容,部署状态>
+写模型：(操作,服务名,服务版本,配置版本,配置内容>->{0,1}。操作可以是：下线、上线。
+订阅模型：()->stream<操作,服务名,服务版本,配置版本,配置内容,部署状态>。
+接口设计为：
+public enum class DeployStatus {
+  Deployed, Undeployed;
+  // TODO add deploying, gated_launching.
+}
+public interface Configuration {
+  String getServiceName();
+  String getServiceVersion();
+  String getConfigurationVersion();
+  String getConfigurationContent();
+  DeployStatus getDeployStatus();
+}
+
+public interface ConfigurationStorage {
+  List<Configuration> load();
+  Boolean deploy(Configuration configuration);
+  Boolean undeploy(Configuration configuration);
+  Stream<Configuration> subscribe();
+}
+
+public interface KeyGenerator<Key,Param> {
+  Key generateKey(Param param);
+}
+
+注册中心后端存储模型：
+public interface RegistryStorage {
+  List<ServiceInstance> load();
+  Stream<ServiceInstance> subscribe();
+  Boolean register(ServiceInstance service);
+  Boolean unregister(ServiceInstance service);
+}
+public interface ServiceInstance {
+  String getServiceName();
+  String getServiceVersion();
+  String getAddress();
+  int getPort();
+  DeployStatus getDeployStatus();
+}
+

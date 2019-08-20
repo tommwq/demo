@@ -25,8 +25,18 @@ public class GatewayServiceApplication implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 
+    ProxyServiceBuilder.Config proxyServiceBuilderConfig = new ProxyServiceBuilder.Config();
+    proxyServiceBuilderConfig.setProtocolDirectory(gatewayConfig.getProtocolDirectory());
+    proxyServiceBuilderConfig.setBuildDirectory(gatewayConfig.getBuildDirectory());
+    proxyServiceBuilderConfig.setProtoCompilerPath(gatewayConfig.getProtoCompilerPath());
+    proxyServiceBuilderConfig.setProtoIncludeDirectory(gatewayConfig.getProtoIncludeDirectory());
+    proxyServiceBuilderConfig.setGrpcPluginPath(gatewayConfig.getGrpcPluginPath());
+    proxyServiceBuilderConfig.setJavaCompilerPath(gatewayConfig.getJavaCompilerPath());
+    proxyServiceBuilderConfig.setJarPath(gatewayConfig.getJarPath());
+    proxyServiceBuilderConfig.setClassPath(gatewayConfig.getClassPath());
+
     Server server = ServerBuilder.forPort(gatewayConfig.getPort())
-      .fallbackHandlerRegistry(new UnregisteredServiceRegistry(new ProxyServiceBuilder().build(gatewayConfig)))
+      .fallbackHandlerRegistry(new UnregisteredServiceRegistry(new ProxyServiceBuilder().build(proxyServiceBuilderConfig)))
       .build()
       .start();
 
