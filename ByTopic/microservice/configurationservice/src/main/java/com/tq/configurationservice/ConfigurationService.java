@@ -26,7 +26,7 @@ public class ConfigurationService extends ConfigurationServiceGrpc.Configuration
   public void queryConfiguration(QueryConfigurationRequest input, StreamObserver<QueryConfigurationReply> outputStream) {
     QueryConfigurationReply reply = QueryConfigurationReply.newBuilder()
       // TODO use configuration storage
-      .setConfigurationContent("test")
+      .setConfigurationContent("foo=bar\nxyz=123")
       .build();
 
     outputStream.onNext(reply);

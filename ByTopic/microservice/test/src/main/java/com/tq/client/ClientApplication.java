@@ -18,40 +18,45 @@ import java.util.logging.Logger;
 public class ClientApplication {
 
   private static final Logger logger = Logger.getLogger(ClientApplication.class.getName());
-  private final ManagedChannel channel;
-  private final ConfigurationServiceGrpc.ConfigurationServiceBlockingStub blockingStub;
-  private final ConfigurationServiceGrpc.ConfigurationServiceStub stub;
+  // private final ManagedChannel channel;
+  // private final ConfigurationServiceGrpc.ConfigurationServiceBlockingStub blockingStub;
+  // private final ConfigurationServiceGrpc.ConfigurationServiceStub stub;
 
-  private ClientApplication(String host, int port) {
-    channel = ManagedChannelBuilder.forAddress(host, port)
-      .usePlaintext()
-      .build();
-    blockingStub = ConfigurationServiceGrpc.newBlockingStub(channel);
-    stub = ConfigurationServiceGrpc.newStub(channel);
-  }
+  public ClientApplication() {}
+  
+  // private ClientApplication(String host, int port) {
+  //   channel = ManagedChannelBuilder.forAddress(host, port)
+  //     .usePlaintext()
+  //     .build();
+  //   blockingStub = ConfigurationServiceGrpc.newBlockingStub(channel);
+  //   stub = ConfigurationServiceGrpc.newStub(channel);
+  // }
 
-  public void shutdown() throws InterruptedException {
-    channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-  }
+  // public void shutdown() throws InterruptedException {
+  //   channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+  // }
 
-  public void test() throws Exception {
+  // public void test() throws Exception {
     
-    System.out.println(blockingStub.postConfiguration(PostConfigurationRequest.newBuilder()
-                                                      .setServiceName("com.tq.foo")
-                                                      .setServiceVersion("1.0")
-                                                      .setConfigurationVersion("")
-                                                      .setConfigurationContent("XYZ")
-                                                      .build())
-                       .getResult()
-                       .toString());
+  //   System.out.println(blockingStub.postConfiguration(PostConfigurationRequest.newBuilder()
+  //                                                     .setServiceName("com.tq.foo")
+  //                                                     .setServiceVersion("1.0")
+  //                                                     .setConfigurationVersion("")
+  //                                                     .setConfigurationContent("XYZ")
+  //                                                     .build())
+  //                      .getResult()
+  //                      .toString());
 
-    System.out.println(blockingStub.queryConfiguration(QueryConfigurationRequest.newBuilder()
-                                                       .setServiceName("com.tq.foo")
-                                                       .setServiceVersion("1.0")
-                                                       .setConfigurationVersion("")
-                                                       .build())
-                       .getConfigurationContent());
-  }
+  //   System.out.println(blockingStub.queryConfiguration(QueryConfigurationRequest.newBuilder()
+  //                                                      .setServiceName("com.tq.foo")
+  //                                                      .setServiceVersion("1.0")
+  //                                                      .setConfigurationVersion("")
+  //                                                      .build())
+  //                      .getConfigurationContent());
+  // }
+
+  @Configuration(service="foo")
+  String bar;
 
   public static void main(String[] args) throws Exception {
     // ClientApplication app = new ClientApplication("localhost", 12345);
@@ -62,6 +67,6 @@ public class ClientApplication {
   }
 
   public void run() {
-    System.out.println("ok");
+    System.out.println("ok" + bar);
   }
 }

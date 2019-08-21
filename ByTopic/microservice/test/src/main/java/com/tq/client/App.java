@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -27,6 +28,8 @@ import java.io.IOException;
 import java.io.FileInputStream;
 import java.net.URLClassLoader;
 import java.net.URL;
+
+import java.lang.reflect.*;
 
 
 
@@ -154,19 +157,76 @@ public class App {
       .replace(".class", "");
   }
 
-  public static void processScannedClass(String className) throws ClassNotFoundException {
-    System.out.println("CLASS: " + className);
+  public static Object getBean(String className) {
+    return beans.get(className);
+  }
+
+  public static Object getOrCreateBean(Class clazz) throws Exception {
+    String name = clazz.getName();
+    if (beans.containsKey(name)) {
+      return beans.get(name);
+    }
     
+    Object instance = clazz.newInstance();
+    beans.put(name, instance);
+    System.out.println(name + instance);
+    return instance;
+  }
+
+  public static HashMap<String,Object> beans = new HashMap<>();
+  public static void processScannedClass(String className) throws Exception {
+        
     Class clazz = Thread.currentThread()
       .getContextClassLoader()
       .loadClass(className);
+
+    for (Field field: clazz.getDeclaredFields()) {
+      System.out.println(className + field);
+      Configuration anno = (Configuration) field.getAnnotation(Configuration.class);
+      if (anno == null) {
+        continue;
+      }
+
+      String service = anno.service();
+
+      ManagedChannel channel;
+      ConfigurationServiceGrpc.ConfigurationServiceBlockingStub blockingStub;
+      ConfigurationServiceGrpc.ConfigurationServiceStub stub;
+  
+      String host = "localhost";
+      int port = 12345; 
+      channel = ManagedChannelBuilder.forAddress(host, port)
+        .usePlaintext()
+        .build();
+      blockingStub = ConfigurationServiceGrpc.newBlockingStub(channel);
+      stub = ConfigurationServiceGrpc.newStub(channel);
+
     
-    Annotation annotationArray[] = clazz.getAnnotations();
-    for (Annotation anno: annotationArray) {
-      System.out.println(anno.annotationType().getName());
+      String config = blockingStub.queryConfiguration(QueryConfigurationRequest.newBuilder()
+                                                      .setServiceName("com.tq.foo")
+                                                      .setServiceVersion("1.0")
+                                                      .setConfigurationVersion("")
+                                                      .build())
+        .getConfigurationContent();
+
+      Object value = config;
+
+      channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+      
+      Object bean = getOrCreateBean(clazz);
+      field.setAccessible(true);
+      field.set(bean, value);
     }
 
-    Stream.of(clazz.getAnnotatedInterfaces())
-      .forEach(x -> System.out.println(x.getType().getTypeName()));
+    try {
+      Annotation anno = clazz.getAnnotation(Executable.class);
+      if (anno != null) {
+        Method method = clazz.getMethod("run");
+        method.invoke(getOrCreateBean(clazz));
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
   }
 }
