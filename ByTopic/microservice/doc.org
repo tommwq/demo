@@ -63,20 +63,6 @@ public interface ServiceInstance {
 
 对于SpringBoot客户端：（稍后再做）
 
-#+BEGIN_SRC java
-// demo
-@Executable
-public class FooApp {
 
-  @Configuration(name="foo")
-  int abc;
-  
-  public static void main(String... args) {
-    App.run()
-  }
-
-  public void run() {
-    System.out.println("ok");
-  }
-}
-#+END_SRC
+* 程序启动过程
+在main()方法中调用App.run()。后者通过堆栈得到调用自己的类所在的包，以这个包作为扫描起点，扫描ClassPath下的全部类。对于扫描到的类，如果声明了Executable注解，App将调用它的run()方法。如果声明了Configuration注解，App将构造一个实例，然后向ConfigurationService发出请求，将得到的配置值注入到实例中。

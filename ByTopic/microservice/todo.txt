@@ -30,3 +30,4 @@
 将依赖的程序（Win/Linux）加入到jar包中，启动时增加一个参数--install，将程序解压缩到目录。
 集成git/svn。
 远期做成一个一站式开箱即用的，可以创建新工程，查看服务状态，编辑配置，部署/下线服务。允许作为agent运行。
+整合SpringBoot和gRPC。如果以gRPC模式启动，使用自定义扫描和注入。如果以SpringBoot模式启动，使用Spring的工具。
