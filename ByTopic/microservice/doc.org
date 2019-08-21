@@ -1,9 +1,7 @@
+
+* 配置服务
+
 从查询角度看，配置服务是一个函数，将<服务名,服务版本号,配置版本号>映射为配置内容。从更新角度看，配置服务将<服务名,服务版本号,配置版本号,配置内容>应为为结果{0,1}。为了优化使用，可以预定义两个版本号：默认版本和最新版本。
-
-注册中心模型：
-写模型：<服务名,服务版本,服务地址>->{0,1}
-读模型：<服务名,服务版本>->[]<地址,端口>
-
 Gateway: Request -> Response
 Server: Request -> Response
 
@@ -35,6 +33,13 @@ public interface KeyGenerator<Key,Param> {
   Key generateKey(Param param);
 }
 
+* 注册服务
+
+注册中心模型：
+写模型：<服务名,服务版本,服务地址>->{0,1}
+读模型：<服务名,服务版本>->[]<地址,端口>
+
+
 注册中心后端存储模型：
 public interface RegistryStorage {
   List<ServiceInstance> load();
@@ -50,3 +55,28 @@ public interface ServiceInstance {
   DeployStatus getDeployStatus();
 }
 
+* 客户端-配置服务交互过程
+对于gRPC客户端：
+从环境变量中得到配置服务地址。
+连接配置服务，请求配置内容。
+注入bean。
+
+对于SpringBoot客户端：（稍后再做）
+
+#+BEGIN_SRC java
+// demo
+@Executable
+public class FooApp {
+
+  @Configuration(name="foo")
+  int abc;
+  
+  public static void main(String... args) {
+    App.run()
+  }
+
+  public void run() {
+    System.out.println("ok");
+  }
+}
+#+END_SRC

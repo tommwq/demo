@@ -13,6 +13,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
+
+@Executable
 public class ClientApplication {
 
   private static final Logger logger = Logger.getLogger(ClientApplication.class.getName());
@@ -52,8 +54,14 @@ public class ClientApplication {
   }
 
   public static void main(String[] args) throws Exception {
-    ClientApplication app = new ClientApplication("localhost", 12345);
-    app.test();
-    app.shutdown();
-  }  
+    // ClientApplication app = new ClientApplication("localhost", 12345);
+    // app.test();
+    // app.shutdown();
+
+    App.run();
+  }
+
+  public void run() {
+    System.out.println("ok");
+  }
 }
