@@ -18,7 +18,11 @@ import org.slf4j.LoggerFactory;
 public class LogCollectServer {
   private int port = 50051;
   private Server underlyingServer = null;
-  public LogCollectService service;
+  private LogCollectService service;
+
+  public LogCollectService getService() {
+    return service;
+  }
 
   public int port() {
     return port;
