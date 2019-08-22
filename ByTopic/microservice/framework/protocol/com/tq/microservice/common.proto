@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+// option java_package = "com.tq.common";
+option java_outer_classname = "CommonProto";
+
+package com.tq.microservice.common;
+
+
+enum Result {
+  OK = 0;
+  UNKNOWN_ERROR = 1;
+  INVALID_REQUEST = 2;
+  INSTANCE_NOT_FOUND = 3;
+}
+
+message InstanceLocation {
+  int32 ip = 1;
+  int32 port = 2;
+}
+
+message InstanceLocalId {
+  int32 start_time = 3;
+  int32 pid = 4;
+}
+
+message InstanceId {
+  InstanceLocation location = 1;
+  InstanceLocalId local_id = 2;
+}
+

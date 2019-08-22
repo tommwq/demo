@@ -13,6 +13,9 @@
 支持enum。通过forNumber(int)构建。ok
 支持下划线命名。ok
 设计RegistryService。ok
+合并各个项目，做成一个类。ok
+早期版本去掉spring支持。
+支持按需求启动。
 为ProxyServiceBuilder增加main方法。
 让ConfigurationService支持Consul。
 让ConfigurationService支持ZooKeeper。

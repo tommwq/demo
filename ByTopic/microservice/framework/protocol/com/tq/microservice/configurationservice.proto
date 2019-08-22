@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+// option java_package = "com.tq.microservice.configurationservice";
+option java_outer_classname = "ConfigurationServiceProto";
+
+package com.tq.microservice.configurationservice;
+
+import "com/tq/microservice/common.proto";
+
+message QueryConfigurationRequest {
+  string service_name = 1;
+  string service_version = 2;
+  string configuration_version = 3;
+}
+
+message QueryConfigurationReply {
+  com.tq.microservice.common.Result result = 1;
+  string configuration_content = 2;
+}
+
+message PostConfigurationRequest {
+  string service_name = 1;
+  string service_version = 2;
+  string configuration_version = 3;
+  string configuration_content = 4;
+}
+
+message PostConfigurationReply {
+  com.tq.microservice.common.Result result = 1;
+}
+
+service ConfigurationService {
+  rpc PostConfiguration(PostConfigurationRequest) returns (PostConfigurationReply) {}
+  rpc PublishConfiguration(stream PostConfigurationRequest) returns (stream PostConfigurationReply) {}
+  rpc QueryConfiguration(QueryConfigurationRequest) returns (QueryConfigurationReply) {}
+  rpc SubscribeConfiguration(QueryConfigurationRequest) returns (stream QueryConfigurationReply) {}
+}
+

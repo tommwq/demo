@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.tq.greetservice";
+// option java_package = "com.tq.greetservice";
 option java_outer_classname = "GreetServiceProto";
 
 package com.tq.greetservice;
