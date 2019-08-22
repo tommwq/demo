@@ -30,6 +30,12 @@ enum LogLevel {
   FATAL = 5;
 }
 
+message CommonInfo {
+  int64 sequence = 1;
+  int64 time = 2;
+  int8 content_type = 3;
+}
+
 // App上报给服务器的日志。
 message LogRecord {
   int64 sequence = 1;
@@ -48,10 +54,74 @@ message LogRecord {
   string device_id = 14;
 }
 
-// message Empty {}
+// User defined message.
+message UserDefinedMessage {
+  int64 sequence = 1;
+  int64 time = 2;
+  string source_file = 3;
+  int32 line_number = 4;
+  string package_name = 5;
+  string class_name = 6;
+  string method_name = 7;
+  string user_defined_message = 8;
+}
+
+// Module name and version.
+message ModuleInfo {
+  string module_name = 1;
+  string module_version = 2;
+}
+
+// Device and app information.
+message DeviceAndAppInfoLog {
+  int64 sequence = 1;
+  int64 time = 2;
+  string device_id = 3;
+  string device_version = 4;
+  string base_os_name = 5;
+  string base_os_version = 6;
+  string os_name = 7;
+  string os_version = 8;
+  string app_version = 9;
+  repeated ModuleInfo module_info = 6;
+}
+
+message ObjectInfo {
+  string object_name = 1;
+  string object_type = 2;
+  string object_value = 3;
+}
+
+message MethodInfo {
+  string source_file = 1;
+  int32 line_number = 2;
+  string package_name = 3;
+  string class_name = 4;
+  string method_name = 5;
+  repeated ObjectInfo method_parameter = 6;
+  ObjectInfo method_result = 7;
+}
+
+// Method and object information
+message MethodAndObjectInfo {
+  int64 sequence = 1;
+  int64 time = 2;
+  MethodInfo method = 3;
+  repeated ObjectInfo variable = 4;
+}
+
+message ExceptionInfo {
+  int64 sequence = 1;
+  int64 time = 2;
+  ObjectInfo exception = 3;
+  repeated MethodInfo stack = 4;
+}
+
+
+// For heartbeat.
+message Empty {}
 
 service LogCollectService {
   rpc Report (stream LogRecord) returns (stream LogQueryCommand);
-  // 需要心跳吗？
-  // rpc Heartbeat (stream Empty) returns (stream Empty);
+  rpc Heartbeat (stream Empty) returns (stream Empty);
 }
