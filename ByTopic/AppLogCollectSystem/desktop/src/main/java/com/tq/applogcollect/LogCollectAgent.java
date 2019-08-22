@@ -41,6 +41,8 @@ public class LogCollectAgent {
           long sequence = command.getSequence();
           int count = command.getCount();
 
+          System.err.println("onNext:command");
+
           if (sequence == INVALID_SEQUENCE) {
             sequence = Logger.instance().maxSequence();
           }
