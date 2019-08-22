@@ -2,7 +2,7 @@ package com.tq.applogcollect;
 
 import java.util.UUID;
 
-import com.tq.applogcollect.agent.LogCollectAgent;
+import com.tq.applogcollect.agent.LogAgent;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,7 +29,7 @@ public class AppLogClientApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    new LogCollectAgent("localhost", 50051).start();
+    new LogAgent("localhost", 50051).start();
 
     for (int i = 1; i < 100; i++) {
       long lsn = Logger.instance().enter();
