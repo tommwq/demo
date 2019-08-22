@@ -4,13 +4,16 @@ import com.tq.applogcollect.AppLogCollectProto.LogLevel;
 import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
 import com.tq.applogcollect.AppLogCollectProto.LogRecord;
 import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
+import com.tq.applogcollect.storage.LoggerStorage;
+import com.tq.applogcollect.storage.SimpleBlockStorage;
+import com.tq.applogcollect.utility.StringUtil;
+
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.List;
 import java.util.Map;
@@ -218,8 +221,8 @@ public class Logger {
                                     lineNumber,
                                     className,
                                     methodName,
-                                    StringUtils.stringify(parameters),
-                                    StringUtils.stringify(result));
+                                    StringUtil.stringify(parameters),
+                                    StringUtil.stringify(result));
 
     logQueue.offer(record);
     return lsn;

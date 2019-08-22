@@ -1,8 +1,7 @@
-package com.tq.applogcollect;
+package com.tq.applogcollect.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Path;
@@ -26,7 +25,7 @@ public class SimpleBlockStorage implements BlockStorage {
    * Open or create a storage file.
    */
   @Override
-  public void open() throws IOException, FileNotFoundException {
+  public void open() throws IOException {
     File file = filePath.toFile();
     if (file.exists() && file.length() != fileLength) {
       throw new RuntimeException("invalid storage file");

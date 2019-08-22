@@ -1,14 +1,14 @@
-package com.tq.applogcollect;
+package com.tq.applogcollect.agent;
 
 import com.tq.applogcollect.AppLogCollectProto.LogLevel;
 import com.tq.applogcollect.AppLogCollectProto.LogRecord;
 import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
 import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
+import com.tq.applogcollect.LogCollectServiceGrpc;
+import com.tq.applogcollect.Logger;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.List;
 import static com.tq.applogcollect.Constant.DEFAULT_LOG_COUNT;

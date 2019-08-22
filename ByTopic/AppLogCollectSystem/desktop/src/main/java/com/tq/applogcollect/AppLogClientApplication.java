@@ -1,7 +1,8 @@
 package com.tq.applogcollect;
 
-import java.io.File;
 import java.util.UUID;
+
+import com.tq.applogcollect.agent.LogCollectAgent;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

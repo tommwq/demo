@@ -1,4 +1,4 @@
-package com.tq.applogcollect;
+package com.tq.applogcollect.utility;
 
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 /**
  * Utility functions for string.
  */
-public class StringUtils {
+public class StringUtil {
 
   /**
    * Dump object to string, support primitive type, Object and array.
@@ -34,7 +34,7 @@ public class StringUtils {
     }
         
     return Stream.of(objects)
-      .map(StringUtils::stringify)
+      .map(StringUtil::stringify)
       .collect(Collectors.toList())
       .toArray(new String[]{});
   }
