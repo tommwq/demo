@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.zip.Adler32;
 import static com.tq.applogcollect.Constant.*;
 
-public class LoggerStorage implements BlockStorage {
+public class LogStorage implements BlockStorage {
     private static final int MIN_BLOCK_SIZE = 1024;
     private static final int MIN_BLOCK_COUNT = 8;
 
@@ -24,7 +24,7 @@ public class LoggerStorage implements BlockStorage {
     private int pingBlockNumber;
     private int pongBlockNumber;
 
-    public LoggerStorage(BlockStorage aStorage) {
+    public LogStorage(BlockStorage aStorage) {
         storage = aStorage;
         emptyBlock = new byte[blockSize()];
     }
