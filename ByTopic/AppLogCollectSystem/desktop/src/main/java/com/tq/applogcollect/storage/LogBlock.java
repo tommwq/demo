@@ -1,4 +1,4 @@
-package com.tq.applogcollect;
+package com.tq.applogcollect.storage;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.tq.applogcollect.AppLogCollectProto.LogRecord;

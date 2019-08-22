@@ -226,4 +226,8 @@ public class ProxyServiceBuilder {
     ClassLoader classLoader = createProxyServiceLoader(config.getBuildDirectory() + "/generated.jar");
     return classLoader;
   }
+
+  public static void main(String... args) {
+    // TODO
+  }
 }

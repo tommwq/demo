@@ -1,5 +1,8 @@
 package com.tq.applogcollect;
 
+/**
+ * Constant table.
+ */
 public class Constant {
   public static final int ADLER32_SIZE = 8;
   public static final int DATALENGTH_SIZE = 2;

@@ -18,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tq.applogcollect.storage.LogStorage;
 import com.tq.applogcollect.storage.Memory;
 
+import com.tq.applogcollect.http.codec.LogRecordCodec;
+import com.tq.applogcollect.LogSession;
+
 @RestController
 public class ApiController {
 
@@ -32,11 +35,16 @@ public class ApiController {
 
   @RequestMapping(value="/api/log/{deviceId}")
   @ResponseBody
-  public List<String>log(@PathVariable("deviceId") String deviceId) throws Exception {
+  public List<com.tq.applogcollect.http.LogRecord>log(@PathVariable("deviceId") String deviceId) throws Exception {
+    LogSession session = server.getService().getLogSession(deviceId);
+    if (session != null) {
+      session.command();
+    }
+      
     LogStorage storage = new Memory();
     return storage.load(deviceId, 0L, 0)
       .stream()
-      .map(LogRecord::toString)
+      .map(LogRecordCodec::toPojo)
       .collect(Collectors.toList());
   }
 }

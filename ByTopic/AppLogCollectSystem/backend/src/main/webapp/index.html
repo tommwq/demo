@@ -9,7 +9,7 @@
       <span>Device</span>
       <ol>
         <li v-for="deviceId in deviceIdList">
-          <a v-bind:href="'/api/log/'+deviceId" target=_blank>
+          <a v-bind:href="'log.html?deviceId='+deviceId" target=_blank>
             {{deviceId}}
           </a>
         </li>
