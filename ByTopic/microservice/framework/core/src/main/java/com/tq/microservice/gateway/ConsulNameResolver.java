@@ -1,4 +1,4 @@
-package com.tq.gateway;
+package com.tq.microservice.gateway;
 
 import com.ecwid.consul.v1.health.HealthServicesRequest;
 import com.ecwid.consul.v1.health.model.HealthService;

@@ -1,4 +1,4 @@
-package com.tq.gateway;
+package com.tq.microservice.gateway;
 
 import io.grpc.BindableService;
 import io.grpc.HandlerRegistry;

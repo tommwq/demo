@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class OSUtils {
+public class FileUtil {
 
   public static List<String> recurseListProtocolFileNames(File file) {
     return recurseListFileNamesBySuffix(file, ".proto");

@@ -1,32 +1,19 @@
-package com.tq.gateway.service.builder;
+package com.tq.microservice.gateway.service.builder;
 
-import com.tq.gateway.generator.ProxyServiceGenerator;
-import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
-import com.tq.utility.CollectionUtils;
-import com.tq.utility.OSUtils;
-import com.tq.utility.Utils;
+import com.tq.microservice.gateway.generator.ProxyServiceGenerator;
+import com.tq.utility.CollectionUtil;
+import com.tq.utility.FileUtil;
+import com.tq.utility.Util;
 import freemarker.template.Configuration;
-import io.grpc.stub.StreamObserver;
-import java.io.Console;
+
 import java.io.IOException;
 import java.io.File;
-import java.nio.file.Paths;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.lang.reflect.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
 
 public class ProxyServiceBuilder {
 
@@ -117,7 +104,7 @@ public class ProxyServiceBuilder {
                                 String buildDirectory,
                                 String grpcPluginPath)
     throws IOException, InterruptedException {
-    OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(protoCompilerPath,
+    FileUtil.createProcess(CollectionUtil.mergeList(Arrays.asList(protoCompilerPath,
                                                                   "--proto_path",
                                                                   protocolDirectory,
                                                                   "--proto_path",
@@ -125,16 +112,16 @@ public class ProxyServiceBuilder {
                                                                   "--descriptor_set_out",
                                                                   getDescriptorSetFileName(buildDirectory),
                                                                   "--java_out=" + buildDirectory),
-                                                    OSUtils.recurseListProtocolFileNames(new File(protocolDirectory)))).waitFor();
+                                                    FileUtil.recurseListProtocolFileNames(new File(protocolDirectory)))).waitFor();
 
-    OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(protoCompilerPath,
+    FileUtil.createProcess(CollectionUtil.mergeList(Arrays.asList(protoCompilerPath,
                                                                   "--proto_path",
                                                                   protocolDirectory,
                                                                   "--proto_path",
                                                                   protoIncludeDirectory,
                                                                   "--grpc-java_out=" + buildDirectory,
                                                                   "--plugin=protoc-gen-grpc-java=" + grpcPluginPath),
-                                                    OSUtils.recurseListProtocolFileNames(new File(protocolDirectory)))).waitFor();
+                                                    FileUtil.recurseListProtocolFileNames(new File(protocolDirectory)))).waitFor();
   }
 
 
@@ -144,13 +131,13 @@ public class ProxyServiceBuilder {
                                        String classPath)
     throws IOException, InterruptedException {
 
-    OSUtils.createDirectoryInNeed(outputDirectory);
-    OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(javaCompilerPath,
+    FileUtil.createDirectoryInNeed(outputDirectory);
+    FileUtil.createProcess(CollectionUtil.mergeList(Arrays.asList(javaCompilerPath,
                                                                   "-d",
                                                                   outputDirectory,
                                                                   "-classpath",
                                                                   classPath),
-                                                    OSUtils.recurseListJavaFileNames(sourceDirectory))).waitFor();
+                                                    FileUtil.recurseListJavaFileNames(sourceDirectory))).waitFor();
   }
 
   private static void packageClassFiles(String jarPath,
@@ -158,12 +145,12 @@ public class ProxyServiceBuilder {
                                         String classFileDirectory)
     throws IOException, InterruptedException {
   
-    OSUtils.createProcess(CollectionUtils.mergeList(Arrays.asList(jarPath,
+    FileUtil.createProcess(CollectionUtil.mergeList(Arrays.asList(jarPath,
                                                                   "cf",
                                                                   outputFilename,
                                                                   "-C",
                                                                   classFileDirectory),
-                                                    Stream.of(new File(classFileDirectory).listFiles((dir, name) -> Utils.not(name.startsWith("."))))
+                                                    Stream.of(new File(classFileDirectory).listFiles((dir, name) -> Util.not(name.startsWith("."))))
                                                     .map(File::getName)
                                                     .collect(Collectors.toList()))).waitFor();
   }
@@ -172,8 +159,8 @@ public class ProxyServiceBuilder {
 
     List<String> jarList = Arrays.asList(jarFileName);
     URLClassLoader classLoader = new URLClassLoader(jarList.stream()
-                                                    .map(Utils::fileNameToUrl)
-                                                    .filter(Utils::notNull)
+                                                    .map(Util::fileNameToUrl)
+                                                    .filter(Util::notNull)
                                                     .collect(Collectors.toList())
                                                     .toArray(new URL[]{}),
                                                     Thread.currentThread().getContextClassLoader());
@@ -195,7 +182,7 @@ public class ProxyServiceBuilder {
   public void compile(Config config) throws Exception {
 
     String buildDirectory = config.getBuildDirectory();
-    OSUtils.createDirectoryInNeed(config.getBuildDirectory());
+    FileUtil.createDirectoryInNeed(config.getBuildDirectory());
     
     compileGrpcFiles(config.getProtoCompilerPath(),
                      config.getProtoIncludeDirectory(),

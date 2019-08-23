@@ -148,15 +148,15 @@ public class Util {
   public static String toCodecClassName(String fieldTypeName) {
     String javaTypeName = adjustClassName(fieldTypeName);
     int index = javaTypeName.lastIndexOf(".");
-      if (index == -1) {
-        javaTypeName = "http.codec" + javaTypeName;
-      } else {
-        javaTypeName = javaTypeName.substring(0, index) + ".http.codec" + javaTypeName.substring(index);
-      }
+    if (index == -1) {
+      javaTypeName = "http.codec" + javaTypeName;
+    } else {
+      javaTypeName = javaTypeName.substring(0, index) + ".http.codec" + javaTypeName.substring(index);
+    }
 
-      javaTypeName += "Codec";
+    javaTypeName += "Codec";
       
-      return javaTypeName;
+    return javaTypeName;
   }
 
   public static String toPojoClassName(String protoMessageName) {
@@ -232,7 +232,7 @@ public class Util {
     }
 
     return CollectionUtil.mergeList(Arrays.asList(clazz.getInterfaces()),
-                                     getAllInterfaces(clazz.getSuperclass()));
+                                    getAllInterfaces(clazz.getSuperclass()));
   }
 
   public static boolean not(boolean condition) {
@@ -265,4 +265,35 @@ public class Util {
 
     return pascalCase.substring(0, 1).toLowerCase() + pascalCase.substring(1);
   }
+
+  public static <T> void mustRun(Procedure<T> procedure, T... args) {
+    try {
+      procedure.call(args);
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+      System.exit(-1);
+    }
+  }
+
+  public static void mustRun(Procedure<Void> procedure) {
+    mustRun(procedure, null);
+  }
+
+  public static void mustRun(Routine routine) {
+    try {
+      routine.call();
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+      System.exit(-1);
+    }
+  }
+
+  public static void ignoreError(final Routine routine) {
+    try {
+      routine.call();
+    } catch (Exception e) {
+      // ignore
+    }
+  }
+
 }

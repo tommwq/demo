@@ -1,4 +1,4 @@
-package com.tq.configurationservice;
+package com.tq.microservice.configurationservice;
 
 import com.tq.microservice.common.Result;
 import com.tq.microservice.configurationservice.PostConfigurationReply;

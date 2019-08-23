@@ -14,6 +14,8 @@
 支持下划线命名。ok
 设计RegistryService。ok
 合并各个项目，做成一个类。ok
+编写CollectionUtil.propertiesToObject。ok
+整理Util代码。
 早期版本去掉spring支持。
 支持按需求启动。
 为ProxyServiceBuilder增加main方法。

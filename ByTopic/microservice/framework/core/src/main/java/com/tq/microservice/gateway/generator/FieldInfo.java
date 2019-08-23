@@ -1,4 +1,4 @@
-package com.tq.gateway.generator;
+package com.tq.microservice.gateway.generator;
 
 /**
  * Record type and name of field generated for pojo class.

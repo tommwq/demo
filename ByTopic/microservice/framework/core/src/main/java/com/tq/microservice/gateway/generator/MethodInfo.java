@@ -1,4 +1,4 @@
-package com.tq.gateway.generator;
+package com.tq.microservice.gateway.generator;
 
 /**
  * Generated method body.

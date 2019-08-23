@@ -1,7 +1,6 @@
-package com.tq.gateway.generator;
+package com.tq.microservice.gateway.generator;
 
 import com.google.protobuf.DescriptorProtos.DescriptorProto;
-import com.google.protobuf.DescriptorProtos.FieldDescriptorProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
@@ -10,27 +9,17 @@ import com.google.protobuf.DescriptorProtos.MethodDescriptorProto;
 import com.google.protobuf.DescriptorProtos.ServiceDescriptorProto;
 
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.nio.file.Paths;
-import java.nio.file.Path;
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.ArrayList;
 
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
-import java.io.OutputStreamWriter;
-import java.io.Serializable;
-import java.io.ByteArrayOutputStream;
 
-import com.tq.utility.Utils;
+import com.tq.utility.Util;
 
 public class ProxyServiceGenerator {
 
@@ -123,16 +112,16 @@ public class ProxyServiceGenerator {
     service.getMethodList()
       .stream()
       .forEach(method -> {
-          String inputType = Utils.adjustClassName(method.getInputType());
-          String outputType = Utils.adjustClassName(method.getOutputType());
-          String javaMethodName = Utils.grpcMethodNameToJava(method.getName());
+          String inputType = Util.adjustClassName(method.getInputType());
+          String outputType = Util.adjustClassName(method.getOutputType());
+          String javaMethodName = Util.grpcMethodNameToJava(method.getName());
           HashMap<String, Object> values = new HashMap<>();
           values.put("methodName", javaMethodName);
           values.put("inputType", inputType);
           values.put("outputType", outputType);
 
           try {
-            methodList.add(new MethodInfo(Utils.renderTemplate(config.freemarkerConfiguration,
+            methodList.add(new MethodInfo(Util.renderTemplate(config.freemarkerConfiguration,
                                                                getMethodTemplateName(method),
                                                                values)));
           } catch (Exception e) {
@@ -144,7 +133,7 @@ public class ProxyServiceGenerator {
     root.put("package", file.getPackage());
     root.put("service", serviceName);
     root.put("methods", methodList);
-    sourceCode = Utils.renderTemplate(config.freemarkerConfiguration, "ServiceClass.ftlh", root);
+    sourceCode = Util.renderTemplate(config.freemarkerConfiguration, "ServiceClass.ftlh", root);
 
     return new SourceFile(fileName, sourceCode);
   }
@@ -162,14 +151,14 @@ public class ProxyServiceGenerator {
 
     message.getFieldList()
       .stream()
-      .forEach(field -> fieldList.add(new FieldInfo(Utils.toPojoClassName(field), Utils.underlineToPascalCase(field.getName()))));
+      .forEach(field -> fieldList.add(new FieldInfo(Util.toPojoClassName(field), Util.underlineToPascalCase(field.getName()))));
 
     String sourceCode = "";
     HashMap<String,Object> root = new HashMap<>();
     root.put("package", packageName);
     root.put("class", message.getName());
     root.put("fields", fieldList);
-    sourceCode = Utils.renderTemplate(config.freemarkerConfiguration, "POJOClass.ftlh", root);
+    sourceCode = Util.renderTemplate(config.freemarkerConfiguration, "POJOClass.ftlh", root);
 
     return new SourceFile(fileName, sourceCode);
   }
@@ -194,9 +183,9 @@ public class ProxyServiceGenerator {
           String protoParam = "";
           String pojoSetter = "";
           String pojoParam = "";
-          String pascalCase = Utils.underlineToPascalCase(fieldName);
+          String pascalCase = Util.underlineToPascalCase(fieldName);
           int fieldType = field.getType().getNumber();
-          String fieldTypeName = Utils.adjustClassName(field.getTypeName());
+          String fieldTypeName = Util.adjustClassName(field.getTypeName());
           
           protoSetter = "set" + pascalCase;
           pojoSetter = "set" + pascalCase;
@@ -204,8 +193,8 @@ public class ProxyServiceGenerator {
           pojoParam = "proto.get" + pascalCase + "()";
 
           if (fieldType == Type.TYPE_MESSAGE_VALUE) {
-            protoParam = Utils.toCodecClassName(fieldTypeName) + ".toProto(pojo.get" + pascalCase + "())";
-            pojoParam = Utils.toCodecClassName(fieldTypeName) + ".toPojo(proto.get" + pascalCase + "())";
+            protoParam = Util.toCodecClassName(fieldTypeName) + ".toProto(pojo.get" + pascalCase + "())";
+            pojoParam = Util.toCodecClassName(fieldTypeName) + ".toPojo(proto.get" + pascalCase + "())";
           } else if (fieldType == Type.TYPE_ENUM_VALUE) {
             protoParam = fieldTypeName + ".forNumber(pojo.get" + pascalCase + "())";
             pojoParam = "proto.get" + pascalCase + "().getNumber()";
@@ -227,7 +216,7 @@ public class ProxyServiceGenerator {
     values.put("protoSetStat", String.join("\n", protoSetStat));
     values.put("pojoSetStat", String.join("\n", pojoSetStat));
     
-    String sourceCode = Utils.renderTemplate(config.freemarkerConfiguration, "CodecClass.ftlh", values);
+    String sourceCode = Util.renderTemplate(config.freemarkerConfiguration, "CodecClass.ftlh", values);
     String fileName = rootPath + "/" + packageName.replace(".", "/") + "/http/codec/" + messageName + "Codec.java";
     return new SourceFile(fileName, sourceCode);
   }

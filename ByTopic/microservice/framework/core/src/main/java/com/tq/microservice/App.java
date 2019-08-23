@@ -22,8 +22,10 @@ import java.net.URL;
 import java.lang.reflect.*;
 
 public class App {
-
-  public static void run() {
+  private static String[] commandlineArguments;
+  
+  public static void main(String... args) {
+    commandlineArguments = args;
     Throwable throwable = new Throwable();
     StackTraceElement[] stacks = throwable.getStackTrace();
 
@@ -40,15 +42,15 @@ public class App {
       String startScanPackage = startClass.getPackage().getName();
 
       for (URL path: classLoader.getURLs()) {
-          File file = new File(path.getFile());
+        File file = new File(path.getFile());
             
-          if (file.isFile()) {
-            scanJarFile(file, startScanPackage);
-          }
+        if (file.isFile()) {
+          scanJarFile(file, startScanPackage);
+        }
 
-          if (file.isDirectory()) {
-            scanClassDirectory(file, startScanPackage);
-          }
+        if (file.isDirectory()) {
+          scanClassDirectory(file, startScanPackage);
+        }
       }
     } catch (Exception e) {
       // ClassNotFoundException
@@ -164,51 +166,50 @@ public class App {
       .getContextClassLoader()
       .loadClass(className);
 
-    for (Field field: clazz.getDeclaredFields()) {
-      System.out.println(className + field);
-      // Configuration anno = (Configuration) field.getAnnotation(Configuration.class);
-      // if (anno == null) {
-      //   continue;
-      // }
+    // for (Field field: clazz.getDeclaredFields()) {
+    //   System.out.println(className + field);
+    // Configuration anno = (Configuration) field.getAnnotation(Configuration.class);
+    // if (anno == null) {
+    //   continue;
+    // }
 
-      // String service = anno.service();
+    // String service = anno.service();
 
-      // ManagedChannel channel;
-      // ConfigurationServiceGrpc.ConfigurationServiceBlockingStub blockingStub;
-      // ConfigurationServiceGrpc.ConfigurationServiceStub stub;
+    // ManagedChannel channel;
+    // ConfigurationServiceGrpc.ConfigurationServiceBlockingStub blockingStub;
+    // ConfigurationServiceGrpc.ConfigurationServiceStub stub;
   
-      // String host = "localhost";
-      // int port = 12345; 
-      // channel = ManagedChannelBuilder.forAddress(host, port)
-      //   .usePlaintext()
-      //   .build();
-      // blockingStub = ConfigurationServiceGrpc.newBlockingStub(channel);
-      // stub = ConfigurationServiceGrpc.newStub(channel);
+    // String host = "localhost";
+    // int port = 12345; 
+    // channel = ManagedChannelBuilder.forAddress(host, port)
+    //   .usePlaintext()
+    //   .build();
+    // blockingStub = ConfigurationServiceGrpc.newBlockingStub(channel);
+    // stub = ConfigurationServiceGrpc.newStub(channel);
 
     
-      // String config = blockingStub.queryConfiguration(QueryConfigurationRequest.newBuilder()
-      //                                                 .setServiceName("com.tq.foo")
-      //                                                 .setServiceVersion("1.0")
-      //                                                 .setConfigurationVersion("")
-      //                                                 .build())
-      //   .getConfigurationContent();
+    // String config = blockingStub.queryConfiguration(QueryConfigurationRequest.newBuilder()
+    //                                                 .setServiceName("com.tq.foo")
+    //                                                 .setServiceVersion("1.0")
+    //                                                 .setConfigurationVersion("")
+    //                                                 .build())
+    //   .getConfigurationContent();
 
-      // Object value = config;
+    // Object value = config;
 
-      // channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-      String value = "TODO";
-      Object bean = getOrCreateBean(clazz);
-      field.setAccessible(true);
-      field.set(bean, value);
-    }
+    // channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+    // String value = "TODO";
+    // Object bean = getOrCreateBean(clazz);
+    // field.setAccessible(true);
+    // field.set(bean, value);
+//    }
 
     try {
       Annotation anno = clazz.getAnnotation(Executable.class);
       if (anno != null) {
-        Method method = clazz.getMethod("run");
-        method.invoke(getOrCreateBean(clazz));
+        Method method = clazz.getMethod("execute", (new String[]{}).getClass());
+        method.invoke(getOrCreateBean(clazz), (Object) commandlineArguments);
       }
-
     } catch (Exception e) {
       e.printStackTrace(System.err);
     }

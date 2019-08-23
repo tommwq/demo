@@ -1,4 +1,4 @@
-package com.tq.gateway;
+package com.tq.microservice.gateway;
 
 import org.springframework.stereotype.Component;
 import org.springframework.boot.context.properties.ConfigurationProperties;
