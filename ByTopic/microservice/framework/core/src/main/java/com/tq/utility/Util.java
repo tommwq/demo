@@ -5,14 +5,12 @@ import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Type;
 import freemarker.template.Configuration;
 import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.File;
 import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class Utils {
+public class Util {
 
   public static <T,R> R call(Emitter<T,R> emitter, T... args) {
     return call(null, emitter, args);
@@ -233,7 +231,7 @@ public class Utils {
       return new ArrayList<Class>();
     }
 
-    return CollectionUtils.mergeList(Arrays.asList(clazz.getInterfaces()),
+    return CollectionUtil.mergeList(Arrays.asList(clazz.getInterfaces()),
                                      getAllInterfaces(clazz.getSuperclass()));
   }
 
