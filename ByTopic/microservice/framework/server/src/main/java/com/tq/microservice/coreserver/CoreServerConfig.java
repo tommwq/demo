@@ -4,6 +4,11 @@ import com.tq.microservice.gateway.GatewayConfig;
 
 public class CoreServerConfig {
 
+  public static class Toggle {
+    boolean gateway;
+  }
+
+  Toggle active;
   GatewayConfig gateway;
   
   /*
