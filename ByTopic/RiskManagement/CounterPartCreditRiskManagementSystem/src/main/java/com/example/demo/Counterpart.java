@@ -1,32 +1,5 @@
 package com.example.demo;
 
-import java.util.TreeMap;
-import java.util.Map.Entry;
-
-class ValueScoreTable {
-  TreeMap<Double,Double> table = new TreeMap<>();
-  double defaultScore = 0.0;
-
-  public ValueScoreTable add(double value, double score) {
-    table.put(value, score);
-    return this;
-  }
-
-  public ValueScoreTable setDefaultScore(double score) {
-    defaultScore = score;
-    return this;
-  }
-
-  public double score(double value) {
-    Entry<Double,Double> floor = table.floorEntry(value);
-    if (floor == null) {
-      return defaultScore;
-    }
-
-    return floor.getValue();
-  }
-}
-
 public class Counterpart {
   private String id;
   private CounterpartType type;
@@ -106,88 +79,58 @@ public class Counterpart {
   }
 
   private double scoreNetAsset() {
-    if (netAsset >= 200000000.0) {
-      return 100.0;
-    } else if (netAsset >= 100000000.0) {
-      return 90.0;
-    } else if (netAsset >= 50000000.0) {
-      return 80.0;
-    } else if (netAsset >= 30000000.0) {
-      return 70.0;
-    } else if (netAsset >= 10000000.0) {
-      return 60.0;
-    } else {
-      return 0.0;
-    }
+    return (double) new ScoreRateTable<Double>(0.0)
+      .addRate(200000000, 100.0)
+      .addRate(100000000, 90.0)
+      .addRate(50000000, 80.0)
+      .addRate(30000000, 70.0)
+      .addRate(10000000, 60.0)
+      .rate(netAsset);
   }
 
   private double scoreDebtAssetRatio() {
     double base = industryDebtAssetRatio;
-    if (debtAssetRatio >= 2 * base) {
-      return 0.0;
-    } else if (debtAssetRatio >= 1.5 * base) {
-      return 60.0;
-    } else if (debtAssetRatio >= 1 * base) {
-      return 80.0;
-    } else if (debtAssetRatio >= 0.5 * base) {
-      return 90.0;
-    } else {
-      return 100.0;
-    }
+    return (double) new ScoreRateTable<Double>(100.0)
+      .addRate(2.0 * base, 0.0)
+      .addRate(1.5 * base, 60.0)
+      .addRate(1.0 * base, 80.0)
+      .addRate(0.5 * base, 90.0)
+      .rate(debtAssetRatio);
   }
 
   private double scoreQuickRatio() {
     double base = industryQuickRatio;
-    if (quickRatio >= 1.5 * base) {
-      return 100.0;
-    } else if (quickRatio >= base) {
-      return 90.0;
-    } else if (quickRatio >= 0.8 * base) {
-      return 80.0;
-    } else if (quickRatio >= 0.5 * base) {
-      return 60.0;
-    } else {
-      return 0.0;
-    }
+    return (double) new ScoreRateTable<Double>(0.0)
+      .addRate(1.5 * base, 100.0)
+      .addRate(1.0 * base, 90.0)
+      .addRate(0.8 * base, 80.0)
+      .addRate(0.5 * base, 60.0)
+      .rate(quickRatio);
   }
 
   private double scoreRoe() {
     double base = industryRoe;
-    if (roe >= 1.5 * base) {
-      return 100.0;
-    } else if (roe >= base) {
-      return 90.0;
-    } else if (roe >= 0.8 * base) {
-      return 80.0;
-    } else if (roe >= 0.5 * base) {
-      return 60.0;
-    } else {
-      return 0.0;
-    }
+    return (double) new ScoreRateTable<Double>(0.0)
+      .addRate(1.5 * base, 100.0)
+      .addRate(1.0 * base, 90.0)
+      .addRate(0.8 * base, 80.0)
+      .addRate(0.5 * base, 60.0)
+      .rate(roe);
   }
 
   private double scoreCredit() {
-    if (numberOfDefault == 0) {
-      return 100.0;
-    } else if (numberOfDefault == 1) {
-      return 60.0;
-    }
-    return 0.0;
+    return (double) new ScoreRateTable<Double>(100.0)
+      .addRate(2, 0.0)
+      .addRate(1, 60.0)
+      .rate(numberOfDefault);
   }
 
   private double scoreExperience() {
-    double experience = 0.0;
-    if (yearOfInvestment >= 5) {
-      experience = 100.0;
-    } else if (yearOfInvestment >= 3) {
-      experience = 90.0;
-    } else if (yearOfInvestment >= 1) {
-      experience = 80.0;
-    } else if (yearOfInvestment >= 0.5) {
-      experience = 60.0;
-    }
-
-    return experience;
+    return (double) new ScoreRateTable<Double>(60.0)
+      .addRate(5, 100.0)
+      .addRate(3, 90.0)
+      .addRate(1, 80.0)
+      .rate(yearOfInvestment);
   }
 
   private double scoreFinancial() {
@@ -203,34 +146,30 @@ public class Counterpart {
   }
 
   private double scoreProductNetAsset() {
-    if (netAsset > 100000000.0) {
-      return 100.0;
-    } else if (netAsset > 50000000.0) {
-      return 90.0;
-    } else if (netAsset > 20000000.0) {
-      return 80.0;
-    } else {
-      return 60.0;
-    }
+    return (double) new ScoreRateTable<Double>(60.0)
+      .addRate(100000000, 100.0)
+      .addRate(50000000, 90.0)
+      .addRate(20000000, 80.0)
+      .rate(netAsset);
   }
 
   private double scoreNetValueIncreasment() {
-    return new ValueScoreTable().setDefaultScore(0.0)
-      .add(0.2, 100.0)
-      .add(0.1, 90.0)
-      .add(0.05, 80.0)
-      .add(0.0, 70.0)
-      .add(-0.05, 50.0)
-      .score(netValueIncreasment);    
+    return (double) new ScoreRateTable<Double>(0.0)
+      .addRate(0.2, 100.0)
+      .addRate(0.1, 90.0)
+      .addRate(0.05, 80.0)
+      .addRate(0.0, 70.0)
+      .addRate(-0.05, 50.0)
+      .rate(netValueIncreasment);    
   }
 
   private double scoreStopLossRatio() {
-    return new ValueScoreTable().setDefaultScore(0.0)
-      .add(0.9, 100.0)
-      .add(0.8, 80.0)
-      .add(0.7, 70.0)
-      .add(0.5, 50.0)
-      .score(stopLossRatio);
+    return (double) new ScoreRateTable<Double>(0.0)
+      .addRate(0.9, 100.0)
+      .addRate(0.8, 80.0)
+      .addRate(0.7, 70.0)
+      .addRate(0.5, 50.0)
+      .rate(stopLossRatio);
   }
 
   private double scoreProductIndex() {
@@ -257,16 +196,10 @@ public class Counterpart {
   }
   
   public void rate() {
-    Rate rate;
-    double result = score();
-    if (result >= 80) {
-      rate = Rate.A;
-    } else if (result >= 60) {
-      rate = Rate.B;
-    } else {
-      rate = Rate.C;
-    }
-
+    Rate rate = (Rate) new ScoreRateTable<Rate>(Rate.C).addRate(80, Rate.A)
+      .addRate(60, Rate.B)
+      .rate(score());
+    
     lastRateInfo = new RateInfo(name, type, rate);
   }
 
