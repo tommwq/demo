@@ -15,7 +15,7 @@ enum Result {
 }
 
 message InstanceLocation {
-  int32 ip = 1;
+  string host = 1;
   int32 port = 2;
 }
 

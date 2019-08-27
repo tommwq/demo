@@ -1,28 +1,12 @@
 package com.tq.utility;
 
-import java.io.Console;
-import java.io.IOException;
-import java.io.File;
-import java.nio.file.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.lang.reflect.Field;
 import java.lang.InstantiationException;
 import java.lang.IllegalAccessException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
-import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
 
 
 public class CollectionUtil {
@@ -89,7 +73,7 @@ public class CollectionUtil {
   }
 
   public static void setFieldValue(Object object, String fieldName, Object value) {
-    Util.mustRun(() -> {
+    Util.abortOnError(() -> {
         Field field = object.getClass().getDeclaredField(fieldName);
         boolean accessible = field.isAccessible();
         field.setAccessible(true);
@@ -99,7 +83,7 @@ public class CollectionUtil {
   }
 
   public static void setFieldValueString(Object object, String fieldName, String value) {
-    Util.mustRun(() -> {
+    Util.abortOnError(() -> {
         Field field = object.getClass().getDeclaredField(fieldName);
         boolean accessible = field.isAccessible();
         field.setAccessible(true);
@@ -147,7 +131,7 @@ public class CollectionUtil {
     }
 
     final String memberFieldName = piece[1];
-    Util.mustRun(() -> {
+    Util.abortOnError(() -> {
         fillObject(getOrCreateFieldValue(object, fieldName), memberFieldName, value);
       });
   }

@@ -1,5 +1,6 @@
 package com.tq.microservice.gateway;
 
+import com.tq.microservice.gateway.nameresolver.RegistryNameResolver;
 import io.grpc.BindableService;
 import io.grpc.HandlerRegistry;
 import io.grpc.NameResolver;
@@ -41,10 +42,11 @@ public class UnregisteredServiceRegistry extends HandlerRegistry {
 
     // TODO lookup service instances.
 
-   try {
+    try {
       String serviceClassName = packageName + "." + className;
       Constructor constructor = classLoader.loadClass(serviceClassName).getConstructor(NameResolver.Factory.class);
-      BindableService service = (BindableService) constructor.newInstance(new ConsulNameResolver.Factory());
+      // BindableService service = (BindableService) constructor.newInstance(new ConsulNameResolver.Factory());
+      BindableService service = (BindableService) constructor.newInstance(new RegistryNameResolver.Factory());
       return service.bindService().getMethod(methodName);
     } catch (ClassNotFoundException e) {
       // TODO use logging

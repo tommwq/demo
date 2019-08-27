@@ -4,16 +4,12 @@ import com.tq.microservice.gateway.GatewayConfig;
 
 public class CoreServerConfig {
 
-  public static class Toggle {
+  public static class ModuleToggle {
     boolean gateway;
+    boolean configurationService;
+    boolean registryService;
   }
 
-  Toggle active;
+  ModuleToggle activeModule;
   GatewayConfig gateway;
-  
-  /*
-    gateway 是否启动 端口 
-    configurationservice
-    registryservice
-  */
 }

@@ -41,7 +41,7 @@ message QueryServiceRequest {
 message QueryServiceResponse {
     string service_name = 1;
     string service_version = 2;
-    repeated common.InstanceId instances = 3;
+    repeated common.InstanceId instance = 3;
 }
 
 message QueryServiceCatalogRequest {

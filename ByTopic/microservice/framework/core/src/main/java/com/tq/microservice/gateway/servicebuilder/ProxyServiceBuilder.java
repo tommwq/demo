@@ -1,4 +1,4 @@
-package com.tq.microservice.gateway.service.builder;
+package com.tq.microservice.gateway.servicebuilder;
 
 import com.tq.microservice.gateway.generator.ProxyServiceGenerator;
 import com.tq.utility.CollectionUtil;
