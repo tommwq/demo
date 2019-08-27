@@ -1,7 +1,7 @@
 package com.tq.applogcollect.storage;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.tq.applogcollect.AppLogCollectProto.LogRecord;
+import com.tq.applogcollect.AppLogCollectProto.Log;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import static com.tq.applogcollect.Constant.SEQUENCE_SIZE;
 
 public class LogBlock {
   private int dataLength;
-  private ArrayList<LogRecord> logList = new ArrayList<>();
+  private ArrayList<Log> logList = new ArrayList<>();
   private int blockSize;
 
   public LogBlock(int aBlockSize) {
@@ -22,10 +22,11 @@ public class LogBlock {
   }
 
   public boolean containsLog(long sequence) {
-    return logList.stream().anyMatch(log -> log.getSequence() == sequence);
+//    return logList.stream().anyMatch(log -> log.getSequence() == sequence);
+    return true;
   }
 
-  public List<LogRecord> logs() {
+  public List<Log> logs() {
     return logList;
   }
   
@@ -37,7 +38,8 @@ public class LogBlock {
       return 0;
     }
 
-    return logList.get(0).getSequence();
+//    return logList.get(0).getSequence();
+    return 0;
   }
 
   /*
@@ -48,7 +50,8 @@ public class LogBlock {
       return 0;
     }
 
-    return logList.get(logList.size() - 1).getSequence();
+//    return logList.get(logList.size() - 1).getSequence();
+    return 0;
   }
 
   public void updateDataLength() {
@@ -67,7 +70,7 @@ public class LogBlock {
     updateDataLength();
   }
 
-  public boolean tryInsertLog(LogRecord log) {
+  public boolean tryInsertLog(Log log) {
     updateDataLength();
     int newLength = dataLength + log.getSerializedSize();
         
@@ -91,7 +94,7 @@ public class LogBlock {
       int offset = ADLER32_SIZE + DATALENGTH_SIZE + remainDataLength - LOGLENGTH_SIZE - SEQUENCE_SIZE;
       buffer.position(offset);
       short logLength = buffer.getShort();
-      LogRecord log = LogRecord.parser().parseFrom(block, offset - logLength, logLength);
+      Log log = Log.parser().parseFrom(block, offset - logLength, logLength);
       logList.add(log);
       remainDataLength -= (LOGLENGTH_SIZE + SEQUENCE_SIZE + logLength);
     }
@@ -107,7 +110,7 @@ public class LogBlock {
       
     logList.stream()
       .forEach(log -> buffer.put(log.toByteArray())
-               .putShort((short) log.getSerializedSize())
-               .putLong(log.getSequence()));
+               .putShort((short) log.getSerializedSize()));
+//               .putLong(log.getSequence()));
   }
 }

@@ -9,23 +9,26 @@ public class StorageConfig {
     return blockSize;
   }
 
-  public void setBlockSize(int size) {
+  public StorageConfig setBlockSize(int size) {
     blockSize = size;
+    return this;
   }
 
   public int getBlockCount() {
     return blockCount;
   }
 
-  public void setBlockCount(int count) {
+  public StorageConfig setBlockCount(int count) {
     blockCount = count;
+    return this;
   }
 
   public String getFileName() {
     return fileName;
   }
 
-  public void setFileName(String aFileName) {
+  public StorageConfig setFileName(String aFileName) {
     fileName = aFileName;
+    return this;
   }
 }

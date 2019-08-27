@@ -5,65 +5,45 @@ package com.tq.applogcollect;
 option java_package = "com.tq.applogcollect";
 option java_outer_classname ="AppLogCollectProto";
 
+import "google/protobuf/any.proto";
+
 // 服务器向App发出命令，要求App上报日志。
 // TODO 重新审定协议。
-message LogQueryCommand {
+message Command {
   string package_name = 1;
   int64 sequence = 2; // 0 表示从最新一条日志开始
   int32 count = 3;
   bool include_sub_package = 4;
 }
 
-// 模块版本信息。
-message ModuleVersion {
-  string module_name = 1;
-  string module_version = 2;
+enum LogType {
+  UNKNOWN = 0;
+  DEVICE_AND_APP_INFO = 1;
+  METHOD_AND_OBJECT_INFO = 2;
+  EXCEPTION_INFO = 3;
+  USER_DEFINED = 4;
 }
 
-// 日志级别。
-enum LogLevel {
-  TRACE = 0;
-  DEBUG = 1;
-  INFO = 2;
-  WARN = 3;
-  ERROR = 4;
-  FATAL = 5;
-}
-
-message CommonInfo {
+message LogHeader {
   int64 sequence = 1;
   int64 time = 2;
-  int8 content_type = 3;
+  LogType log_type = 3;
 }
 
 // App上报给服务器的日志。
-message LogRecord {
-  int64 sequence = 1;
-  int64 associated_sequence = 2;
-  LogLevel log_level = 3;
-  int64 local_time = 4;
-  string app_version = 5;
-  repeated ModuleVersion module_versions = 6;
-  string source_file = 7;
-  int32 line_number = 8;
-  string package_name = 9;
-  string class_name = 10;
-  string method_name = 11;
-  repeated string method_parameters = 12;
-  string method_result = 13;
-  string device_id = 14;
+message Log {
+  LogHeader header = 1;
+  google.protobuf.Any body = 2;
 }
 
 // User defined message.
 message UserDefinedMessage {
-  int64 sequence = 1;
-  int64 time = 2;
-  string source_file = 3;
-  int32 line_number = 4;
-  string package_name = 5;
-  string class_name = 6;
-  string method_name = 7;
-  string user_defined_message = 8;
+  string source_file = 1;
+  int32 line_number = 2;
+  string package_name = 3;
+  string class_name = 4;
+  string method_name = 5;
+  string user_defined_message = 6;
 }
 
 // Module name and version.
@@ -73,17 +53,15 @@ message ModuleInfo {
 }
 
 // Device and app information.
-message DeviceAndAppInfoLog {
-  int64 sequence = 1;
-  int64 time = 2;
-  string device_id = 3;
-  string device_version = 4;
-  string base_os_name = 5;
-  string base_os_version = 6;
-  string os_name = 7;
-  string os_version = 8;
-  string app_version = 9;
-  repeated ModuleInfo module_info = 6;
+message DeviceAndAppInfo {
+  string device_id = 1;
+  string device_version = 2;
+  string base_os_name = 3;
+  string base_os_version = 4;
+  string os_name = 5;
+  string os_version = 6;
+  string app_version = 7;
+  repeated ModuleInfo module_info = 8;
 }
 
 message ObjectInfo {
@@ -104,17 +82,13 @@ message MethodInfo {
 
 // Method and object information
 message MethodAndObjectInfo {
-  int64 sequence = 1;
-  int64 time = 2;
-  MethodInfo method = 3;
-  repeated ObjectInfo variable = 4;
+  MethodInfo method = 1;
+  repeated ObjectInfo variable = 2;
 }
 
 message ExceptionInfo {
-  int64 sequence = 1;
-  int64 time = 2;
-  ObjectInfo exception = 3;
-  repeated MethodInfo stack = 4;
+  ObjectInfo exception = 1;
+  repeated MethodInfo stack = 2;
 }
 
 
@@ -122,6 +96,6 @@ message ExceptionInfo {
 message Empty {}
 
 service LogCollectService {
-  rpc Report (stream LogRecord) returns (stream LogQueryCommand);
+  rpc Report (stream Log) returns (stream Command);
   rpc Heartbeat (stream Empty) returns (stream Empty);
 }

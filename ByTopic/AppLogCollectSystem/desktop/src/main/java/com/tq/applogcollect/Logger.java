@@ -1,27 +1,29 @@
 package com.tq.applogcollect;
 
-import com.tq.applogcollect.AppLogCollectProto.LogLevel;
-import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
-import com.tq.applogcollect.AppLogCollectProto.LogRecord;
-import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
+import com.google.protobuf.Any;
+import com.tq.applogcollect.AppLogCollectProto.Command;
+import com.tq.applogcollect.AppLogCollectProto.DeviceAndAppInfo;
+import com.tq.applogcollect.AppLogCollectProto.Log;
+import com.tq.applogcollect.AppLogCollectProto.LogHeader;
+import com.tq.applogcollect.AppLogCollectProto.LogType;
+import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
 import com.tq.applogcollect.storage.LogStorage;
 import com.tq.applogcollect.storage.SimpleBlockStorage;
 import com.tq.applogcollect.utility.StringUtil;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Logger {
 
   private static Logger instance = new Logger();
-  private AppInfo appInfo = new AppInfo();
 
+  private DeviceAndAppConfig info = new DeviceAndAppConfig();
   private long sequence = 1;
-  private LinkedTransferQueue<LogRecord> logQueue = new LinkedTransferQueue<>();
+  private LinkedTransferQueue<Log> logQueue = new LinkedTransferQueue<>();
   protected Thread backgroundWriteThread = null;
   private LogStorage storage;
   
@@ -32,7 +34,7 @@ public class Logger {
     public void run() {
       try {
         while (true) {
-          LogRecord log = instance.logQueue.take();
+          Log log = instance.logQueue.take();
           try {
             instance.write(log);
           } catch (IOException e) {
@@ -40,7 +42,7 @@ public class Logger {
           }
         }
       } catch (InterruptedException e) {
-        ArrayList<LogRecord> tails = new ArrayList<>();
+        ArrayList<Log> tails = new ArrayList<>();
         tails.addAll(instance.logQueue);
         tails.stream().forEach(log -> {try {instance.write(log);} catch (Exception ex){}});
       } finally {
@@ -53,12 +55,12 @@ public class Logger {
     return instance;
   }
 
-  public void open(StorageConfig aConfig, AppInfo aInfo) throws IOException {
-    appInfo = aInfo;
+  public void open(StorageConfig aConfig, DeviceAndAppConfig aInfo) throws IOException {
+    info = aInfo;
 
     storage = new LogStorage(new SimpleBlockStorage(Paths.get(aConfig.getFileName()),
-            aConfig.getBlockCount(),
-            aConfig.getBlockSize()));
+                                                    aConfig.getBlockCount(),
+                                                    aConfig.getBlockSize()));
 
     storage.open();
 
@@ -85,44 +87,81 @@ public class Logger {
   public void close() {
     if (backgroundWriteThread != null) {
       backgroundWriteThread.interrupt();
+      try {
+        backgroundWriteThread.join();
+      } catch (InterruptedException e) {
+        // ignore
+      }
     }
   }
 
-  private void write(LogRecord log) throws IOException {
+  private void write(Log log) throws IOException {
     storage.write(log);
   }
 
-  public long enter(Object... parameters) {
-    return log(2, 0, parameters);
+  public void trace() {
+    log(2, 0, new Object[]{});
+  }
+  
+  public void log(String message, Object... parameters) {
+    log(2, 0, parameters);
   }
 
-  public void leave(long associatedSequence, Object... parameters) {
-    log(2, associatedSequence, parameters);
+  public void dump(Object... parameters) {
+    log(2, 0, parameters);
   }
 
   public void error(Object... parameters) {
     log(2, 0, parameters);
   }
-  
-  public void warn(Object... parameters) {
-    log(2, 0, parameters);
-  }
-  
-  public void info(Object... parameters) {
-    log(2, 0, parameters);
-  }
-  
-  public void debug(Object... parameters) {
-    log(2, 0, parameters);
-  }
 
-  public List<LogRecord> queryLog(long sequence, int count) {
+  public List<Log> queryLog(long sequence, int count) {
     return storage.read(sequence, count);
   }
 
   public long maxSequence() {
     return storage.maxSequence();
   }
+
+  // TODO think concurrency
+  private long nextSequence() {
+    return sequence++;
+  }
+
+  private long currentTime() {
+    return System.currentTimeMillis();
+  }
+  
+  private Log newDeviceAndAppInfoLog(DeviceAndAppConfig info) {
+    return Log.newBuilder()
+      .setHeader(LogHeader.newBuilder()
+                 .setSequence(nextSequence())
+                 .setTime(currentTime())
+                 .setLogType(LogType.DEVICE_AND_APP_INFO)
+                 .build())
+      .setBody(Any.pack(DeviceAndAppInfo.newBuilder()
+                        .setDeviceId(info.getDeviceId())
+                        .setDeviceVersion(info.getDeviceVersion())
+                        .setBaseOsName(info.getBaseOsName())
+                        .setBaseOsVersion(info.getBaseOsVersion())
+                        .setOsName(info.getOsName())
+                        .setOsVersion(info.getOsVersion())
+                        .setAppVersion(info.getAppVersion())
+                        .addAllModuleInfo(info.getModuleVersions()
+                                          .entrySet()
+                                          .stream()
+                                          .map(entry -> ModuleInfo.newBuilder()
+                                               .setModuleName(entry.getKey())
+                                               .setModuleVersion(entry.getValue())
+                                               .build())
+                                          .collect(Collectors.toList()))
+                        .build()))
+      .build();
+  }
+  
+  // private Log newMethodAndObjectInfoLog() {}
+  // private Log newExceptionInfoLog() {}
+  // private Log newUserDefinedLog() {}
   
   private long log(int stackDepth, long associatedSequence, Object... parameters) {
     String fileName = "unknown";
@@ -151,77 +190,57 @@ public class Logger {
     }
 
     long lsn = sequence++;
-    LogRecord record = newLogRecord(lsn,
-                                    associatedSequence,
-                                    LogLevel.DEBUG.ordinal(),
-                                    System.currentTimeMillis(),
-                                    packageName,
-                                    fileName,
-                                    lineNumber,
-                                    className,
-                                    methodName,
-                                    StringUtil.stringify(parameters),
-                                    StringUtil.stringify(result));
+    Log record = newLog(lsn,
+                        associatedSequence,
+                        0,
+                        System.currentTimeMillis(),
+                        packageName,
+                        fileName,
+                        lineNumber,
+                        className,
+                        methodName,
+                        StringUtil.stringify(parameters),
+                        StringUtil.stringify(result));
 
     logQueue.offer(record);
     return lsn;
   }
-  
-  public LogRecord newEmptyLogRecord() {
-    return newLogRecord(0,
-                        0,
-                        LogLevel.DEBUG.ordinal(),
-                        System.currentTimeMillis(),
-                        "",
-                        "",
-                        0,
-                        "",
-                        "",
-                        new String[]{""},
-                        "");
-  }
-  
-  private LogRecord newLogRecord(long sequence,
-                                 long associatedSequence,
-                                 int level,
-                                 long localTime,
-                                 String packageName,
-                                 String fileName,
-                                 int lineNumber,
-                                 String className,
-                                 String methodName,
-                                 String[] parameters,
-                                 String result) {
+    
+  private Log newLog(long sequence,
+                     long associatedSequence,
+                     int level,
+                     long localTime,
+                     String packageName,
+                     String fileName,
+                     int lineNumber,
+                     String className,
+                     String methodName,
+                     String[] parameters,
+                     String result) {
 
-    LogLevel logLevel = LogLevel.DEBUG;
-    if (level <= LogLevel.FATAL.ordinal() || LogLevel.TRACE.ordinal() <= level) {
-      logLevel = LogLevel.values()[level];
-    }
-
-    return LogRecord.newBuilder()
-      .setSequence(sequence)
-      .setAssociatedSequence(associatedSequence)
-      .setLogLevel(logLevel)
-      .setLocalTime(localTime)
-      .setAppVersion(appInfo.getAppVersion())
-      .addAllModuleVersions(
-        appInfo.getModuleVersions()
-        .entrySet()
-        .stream()
-        .map(entry -> ModuleVersion.newBuilder()
-             .setModuleName(entry.getKey())
-             .setModuleVersion(entry.getValue())
-             .build())
-        .collect(Collectors.toList()))
-      .setSourceFile(fileName)
-      .setLineNumber(lineNumber)
-      .setPackageName(packageName)
-      .setClassName(className)
-      .setMethodName(methodName)
-      .addAllMethodParameters(Stream.of(parameters)
-                              .collect(Collectors.toList()))
-      .setMethodResult(result)
-      .setDeviceId(appInfo.getDeviceId())
+    return Log.newBuilder()
+//      .setSequence(sequence)
+//      .setAssociatedSequence(associatedSequence)
+      //    .setLocalTime(localTime)
+      // .setAppVersion(info.getAppVersion())
+      // .addAllModuleVersions(
+      //   info.getModuleVersions()
+      //   .entrySet()
+      //   .stream()
+      //   .map(entry -> ModuleVersion.newBuilder()
+      //        .setModuleName(entry.getKey())
+      //        .setModuleVersion(entry.getValue())
+      //        .build())
+      //   .collect(Collectors.toList()))
+      // .setSourceFile(fileName)
+      // .setLineNumber(lineNumber)
+      // .setPackageName(packageName)
+      // .setClassName(className)
+      // .setMethodName(methodName)
+      // .addAllMethodParameters(Stream.of(parameters)
+      //                         .collect(Collectors.toList()))
+      // .setMethodResult(result)
+      // .setDeviceId(info.getDeviceId())
       .build();
   }
 }

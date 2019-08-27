@@ -10,33 +10,47 @@ import java.util.UUID;
 @SpringBootApplication
 public class AppLogClientApplication implements CommandLineRunner {
 
-  public static void main(String[] args) throws Exception {
-    String deviceId = UUID.randomUUID().toString();
-    
-    AppInfo info = new AppInfo();
-    info.setAppVersion("0.1.0");
-    info.setModuleVersion("client", "0.1.0");
-    info.setDeviceId(deviceId);
+  private static final Logger logger = Logger.instance();
 
-    StorageConfig config = new StorageConfig();
-    config.setFileName("a.blk");
-    config.setBlockSize(4096);
-    config.setBlockCount(8);
-    
-    Logger.instance().open(config, info);
-    
+  public static void main(String[] args) throws Exception {    
     SpringApplication.run(AppLogClientApplication.class, args);
   }
 
   @Override
   public void run(String... args) throws Exception {
-    new LogAgent("localhost", 50051).start();
 
-    for (int i = 1; i < 100; i++) {
-      long lsn = Logger.instance().enter();
-      Logger.instance().leave(lsn);
-    }
+    DeviceAndAppConfig info = new DeviceAndAppConfig()
+      .setAppVersion("0.1.0")
+      .setModuleVersion("client", "0.1.0")
+      .setDeviceId(UUID.randomUUID().toString());
 
-    // Logger.instance().close();
+    StorageConfig config = new StorageConfig()
+      .setFileName("a.blk")
+      .setBlockSize(4096)
+      .setBlockCount(8);
+    
+    logger.open(config, info);
+    
+    // report device and app info on log report agent start.
+    LogAgent agent = new LogAgent("localhost", 50051);
+    agent.start();
+
+    // record user defined message
+    logger.log("hello");
+
+    // record method and variables
+    logger.trace();
+    int x = 1;
+    logger.dump(x);
+    
+    // record exception
+    Throwable error = new Throwable("Test");
+    logger.error(error);
+
+    // record user defined message
+    logger.log("bye");
+
+    agent.shutdown();
+    logger.close();
   }
 }

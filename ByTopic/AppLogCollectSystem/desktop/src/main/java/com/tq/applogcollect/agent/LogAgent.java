@@ -1,11 +1,13 @@
 package com.tq.applogcollect.agent;
 
-import com.tq.applogcollect.AppLogCollectProto.LogLevel;
-import com.tq.applogcollect.AppLogCollectProto.LogRecord;
-import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
-import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
+import com.tq.applogcollect.AppLogCollectProto.Command;
+import com.tq.applogcollect.AppLogCollectProto.Log;
+import com.tq.applogcollect.AppLogCollectProto.LogType;
+import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
+
 import com.tq.applogcollect.LogCollectServiceGrpc;
 import com.tq.applogcollect.Logger;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -19,7 +21,7 @@ public class LogAgent {
 
   private final ManagedChannel channel;
   private final LogCollectServiceGrpc.LogCollectServiceStub stub;
-  private StreamObserver<LogRecord> inputStream = null;
+  private StreamObserver<Log> inputStream = null;
   
   public LogAgent(String host, int port) {
     channel = ManagedChannelBuilder.forAddress(host, port)
@@ -35,10 +37,11 @@ public class LogAgent {
 
   public void start() throws InterruptedException {
     inputStream = stub.report(new LogReporter(this));
-    inputStream.onNext(Logger.instance().newEmptyLogRecord());
+    // TODO report device and app info log
+    // inputStream.onNext(Logger.instance().newEmptyLog());
   }
 
-  protected void reportLog(List<LogRecord> logs) {
+  protected void reportLog(List<Log> logs) {
     logs.stream()
       .forEach(logRecord -> inputStream.onNext(logRecord));
   }

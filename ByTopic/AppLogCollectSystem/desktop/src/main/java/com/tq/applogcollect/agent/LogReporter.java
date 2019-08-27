@@ -1,9 +1,9 @@
 package com.tq.applogcollect.agent;
 
-import com.tq.applogcollect.AppLogCollectProto.LogLevel;
-import com.tq.applogcollect.AppLogCollectProto.LogRecord;
-import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
-import com.tq.applogcollect.AppLogCollectProto.ModuleVersion;
+import com.tq.applogcollect.AppLogCollectProto.LogType;
+import com.tq.applogcollect.AppLogCollectProto.Log;
+import com.tq.applogcollect.AppLogCollectProto.Command;
+import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
 import com.tq.applogcollect.LogCollectServiceGrpc;
 import com.tq.applogcollect.Logger;
 import io.grpc.ManagedChannel;
@@ -16,9 +16,9 @@ import static com.tq.applogcollect.Constant.INVALID_COUNT;
 import static com.tq.applogcollect.Constant.INVALID_SEQUENCE;
 
 /**
- * Receive LogQueryCommand, send requested logs.
+ * Receive Command, send requested logs.
  */
-public class LogReporter implements StreamObserver<LogQueryCommand> {
+public class LogReporter implements StreamObserver<Command> {
 
   private LogAgent agent;
   
@@ -27,7 +27,7 @@ public class LogReporter implements StreamObserver<LogQueryCommand> {
   }
 
   @Override
-  public void onNext(LogQueryCommand command) {
+  public void onNext(Command command) {
     long sequence = command.getSequence();
     int count = command.getCount();
 
