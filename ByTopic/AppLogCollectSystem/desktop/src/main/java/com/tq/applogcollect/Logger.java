@@ -6,7 +6,10 @@ import com.tq.applogcollect.AppLogCollectProto.DeviceAndAppInfo;
 import com.tq.applogcollect.AppLogCollectProto.Log;
 import com.tq.applogcollect.AppLogCollectProto.LogHeader;
 import com.tq.applogcollect.AppLogCollectProto.LogType;
+import com.tq.applogcollect.AppLogCollectProto.MethodAndObjectInfo;
+import com.tq.applogcollect.AppLogCollectProto.MethodInfo;
 import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
+import com.tq.applogcollect.AppLogCollectProto.ObjectInfo;
 import com.tq.applogcollect.storage.LogStorage;
 import com.tq.applogcollect.storage.SimpleBlockStorage;
 import com.tq.applogcollect.utility.StringUtil;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Logger {
 
@@ -35,11 +39,7 @@ public class Logger {
       try {
         while (true) {
           Log log = instance.logQueue.take();
-          try {
-            instance.write(log);
-          } catch (IOException e) {
-            // TODO
-          }
+          instance.write(log);
         }
       } catch (InterruptedException e) {
         ArrayList<Log> tails = new ArrayList<>();
@@ -82,6 +82,8 @@ public class Logger {
     
     backgroundWriteThread = new Thread(new BackgroundWriteRoutine());
     backgroundWriteThread.start();
+
+    write(newDeviceAndAppInfoLog(info));
   }
 
   public void close() {
@@ -95,12 +97,29 @@ public class Logger {
     }
   }
 
-  private void write(Log log) throws IOException {
-    storage.write(log);
+  private void write(Log log) {
+    // TODO test
+    System.err.println(log.toString());
+    try {
+      storage.write(log);
+    } catch (IOException e) {
+      // TODO
+    }
+  }
+
+  private StackTraceElement currentFrame() {
+    StackTraceElement[] stack = new Throwable().getStackTrace();
+
+    final int stackDepth = 3;
+    if (stack.length < stackDepth) {
+      throw new RuntimeException("cannot get stack information");
+    }
+
+    return stack[stackDepth - 1];
   }
 
   public void trace() {
-    log(2, 0, new Object[]{});
+    write(newMethodAndObjectInfoLog(currentFrame(), new Object[]{}));
   }
   
   public void log(String message, Object... parameters) {
@@ -108,7 +127,7 @@ public class Logger {
   }
 
   public void dump(Object... parameters) {
-    log(2, 0, parameters);
+    write(newMethodAndObjectInfoLog(currentFrame(), parameters));
   }
 
   public void error(Object... parameters) {
@@ -159,7 +178,30 @@ public class Logger {
       .build();
   }
   
-  // private Log newMethodAndObjectInfoLog() {}
+  private Log newMethodAndObjectInfoLog(StackTraceElement frame, Object... variables) {
+    return Log.newBuilder()
+      .setHeader(LogHeader.newBuilder()
+                 .setSequence(nextSequence())
+                 .setTime(currentTime())
+                 .setLogType(LogType.METHOD_AND_OBJECT_INFO)
+                 .build())
+      .setBody(Any.pack(MethodAndObjectInfo.newBuilder()
+                        .setMethod(MethodInfo.newBuilder()
+                                   .setSourceFile(frame.getFileName())
+                                   .setLineNumber(frame.getLineNumber())
+                                   .setClassName(frame.getClassName())
+                                   .setMethodName(frame.getMethodName())
+                                   .build())
+                        .addAllVariable(Stream.of(variables)
+                                        .map(x -> ObjectInfo.newBuilder()
+                                             .setObjectType(x == null ? "Object" : x.getClass().getName())
+                                             .setObjectValue(x == null ? "null" : x.toString())
+                                             .build())
+                                        .collect(Collectors.toList()))
+                        .build()))
+      .build();
+  }
+  
   // private Log newExceptionInfoLog() {}
   // private Log newUserDefinedLog() {}
   

@@ -48,7 +48,7 @@ public class AnchorBlock {
         lastBlockNumber = 0;
     }
 
-    public void load(byte[] block) {
+    public void read(byte[] block) {
         ByteBuffer buffer = ByteBuffer.wrap(block).order(ByteOrder.LITTLE_ENDIAN);
         buffer.getLong(); // skip adler32
         dataLength = buffer.getShort();
@@ -64,7 +64,7 @@ public class AnchorBlock {
         }
     }
 
-    public void dump(byte[] block) {
+    public void write(byte[] block) {
         ByteBuffer buffer = ByteBuffer.wrap(block).order(ByteOrder.LITTLE_ENDIAN);
         dataLength = 18;
         buffer.position(8); // skip adler32

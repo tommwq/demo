@@ -100,7 +100,7 @@ public class LogStorage implements BlockStorage {
 
         if (okl) {
             try {
-                lbl.load(bl);
+                lbl.read(bl);
             } catch (InvalidProtocolBufferException e) {
                 okl = false;
             }
@@ -108,7 +108,7 @@ public class LogStorage implements BlockStorage {
 
         if (okc) {
             try {
-                lbc.load(bc);
+                lbc.read(bc);
             } catch (InvalidProtocolBufferException e) {
                 okc = false;
             }
@@ -134,7 +134,7 @@ public class LogStorage implements BlockStorage {
 
     private void syncAnchor() throws IOException {
         byte[] block = new byte[blockSize()];
-        anchorBlock.dump(block);
+        anchorBlock.write(block);
         write(0, block);
         write(1, block);
     }
@@ -168,7 +168,7 @@ public class LogStorage implements BlockStorage {
         }
 
         anchorBlock = new AnchorBlock(blockCount());
-        anchorBlock.load(newest);
+        anchorBlock.read(newest);
         updatePingPong();
     }
 
@@ -213,14 +213,14 @@ public class LogStorage implements BlockStorage {
 
     private void syncAndMoveForward() throws IOException {
         byte[] block = new byte[blockSize()];
-        logBlock.dump(block);
+        logBlock.write(block);
         write(pongBlockNumber, block); // make ping = pong, pingBlock already wrote
 
         anchorBlock.moveForward();
         updatePingPong();
 
         logBlock.clear();
-        logBlock.dump(block);
+        logBlock.write(block);
         write(pingBlockNumber, block);
         write(pongBlockNumber, block);
         syncAnchor();
@@ -228,7 +228,7 @@ public class LogStorage implements BlockStorage {
 
     private void syncLog() throws IOException {
         byte[] block = new byte[blockSize()];
-        logBlock.dump(block);
+        logBlock.write(block);
         write(pingBlockNumber, block);
         swapPingPong();
     }
@@ -252,7 +252,7 @@ public class LogStorage implements BlockStorage {
                 return false;
             }
 
-            block.load(data);
+            block.read(data);
             return true;
         } catch (InvalidProtocolBufferException e) {
             return false;

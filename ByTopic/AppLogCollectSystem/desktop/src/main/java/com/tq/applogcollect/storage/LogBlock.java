@@ -82,8 +82,7 @@ public class LogBlock {
     return false;
   }
 
-  public void load(byte[] block) throws InvalidProtocolBufferException {
-      
+  public void read(byte[] block) throws InvalidProtocolBufferException {
     ByteBuffer buffer = ByteBuffer.wrap(block).order(ByteOrder.LITTLE_ENDIAN);
     buffer.position(ADLER32_SIZE);
     dataLength = buffer.getShort();
@@ -102,7 +101,7 @@ public class LogBlock {
     Collections.reverse(logList);
   }
 
-  public void dump(byte[] block) {
+  public void write(byte[] block) {
     ByteBuffer buffer = ByteBuffer.wrap(block).order(ByteOrder.LITTLE_ENDIAN);
     buffer.position(ADLER32_SIZE);
     updateDataLength();
@@ -110,7 +109,7 @@ public class LogBlock {
       
     logList.stream()
       .forEach(log -> buffer.put(log.toByteArray())
-               .putShort((short) log.getSerializedSize()));
-//               .putLong(log.getSequence()));
+               .putShort((short) log.getSerializedSize())
+               .putLong(log.getHeader().getSequence()));
   }
 }
