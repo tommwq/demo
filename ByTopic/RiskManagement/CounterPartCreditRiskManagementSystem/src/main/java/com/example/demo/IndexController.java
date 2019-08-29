@@ -30,6 +30,15 @@ public class IndexController {
     public int type;
   }
   
+  public static class NewIndustry {
+    private String name;
+    public void setName(String aName) {
+      name = aName;
+    }
+    public String getName() {
+      return name;
+    }
+  }
 
   @RequestMapping("/counterpart")
   @ResponseBody
@@ -53,6 +62,14 @@ public class IndexController {
   @ResponseBody
   public Response newCounterpart(NewCounterpart aCounterpart) {
     System.err.println(aCounterpart.name);
+    Response resp = new Response();
+    return resp;
+  }
+
+  @RequestMapping("/industry/new")
+  @ResponseBody
+  public Response newIndustry(@RequestBody NewIndustry industry) {
+    System.err.println("CREATE INDUSTRY NAME: " + industry + " " + industry.name);
     Response resp = new Response();
     return resp;
   }
