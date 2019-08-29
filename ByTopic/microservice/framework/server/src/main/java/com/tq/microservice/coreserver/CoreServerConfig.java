@@ -1,6 +1,7 @@
 package com.tq.microservice.coreserver;
 
 import com.tq.microservice.gateway.GatewayConfig;
+import com.tq.microservice.registryservice.RegistryServiceConfig;
 
 public class CoreServerConfig {
 
@@ -12,4 +13,5 @@ public class CoreServerConfig {
 
   ModuleToggle activeModule;
   GatewayConfig gateway;
+  RegistryServiceConfig registryservice;
 }

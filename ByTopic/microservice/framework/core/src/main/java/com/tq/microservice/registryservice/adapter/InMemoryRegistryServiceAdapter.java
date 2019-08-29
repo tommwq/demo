@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * maintain service instance locations in memory.
+ */
 public class InMemoryRegistryServiceAdapter implements RegistryServiceAdapter {
 
   private static final String WILDCARD = "";

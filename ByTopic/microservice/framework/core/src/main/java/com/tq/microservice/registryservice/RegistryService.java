@@ -2,15 +2,22 @@ package com.tq.microservice.registryservice;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.tq.microservice.common.InstanceId;
+//import com.tq.microservice.common.InstanceId;
 import com.tq.microservice.common.InstanceLocalId;
 import com.tq.microservice.common.InstanceLocation;
+import com.tq.microservice.registryservice.adapter.InMemoryRegistryServiceAdapter;
+import com.tq.microservice.registryservice.adapter.InstanceId;
+import com.tq.microservice.registryservice.adapter.LocalId;
+import com.tq.microservice.registryservice.adapter.Location;
+import com.tq.microservice.registryservice.adapter.RegistryServiceAdapter;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,41 +29,35 @@ import java.util.stream.Collectors;
  */
 public class RegistryService extends RegistryServiceGrpc.RegistryServiceImplBase {
 
-  private static class InstanceDescriptor {
-    public int ip = 0;
-    public int port = 0;
-    public int startTime = 0;
-    public int pid = 0;
-    public InstanceType type = InstanceType.CLIENT;
-    public String serviceName = "";
-    public String serviceVersion = "";
+  private static final Map<String,Class> adapterTable = new HashMap<>();
+  static {
+    adapterTable.put("IN_MEMORY", InMemoryRegistryServiceAdapter.class);
   }
 
-  private static ConcurrentHashMap<String,List<InstanceDescriptor>> instanceTable = new ConcurrentHashMap<>();
+  private RegistryServiceAdapter adapter;
+
+  public RegistryService(String adapterName) {
+    try {
+      adapter = (RegistryServiceAdapter) adapterTable.get(adapterName).newInstance();
+    } catch (InstantiationException e) {
+      throw new RuntimeException("cannot create registry service adapter", e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException("cannot create registry service adapter", e);
+    }
+  }
 
   @Override
-  public void registerInstance(RegisterInstanceRequest request, StreamObserver<RegisterInstanceResponse> outputStream) {
+  public void registerInstance(RegisterInstanceRequest input, StreamObserver<RegisterInstanceResponse> outputStream) {
 
-    // InstanceType instanceType = request.getType();
-    // InstanceId instanceId = request.getInstanceId();
-    // String serviceName = request.getServiceName();
-    // String serviceVersion = request.getServiceVersion();
-
-    // InstanceDescriptor descriptor = new InstanceDescriptor();
-    // descriptor.ip = instanceId.getIp();
-    // descriptor.port = instanceId.getPort();
-    // descriptor.startTime = instanceId.getStartTime();
-    // descriptor.pid = instanceId.getPid();
-    // descriptor.type = instanceType;
-    // descriptor.serviceName = serviceName;
-    // descriptor.serviceVersion = serviceVersion;
-
-    // String tag = generateTag(instanceId);
-    // if (!instanceTable.containsKey(tag)) {
-    //   instanceTable.put(tag, new ArrayList<>());
-    // }
-    // instanceTable.get(tag).add(descriptor);
-
+    String serviceName = input.getServiceName();
+    String serviceVersion = input.getServiceVersion();
+    String host = input.getInstanceId().getLocation().getHost();
+    int port = input.getInstanceId().getLocation().getPort();
+    int time = input.getInstanceId().getLocalId().getStartTime();
+    int pid = input.getInstanceId().getLocalId().getPid();
+    
+    adapter.register(serviceName, serviceVersion, new InstanceId(new Location(host, port), new LocalId(time, pid)));
+    
     outputStream.onNext(RegisterInstanceResponse.newBuilder().build());
     outputStream.onCompleted();
   }
@@ -64,16 +65,22 @@ public class RegistryService extends RegistryServiceGrpc.RegistryServiceImplBase
   @Override
   public void queryService(QueryServiceRequest input, StreamObserver<QueryServiceResponse> outputStream) {
 
-    final String serviceName = input.getServiceName();
-    final String serviceVersion = input.getServiceVersion();
-    final String LOOPBACK_IP = "127.0.0.1";
+    String serviceName = input.getServiceName();
+    String serviceVersion = input.getServiceVersion();
 
-    List<InstanceId> instanceList = Arrays.asList(InstanceId.newBuilder()
-                                                  .setLocation(InstanceLocation.newBuilder()
-                                                               .setHost(LOOPBACK_IP)
-                                                               .setPort(50052)
-                                                               .build())
-                                                  .build());
+    List<com.tq.microservice.common.InstanceId> instanceList = adapter.query(serviceName, serviceVersion)
+      .stream()
+      .map(instance -> com.tq.microservice.common.InstanceId.newBuilder()
+           .setLocation(com.tq.microservice.common.InstanceLocation.newBuilder()
+                        .setHost(instance.location().address())
+                        .setPort(instance.location().port())
+                        .build())
+           .setLocalId(com.tq.microservice.common.InstanceLocalId.newBuilder()
+                       .setStartTime(instance.localId().startTime())
+                       .setPid(instance.localId().pid())
+                       .build())
+           .build())
+      .collect(Collectors.toList());
 
     QueryServiceResponse response = QueryServiceResponse.newBuilder()
       .setServiceName(serviceName)
@@ -88,16 +95,16 @@ public class RegistryService extends RegistryServiceGrpc.RegistryServiceImplBase
   @Override
   public void queryServiceCatalog(QueryServiceCatalogRequest input, StreamObserver<QueryServiceCatalogResponse> outputStream) {
 
-    List<String> serviceNames = instanceTable
-      .values()
-      .stream()
-      .flatMap(Collection::stream)
-      .map((descriptor) -> descriptor.serviceName)
-      .distinct()
-      .collect(Collectors.toList());
+    // List<String> serviceNames = instanceTable
+    //   .values()
+    //   .stream()
+    //   .flatMap(Collection::stream)
+    //   .map((descriptor) -> descriptor.serviceName)
+    //   .distinct()
+    //   .collect(Collectors.toList());
 
     QueryServiceCatalogResponse response = QueryServiceCatalogResponse.newBuilder()
-      .addAllServiceNames(serviceNames)
+      // .addAllServiceNames(serviceNames)
       .build();
 
     outputStream.onNext(response);

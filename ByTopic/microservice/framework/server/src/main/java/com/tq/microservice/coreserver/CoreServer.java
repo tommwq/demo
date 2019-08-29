@@ -7,6 +7,7 @@ import com.tq.microservice.gateway.GatewayConfig;
 import com.tq.microservice.gateway.UnregisteredServiceRegistry;
 import com.tq.microservice.gateway.servicebuilder.ProxyServiceBuilder;
 import com.tq.microservice.registryservice.RegistryService;
+import com.tq.microservice.registryservice.RegistryServiceConfig;
 import com.tq.utility.CollectionUtil;
 import com.tq.utility.Util;
 import io.grpc.Server;
@@ -97,10 +98,10 @@ public class CoreServer {
     }
   }
 
-  private void startRegistryService(/* todo */) {
+  private void startRegistryService(RegistryServiceConfig config) {
     try {
-      Server server = ServerBuilder.forPort(12346)
-        .addService(new RegistryService())
+      Server server = ServerBuilder.forPort(config.getPort())
+        .addService(new RegistryService(config.getAdapter()))
         .build()
         .start();
 
@@ -123,7 +124,7 @@ public class CoreServer {
     }
 
     if (config.activeModule.registryService) {
-      new Thread(() -> startRegistryService()).start();
+      new Thread(() -> startRegistryService(config.registryservice)).start();
     }
   }
 
