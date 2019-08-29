@@ -1,8 +1,10 @@
 package com.tq.applogcollect;
 
 import com.google.protobuf.Any;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.tq.applogcollect.AppLogCollectProto.Command;
 import com.tq.applogcollect.AppLogCollectProto.DeviceAndAppInfo;
+import com.tq.applogcollect.AppLogCollectProto.ExceptionInfo;
 import com.tq.applogcollect.AppLogCollectProto.Log;
 import com.tq.applogcollect.AppLogCollectProto.LogHeader;
 import com.tq.applogcollect.AppLogCollectProto.LogType;
@@ -10,10 +12,12 @@ import com.tq.applogcollect.AppLogCollectProto.MethodAndObjectInfo;
 import com.tq.applogcollect.AppLogCollectProto.MethodInfo;
 import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
 import com.tq.applogcollect.AppLogCollectProto.ObjectInfo;
+import com.tq.applogcollect.AppLogCollectProto.UserDefinedMessage;
 import com.tq.applogcollect.storage.LogStorage;
 import com.tq.applogcollect.storage.SimpleBlockStorage;
 import com.tq.applogcollect.utility.StringUtil;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedTransferQueue;
@@ -30,6 +34,7 @@ public class Logger {
   private LinkedTransferQueue<Log> logQueue = new LinkedTransferQueue<>();
   protected Thread backgroundWriteThread = null;
   private LogStorage storage;
+  private Log deviceAndAppInfoLog;
   
   private Logger() {}
 
@@ -68,7 +73,7 @@ public class Logger {
     Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
         @Override
         public void uncaughtException(Thread location, Throwable error) {
-          instance().error(location, error);
+          instance().error(error);
           
           if (next != null) {
             next.uncaughtException(location, error);
@@ -83,7 +88,11 @@ public class Logger {
     backgroundWriteThread = new Thread(new BackgroundWriteRoutine());
     backgroundWriteThread.start();
 
-    write(newDeviceAndAppInfoLog(info));
+    deviceAndAppInfoLog = newDeviceAndAppInfoLog(info);
+  }
+
+  public Log deviceAndAppInfoLog() {
+    return deviceAndAppInfoLog;
   }
 
   public void close() {
@@ -97,13 +106,34 @@ public class Logger {
     }
   }
 
+  private void printLog(Log log, PrintStream printStream) {
+    printStream.print(log.getHeader());
+    Any any = log.getBody();
+
+    Stream.of(DeviceAndAppInfo.class,
+              ExceptionInfo.class,
+              MethodAndObjectInfo.class,
+              UserDefinedMessage.class)
+      .forEach(clazz -> {
+          if (any.is(clazz)) {
+            try {
+              printStream.print(any.unpack(clazz));
+            } catch (InvalidProtocolBufferException e) {
+              // ignore
+            }
+          }
+        });
+    printStream.println();
+  }
+
   private void write(Log log) {
     // TODO test
-    System.err.println(log.toString());
+    printLog(log, System.err);
+    
     try {
       storage.write(log);
     } catch (IOException e) {
-      // TODO
+      // TODO 根据策略决定忽略或强制退出进程。
     }
   }
 
@@ -123,15 +153,18 @@ public class Logger {
   }
   
   public void log(String message, Object... parameters) {
-    log(2, 0, parameters);
+    String text = String.join(", ", Stream.concat(Stream.of(message), Stream.of(parameters))
+                              .map(x -> x == null ? "null" : x.toString())
+                              .collect(Collectors.toList()));
+    write(newUserDefinedLog(currentFrame(), text));
   }
 
-  public void dump(Object... parameters) {
+  public void print(Object... parameters) {
     write(newMethodAndObjectInfoLog(currentFrame(), parameters));
   }
 
-  public void error(Object... parameters) {
-    log(2, 0, parameters);
+  public void error(Throwable error) {
+    write(newExceptionInfoLog(error));
   }
 
   public List<Log> queryLog(long sequence, int count) {
@@ -142,7 +175,7 @@ public class Logger {
     return storage.maxSequence();
   }
 
-  // TODO think concurrency
+  // TODO 处理并发。
   private long nextSequence() {
     return sequence++;
   }
@@ -202,87 +235,44 @@ public class Logger {
       .build();
   }
   
-  // private Log newExceptionInfoLog() {}
-  // private Log newUserDefinedLog() {}
-  
-  private long log(int stackDepth, long associatedSequence, Object... parameters) {
-    String fileName = "unknown";
-    int lineNumber = -1;
-    String packageName = "unknown";
-    String methodName = "unknown";
-    String className = "unknown";
-    Object result = null;
-        
-    Throwable throwable = new Throwable();
-    StackTraceElement[] stacks = throwable.getStackTrace();
-        
-    if (stacks.length > stackDepth) {
-      StackTraceElement stack = stacks[stackDepth];
-      fileName = stack.getFileName();
-      lineNumber = stack.getLineNumber();
-      packageName = "";
-      methodName = stack.getMethodName();
-      className = stack.getClassName();
-
-      int classNamePosition = className.lastIndexOf('.');
-      if (classNamePosition != -1) {
-        packageName = className.substring(0, classNamePosition);
-        className = className.substring(classNamePosition + 1);
-      }
-    }
-
-    long lsn = sequence++;
-    Log record = newLog(lsn,
-                        associatedSequence,
-                        0,
-                        System.currentTimeMillis(),
-                        packageName,
-                        fileName,
-                        lineNumber,
-                        className,
-                        methodName,
-                        StringUtil.stringify(parameters),
-                        StringUtil.stringify(result));
-
-    logQueue.offer(record);
-    return lsn;
-  }
-    
-  private Log newLog(long sequence,
-                     long associatedSequence,
-                     int level,
-                     long localTime,
-                     String packageName,
-                     String fileName,
-                     int lineNumber,
-                     String className,
-                     String methodName,
-                     String[] parameters,
-                     String result) {
-
+  private Log newExceptionInfoLog(Throwable exception) {
     return Log.newBuilder()
-//      .setSequence(sequence)
-//      .setAssociatedSequence(associatedSequence)
-      //    .setLocalTime(localTime)
-      // .setAppVersion(info.getAppVersion())
-      // .addAllModuleVersions(
-      //   info.getModuleVersions()
-      //   .entrySet()
-      //   .stream()
-      //   .map(entry -> ModuleVersion.newBuilder()
-      //        .setModuleName(entry.getKey())
-      //        .setModuleVersion(entry.getValue())
-      //        .build())
-      //   .collect(Collectors.toList()))
-      // .setSourceFile(fileName)
-      // .setLineNumber(lineNumber)
-      // .setPackageName(packageName)
-      // .setClassName(className)
-      // .setMethodName(methodName)
-      // .addAllMethodParameters(Stream.of(parameters)
-      //                         .collect(Collectors.toList()))
-      // .setMethodResult(result)
-      // .setDeviceId(info.getDeviceId())
+      .setHeader(LogHeader.newBuilder()
+                 .setSequence(nextSequence())
+                 .setTime(currentTime())
+                 .setLogType(LogType.EXCEPTION_INFO)
+                 .build())
+      .setBody(Any.pack(ExceptionInfo.newBuilder()
+                        .setException(ObjectInfo.newBuilder()
+                                      .setObjectType(exception.getClass().getName())
+                                      .setObjectValue(exception.toString())
+                                      .build())
+                        .addAllStack(Stream.of(exception.getStackTrace())
+                                     .map(frame -> MethodInfo.newBuilder()
+                                          .setSourceFile(frame.getFileName())
+                                          .setLineNumber(frame.getLineNumber())
+                                          .setClassName(frame.getClassName())
+                                          .setMethodName(frame.getMethodName())
+                                          .build())
+                                     .collect(Collectors.toList()))
+                        .build()))
+      .build();
+  }
+
+  private Log newUserDefinedLog(StackTraceElement frame, String message) {
+    return Log.newBuilder()
+      .setHeader(LogHeader.newBuilder()
+                 .setSequence(nextSequence())
+                 .setTime(currentTime())
+                 .setLogType(LogType.USER_DEFINED)
+                 .build())
+      .setBody(Any.pack(UserDefinedMessage.newBuilder()
+                        .setSourceFile(frame.getFileName())
+                        .setLineNumber(frame.getLineNumber())
+                        .setClassName(frame.getClassName())
+                        .setMethodName(frame.getMethodName())
+                        .setUserDefinedMessage(message)
+                        .build()))
       .build();
   }
 }

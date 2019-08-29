@@ -36,12 +36,12 @@ public class AppLogClientApplication implements CommandLineRunner {
     agent.start();
 
     // record user defined message
-    logger.log("hello");
+    logger.log("hello", info, config);
 
     // record method and variables
     logger.trace();
     int x = 1;
-    logger.dump(x);
+    logger.print(x);
     
     // record exception
     Throwable error = new Throwable("Test");

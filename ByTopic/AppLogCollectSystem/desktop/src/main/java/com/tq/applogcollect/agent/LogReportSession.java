@@ -18,11 +18,13 @@ import static com.tq.applogcollect.Constant.INVALID_SEQUENCE;
 /**
  * Receive Command, send requested logs.
  */
-public class LogReporter implements StreamObserver<Command> {
+public class LogReportSession implements StreamObserver<Command> {
 
   private LogAgent agent;
+  private StreamObserver<Log> logOutputStream;
+  private static final Logger logger = Logger.instance();
   
-  public LogReporter(LogAgent aAgent) {
+  public LogReportSession(LogAgent aAgent) {
     agent = aAgent;
   }
 
@@ -38,13 +40,16 @@ public class LogReporter implements StreamObserver<Command> {
       count = sequence < DEFAULT_LOG_COUNT ? (int) sequence : DEFAULT_LOG_COUNT;
     }
 
-    agent.reportLog(Logger.instance().queryLog(sequence, count));
+    // agent.reportLog(Logger.instance().queryLog(sequence, count));
+
+    List<Log> logList = logger.queryLog(sequence, count);
+    logList.stream().forEach(log -> logOutputStream.onNext(log));
   }
                 
   @Override
   public void onError(Throwable error) {
     // 通知agent失败。
-    // inputStream.onCompleted();
+    // logOutputStream.onCompleted();
     // TODO 重写重连机制。
     // new Thread(() -> {
     //     try {
@@ -59,9 +64,17 @@ public class LogReporter implements StreamObserver<Command> {
   @Override
   public void onCompleted() {
     // TODO 通知agent。
-    // inputStream.onCompleted();
-    // inputStream = null;
+    // logOutputStream.onCompleted();
+    // logOutputStream = null;
     // System.err.println("complete");
+  }
+
+  public void reportDeviceAndAppInfo() {
+    logOutputStream.onNext(logger.deviceAndAppInfoLog());
+  }
+
+  public void setLogOutputStream(StreamObserver<Log> aStream) {
+    logOutputStream = aStream;
   }
 }
 

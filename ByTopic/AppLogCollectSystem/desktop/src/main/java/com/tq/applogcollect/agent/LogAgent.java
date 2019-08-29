@@ -21,7 +21,8 @@ public class LogAgent {
 
   private final ManagedChannel channel;
   private final LogCollectServiceGrpc.LogCollectServiceStub stub;
-  private StreamObserver<Log> inputStream = null;
+  private static final Logger logger = Logger.instance();
+  private LogReportSession session;
   
   public LogAgent(String host, int port) {
     channel = ManagedChannelBuilder.forAddress(host, port)
@@ -36,13 +37,8 @@ public class LogAgent {
   }
 
   public void start() throws InterruptedException {
-    inputStream = stub.report(new LogReporter(this));
-    // TODO report device and app info log
-    // inputStream.onNext(Logger.instance().newEmptyLog());
-  }
-
-  protected void reportLog(List<Log> logs) {
-    logs.stream()
-      .forEach(logRecord -> inputStream.onNext(logRecord));
+    session = new LogReportSession(this);
+    session.setLogOutputStream(stub.report(session));
+    session.reportDeviceAndAppInfo();
   }
 }
