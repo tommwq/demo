@@ -20,6 +20,5 @@ public class MainActivity extends AppCompatActivity {
                     new MyTask(MainActivity.this).execute();
                 }
             });
-
     }
 }

@@ -12,6 +12,9 @@ import com.tq.applogcollect.agent.LogAgent;
 import com.tq.applogcollect.Logger;
 import com.tq.applogcollect.*;
 
+import android.os.Environment;
+import java.io.File;
+
 public class MyTask extends AsyncTask<Void,Void,Void> {
   private final WeakReference<Activity> activity;
   private static final Logger logger = Logger.instance();
@@ -31,14 +34,17 @@ public class MyTask extends AsyncTask<Void,Void,Void> {
         .setModuleVersion("client", "0.1.0")
         .setDeviceId(UUID.randomUUID().toString());
 
+      String fileName = new File(Environment.getExternalStorageDirectory(), "a.blk").getAbsolutePath();
+      Log.e("AndroidRuntime", fileName);
+      
       StorageConfig config = new StorageConfig()
-        .setFileName("a.blk")
+        .setFileName(fileName)
         .setBlockSize(4096)
         .setBlockCount(8);
     
       logger.open(config, info);
 
-      LogAgent agent = new LogAgent("localhost", 50051);
+      LogAgent agent = new LogAgent(host, 50051);
       agent.start();
 
       // record user defined message
@@ -60,7 +66,7 @@ public class MyTask extends AsyncTask<Void,Void,Void> {
       logger.close();
 
     } catch (Exception e) {
-      Log.e("TEST", e.getMessage(), e);
+      Log.e("AndroidRuntime", e.getMessage(), e);
     }
     return null;
   }
