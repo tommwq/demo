@@ -1,8 +1,8 @@
 package com.tq.applogcollect;
 
 import org.springframework.stereotype.Component;
-import com.tq.applogcollect.AppLogCollectProto.LogRecord;
-import com.tq.applogcollect.AppLogCollectProto.LogQueryCommand;
+import com.tq.applogcollect.AppLogCollectProto.Log;
+import com.tq.applogcollect.AppLogCollectProto.Command;
 import io.grpc.stub.StreamObserver;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
@@ -21,7 +21,7 @@ public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceIm
   }
   
   @Override
-  public StreamObserver<LogRecord> report(StreamObserver<LogQueryCommand> outputStream) {
+  public StreamObserver<Log> report(StreamObserver<Command> outputStream) {
     return new LogSession(outputStream, deviceTable);
   }
 }
