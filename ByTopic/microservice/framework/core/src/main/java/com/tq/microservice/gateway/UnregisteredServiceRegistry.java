@@ -1,6 +1,8 @@
 package com.tq.microservice.gateway;
 
+import com.tq.microservice.gateway.GatewayConfig;
 import com.tq.microservice.gateway.nameresolver.RegistryNameResolver;
+import com.tq.utility.NetUtil.SocketAddressParser;
 import io.grpc.BindableService;
 import io.grpc.HandlerRegistry;
 import io.grpc.NameResolver;
@@ -17,8 +19,10 @@ public class UnregisteredServiceRegistry extends HandlerRegistry {
   // TODO consider concurrency
 
   private ClassLoader classLoader;
-  public UnregisteredServiceRegistry(ClassLoader aClassLoader) {
+  private String registryServiceAddress;
+  public UnregisteredServiceRegistry(ClassLoader aClassLoader, String aAddress) {
     classLoader = aClassLoader;
+    registryServiceAddress = aAddress;
   }
   
   @Override
@@ -45,8 +49,8 @@ public class UnregisteredServiceRegistry extends HandlerRegistry {
     try {
       String serviceClassName = packageName + "." + className;
       Constructor constructor = classLoader.loadClass(serviceClassName).getConstructor(NameResolver.Factory.class);
-      // BindableService service = (BindableService) constructor.newInstance(new ConsulNameResolver.Factory());
-      BindableService service = (BindableService) constructor.newInstance(new RegistryNameResolver.Factory());
+      SocketAddressParser parser = new SocketAddressParser(registryServiceAddress);
+      BindableService service = (BindableService) constructor.newInstance(new RegistryNameResolver.Factory(parser.address(), parser.port()));
       return service.bindService().getMethod(methodName);
     } catch (ClassNotFoundException e) {
       // TODO use logging

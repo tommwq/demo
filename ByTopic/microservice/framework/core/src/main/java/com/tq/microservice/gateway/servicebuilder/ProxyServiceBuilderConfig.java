@@ -1,11 +1,6 @@
-package com.tq.microservice.gateway;
+package com.tq.microservice.gateway.servicebuilder;
 
-import org.springframework.stereotype.Component;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-@Component
-@ConfigurationProperties(prefix="gateway")
-public class GatewayConfig {
+public class ProxyServiceBuilderConfig {
   private String protocolDirectory = "";
   private String buildDirectory = "";
   private String protoCompilerPath = "";
@@ -13,17 +8,8 @@ public class GatewayConfig {
   private String grpcPluginPath = "";
   private String javaCompilerPath = "";
   private String jarPath = "";
-  private int port = 50051;
   private String classPath = "";
   private String registryServiceAddress = "";
-
-  public int getPort() {
-    return port;
-  }
-
-  public void setPort(int value) {
-    port = value;
-  }
   
   public String getProtocolDirectory() {
     return protocolDirectory;
@@ -95,20 +81,5 @@ public class GatewayConfig {
 
   public void setRegistryServiceAddress(String address) {
     registryServiceAddress = address;
-  }
-
-  @Override
-  public String toString() {
-    return String.join("\n", new String[] {
-        "gateway.protocolDirectory=" + protocolDirectory,
-        "gateway.buildDirectory=" + buildDirectory,
-        "gateway.protoCompilerPath=" + protoCompilerPath,
-        "gateway.protoIncludeDirectory=" + protoIncludeDirectory,
-        "gateway.grpcPluginPath=" + grpcPluginPath,
-        "gateway.javaCompilerPath=" + javaCompilerPath,
-        "gateway.jarPath=" + jarPath,
-        "gateway.port=" + port,
-        "gateway.classPath=" + classPath,
-      });
   }
 }

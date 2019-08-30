@@ -2,6 +2,7 @@ package com.tq.microservice.gateway;
 
 import com.tq.microservice.gateway.nameresolver.ConsulNameResolver;
 import com.tq.microservice.gateway.servicebuilder.ProxyServiceBuilder;
+import com.tq.microservice.gateway.servicebuilder.ProxyServiceBuilderConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,7 +48,7 @@ public class DefaultController {
                        @PathVariable("method") String method,
                        @RequestParam Map<String, String> body) throws Exception {
 
-    ProxyServiceBuilder.Config proxyServiceBuilderConfig = new ProxyServiceBuilder.Config();
+    ProxyServiceBuilderConfig proxyServiceBuilderConfig = new ProxyServiceBuilderConfig();
     proxyServiceBuilderConfig.setProtocolDirectory(gatewayConfig.getProtocolDirectory());
     proxyServiceBuilderConfig.setBuildDirectory(gatewayConfig.getBuildDirectory());
     proxyServiceBuilderConfig.setProtoCompilerPath(gatewayConfig.getProtoCompilerPath());

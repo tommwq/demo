@@ -6,6 +6,7 @@ import com.tq.microservice.configurationservice.ConfigurationService;
 import com.tq.microservice.gateway.GatewayConfig;
 import com.tq.microservice.gateway.UnregisteredServiceRegistry;
 import com.tq.microservice.gateway.servicebuilder.ProxyServiceBuilder;
+import com.tq.microservice.gateway.servicebuilder.ProxyServiceBuilderConfig;
 import com.tq.microservice.registryservice.RegistryService;
 import com.tq.microservice.registryservice.RegistryServiceConfig;
 import com.tq.utility.CollectionUtil;
@@ -63,7 +64,7 @@ public class CoreServer {
 
   private void startGateway(GatewayConfig gatewayConfig) {
     try {
-      ProxyServiceBuilder.Config proxyServiceBuilderConfig = new ProxyServiceBuilder.Config();
+      ProxyServiceBuilderConfig proxyServiceBuilderConfig = new ProxyServiceBuilderConfig();
       proxyServiceBuilderConfig.setProtocolDirectory(gatewayConfig.getProtocolDirectory());
       proxyServiceBuilderConfig.setBuildDirectory(gatewayConfig.getBuildDirectory());
       proxyServiceBuilderConfig.setProtoCompilerPath(gatewayConfig.getProtoCompilerPath());
@@ -72,9 +73,11 @@ public class CoreServer {
       proxyServiceBuilderConfig.setJavaCompilerPath(gatewayConfig.getJavaCompilerPath());
       proxyServiceBuilderConfig.setJarPath(gatewayConfig.getJarPath());
       proxyServiceBuilderConfig.setClassPath(gatewayConfig.getClassPath());
+      proxyServiceBuilderConfig.setRegistryServiceAddress(gatewayConfig.getRegistryServiceAddress());
 
       Server server = ServerBuilder.forPort(gatewayConfig.getPort())
-        .fallbackHandlerRegistry(new UnregisteredServiceRegistry(new ProxyServiceBuilder().build(proxyServiceBuilderConfig)))
+        .fallbackHandlerRegistry(new UnregisteredServiceRegistry(new ProxyServiceBuilder().build(proxyServiceBuilderConfig),
+                                                                 gatewayConfig.getRegistryServiceAddress()))
         .build()
         .start();
       Runtime.getRuntime().addShutdownHook(new Thread(() -> server.shutdown()));

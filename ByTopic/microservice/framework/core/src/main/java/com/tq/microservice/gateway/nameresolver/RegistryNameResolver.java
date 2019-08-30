@@ -23,8 +23,17 @@ public class RegistryNameResolver extends NameResolver {
 
   private ManagedChannel channel;
   private RegistryServiceGrpc.RegistryServiceBlockingStub blockingStub;
+  private String registryServiceHost;
+  private int registryServicePort;
 
   public static class Factory extends NameResolver.Factory {
+    private String registryServiceHost;
+    private int registryServicePort;
+
+    public Factory(String aHost, int aPort) {
+      registryServiceHost = aHost;
+      registryServicePort = aPort;
+    }
 
     @Override
     public String getDefaultScheme() {
@@ -33,7 +42,7 @@ public class RegistryNameResolver extends NameResolver {
 
     @Override
     public NameResolver newNameResolver(URI uri, NameResolver.Helper helper) {
-      return new RegistryNameResolver(getServiceName(uri));
+      return new RegistryNameResolver(registryServiceHost, registryServicePort, getServiceName(uri));
     }
 
     private String  getServiceName(URI uri) {
@@ -44,7 +53,9 @@ public class RegistryNameResolver extends NameResolver {
   private NameResolver.Listener listener = null;
   private String serviceName = "";
 
-  private RegistryNameResolver(String aServiceName) {
+  public RegistryNameResolver(String aHost, int aPort, String aServiceName) {
+    registryServiceHost = aHost;
+    registryServicePort = aPort;
     serviceName = aServiceName;
   }
 
@@ -57,8 +68,10 @@ public class RegistryNameResolver extends NameResolver {
   public void start(NameResolver.Listener aListener) {
     listener = aListener;
 
-    // TODO read configuration
-    channel = ManagedChannelBuilder.forAddress("localhost", 12346)
+    // TODO
+    System.err.println(registryServiceHost + " - " + registryServicePort);
+    
+    channel = ManagedChannelBuilder.forAddress(registryServiceHost, registryServicePort)
       .usePlaintext()
       .build();
     blockingStub = RegistryServiceGrpc.newBlockingStub(channel);

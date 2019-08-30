@@ -40,6 +40,10 @@ public class InMemoryRegistryServiceAdapter implements RegistryServiceAdapter {
 
     registryTable.get(serviceName).get(serviceVersion).add(instanceId);
     instanceTable.put(instanceId, new ServiceDescriptor(serviceName, serviceVersion));
+    System.out.println(String.format("%s@%s:%d registered.",
+                                     serviceName,
+                                     instanceId.location().address(),
+                                     instanceId.location().port()));
   }
 
   @Override

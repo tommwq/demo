@@ -17,10 +17,12 @@ public class ClientApplication {
   }
 
   public static void main(String[] args) throws Exception {
-    ManagedChannel channel = createChannel("localhost", 50052);
+    ManagedChannel channel = createChannel("localhost", 50051);
+    // ManagedChannel channel = createChannel("localhost", 51052);
+    new GreetServiceTester(channel).test();
 
-    // new GreetServiceTester(channel).test();
-    new RegistryServiceTester(channel).test();
+    // ManagedChannel channel2 = createChannel("localhost", 50052);
+    // new RegistryServiceTester(channel2).test();
     
     channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
   }  
