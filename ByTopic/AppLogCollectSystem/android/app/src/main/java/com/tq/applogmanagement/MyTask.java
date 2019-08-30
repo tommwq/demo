@@ -1,72 +1,73 @@
 package com.tq.applogmanagement;
 
+import java.util.UUID;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogLevel;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogReport;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogReportResult;
-import com.tq.applogmanagement.LogCollectServiceProtos.MethodParameter;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
+import com.tq.applogcollect.agent.LogAgent;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import java.lang.ref.WeakReference;
-import java.util.concurrent.CountDownLatch;
+import com.tq.applogcollect.agent.LogAgent;
+import com.tq.applogcollect.Logger;
+import com.tq.applogcollect.*;
 
 public class MyTask extends AsyncTask<Void,Void,Void> {
-    private final WeakReference<Activity> activity;
-    private ManagedChannel channel;
-    private final CountDownLatch latch = new CountDownLatch(2);
+  private final WeakReference<Activity> activity;
+  private static final Logger logger = Logger.instance();
 
-    public MyTask(Activity aActivity) {
-        activity = new WeakReference<Activity>(aActivity);
+  public MyTask(Activity aActivity) {
+    activity = new WeakReference<Activity>(aActivity);
+  }
+
+  @Override
+  protected Void doInBackground(Void... ignored) {
+    try {
+      String host = "172.24.20.112";
+      int port = 50051;
+
+      DeviceAndAppConfig info = new DeviceAndAppConfig()
+        .setAppVersion("0.1.0")
+        .setModuleVersion("client", "0.1.0")
+        .setDeviceId(UUID.randomUUID().toString());
+
+      StorageConfig config = new StorageConfig()
+        .setFileName("a.blk")
+        .setBlockSize(4096)
+        .setBlockCount(8);
+    
+      logger.open(config, info);
+
+      LogAgent agent = new LogAgent("localhost", 50051);
+      agent.start();
+
+      // record user defined message
+      logger.log("hello", info, config);
+
+      // record method and variables
+      logger.trace();
+      int x = 1;
+      logger.print(x);
+    
+      // record exception
+      Throwable error = new Throwable("Test");
+      logger.error(error);
+
+      // record user defined message
+      logger.log("bye");
+
+      agent.shutdown();
+      logger.close();
+
+    } catch (Exception e) {
+      Log.e("TEST", e.getMessage(), e);
     }
+    return null;
+  }
 
-    @Override
-    protected Void doInBackground(Void... ignored) {
-        try {
-            String host = "172.24.20.112";
-            int port = 50051;
-            channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
-
-            LogCollectServiceGrpc.LogCollectServiceStub stub = LogCollectServiceGrpc.newStub(channel);
-            StreamObserver<LogReport> reportStream = stub.reportLog(new StreamObserver<LogReportResult>() {
-                    @Override
-                    public void onNext(LogReportResult result) {
-                        Log.d("TEST", "receive");
-                    }
-                
-                    @Override
-                    public void onError(Throwable error) {
-                    }
-                
-                    @Override
-                    public void onCompleted() {
-                        latch.countDown();
-                    }
-                });
-
-            LogReport x = LogReport.newBuilder()
-                .setHeartbeat(true)
-                .setModule("FROM ANDROID")
-                .build();
-            reportStream.onNext(x);
-            reportStream.onCompleted();
-            Log.d("TEST", "send");
-            Log.d("TEST", " " + channel.isTerminated() + " " + channel.isShutdown());
-            latch.countDown();
-            latch.await();
-            Log.d("TEST", "finish");
-        } catch (Exception e) {
-            Log.e("TEST", e.getMessage(), e);
-        }
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void ignored) {
-    }
+  @Override
+  protected void onPostExecute(Void ignored) {
+  }
 }
 
 

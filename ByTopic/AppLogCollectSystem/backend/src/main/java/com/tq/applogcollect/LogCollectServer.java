@@ -34,6 +34,8 @@ public class LogCollectServer {
       .addService(service)
       .build();
 
+    System.err.println("**** started ****");
+
     underlyingServer.start();
   }
 

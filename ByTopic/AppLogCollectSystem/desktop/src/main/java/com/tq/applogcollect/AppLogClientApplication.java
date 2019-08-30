@@ -50,6 +50,7 @@ public class AppLogClientApplication implements CommandLineRunner {
     // record user defined message
     logger.log("bye");
 
+    Thread.sleep(10000);
     agent.shutdown();
     logger.close();
   }

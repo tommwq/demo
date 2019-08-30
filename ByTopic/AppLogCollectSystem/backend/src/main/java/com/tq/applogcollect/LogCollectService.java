@@ -22,6 +22,7 @@ public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceIm
   
   @Override
   public StreamObserver<Log> report(StreamObserver<Command> outputStream) {
+    System.err.println("report");
     return new LogSession(outputStream, deviceTable);
   }
 }

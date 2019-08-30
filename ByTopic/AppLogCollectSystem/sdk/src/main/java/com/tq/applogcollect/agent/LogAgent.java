@@ -17,7 +17,7 @@ import static com.tq.applogcollect.Constant.DEFAULT_LOG_COUNT;
 import static com.tq.applogcollect.Constant.INVALID_COUNT;
 import static com.tq.applogcollect.Constant.INVALID_SEQUENCE;
 
-public class LogAgent {
+public class LogAgent implements Logger.LogSubscriber {
 
   private final ManagedChannel channel;
   private final LogCollectServiceGrpc.LogCollectServiceStub stub;
@@ -33,12 +33,20 @@ public class LogAgent {
   }
 
   public void shutdown() throws InterruptedException {
-    channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+    channel.shutdown().awaitTermination(30, TimeUnit.SECONDS);
+  }
+
+  @Override
+  public void onLog(Log log) {
+    session.report(log);
+    // TODO
+    System.err.println("report log " + log.getHeader().toString());
   }
 
   public void start() throws InterruptedException {
     session = new LogReportSession(this);
     session.setLogOutputStream(stub.report(session));
     session.reportDeviceAndAppInfo();
+    logger.setSubscriber(this);
   }
 }

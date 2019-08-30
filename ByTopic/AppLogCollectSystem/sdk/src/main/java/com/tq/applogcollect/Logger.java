@@ -35,6 +35,11 @@ public class Logger {
   protected Thread backgroundWriteThread = null;
   private LogStorage storage;
   private Log deviceAndAppInfoLog;
+  private LogSubscriber subscriber;
+
+  public interface LogSubscriber {
+    void onLog(Log log);
+  }
   
   private Logger() {}
 
@@ -54,6 +59,10 @@ public class Logger {
         Logger.instance().backgroundWriteThread = null;
       }
     }
+  }
+
+  public void setSubscriber(LogSubscriber aSubscriber) {
+    subscriber = aSubscriber;
   }
 
   public static Logger instance() {
@@ -128,10 +137,15 @@ public class Logger {
 
   private void write(Log log) {
     // TODO test
-    printLog(log, System.err);
+    // printLog(log, System.err);
     
     try {
       storage.write(log);
+      // TODO test
+      if (subscriber != null) {
+        // System.err.println("post log");
+        subscriber.onLog(log);
+      }
     } catch (IOException e) {
       // TODO 根据策略决定忽略或强制退出进程。
     }

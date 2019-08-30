@@ -12,11 +12,12 @@ public class Memory implements LogStorage {
   @Override
   public void save(Log log) {
     // String deviceId = log.getDeviceId();
-    // if (!table.containsKey(deviceId)) {
-    //   table.put(deviceId, new ArrayList<>());
-    // }
 
     String deviceId = "";
+    if (!table.containsKey(deviceId)) {
+      table.put(deviceId, new ArrayList<>());
+    }
+
     table.get(deviceId).add(log);
   }
   

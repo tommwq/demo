@@ -30,6 +30,8 @@ public class LogReportSession implements StreamObserver<Command> {
 
   @Override
   public void onNext(Command command) {
+    System.err.println(command.toString());
+    
     long sequence = command.getSequence();
     int count = command.getCount();
 
@@ -48,6 +50,7 @@ public class LogReportSession implements StreamObserver<Command> {
                 
   @Override
   public void onError(Throwable error) {
+    System.err.println(error.toString());
     // 通知agent失败。
     // logOutputStream.onCompleted();
     // TODO 重写重连机制。
@@ -63,6 +66,7 @@ public class LogReportSession implements StreamObserver<Command> {
                 
   @Override
   public void onCompleted() {
+    System.err.println("complete");
     // TODO 通知agent。
     // logOutputStream.onCompleted();
     // logOutputStream = null;
@@ -75,6 +79,11 @@ public class LogReportSession implements StreamObserver<Command> {
 
   public void setLogOutputStream(StreamObserver<Log> aStream) {
     logOutputStream = aStream;
+  }
+
+  public void report(Log log) {
+    System.err.println("" + logOutputStream + " " + log);
+    logOutputStream.onNext(log);
   }
 }
 

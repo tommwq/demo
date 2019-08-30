@@ -5,13 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogLevel;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogReport;
-import com.tq.applogmanagement.LogCollectServiceProtos.LogReportResult;
-import com.tq.applogmanagement.LogCollectServiceProtos.MethodParameter;
 
 public class MainActivity extends AppCompatActivity {
-    private final LocalLogger logger = new LocalLogger();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

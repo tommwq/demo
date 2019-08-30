@@ -26,6 +26,8 @@ public class LogSession implements StreamObserver<Log> {
       
   @Override
   public void onNext(Log newLog) {
+    System.err.println(newLog.getHeader().toString());
+    
     Any body = newLog.getBody();
     if (!body.is(DeviceAndAppInfo.class)) {
       try {
