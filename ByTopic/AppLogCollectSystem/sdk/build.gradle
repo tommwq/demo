@@ -1,13 +1,10 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
     id 'com.google.protobuf' version '0.8.9'
 }
 
-apply plugin: 'io.spring.dependency-management'
-
 group = 'com.tq'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -15,12 +12,9 @@ repositories {
 }
 
 dependencies {
-    compile files("../sdk/build/libs/applogsdk-0.1.0-SNAPSHOT.jar")
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'io.grpc:grpc-netty-shaded:1.21.0'
     implementation 'io.grpc:grpc-protobuf:1.21.0'
     implementation 'io.grpc:grpc-stub:1.21.0'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 protobuf {
@@ -47,3 +41,6 @@ sourceSets {
         }
     }
 }
+
+compileJava.options.encoding = 'UTF-8'
+
