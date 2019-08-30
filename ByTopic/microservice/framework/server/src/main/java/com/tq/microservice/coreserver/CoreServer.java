@@ -3,6 +3,7 @@ package com.tq.microservice.coreserver;
 import com.tq.microservice.annotation.Executable;
 import com.tq.microservice.App;
 import com.tq.microservice.configurationservice.ConfigurationService;
+import com.tq.microservice.configurationservice.ConfigurationServiceConfig;
 import com.tq.microservice.gateway.GatewayConfig;
 import com.tq.microservice.gateway.UnregisteredServiceRegistry;
 import com.tq.microservice.gateway.servicebuilder.ProxyServiceBuilder;
@@ -87,9 +88,9 @@ public class CoreServer {
     }
   }
 
-  private void startConfigurationService(/* todo */) {
+  private void startConfigurationService(ConfigurationServiceConfig config) {
     try {
-      Server server = ServerBuilder.forPort(12345)
+      Server server = ServerBuilder.forPort(config.getPort())
         .addService(new ConfigurationService())
         .build()
         .start();
@@ -123,7 +124,7 @@ public class CoreServer {
     }
 
     if (config.activeModule.configurationService) {
-      new Thread(() -> startConfigurationService()).start();
+      new Thread(() -> startConfigurationService(config.configurationservice)).start();
     }
 
     if (config.activeModule.registryService) {

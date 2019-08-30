@@ -29,6 +29,9 @@ public class GreetServiceApplication {
   }
 
   private void start() throws IOException {
+
+    // TODO 从配置服务中取回配置。
+    
     int port = 51052;
     server = ServerBuilder.forPort(port)
       .addService(new GreetService())
@@ -37,8 +40,6 @@ public class GreetServiceApplication {
 
     String host = hostAddress();
     register(host, port);
-
-    // TODO 注册
     
     Runtime.getRuntime().addShutdownHook(new Thread(() -> GreetServiceApplication.this.stop()));
   }

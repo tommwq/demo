@@ -14,7 +14,7 @@ message QueryConfigurationRequest {
   string configuration_version = 3;
 }
 
-message QueryConfigurationReply {
+message QueryConfigurationResponse {
   com.tq.microservice.common.Result result = 1;
   string configuration_content = 2;
 }
@@ -26,14 +26,14 @@ message PostConfigurationRequest {
   string configuration_content = 4;
 }
 
-message PostConfigurationReply {
+message PostConfigurationResponse {
   com.tq.microservice.common.Result result = 1;
 }
 
 service ConfigurationService {
-  rpc PostConfiguration(PostConfigurationRequest) returns (PostConfigurationReply) {}
-  rpc PublishConfiguration(stream PostConfigurationRequest) returns (stream PostConfigurationReply) {}
-  rpc QueryConfiguration(QueryConfigurationRequest) returns (QueryConfigurationReply) {}
-  rpc SubscribeConfiguration(QueryConfigurationRequest) returns (stream QueryConfigurationReply) {}
+  rpc PostConfiguration(PostConfigurationRequest) returns (PostConfigurationResponse) {}
+  rpc PublishConfiguration(stream PostConfigurationRequest) returns (stream PostConfigurationResponse) {}
+  rpc QueryConfiguration(QueryConfigurationRequest) returns (QueryConfigurationResponse) {}
+  rpc SubscribeConfiguration(QueryConfigurationRequest) returns (stream QueryConfigurationResponse) {}
 }
 

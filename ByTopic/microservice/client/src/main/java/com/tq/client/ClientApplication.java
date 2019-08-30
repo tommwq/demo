@@ -1,29 +1,35 @@
 package com.tq.client;
 
+import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.util.concurrent.TimeUnit;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class ClientApplication {
 
   private static final Logger logger = Logger.getLogger(ClientApplication.class.getName());
 
-  private static ManagedChannel createChannel(String host, int port) {
+  private static ManagedChannel channel(String host, int port) {
     return ManagedChannelBuilder.forAddress(host, port)
       .usePlaintext()
       .build();
   }
 
-  public static void main(String[] args) throws Exception {
-    ManagedChannel channel = createChannel("localhost", 50051);
-    // ManagedChannel channel = createChannel("localhost", 51052);
-    new GreetServiceTester(channel).test();
+  private static ManagedChannel channel(int port) {
+    return channel("localhost", port);
+  }
 
-    // ManagedChannel channel2 = createChannel("localhost", 50052);
-    // new RegistryServiceTester(channel2).test();
+  public static void main(String[] args) throws Exception {
+    ManagedChannel chan = channel(50053);
+    // new GreetServiceTester(chan).test();
+    // new RegistryServiceTester(chan).test();
+    new ConfigurationServiceTester(chan).test();
     
-    channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+    chan.shutdown().awaitTermination(5, TimeUnit.SECONDS);
   }  
 }
