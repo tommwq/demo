@@ -1,4 +1,4 @@
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
 import java.util.Map;
 import java.util.TreeMap;

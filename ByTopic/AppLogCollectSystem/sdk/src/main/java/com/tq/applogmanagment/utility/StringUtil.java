@@ -1,4 +1,4 @@
-package com.tq.applogcollect.utility;
+package com.tq.applogmanagement.utility;
 
 import java.util.stream.Stream;
 import java.util.stream.Collectors;

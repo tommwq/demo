@@ -1,27 +1,27 @@
-package com.tq.applogcollect.agent;
+package com.tq.applogmanagement.agent;
 
-import com.tq.applogcollect.AppLogCollectProto.Command;
-import com.tq.applogcollect.AppLogCollectProto.Log;
-import com.tq.applogcollect.AppLogCollectProto.LogType;
-import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
+import com.tq.applogmanagement.AppLogManagementProto.Command;
+import com.tq.applogmanagement.AppLogManagementProto.Log;
+import com.tq.applogmanagement.AppLogManagementProto.LogType;
+import com.tq.applogmanagement.AppLogManagementProto.ModuleInfo;
 
-import com.tq.applogcollect.LogCollectServiceGrpc;
-import com.tq.applogcollect.Logger;
-import com.tq.applogcollect.SimpleLogger;
+import com.tq.applogmanagement.LogManagementServiceGrpc;
+import com.tq.applogmanagement.Logger;
+import com.tq.applogmanagement.SimpleLogger;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 import java.util.concurrent.TimeUnit;
 import java.util.List;
-import static com.tq.applogcollect.Constant.DEFAULT_LOG_COUNT;
-import static com.tq.applogcollect.Constant.INVALID_COUNT;
-import static com.tq.applogcollect.Constant.INVALID_SEQUENCE;
+import static com.tq.applogmanagement.Constant.DEFAULT_LOG_COUNT;
+import static com.tq.applogmanagement.Constant.INVALID_COUNT;
+import static com.tq.applogmanagement.Constant.INVALID_SEQUENCE;
 
 public class LogAgent implements Logger.LogSubscriber {
 
   private final ManagedChannel channel;
-  private final LogCollectServiceGrpc.LogCollectServiceStub stub;
+  private final LogManagementServiceGrpc.LogManagementServiceStub stub;
   private static final Logger logger = SimpleLogger.instance();
   private LogReportSession session;
   
@@ -30,7 +30,7 @@ public class LogAgent implements Logger.LogSubscriber {
       .usePlaintext()
       .build();
 
-    stub = LogCollectServiceGrpc.newStub(channel);
+    stub = LogManagementServiceGrpc.newStub(channel);
   }
 
   public void shutdown() throws InterruptedException {
@@ -46,7 +46,7 @@ public class LogAgent implements Logger.LogSubscriber {
 
   public void start() throws InterruptedException {
     session = new LogReportSession(this);
-    session.setLogOutputStream(stub.report(session));
+    session.setLogOutputStream(stub.reportLog(session));
     session.reportDeviceAndAppInfo();
     logger.setSubscriber(this);
   }

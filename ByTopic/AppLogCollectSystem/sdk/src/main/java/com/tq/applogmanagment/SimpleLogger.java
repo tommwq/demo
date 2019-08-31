@@ -1,21 +1,21 @@
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.tq.applogcollect.AppLogCollectProto.Command;
-import com.tq.applogcollect.AppLogCollectProto.DeviceAndAppInfo;
-import com.tq.applogcollect.AppLogCollectProto.ExceptionInfo;
-import com.tq.applogcollect.AppLogCollectProto.Log;
-import com.tq.applogcollect.AppLogCollectProto.LogHeader;
-import com.tq.applogcollect.AppLogCollectProto.LogType;
-import com.tq.applogcollect.AppLogCollectProto.MethodAndObjectInfo;
-import com.tq.applogcollect.AppLogCollectProto.MethodInfo;
-import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
-import com.tq.applogcollect.AppLogCollectProto.ObjectInfo;
-import com.tq.applogcollect.AppLogCollectProto.UserDefinedMessage;
-import com.tq.applogcollect.storage.LogStorage;
-import com.tq.applogcollect.storage.SimpleBlockStorage;
-import com.tq.applogcollect.utility.StringUtil;
+import com.tq.applogmanagement.AppLogManagementProto.Command;
+import com.tq.applogmanagement.AppLogManagementProto.DeviceAndAppInfo;
+import com.tq.applogmanagement.AppLogManagementProto.ExceptionInfo;
+import com.tq.applogmanagement.AppLogManagementProto.Log;
+import com.tq.applogmanagement.AppLogManagementProto.LogHeader;
+import com.tq.applogmanagement.AppLogManagementProto.LogType;
+import com.tq.applogmanagement.AppLogManagementProto.MethodAndObjectInfo;
+import com.tq.applogmanagement.AppLogManagementProto.MethodInfo;
+import com.tq.applogmanagement.AppLogManagementProto.ModuleInfo;
+import com.tq.applogmanagement.AppLogManagementProto.ObjectInfo;
+import com.tq.applogmanagement.AppLogManagementProto.UserDefinedMessage;
+import com.tq.applogmanagement.storage.LogStorage;
+import com.tq.applogmanagement.storage.SimpleBlockStorage;
+import com.tq.applogmanagement.utility.StringUtil;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Paths;
@@ -24,7 +24,7 @@ import java.util.concurrent.LinkedTransferQueue;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import com.tq.applogcollect.Logger.LogSubscriber;
+import com.tq.applogmanagement.Logger.LogSubscriber;
 
 public class SimpleLogger implements Logger {
 

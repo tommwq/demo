@@ -1,14 +1,14 @@
 package com.tq.applogmanagement;
 
-import com.tq.applogcollect.agent.LogAgent;
-import com.tq.applogcollect.Logger;
-import com.tq.applogcollect.SimpleLogger;
-import com.tq.applogcollect.*;
+import com.tq.applogmanagement.agent.LogAgent;
+import com.tq.applogmanagement.Logger;
+import com.tq.applogmanagement.SimpleLogger;
+import com.tq.applogmanagement.*;
 import java.io.*;
 import java.util.*;
 import java.util.stream.*;
-import com.tq.applogcollect.*;
-import com.tq.applogcollect.AppLogCollectProto.*;
+import com.tq.applogmanagement.*;
+import com.tq.applogmanagement.AppLogManagementProto.*;
 
 public class LoggerWrapper implements Logger {
 
@@ -66,8 +66,7 @@ public class LoggerWrapper implements Logger {
   }
   public long maxSequence() {
     return delegate.maxSequence();
-  }
-  
+  }  
 }
 
 

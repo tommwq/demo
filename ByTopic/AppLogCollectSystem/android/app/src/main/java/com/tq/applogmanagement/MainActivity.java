@@ -11,13 +11,13 @@ import java.util.UUID;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
-import com.tq.applogcollect.agent.LogAgent;
+import com.tq.applogmanagement.agent.LogAgent;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import java.lang.ref.WeakReference;
-import com.tq.applogcollect.agent.LogAgent;
-import com.tq.applogcollect.Logger;
-import com.tq.applogcollect.*;
+import com.tq.applogmanagement.agent.LogAgent;
+import com.tq.applogmanagement.Logger;
+import com.tq.applogmanagement.*;
 
 public class MainActivity extends AppCompatActivity {
   private static Logger logger;

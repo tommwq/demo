@@ -1,10 +1,10 @@
-package com.tq.applogcollect.storage;
+package com.tq.applogmanagement.storage;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import static com.tq.applogcollect.Constant.FIRST_LOG_BLOCK;
+import static com.tq.applogmanagement.Constant.FIRST_LOG_BLOCK;
 
 public class AnchorBlock {
     private short dataLength;

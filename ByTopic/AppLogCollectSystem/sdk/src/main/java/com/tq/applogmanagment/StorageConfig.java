@@ -1,4 +1,4 @@
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
 public class StorageConfig {
   private String fileName = "";

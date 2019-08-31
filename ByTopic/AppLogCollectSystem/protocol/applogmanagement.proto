@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
-option java_package = "com.tq.applogcollect";
-option java_outer_classname ="AppLogCollectProto";
+option java_package = "com.tq.applogmanagement";
+option java_outer_classname ="AppLogManagementProto";
 
 import "google/protobuf/any.proto";
 
@@ -87,11 +87,10 @@ message ExceptionInfo {
   repeated MethodInfo stack = 2;
 }
 
-
 // For heartbeat.
 message Empty {}
 
-service LogCollectService {
-  rpc Report (stream Log) returns (stream Command);
+service LogManagementService {
+  rpc ReportLog (stream Log) returns (stream Command);
   rpc Heartbeat (stream Empty) returns (stream Empty);
 }

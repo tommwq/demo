@@ -1,6 +1,6 @@
-package com.tq.applogcollect.storage;
+package com.tq.applogmanagement.storage;
 
-import com.tq.applogcollect.AppLogCollectProto.Log;
+import com.tq.applogmanagement.AppLogManagementProto.Log;
 import com.google.protobuf.InvalidProtocolBufferException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.Adler32;
-import static com.tq.applogcollect.Constant.*;
+import static com.tq.applogmanagement.Constant.*;
 
 public class LogStorage implements BlockStorage {
     private static final int MIN_BLOCK_SIZE = 1024;

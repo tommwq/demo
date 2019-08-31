@@ -1,6 +1,6 @@
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
-import com.tq.applogcollect.agent.LogAgent;
+import com.tq.applogmanagement.agent.LogAgent;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,7 @@ import java.util.UUID;
 @SpringBootApplication
 public class AppLogClientApplication implements CommandLineRunner {
 
-  private static final Logger logger = Logger.instance();
+  private static final Logger logger = SimpleLogger.instance();
 
   public static void main(String[] args) throws Exception {    
     SpringApplication.run(AppLogClientApplication.class, args);

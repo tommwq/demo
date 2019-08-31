@@ -1,4 +1,4 @@
-package com.tq.applogcollect.storage;
+package com.tq.applogmanagement.storage;
 
 import java.io.IOException;
 

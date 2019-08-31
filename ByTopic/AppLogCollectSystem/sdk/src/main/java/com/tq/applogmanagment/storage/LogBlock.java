@@ -1,16 +1,16 @@
-package com.tq.applogcollect.storage;
+package com.tq.applogmanagement.storage;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.tq.applogcollect.AppLogCollectProto.Log;
+import com.tq.applogmanagement.AppLogManagementProto.Log;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import static com.tq.applogcollect.Constant.ADLER32_SIZE;
-import static com.tq.applogcollect.Constant.DATALENGTH_SIZE;
-import static com.tq.applogcollect.Constant.LOGLENGTH_SIZE;
-import static com.tq.applogcollect.Constant.SEQUENCE_SIZE;
+import static com.tq.applogmanagement.Constant.ADLER32_SIZE;
+import static com.tq.applogmanagement.Constant.DATALENGTH_SIZE;
+import static com.tq.applogmanagement.Constant.LOGLENGTH_SIZE;
+import static com.tq.applogmanagement.Constant.SEQUENCE_SIZE;
 
 public class LogBlock {
   private int dataLength;
