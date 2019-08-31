@@ -7,6 +7,7 @@ import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
 
 import com.tq.applogcollect.LogCollectServiceGrpc;
 import com.tq.applogcollect.Logger;
+import com.tq.applogcollect.SimpleLogger;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -21,7 +22,7 @@ public class LogAgent implements Logger.LogSubscriber {
 
   private final ManagedChannel channel;
   private final LogCollectServiceGrpc.LogCollectServiceStub stub;
-  private static final Logger logger = Logger.instance();
+  private static final Logger logger = SimpleLogger.instance();
   private LogReportSession session;
   
   public LogAgent(String host, int port) {

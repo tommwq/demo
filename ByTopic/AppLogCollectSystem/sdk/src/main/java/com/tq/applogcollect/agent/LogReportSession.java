@@ -6,6 +6,7 @@ import com.tq.applogcollect.AppLogCollectProto.Command;
 import com.tq.applogcollect.AppLogCollectProto.ModuleInfo;
 import com.tq.applogcollect.LogCollectServiceGrpc;
 import com.tq.applogcollect.Logger;
+import com.tq.applogcollect.SimpleLogger;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -22,7 +23,7 @@ public class LogReportSession implements StreamObserver<Command> {
 
   private LogAgent agent;
   private StreamObserver<Log> logOutputStream;
-  private static final Logger logger = Logger.instance();
+  private static final Logger logger = SimpleLogger.instance();
   
   public LogReportSession(LogAgent aAgent) {
     agent = aAgent;
@@ -36,7 +37,7 @@ public class LogReportSession implements StreamObserver<Command> {
     int count = command.getCount();
 
     if (sequence == INVALID_SEQUENCE) {
-      sequence = Logger.instance().maxSequence();
+      sequence = SimpleLogger.instance().maxSequence();
     }
     if (count == INVALID_COUNT) {
       count = sequence < DEFAULT_LOG_COUNT ? (int) sequence : DEFAULT_LOG_COUNT;

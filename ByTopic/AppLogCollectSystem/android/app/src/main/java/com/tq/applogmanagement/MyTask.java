@@ -17,7 +17,7 @@ import java.io.File;
 
 public class MyTask extends AsyncTask<Void,Void,Void> {
   private final WeakReference<Activity> activity;
-  private static final Logger logger = Logger.instance();
+  private static final Logger logger = SimpleLogger.instance();
 
   public MyTask(Activity aActivity) {
     activity = new WeakReference<Activity>(aActivity);
@@ -27,6 +27,7 @@ public class MyTask extends AsyncTask<Void,Void,Void> {
   protected Void doInBackground(Void... ignored) {
     try {
       String host = "172.24.20.112";
+      host = "192.168.1.103";
       int port = 50051;
 
       DeviceAndAppConfig info = new DeviceAndAppConfig()
