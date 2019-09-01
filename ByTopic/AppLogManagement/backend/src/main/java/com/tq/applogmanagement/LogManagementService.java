@@ -1,14 +1,14 @@
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
 import org.springframework.stereotype.Component;
-import com.tq.applogcollect.AppLogCollectProto.Log;
-import com.tq.applogcollect.AppLogCollectProto.Command;
+import com.tq.applogmanagement.AppLogManagementProto.Log;
+import com.tq.applogmanagement.AppLogManagementProto.Command;
 import io.grpc.stub.StreamObserver;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
 
 @Component
-public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceImplBase {
+public class LogManagementService extends LogManagementServiceGrpc.LogManagementServiceImplBase {
 
   private ConcurrentHashMap<String, LogSession> deviceTable = new ConcurrentHashMap<>();
 
@@ -21,7 +21,7 @@ public class LogCollectService extends LogCollectServiceGrpc.LogCollectServiceIm
   }
   
   @Override
-  public StreamObserver<Log> report(StreamObserver<Command> outputStream) {
+  public StreamObserver<Log> reportLog(StreamObserver<Command> outputStream) {
     System.err.println("report");
     return new LogSession(outputStream, deviceTable);
   }

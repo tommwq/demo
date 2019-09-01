@@ -1,0 +1,20 @@
+* DONE 设计日志服务器接口。
+  - State "DONE"       from "TODO"       [2019-09-01 周日 13:09]
+** CANCELED 日志服务器间接口。
+   - State "CANCELED"   from "TODO"       [2019-09-01 周日 13:09]
+** CANCELED 日志服务器客户端接口。
+   - State "CANCELED"   from "TODO"       [2019-09-01 周日 13:09]
+* TODO 设计管理服务器接口。
+** TODO 管理服务器日志服务器接口。
+* TODO 重构代码。
+* TODO 建立android-sdk项目。
+* DONE 将applogcollect重命名为applogmanagement。
+  - State "DONE"       from "TODO"       [2019-09-01 周日 01:50]
+** DONE 重命名protocol。
+   - State "DONE"       from "TODO"       [2019-09-01 周日 01:47]
+** DONE 重构sdk。
+   - State "DONE"       from "TODO"       [2019-09-01 周日 01:47]
+** DONE 重构desktop。
+   - State "DONE"       from "TODO"       [2019-09-01 周日 01:49]
+** DONE 重构android。
+   - State "DONE"       from "TODO"       [2019-09-01 周日 01:50]

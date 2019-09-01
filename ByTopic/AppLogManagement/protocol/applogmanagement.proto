@@ -10,10 +10,11 @@ import "google/protobuf/any.proto";
 // 服务器向App发出命令，要求App上报日志。
 // TODO 重新审定协议。
 message Command {
-  string package_name = 1;
+  string deviceId = 1;
   int64 sequence = 2; // 0 表示从最新一条日志开始
   int32 count = 3;
-  bool include_sub_package = 4;
+  string package_name = 4;
+  bool include_sub_package = 5;
 }
 
 enum LogType {
@@ -87,10 +88,16 @@ message ExceptionInfo {
   repeated MethodInfo stack = 2;
 }
 
-// For heartbeat.
+// no input
 message Empty {}
 
 service LogManagementService {
+  // 客户端向日志服务器上报日志。
   rpc ReportLog (stream Log) returns (stream Command);
+  // 心跳。
   rpc Heartbeat (stream Empty) returns (stream Empty);
+  // 日志节点要求另一个节点转发客户端日志。
+  rpc QueryLog(Command) returns (stream Log);
+  // 查询在线设备。
+  rpc QueryOnlineDevice(Empty) returns (stream DeviceAndAppInfo);
 }

@@ -1,6 +1,6 @@
-package com.tq.applogcollect.storage;
+package com.tq.applogmanagement.storage;
 
-import com.tq.applogcollect.AppLogCollectProto.Log;
+import com.tq.applogmanagement.AppLogManagementProto.Log;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;

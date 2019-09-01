@@ -1,8 +1,8 @@
-package com.tq.applogcollect.controller;
+package com.tq.applogmanagement.controller;
 
-import com.tq.applogcollect.AppLogCollectProto.Log;
-import com.tq.applogcollect.LogCollectServer;
-import com.tq.applogcollect.LogCollectService;
+import com.tq.applogmanagement.AppLogManagementProto.Log;
+import com.tq.applogmanagement.LogManagementServer;
+import com.tq.applogmanagement.LogManagementService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.tq.applogcollect.storage.LogStorage;
-import com.tq.applogcollect.storage.Memory;
+import com.tq.applogmanagement.storage.LogStorage;
+import com.tq.applogmanagement.storage.Memory;
 
-import com.tq.applogcollect.LogSession;
+import com.tq.applogmanagement.LogSession;
 
 @RestController
 public class ApiController {
 
   @Autowired
-  private LogCollectServer server;
+  private LogManagementServer server;
 
   @RequestMapping(value="/api/devices")
   @ResponseBody

@@ -1,4 +1,4 @@
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -15,12 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component
-public class LogCollectServer {
+public class LogManagementServer {
   private int port = 50051;
   private Server underlyingServer = null;
-  private LogCollectService service;
+  private LogManagementService service;
 
-  public LogCollectService getService() {
+  public LogManagementService getService() {
     return service;
   }
 
@@ -28,8 +28,8 @@ public class LogCollectServer {
     return port;
   }
 
-  public LogCollectServer() throws Exception {
-    service = new LogCollectService();
+  public LogManagementServer() throws Exception {
+    service = new LogManagementService();
     underlyingServer = ServerBuilder.forPort(port)
       .addService(service)
       .build();

@@ -1,12 +1,12 @@
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.tq.applogcollect.AppLogCollectProto.Log;
-import com.tq.applogcollect.AppLogCollectProto.Command;
-import com.tq.applogcollect.AppLogCollectProto.DeviceAndAppInfo;
-import com.tq.applogcollect.storage.LogStorage;
-import com.tq.applogcollect.storage.Memory;
+import com.tq.applogmanagement.AppLogManagementProto.Log;
+import com.tq.applogmanagement.AppLogManagementProto.Command;
+import com.tq.applogmanagement.AppLogManagementProto.DeviceAndAppInfo;
+import com.tq.applogmanagement.storage.LogStorage;
+import com.tq.applogmanagement.storage.Memory;
 import io.grpc.stub.StreamObserver;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;

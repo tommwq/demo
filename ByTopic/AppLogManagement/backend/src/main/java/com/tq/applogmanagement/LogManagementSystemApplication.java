@@ -1,12 +1,12 @@
-package com.tq.applogcollect;
+package com.tq.applogmanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LogCollectSystemApplication {
+public class LogManagementSystemApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(LogCollectSystemApplication.class, args);
+    SpringApplication.run(LogManagementSystemApplication.class, args);
   }
 }
