@@ -100,4 +100,6 @@ service LogManagementService {
   rpc QueryLog(Command) returns (stream Log);
   // 查询在线设备。
   rpc QueryOnlineDevice(Empty) returns (stream DeviceAndAppInfo);
+  // TODO 设置设备登录通知。
+  // rpc WatchDeviceConnectEvent();
 }
