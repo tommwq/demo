@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.github.tommwq.riskmanagement;
 
 public class Counterpart {
   private String id;

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.github.tommwq.riskmanagement;
 
 import java.util.TreeMap;
 import java.util.Map.Entry;

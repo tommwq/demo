@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.github.tommwq.riskmanagement;
 
 public class RateInfo {
   public String name;

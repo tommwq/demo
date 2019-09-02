@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.github.tommwq.riskmanagement;
 
 import java.util.List;
 import java.util.ArrayList;
