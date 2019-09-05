@@ -1,5 +1,7 @@
 import numpy as np
 import tensorflow as tf
+from tensorflow import keras
+import matplotlib.pyplot as plt
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
