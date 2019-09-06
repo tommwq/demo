@@ -5,6 +5,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+
+# 目标：训练一个神经网络，该网络可以识别单个服装图片。
+
+
+
 def load_mnist_data(data_directory):
     # 从https://github.com/zalandoresearch/fashion-mnist下载。
     data_files = [
@@ -71,18 +76,23 @@ model = keras.Sequential([
     keras.layers.Flatten(input_shape=(28,28)),
     # Flatten定义在tensorflow/python/keras/layers/core.py。
     # Flatten派生自Layer，Layer在engine.base_layer中。
+    # Flatten将28x28的数组转换为28x28个元素的数组。
     keras.layers.Dense(128, activation=tf.nn.relu),
     # Dense也是Layer。Just your regular densely-connected NN layer.
     # Dense.__init__(units, activation, ...)
     # tf.nn.relu等激活函数位于目录tensorflow/python/ops。
+    # Dense是全连接层。
     keras.layers.Dense(10, activation=tf.nn.softmax)
 ])
 
-model.compile(optimizer="adam",
-              loss="sparse_categorical_crossentropy",
-              # 损失函数定义在/tensorflow/python/keras/losses.py中。
-              metrics=["accuracy"]
-              # 度量定义在tensorflow/python/ops/metrics_impl.py中。
+model.compile(
+    # 优化器
+    optimizer="adam",
+    loss="sparse_categorical_crossentropy",
+    # 损失函数定义在/tensorflow/python/keras/losses.py中。
+    metrics=["accuracy"]
+    # 度量定义在tensorflow/python/ops/metrics_impl.py中。
+    # accuracy是准确率。
 )
 
 # 训练模型
