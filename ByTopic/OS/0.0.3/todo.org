@@ -1,0 +1,20 @@
+# -*- mode: org -*-
+
+#+startup: showeverything
+#+options: ^:nil
+#+todo: todo(t) in-action(i@/!) wait(w@/!) | done(d!) canceled(c@)
+
+#+title: todo
+#+date: 2019年10月05日
+
+* todo 将boot.asm中第2扇区部分独立出来，做成bootloader.asm。
+
+* todo 修改Test.ps1和Debug.ps1，将构建过程放到目录中。
+
+* todo 初始化显示器。
+
+* todo 集成C语言代码。
+
+* todo 进入保护模式。
+
+* todo 使用msbuild构建。
