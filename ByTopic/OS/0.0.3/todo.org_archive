@@ -1,0 +1,79 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+
+
+* todo 使用msbuild构建。
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2019-10-12 周六 15:41
+  :ARCHIVE_FILE: c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+  :ARCHIVE_CATEGORY: todo
+  :ARCHIVE_TODO: todo
+  :END:
+
+
+Archived entries from file c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+
+
+* done 将boot.asm中第2扇区部分独立出来，做成bootloader.asm。
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2019-10-12 周六 15:42
+  :ARCHIVE_FILE: c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+  :ARCHIVE_CATEGORY: todo
+  :ARCHIVE_TODO: done
+  :END:
+
+  - State "done"       from "todo"       [2019-10-12 周六 15:41]
+
+Archived entries from file c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+
+
+* done 修改Test.ps1和Debug.ps1，将构建过程放到目录中。
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2019-10-12 周六 15:42
+  :ARCHIVE_FILE: c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+  :ARCHIVE_CATEGORY: todo
+  :ARCHIVE_TODO: done
+  :END:
+
+  - State "done"       from "todo"       [2019-10-12 周六 15:41]
+
+Archived entries from file c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+
+
+* done 初始化显示器。
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2019-10-12 周六 15:42
+  :ARCHIVE_FILE: c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+  :ARCHIVE_CATEGORY: todo
+  :ARCHIVE_TODO: done
+  :END:
+
+  - State "done"       from "todo"       [2019-10-12 周六 15:41]
+
+Archived entries from file c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+
+
+* done 集成C语言代码。
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2019-10-12 周六 15:42
+  :ARCHIVE_FILE: c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+  :ARCHIVE_CATEGORY: todo
+  :ARCHIVE_TODO: done
+  :END:
+
+  - State "done"       from "todo"       [2019-10-12 周六 15:41]
+
+Archived entries from file c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+
+
+* done 进入保护模式。
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2019-10-12 周六 15:42
+  :ARCHIVE_FILE: c:/Users/WangQian/Workspace/Project/demo/ByTopic/OS/0.0.3/todo.org
+  :ARCHIVE_CATEGORY: todo
+  :ARCHIVE_TODO: done
+  :END:
+
+  - State "done"       from "todo"       [2019-10-12 周六 15:41]

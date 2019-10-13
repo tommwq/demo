@@ -24,6 +24,17 @@
         db %1 >> 24
         %endmacro
 
+        ;; 数据段描述符
+        ;; data_segment_descriptor BASE_ADDRESS, SEGMENT_LIMIT
+        %macro data_segment_descriptor 2
+        dw %2 & 0xffff
+        dw %1 & 0xffff
+        db (%1 >> 16) & 0xff
+        db 0x92
+        db ((%2 >> 16) & 0x0f) + 0xcf
+        db %1 >> 24
+        %endmacro
+
         ;; 段选择子表
         ;; descriptor_table ADDRESS, LIMIT
         %macro descriptor_table 2

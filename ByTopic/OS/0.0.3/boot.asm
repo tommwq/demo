@@ -6,6 +6,7 @@
         BOOT_ADDRESS equ 0x7c00
         BOOT_LOADER_ADDRESS equ 0xc200
         GDT_ADDRESS equ 0x8000
+        STACK32_BOTTOM equ 0x2ffff
         
         org BOOT_ADDRESS
 
@@ -27,28 +28,48 @@
         ;; 进入保护模式
         cli
 
+        ;; 启用A20跳线
         in al, 0x92
         or al, 0x02
         out 0x92, al
 
-        xor di, di
-        mov es, di
-        mov si, predefined_gdt
-        mov cx, gdt_desc - gdt
+        ;; 设置GDT
+        xor ax, ax
+        mov ds, ax
+        mov es, ax
+        mov si, gdt
+        mov di, GDT_ADDRESS
+        mov cx, gdt_end - gdt
         inc cx
         rep movsb
         mov eax, gdt_desc
         lgdt [eax]
 
-        mov bx, 0x08
-        mov ds, bx
-        mov es, bx
+        ;; 设置为VGA模式
+        mov ah, 0x00
+        mov al, 0x13
+        int 0x10
 
+        ;; 设置PE标志位
         mov eax, cr0
-        or eax, 0x02
+        or eax, 0x01
         mov cr0, eax
 
-        jmp 0:BOOT_LOADER_ADDRESS
+        ;; 清理流水线
+        jmp flush
+        nop
+        nop
+flush:
+        ;; 设置寄存器
+        mov ax, 0x10
+        mov ds, ax
+        mov es, ax
+        mov ss, ax
+        mov fs, ax
+        mov gs, ax
+        mov esp, STACK32_BOTTOM
+        
+        jmp 0x08:BOOT_LOADER_ADDRESS
         
 error:
         mov si, message_error
@@ -111,12 +132,20 @@ message_loading:
 descriptor_table_address:
         descriptor_table $+6, 2
 
-predefined_gdt:
-null_desc:      
+gdt:
         code_segment_descriptor 0x00000000, 0x00000000
-flat_desc:      
         code_segment_descriptor 0x00000000, 0xffffffff
+        data_segment_descriptor 0x00000000, 0xffffffff
+gdt_end:
+
+gdt_desc:
+        dw 23
+        dd GDT_ADDRESS
+        
         
         times 510-($-$$) db 0x00
         dw 0xaa55
 
+idt_desc:
+        dw 0x0800
+        dd 0x00
