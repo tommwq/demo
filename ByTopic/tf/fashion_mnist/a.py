@@ -8,8 +8,6 @@ import os
 
 # 目标：训练一个神经网络，该网络可以识别单个服装图片。
 
-
-
 def load_mnist_data(data_directory):
     # 从https://github.com/zalandoresearch/fashion-mnist下载。
     data_files = [
@@ -103,7 +101,9 @@ test_loss, test_acc = model.evaluate(test_images, test_labels)
 print("Test accuracy: ", test_acc)
 
 # 应用模型
-predictions = model.predict(test_images)
-print(predictions[0])
+# predictions = model.predict(test_images)
+# print(predictions[0])
+
+model.save("a.tfl")
 
 # 模型可以用save/save_weights/load_weights保存和加载。
