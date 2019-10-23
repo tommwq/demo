@@ -20,6 +20,6 @@
 #define dark_yellow       0x848400
 
 // 8-bit RGB转6-bit VGA
-#define vga_red(x)   ((x) >> 16) >> 2
-#define vga_green(x) (((x) >> 8) & 0xff) >> 2
-#define vga_blue(x)  ((x) & 0xff) >> 2
+#define vga_red(x)   ((x) >> 16)
+#define vga_green(x) ((x) >> 18)
+#define vga_blue(x)  (x)

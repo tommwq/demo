@@ -2,7 +2,7 @@ clear
 
 nasm boot.asm -f bin -o boot.bin
 
-gcc main.c -c -m32 -fno-pie
+gcc main.c -c -m32 -fno-pie -fno-stack-protector 
 nasm util.asm -f elf32
 ld -m elf_i386 --oformat binary --output bootloader.bin --entry main --strip-all main.o util.o
 cat boot.bin bootloader.bin > image.bin

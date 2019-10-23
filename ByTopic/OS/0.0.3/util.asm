@@ -1,4 +1,5 @@
         bits 32
+        
         global io_halt, io_cli, io_sti
         global io_in8, io_in16, io_in32
         global io_out8, io_out16, io_out32

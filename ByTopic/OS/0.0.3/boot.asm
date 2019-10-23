@@ -46,10 +46,15 @@
         lgdt [eax]
 
         ;; 设置为VGA模式
-        mov ah, 0x00
-        mov al, 0x13
+        ;; mov ah, 0x00
+        ;; mov al, 0x13
+        ;; int 0x10
+        
+        ;; http://www.ctyme.com/intr/rb-0275.htm
+        mov ax, 0x4f02
+        mov bx, 0x0118
         int 0x10
-
+        
         ;; 设置PE标志位
         mov eax, cr0
         or eax, 0x01
