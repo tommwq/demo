@@ -45,14 +45,16 @@
         mov eax, gdt_desc
         lgdt [eax]
 
-        ;; 设置为VGA模式
-        ;; mov ah, 0x00
-        ;; mov al, 0x13
-        ;; int 0x10
-        
+        ;; 设置为SVGA模式 1024x768x64K
         ;; http://www.ctyme.com/intr/rb-0275.htm
         mov ax, 0x4f02
-        mov bx, 0x0118
+        mov bx, 0x0117
+        int 0x10
+
+        ;; 选择显示页
+        mov ax, 0x4f05
+        mov bx, 0x00
+        mov dx, 0x00
         int 0x10
         
         ;; 设置PE标志位
