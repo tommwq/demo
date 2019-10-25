@@ -6,6 +6,7 @@
         BOOT_ADDRESS equ 0x7c00
         BOOT_LOADER_ADDRESS equ 0xc200
         GDT_ADDRESS equ 0x8000
+        SVGA_INFO_ADDRESS equ 0x9000
         STACK32_BOTTOM equ 0x2ffff
         
         org BOOT_ADDRESS
@@ -48,13 +49,19 @@
         ;; 设置为SVGA模式 1024x768x64K
         ;; http://www.ctyme.com/intr/rb-0275.htm
         mov ax, 0x4f02
-        mov bx, 0x0117
+        mov bx, 0x4114
         int 0x10
 
         ;; 选择显示页
         mov ax, 0x4f05
         mov bx, 0x00
         mov dx, 0x00
+        int 0x10
+
+        ;; 获取SVGA信息
+        mov di, SVGA_INFO_ADDRESS
+        mov ax, 0x4f01
+        mov cx, 0x0114
         int 0x10
         
         ;; 设置PE标志位

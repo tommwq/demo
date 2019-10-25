@@ -1,4 +1,6 @@
-megs: 32
+# https://forum.osdev.org/viewtopic.php?t=9655
+
+megs: 512
 romimage: file=$BXSHARE/BIOS-bochs-latest, address=0xfffe0000, options=fastboot
 vgaromimage: file=$BXSHARE/VGABIOS-lgpl-latest
 floppya: 1_44=build/os.img, status=inserted
