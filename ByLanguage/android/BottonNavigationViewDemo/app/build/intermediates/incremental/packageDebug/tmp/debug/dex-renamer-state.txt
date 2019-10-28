@@ -1,4 +1,0 @@
-#Tue Mar 12 07:24:48 CST 2019
-base.0=C\:\\Users\\WangQian\\Workspace\\Project\\demo\\ByLanguage\\android\\BottonNavigationViewDemo\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
-path.0=classes.dex
-renamed.0=classes.dex
