@@ -1,4 +1,0 @@
-#Mon Jun 10 09:26:06 CST 2019
-base.0=D\:\\workspace\\project\\demo\\ByLanguage\\android\\NumberPickerDemo\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\8
-path.0=classes.dex
-renamed.0=classes.dex

@@ -1,4 +1,0 @@
-#Mon May 20 16:31:42 CST 2019
-base.0=D\:\\workspace\\project\\demo\\ByLanguage\\android\\BottomNavigationViewDemo\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
-renamed.0=classes.dex
-path.0=classes.dex

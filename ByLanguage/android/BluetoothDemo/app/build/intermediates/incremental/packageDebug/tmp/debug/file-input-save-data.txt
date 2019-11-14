@@ -1,7 +1,0 @@
-#Internal package file, do not edit.
-#Fri Jun 14 17:08:57 CST 2019
-0.baseType=DIRECTORY
-0.base=D\:\\workspace\\project\\demo\\ByLanguage\\android\\BluetoothDemo\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
-0.path=classes.dex
-0.set=DEX
-count=1

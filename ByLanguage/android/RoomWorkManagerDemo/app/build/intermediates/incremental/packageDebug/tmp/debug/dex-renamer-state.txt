@@ -1,4 +1,0 @@
-#Tue Jun 18 14:58:30 CST 2019
-base.0=D\:\\workspace\\project\\demo\\ByLanguage\\android\\RoomWorkManagerDemo\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
-path.0=classes.dex
-renamed.0=classes.dex
