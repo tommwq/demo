@@ -1,0 +1,426 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+MERGED from [androidx.databinding:databinding-adapters:3.4.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\eb0b974d56dd48d6734efa324c71c84d\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.databinding:databinding-runtime:3.4.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\da81440ca1792216a095a91ab436f80e\AndroidManifest.xml:17:1-24:12
+MERGED from [android.arch.work:work-runtime-ktx:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\673d6223cdd0d5ffd20bdbc6677b0d06\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:17:1-118:12
+MERGED from [androidx.room:room-runtime:2.1.0-alpha03] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\40baa9ba7eca2cfdd860e3b1ac8eb4cc\AndroidManifest.xml:17:1-28:12
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b687bc60095ba26dfed48e6d3b6780d7\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93ed5bbd23dd5aba3ac0445377bc0490\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\14633fe9e059dba57b77a7f20d4a6293\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8d12a87c74bbdeb930e738e2d6a6afdc\AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\955fe5ab6b3e6f6a0f7fff3a8b22e9e0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\42f0e80e481b6f83382736ded7bd3720\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2f767c762ec56ca27192692d27c8396\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a766f8d6f07e633026cbd95091fe3056\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f5c5eee8e5029d6b52598c4e5a83962e\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\131799e1e031d1e3a6cd941cc1e77db4\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a36b2141ad28319968e0ba4a3bb7a89a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fa64491e4151ca3e40ade118540922ae\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\d20c4098758b5b2958d29854912e090c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f6448ea053744dfc2f16128e45312bf1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\920ee37c9a76b686057c9118c5970d3b\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a97ddf357cfe01c9167ac368eb671782\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\2e6631f5966626806110e06d7931c32d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2566ef1b6deca475054e3101d645b89\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\dcb524cbf4c373e533d0271d3e5a0b5d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\188245c790480e697dbcb672c2bc89a5\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\4a80689d95f5252d0a217529415f7e6f\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\ef9a0c82dc400b87fd2721fe621310e8\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-service:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\548b1dfc0cd93e4628404ff6a7502858\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93c2a46710815c90c79d6a9d3901d0d4\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.sqlite:sqlite-framework:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\85d5394fff7bfe5383b936d19d61945f\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.sqlite:sqlite:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b9a38b7f05bd09afeefe33cd0c090cc9\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8bca48519dfcc29f5dc98d003c1bef8c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\101b3ce7204b9bb4f995ed50f3b3e1d0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fdd0e5b53af2bb5b6c877abd694bc631\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\33e448b43b667a1ca03eace716acc099\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\e5e0b709da20b1a11b1cf788e2c42608\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5162bc1159c1a5a178405fe4572608dc\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\583bac8d56c65847f6567290e5c0d6f5\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b430ee33df0777daccf7d18c8ed20c69\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5393a8ebee83f9f90e8721c7c05bf88a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a5b73ef4cc6bec3146b7df4e6ecea92f\AndroidManifest.xml:17:1-22:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+	package
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:4:11-50
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+	xmlns:dist
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:3:11-67
+	android:versionCode
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:1-27:12
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:2:11-69
+dist:module
+ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:6:5-39
+	dist:instant
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:6:18-37
+application
+ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:8:5-25:19
+MERGED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:27:5-116:19
+MERGED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:27:5-116:19
+MERGED from [androidx.room:room-runtime:2.1.0-alpha03] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\40baa9ba7eca2cfdd860e3b1ac8eb4cc\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.room:room-runtime:2.1.0-alpha03] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\40baa9ba7eca2cfdd860e3b1ac8eb4cc\AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b687bc60095ba26dfed48e6d3b6780d7\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b687bc60095ba26dfed48e6d3b6780d7\AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:9:5-20
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8d12a87c74bbdeb930e738e2d6a6afdc\AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8d12a87c74bbdeb930e738e2d6a6afdc\AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:22:5-89
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:22:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:22:5-28:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:22:5-28:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:22:18-86
+	android:supportsRtl
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:13:13-39
+	android:label
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:11:13-45
+	android:roundIcon
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:12:13-58
+	android:icon
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:10:13-47
+	android:allowBackup
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:9:13-39
+	android:theme
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:14:13-44
+activity#com.tq.startup.tabbedactivity.MainActivity
+ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:15:9-24:20
+	android:label
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:17:17-49
+	android:theme
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:18:17-60
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:16:17-45
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:19:13-23:29
+action#android.intent.action.MAIN
+ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:20:17-68
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:20:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:22:17-76
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml:22:27-74
+uses-sdk
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+MERGED from [androidx.databinding:databinding-adapters:3.4.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\eb0b974d56dd48d6734efa324c71c84d\AndroidManifest.xml:22:5-44
+MERGED from [androidx.databinding:databinding-adapters:3.4.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\eb0b974d56dd48d6734efa324c71c84d\AndroidManifest.xml:22:5-44
+MERGED from [androidx.databinding:databinding-runtime:3.4.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\da81440ca1792216a095a91ab436f80e\AndroidManifest.xml:22:5-44
+MERGED from [androidx.databinding:databinding-runtime:3.4.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\da81440ca1792216a095a91ab436f80e\AndroidManifest.xml:22:5-44
+MERGED from [android.arch.work:work-runtime-ktx:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\673d6223cdd0d5ffd20bdbc6677b0d06\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.work:work-runtime-ktx:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\673d6223cdd0d5ffd20bdbc6677b0d06\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:21:5-44
+MERGED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:21:5-44
+MERGED from [androidx.room:room-runtime:2.1.0-alpha03] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\40baa9ba7eca2cfdd860e3b1ac8eb4cc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.room:room-runtime:2.1.0-alpha03] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\40baa9ba7eca2cfdd860e3b1ac8eb4cc\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b687bc60095ba26dfed48e6d3b6780d7\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b687bc60095ba26dfed48e6d3b6780d7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93ed5bbd23dd5aba3ac0445377bc0490\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93ed5bbd23dd5aba3ac0445377bc0490\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\14633fe9e059dba57b77a7f20d4a6293\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\14633fe9e059dba57b77a7f20d4a6293\AndroidManifest.xml:5:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8d12a87c74bbdeb930e738e2d6a6afdc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8d12a87c74bbdeb930e738e2d6a6afdc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\955fe5ab6b3e6f6a0f7fff3a8b22e9e0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\955fe5ab6b3e6f6a0f7fff3a8b22e9e0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\42f0e80e481b6f83382736ded7bd3720\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\42f0e80e481b6f83382736ded7bd3720\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2f767c762ec56ca27192692d27c8396\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2f767c762ec56ca27192692d27c8396\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a766f8d6f07e633026cbd95091fe3056\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a766f8d6f07e633026cbd95091fe3056\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f5c5eee8e5029d6b52598c4e5a83962e\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f5c5eee8e5029d6b52598c4e5a83962e\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\131799e1e031d1e3a6cd941cc1e77db4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\131799e1e031d1e3a6cd941cc1e77db4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a36b2141ad28319968e0ba4a3bb7a89a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a36b2141ad28319968e0ba4a3bb7a89a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fa64491e4151ca3e40ade118540922ae\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fa64491e4151ca3e40ade118540922ae\AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\d20c4098758b5b2958d29854912e090c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\d20c4098758b5b2958d29854912e090c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f6448ea053744dfc2f16128e45312bf1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f6448ea053744dfc2f16128e45312bf1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\920ee37c9a76b686057c9118c5970d3b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\920ee37c9a76b686057c9118c5970d3b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a97ddf357cfe01c9167ac368eb671782\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a97ddf357cfe01c9167ac368eb671782\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\2e6631f5966626806110e06d7931c32d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\2e6631f5966626806110e06d7931c32d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2566ef1b6deca475054e3101d645b89\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2566ef1b6deca475054e3101d645b89\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\dcb524cbf4c373e533d0271d3e5a0b5d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\dcb524cbf4c373e533d0271d3e5a0b5d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\188245c790480e697dbcb672c2bc89a5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\188245c790480e697dbcb672c2bc89a5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\4a80689d95f5252d0a217529415f7e6f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\4a80689d95f5252d0a217529415f7e6f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\ef9a0c82dc400b87fd2721fe621310e8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\ef9a0c82dc400b87fd2721fe621310e8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\548b1dfc0cd93e4628404ff6a7502858\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\548b1dfc0cd93e4628404ff6a7502858\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93c2a46710815c90c79d6a9d3901d0d4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93c2a46710815c90c79d6a9d3901d0d4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\85d5394fff7bfe5383b936d19d61945f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\85d5394fff7bfe5383b936d19d61945f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b9a38b7f05bd09afeefe33cd0c090cc9\AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b9a38b7f05bd09afeefe33cd0c090cc9\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8bca48519dfcc29f5dc98d003c1bef8c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8bca48519dfcc29f5dc98d003c1bef8c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\101b3ce7204b9bb4f995ed50f3b3e1d0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\101b3ce7204b9bb4f995ed50f3b3e1d0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fdd0e5b53af2bb5b6c877abd694bc631\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fdd0e5b53af2bb5b6c877abd694bc631\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\33e448b43b667a1ca03eace716acc099\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\33e448b43b667a1ca03eace716acc099\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\e5e0b709da20b1a11b1cf788e2c42608\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\e5e0b709da20b1a11b1cf788e2c42608\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5162bc1159c1a5a178405fe4572608dc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5162bc1159c1a5a178405fe4572608dc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\583bac8d56c65847f6567290e5c0d6f5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\583bac8d56c65847f6567290e5c0d6f5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b430ee33df0777daccf7d18c8ed20c69\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b430ee33df0777daccf7d18c8ed20c69\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5393a8ebee83f9f90e8721c7c05bf88a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5393a8ebee83f9f90e8721c7c05bf88a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a5b73ef4cc6bec3146b7df4e6ecea92f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a5b73ef4cc6bec3146b7df4e6ecea92f\AndroidManifest.xml:20:5-44
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\startup\TabbedActivity\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:23:5-68
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:23:22-65
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:24:22-76
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:25:5-81
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:25:22-78
+provider#androidx.work.impl.WorkManagerInitializer
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:28:9-34:35
+	android:authorities
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:30:13-68
+	android:multiprocess
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:33:13-40
+	android:exported
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:32:13-37
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:34:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:31:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:29:13-69
+service#androidx.work.impl.background.systemalarm.SystemAlarmService
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:36:9-41:35
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:39:13-72
+	android:exported
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:40:13-37
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:41:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:38:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:37:13-88
+service#androidx.work.impl.background.systemjob.SystemJobService
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:42:9-48:35
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:45:13-70
+	android:exported
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:46:13-36
+	android:permission
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:47:13-69
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:48:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:44:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:43:13-84
+receiver#androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:50:9-55:35
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:53:13-35
+	android:exported
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:54:13-37
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:55:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:52:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:51:13-88
+receiver#androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:56:9-65:20
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:59:13-36
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:60:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:58:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:57:13-106
+intent-filter#action:name:android.intent.action.ACTION_POWER_CONNECTED+action:name:android.intent.action.ACTION_POWER_DISCONNECTED
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:61:13-64:29
+action#android.intent.action.ACTION_POWER_CONNECTED
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:62:17-87
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:62:25-84
+action#android.intent.action.ACTION_POWER_DISCONNECTED
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:63:17-90
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:63:25-87
+receiver#androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:66:9-75:20
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:69:13-36
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:70:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:68:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:67:13-104
+intent-filter#action:name:android.intent.action.BATTERY_LOW+action:name:android.intent.action.BATTERY_OKAY
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:71:13-74:29
+action#android.intent.action.BATTERY_OKAY
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:72:17-77
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:72:25-74
+action#android.intent.action.BATTERY_LOW
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:73:17-76
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:73:25-73
+receiver#androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:76:9-85:20
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:79:13-36
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:80:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:78:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:77:13-104
+intent-filter#action:name:android.intent.action.DEVICE_STORAGE_LOW+action:name:android.intent.action.DEVICE_STORAGE_OK
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:81:13-84:29
+action#android.intent.action.DEVICE_STORAGE_LOW
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:82:17-83
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:82:25-80
+action#android.intent.action.DEVICE_STORAGE_OK
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:83:17-82
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:83:25-79
+receiver#androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:86:9-94:20
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:89:13-36
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:90:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:88:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:87:13-103
+intent-filter#action:name:android.net.conn.CONNECTIVITY_CHANGE
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:91:13-93:29
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:92:17-79
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:92:25-76
+receiver#androidx.work.impl.background.systemalarm.RescheduleReceiver
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:95:9-105:20
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:98:13-36
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:99:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:97:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:96:13-88
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.TIMEZONE_CHANGED+action:name:android.intent.action.TIME_SET
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:100:13-104:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:101:17-79
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:101:25-76
+action#android.intent.action.TIME_SET
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:102:17-73
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:102:25-70
+action#android.intent.action.TIMEZONE_CHANGED
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:103:17-81
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:103:25-78
+receiver#androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:106:9-115:20
+	android:enabled
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:109:13-72
+	android:exported
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:110:13-37
+	tools:targetApi
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:111:13-32
+	android:directBootAware
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:108:13-44
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:107:13-99
+intent-filter#action:name:androidx.work.impl.background.systemalarm.UpdateProxies
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:112:13-114:29
+action#androidx.work.impl.background.systemalarm.UpdateProxies
+ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:113:17-98
+	android:name
+		ADDED from [android.arch.work:work-runtime:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8a76933673e4c21a7b3356ba30c4c6f3\AndroidManifest.xml:113:25-95
+service#androidx.room.MultiInstanceInvalidationService
+ADDED from [androidx.room:room-runtime:2.1.0-alpha03] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\40baa9ba7eca2cfdd860e3b1ac8eb4cc\AndroidManifest.xml:23:9-25:40
+	android:exported
+		ADDED from [androidx.room:room-runtime:2.1.0-alpha03] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\40baa9ba7eca2cfdd860e3b1ac8eb4cc\AndroidManifest.xml:25:13-37
+	android:name
+		ADDED from [androidx.room:room-runtime:2.1.0-alpha03] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\40baa9ba7eca2cfdd860e3b1ac8eb4cc\AndroidManifest.xml:24:13-74
+provider#androidx.lifecycle.ProcessLifecycleOwnerInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:23:9-27:43
+	android:authorities
+		ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:25:13-69
+	android:multiprocess
+		ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:27:13-40
+	android:exported
+		ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:26:13-37
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\9980cef0a354efb54344f5a7b0261139\AndroidManifest.xml:24:13-79

@@ -1,0 +1,201 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+MERGED from [androidx.navigation:navigation-ui-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-ui-ktx-2.0.0-rc02.aar\851cf32a9392a6531491b5d6f54eee70\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-ui:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\jetified-navigation-ui-2.0.0-rc02.aar\b561f06eaea34dd3f2d201178c886fce\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\d7585f0c6034bc56f13ea6097a2b0be7\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\64e8b4c99f8971640afa776047cb736c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-ktx-1.1.0-alpha04.aar\a1d6d5b8509361771c1899e88e6207cc\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.3.aar\c29874cac2449411b0ff183f29d78a81\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0-beta01.aar\8828304223ad728803f337f19b83be12\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-fragment-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-fragment-ktx-2.0.0-rc02.aar\2efe825f35a8d00bb83012b089ade339\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-runtime-ktx-2.0.0-rc02.aar\22584e47e7c58ae17ad08509e28b8a17\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-common-ktx-2.0.0-rc02.aar\784c8d8938f2f3de7fa5bc341c6a342b\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\media-1.0.0-beta01.aar\8b43cba74cfb8860a19f015e8c16a997\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-fragment:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-fragment-2.0.0-rc02.aar\97b2ed746063f96e6d772ebd9342d430\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\72be4c99fcf78ed29d52e15debe09704\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\acd40908c114aff9f22c4cbf7ea3db1e\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\vectordrawable-animated-1.0.0.aar\e8e6556bdf054228f7f533495dd28619\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-core-ui-1.0.0.aar\3eff4118c4ed55e3027997a25a606e2a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-runtime-2.0.0-rc02.aar\6ab3d616bb901f8a0bd94ac0d190a877\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\be4d4e5ed17812a89af1752d328b87c6\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\transition-1.0.0.aar\1dc2830974d557f09e89e099f9c9140f\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\viewpager-1.0.0.aar\651b37257283be3c21fcfc5c2b5b755a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-1.0.0.aar\4d88c204427792565ee127a6017d54a8\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\drawerlayout-1.0.0.aar\afde0af9e38a020fa60048cb7d3012b2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-1.0.0.aar\f73d89ff9a8defd00ccd2d84cc325e1c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\customview-1.0.0.aar\c9cd05156b6368c5ddf721633f55668a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-1.0.0.aar\2c3bc8966c2630348b89d08d1497ffb3\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-1.0.0.aar\afdc48092b31c0ede897eb51f6ff898e\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\3d065162080d2832cb564b17b04d4796\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\vectordrawable-1.0.0.aar\56eca9e2577491a8b0b06661e6c3891e\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-common-2.0.0-rc02.aar\4dcd4ea9a37f0223cee4b49aab349a83\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-1.1.0-alpha04.aar\08caa056157716d30f90c3404554a9f2\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0.aar\15e50b3b32701a40de134b4689e4ba3d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.1.0-alpha01.aar\7774ef92234e33f6420520abac644a2b\AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\5908961f4aea93c961a66095c0d95c3b\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\e5be52ceaaf159745a88243090a73b01\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\447277ca4073aba7f34ee20436991e6d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\a30e6bdc6b21ac031395a867cd0c3304\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\624470a34905f7375b5642a63eb733c7\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\e4b398f04c557b067a1de279c99b360a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\0f403b9965eccbd50306e07d71190608\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\f21e87c64a20027039893917cd975ede\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\4c276ea731de8800ec22a8682bb6049d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\289590862a328a2278cd296d7a1e4518\AndroidManifest.xml:17:1-22:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+	package
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:3:11-52
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:1-21:12
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:5:5-19:19
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\d7585f0c6034bc56f13ea6097a2b0be7\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\d7585f0c6034bc56f13ea6097a2b0be7\AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.3.aar\c29874cac2449411b0ff183f29d78a81\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.3.aar\c29874cac2449411b0ff183f29d78a81\AndroidManifest.xml:9:5-20
+MERGED from [androidx.core:core:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-1.1.0-alpha04.aar\08caa056157716d30f90c3404554a9f2\AndroidManifest.xml:22:5-89
+MERGED from [androidx.core:core:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-1.1.0-alpha04.aar\08caa056157716d30f90c3404554a9f2\AndroidManifest.xml:22:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.1.0-alpha01.aar\7774ef92234e33f6420520abac644a2b\AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.1.0-alpha01.aar\7774ef92234e33f6420520abac644a2b\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-1.1.0-alpha04.aar\08caa056157716d30f90c3404554a9f2\AndroidManifest.xml:22:18-86
+	android:supportsRtl
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:10:13-39
+	android:label
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:8:13-45
+	android:roundIcon
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:9:13-58
+	android:icon
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:7:13-47
+	android:allowBackup
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:6:13-39
+	android:theme
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:11:13-44
+activity#com.tq.bottomnavigationviewdemo.MainActivity
+ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:12:9-18:20
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:12:19-78
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:13:13-17:29
+action#android.intent.action.MAIN
+ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:14:17-68
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:14:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:16:17-76
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml:16:27-74
+uses-sdk
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+MERGED from [androidx.navigation:navigation-ui-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-ui-ktx-2.0.0-rc02.aar\851cf32a9392a6531491b5d6f54eee70\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-ui-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-ui-ktx-2.0.0-rc02.aar\851cf32a9392a6531491b5d6f54eee70\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-ui:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\jetified-navigation-ui-2.0.0-rc02.aar\b561f06eaea34dd3f2d201178c886fce\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-ui:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\jetified-navigation-ui-2.0.0-rc02.aar\b561f06eaea34dd3f2d201178c886fce\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\d7585f0c6034bc56f13ea6097a2b0be7\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\d7585f0c6034bc56f13ea6097a2b0be7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\64e8b4c99f8971640afa776047cb736c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\64e8b4c99f8971640afa776047cb736c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-ktx-1.1.0-alpha04.aar\a1d6d5b8509361771c1899e88e6207cc\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-ktx-1.1.0-alpha04.aar\a1d6d5b8509361771c1899e88e6207cc\AndroidManifest.xml:5:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.3.aar\c29874cac2449411b0ff183f29d78a81\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.3.aar\c29874cac2449411b0ff183f29d78a81\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0-beta01.aar\8828304223ad728803f337f19b83be12\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0-beta01.aar\8828304223ad728803f337f19b83be12\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-fragment-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-fragment-ktx-2.0.0-rc02.aar\2efe825f35a8d00bb83012b089ade339\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-fragment-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-fragment-ktx-2.0.0-rc02.aar\2efe825f35a8d00bb83012b089ade339\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-runtime-ktx-2.0.0-rc02.aar\22584e47e7c58ae17ad08509e28b8a17\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-runtime-ktx-2.0.0-rc02.aar\22584e47e7c58ae17ad08509e28b8a17\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-common-ktx-2.0.0-rc02.aar\784c8d8938f2f3de7fa5bc341c6a342b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-common-ktx-2.0.0-rc02.aar\784c8d8938f2f3de7fa5bc341c6a342b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\media-1.0.0-beta01.aar\8b43cba74cfb8860a19f015e8c16a997\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0-beta01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\media-1.0.0-beta01.aar\8b43cba74cfb8860a19f015e8c16a997\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-fragment:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-fragment-2.0.0-rc02.aar\97b2ed746063f96e6d772ebd9342d430\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-fragment:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-fragment-2.0.0-rc02.aar\97b2ed746063f96e6d772ebd9342d430\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\72be4c99fcf78ed29d52e15debe09704\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\72be4c99fcf78ed29d52e15debe09704\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\acd40908c114aff9f22c4cbf7ea3db1e\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\acd40908c114aff9f22c4cbf7ea3db1e\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\vectordrawable-animated-1.0.0.aar\e8e6556bdf054228f7f533495dd28619\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\vectordrawable-animated-1.0.0.aar\e8e6556bdf054228f7f533495dd28619\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-core-ui-1.0.0.aar\3eff4118c4ed55e3027997a25a606e2a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-core-ui-1.0.0.aar\3eff4118c4ed55e3027997a25a606e2a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-runtime-2.0.0-rc02.aar\6ab3d616bb901f8a0bd94ac0d190a877\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-runtime-2.0.0-rc02.aar\6ab3d616bb901f8a0bd94ac0d190a877\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\be4d4e5ed17812a89af1752d328b87c6\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\be4d4e5ed17812a89af1752d328b87c6\AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\transition-1.0.0.aar\1dc2830974d557f09e89e099f9c9140f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\transition-1.0.0.aar\1dc2830974d557f09e89e099f9c9140f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\viewpager-1.0.0.aar\651b37257283be3c21fcfc5c2b5b755a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\viewpager-1.0.0.aar\651b37257283be3c21fcfc5c2b5b755a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-1.0.0.aar\4d88c204427792565ee127a6017d54a8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-1.0.0.aar\4d88c204427792565ee127a6017d54a8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\drawerlayout-1.0.0.aar\afde0af9e38a020fa60048cb7d3012b2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\drawerlayout-1.0.0.aar\afde0af9e38a020fa60048cb7d3012b2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-1.0.0.aar\f73d89ff9a8defd00ccd2d84cc325e1c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-1.0.0.aar\f73d89ff9a8defd00ccd2d84cc325e1c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\customview-1.0.0.aar\c9cd05156b6368c5ddf721633f55668a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\customview-1.0.0.aar\c9cd05156b6368c5ddf721633f55668a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-1.0.0.aar\2c3bc8966c2630348b89d08d1497ffb3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-1.0.0.aar\2c3bc8966c2630348b89d08d1497ffb3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-1.0.0.aar\afdc48092b31c0ede897eb51f6ff898e\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-1.0.0.aar\afdc48092b31c0ede897eb51f6ff898e\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\3d065162080d2832cb564b17b04d4796\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\3d065162080d2832cb564b17b04d4796\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\vectordrawable-1.0.0.aar\56eca9e2577491a8b0b06661e6c3891e\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\vectordrawable-1.0.0.aar\56eca9e2577491a8b0b06661e6c3891e\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-common-2.0.0-rc02.aar\4dcd4ea9a37f0223cee4b49aab349a83\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.0.0-rc02] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\navigation-common-2.0.0-rc02.aar\4dcd4ea9a37f0223cee4b49aab349a83\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-1.1.0-alpha04.aar\08caa056157716d30f90c3404554a9f2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.1.0-alpha04] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-1.1.0-alpha04.aar\08caa056157716d30f90c3404554a9f2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0.aar\15e50b3b32701a40de134b4689e4ba3d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0.aar\15e50b3b32701a40de134b4689e4ba3d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.1.0-alpha01.aar\7774ef92234e33f6420520abac644a2b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0-alpha01] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.1.0-alpha01.aar\7774ef92234e33f6420520abac644a2b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\5908961f4aea93c961a66095c0d95c3b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\5908961f4aea93c961a66095c0d95c3b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\e5be52ceaaf159745a88243090a73b01\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\e5be52ceaaf159745a88243090a73b01\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\447277ca4073aba7f34ee20436991e6d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\447277ca4073aba7f34ee20436991e6d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\a30e6bdc6b21ac031395a867cd0c3304\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\a30e6bdc6b21ac031395a867cd0c3304\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\624470a34905f7375b5642a63eb733c7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\624470a34905f7375b5642a63eb733c7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\e4b398f04c557b067a1de279c99b360a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\e4b398f04c557b067a1de279c99b360a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\0f403b9965eccbd50306e07d71190608\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\0f403b9965eccbd50306e07d71190608\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\f21e87c64a20027039893917cd975ede\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\f21e87c64a20027039893917cd975ede\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\4c276ea731de8800ec22a8682bb6049d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\4c276ea731de8800ec22a8682bb6049d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\289590862a328a2278cd296d7a1e4518\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\289590862a328a2278cd296d7a1e4518\AndroidManifest.xml:20:5-44
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\BottomNavigationViewDemo\app\src\main\AndroidManifest.xml

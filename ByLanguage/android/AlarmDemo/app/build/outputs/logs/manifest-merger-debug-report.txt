@@ -1,0 +1,173 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93ed5bbd23dd5aba3ac0445377bc0490\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\14633fe9e059dba57b77a7f20d4a6293\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2f767c762ec56ca27192692d27c8396\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a766f8d6f07e633026cbd95091fe3056\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\131799e1e031d1e3a6cd941cc1e77db4\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a36b2141ad28319968e0ba4a3bb7a89a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fa64491e4151ca3e40ade118540922ae\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\920ee37c9a76b686057c9118c5970d3b\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a97ddf357cfe01c9167ac368eb671782\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\2e6631f5966626806110e06d7931c32d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2566ef1b6deca475054e3101d645b89\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\dcb524cbf4c373e533d0271d3e5a0b5d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\188245c790480e697dbcb672c2bc89a5\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\4a80689d95f5252d0a217529415f7e6f\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\ef9a0c82dc400b87fd2721fe621310e8\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\33e448b43b667a1ca03eace716acc099\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\583bac8d56c65847f6567290e5c0d6f5\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b430ee33df0777daccf7d18c8ed20c69\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5393a8ebee83f9f90e8721c7c05bf88a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5162bc1159c1a5a178405fe4572608dc\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93c2a46710815c90c79d6a9d3901d0d4\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a5b73ef4cc6bec3146b7df4e6ecea92f\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8bca48519dfcc29f5dc98d003c1bef8c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\101b3ce7204b9bb4f995ed50f3b3e1d0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fdd0e5b53af2bb5b6c877abd694bc631\AndroidManifest.xml:17:1-22:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+	package
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:4:11-42
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+	xmlns:dist
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:3:11-67
+	android:versionCode
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:1-30:12
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:2:11-69
+dist:module
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:6:5-39
+	dist:instant
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:6:18-37
+application
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:8:5-28:19
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:9:5-20
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:22:5-89
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:22:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:22:18-86
+	android:supportsRtl
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:13:13-39
+	android:label
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:11:13-45
+	android:roundIcon
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:12:13-58
+	android:icon
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:10:13-47
+	android:allowBackup
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:9:13-39
+	android:theme
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:14:13-44
+activity#com.example.alarmdemo.MainActivity
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:15:9-21:20
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:15:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:16:13-20:29
+action#android.intent.action.MAIN
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:17:17-68
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:17:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:19:17-76
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:19:27-74
+receiver#com.example.alarmdemo.AlarmReceiver
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:22:9-26:20
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:22:19-48
+intent-filter#action:name:short
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:23:13-25:29
+action#short
+ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:24:17-47
+	android:name
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml:24:25-45
+uses-sdk
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93ed5bbd23dd5aba3ac0445377bc0490\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93ed5bbd23dd5aba3ac0445377bc0490\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\14633fe9e059dba57b77a7f20d4a6293\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\14633fe9e059dba57b77a7f20d4a6293\AndroidManifest.xml:5:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a0967d6ec5b0a0395d617b1675f78747\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2f767c762ec56ca27192692d27c8396\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2f767c762ec56ca27192692d27c8396\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a766f8d6f07e633026cbd95091fe3056\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a766f8d6f07e633026cbd95091fe3056\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\131799e1e031d1e3a6cd941cc1e77db4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\131799e1e031d1e3a6cd941cc1e77db4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a36b2141ad28319968e0ba4a3bb7a89a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a36b2141ad28319968e0ba4a3bb7a89a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fa64491e4151ca3e40ade118540922ae\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fa64491e4151ca3e40ade118540922ae\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\920ee37c9a76b686057c9118c5970d3b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\920ee37c9a76b686057c9118c5970d3b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a97ddf357cfe01c9167ac368eb671782\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a97ddf357cfe01c9167ac368eb671782\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\2e6631f5966626806110e06d7931c32d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\2e6631f5966626806110e06d7931c32d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2566ef1b6deca475054e3101d645b89\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\f2566ef1b6deca475054e3101d645b89\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\dcb524cbf4c373e533d0271d3e5a0b5d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\dcb524cbf4c373e533d0271d3e5a0b5d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\188245c790480e697dbcb672c2bc89a5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\188245c790480e697dbcb672c2bc89a5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\4a80689d95f5252d0a217529415f7e6f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\4a80689d95f5252d0a217529415f7e6f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\ef9a0c82dc400b87fd2721fe621310e8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\ef9a0c82dc400b87fd2721fe621310e8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.2] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\3c0480bbf3a2031cebb31216a121f8bb\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\75fade126fff577df0efddd363186d83\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\33e448b43b667a1ca03eace716acc099\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\33e448b43b667a1ca03eace716acc099\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\583bac8d56c65847f6567290e5c0d6f5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\583bac8d56c65847f6567290e5c0d6f5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b430ee33df0777daccf7d18c8ed20c69\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\b430ee33df0777daccf7d18c8ed20c69\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5393a8ebee83f9f90e8721c7c05bf88a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5393a8ebee83f9f90e8721c7c05bf88a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5162bc1159c1a5a178405fe4572608dc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\5162bc1159c1a5a178405fe4572608dc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93c2a46710815c90c79d6a9d3901d0d4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\93c2a46710815c90c79d6a9d3901d0d4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a5b73ef4cc6bec3146b7df4e6ecea92f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\a5b73ef4cc6bec3146b7df4e6ecea92f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8bca48519dfcc29f5dc98d003c1bef8c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\8bca48519dfcc29f5dc98d003c1bef8c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\101b3ce7204b9bb4f995ed50f3b3e1d0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\101b3ce7204b9bb4f995ed50f3b3e1d0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fdd0e5b53af2bb5b6c877abd694bc631\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\guosen\.gradle\caches\transforms-2\files-2.1\fdd0e5b53af2bb5b6c877abd694bc631\AndroidManifest.xml:20:5-44
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+		ADDED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
+		INJECTED from D:\workspace\project\demo\ByLanguage\android\AlarmDemo\app\src\main\AndroidManifest.xml
