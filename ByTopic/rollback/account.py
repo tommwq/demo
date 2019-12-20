@@ -117,6 +117,7 @@ class AccountSystem(object):
                                            security_account_detail.__dict__)
 
 class DealService1(DealService):
+    '''版本1。'''
     def set_account_system(self, account_system):
         self._account_system = account_system
         
@@ -132,3 +133,21 @@ class DealService1(DealService):
         seller_money_account.add(money)
         buyer_security_account.add(security, count)
 
+class DealService2(DealService):
+    '''版本2。'''
+    def set_account_system(self, account_system):
+        self._account_system = account_system
+        
+    def deal(self, buyer_id, seller_id, security, price, count):
+        money = price * count
+        buyer_money_account = self._account_system.find_money_account(buyer_id)
+        buyer_security_account = self._account_system.find_security_account(buyer_id)
+        seller_money_account = self._account_system.find_money_account(seller_id)
+        seller_security_account = self._account_system.find_security_account(seller_id)
+
+        buyer_money_account.substract(money)
+        seller_security_account.substract(security, count)
+        # defect
+        seller_money_account.add(2 * money)
+        buyer_security_account.add(security, count)
+    

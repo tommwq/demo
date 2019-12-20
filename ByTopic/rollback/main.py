@@ -1,7 +1,5 @@
 import csvdb
 from account import *
-from config import *
-
 
 def print_info(title, customer1, customer2):
     print()
@@ -11,8 +9,8 @@ def print_info(title, customer1, customer2):
     customer1.print()
     customer2.print()
 
-
-
+db_path = './db'
+deal_service = DealService2()
 
 account_system = AccountSystem(db_path, deal_service)
 deal_service.set_account_system(account_system)
@@ -23,3 +21,5 @@ bob = account_system.customer(2)
 print_info("BEFORE", alice, bob)
 alice.buy(bob, "abc", 1.00, 100)
 print_info("AFTER", alice, bob)
+
+# 开始恢复
