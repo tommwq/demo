@@ -13,6 +13,14 @@ class Customer(object):
     def buy(self, peer_customer, security, price, count):
         self._account_system.deal_service().deal(self.id, peer_customer.id, security, price, count)
 
+    def lock(self):
+        self._account_system.find_money_account(self.id).freeze()
+        self._account_system.find_security_account(self.id).freeze()
+        
+    def unlock(self):
+        self._account_system.find_money_account(self.id).unfreeze()
+        self._account_system.find_security_account(self.id).unfreeze()
+
     def print(self):
         print('customer\t{}'.format(self.name))
         money_account = self._account_system.find_money_account(self.id)
@@ -32,6 +40,14 @@ class MoneyAccount(object):
         
     def substract(self, value):
         self.balance = str(float(self.balance) - value)
+        self._account_system.save_money_account(self)
+
+    def unfreeze(self):
+        self.lock = '0'
+        self._account_system.save_money_account(self)
+
+    def freeze(self):
+        self.lock = '1'
         self._account_system.save_money_account(self)
 
     def print(self):
@@ -72,6 +88,14 @@ class SecurityAccount(object):
 
         self._account_system.save_security_account_detail(item)
         
+    def unfreez(eself):
+        self.lock = '0'
+        self._account_system.save_security_account(self)
+
+    def freeze(self):
+        self.lock = '1'
+        self._account_system.save_security_account(self)
+        
     def print(self):
         print('security account\tlock {}'.format(self.lock))
         for item in self._items:
@@ -100,7 +124,7 @@ class AccountSystem(object):
         return Customer(entity, self)
 
     def find_money_account(self, customer_id):
-        return MoneyAccount(self._moneyaccount.select_one("customerid",customer_id), self)
+        return MoneyAccount(self._moneyaccount.select_one("customerid", customer_id), self)
         
     def find_security_account(self, customer_id):
         return SecurityAccount(self._securityaccount.select_one("customerid",customer_id), self)
@@ -115,6 +139,9 @@ class AccountSystem(object):
         self._securityaccountdetail.update([("accountid","=",security_account_detail.accountid),
                                             ("securityid","=",security_account_detail.securityid)],
                                            security_account_detail.__dict__)
+
+    def save_security_account(self, security_account):
+        self._securityaccount.update_by_id(security_account)
 
 class DealService1(DealService):
     '''版本1。'''
