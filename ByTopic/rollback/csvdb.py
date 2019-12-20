@@ -9,6 +9,14 @@
 import codecs
 import csv
 import os
+import collections
+
+class Entity(object):
+    def __init__(self, **kwargs):
+        self.__dict__ = kwargs
+        
+    def __str__(self):
+        return str(self.__dict__)
 
 class RecordUpdater(object):
     '''用于更新记录。'''
@@ -67,7 +75,7 @@ class AlwaysTrueFilter(Filter):
     def do_filter(self, record):
         return True
 
-class CsvTable(object):
+class Table(object):
 
     def __init__(self, csv_file_name):
         self._file_name = csv_file_name
@@ -76,7 +84,7 @@ class CsvTable(object):
         self._load()
 
     def _load(self):
-        with codecs.open(self._file_name, "rb", encoding = CsvDB.encoding) as csv_file:
+        with codecs.open(self._file_name, "rb", encoding = Database.encoding) as csv_file:
             reader = csv.DictReader(csv_file)
             self._column_names = reader.fieldnames
             self._rows = [dict(x) for x in reader]
@@ -88,7 +96,7 @@ class CsvTable(object):
         pass
     
     def _sync_to_disk(self):
-        with codecs.open(self._file_name, "wb", encoding = CsvDB.encoding) as csv_file:
+        with codecs.open(self._file_name, "wb", encoding = Database.encoding) as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=self._column_names)
             writer.writeheader()
             writer.writerows(self._rows)
@@ -149,7 +157,7 @@ op: > < = !=
             print(list(row))
         
 
-class CsvDB(object):
+class Database(object):
 
     table_file_name_suffix = ".csvdb"
     encoding = "utf-8"
@@ -164,7 +172,7 @@ class CsvDB(object):
         for file_name in table_file_names:
             table_name = file_name[:-len(self.table_file_name_suffix)]
             file_path = os.path.join(self._root, file_name)
-            self._tables[table_name] = CsvTable(file_path)
+            self._tables[table_name] = Table(file_path)
 
     def list_table_name(self):
         return list(self._tables.keys())
@@ -178,7 +186,7 @@ class CsvDB(object):
             writer = csv.DictWriter(output_file, fieldnames = column_names)
             writer.writeheader()
 
-        self._tables[table_name] = CsvTable(table_file_name)
+        self._tables[table_name] = Table(table_file_name)
 
     def drop_table(self, table_name):
         if not self.is_table_exist(table_name):
@@ -199,3 +207,31 @@ class CsvDB(object):
 
     def _table_file_name(self, table_name):
         return os.path.join(self._root, table_name + self.table_file_name_suffix)
+
+class Repository(object):
+    def __init__(self, table):
+        self._table = table
+
+    def select_one(self, column, value):
+        rows = self.select_many(column, value)
+        if len(rows) == 0:
+            return None
+        return rows[0]
+
+    def select_many(self, column, value):
+        return [Entity(**row) for row in self._table.select([(column,"=",value)])]
+
+    def select_by_id(self, id):
+        return self.select_one("id", id)
+
+    def update_by_id(self, entity):
+        id = entity.id
+        kv = {}
+        for k, v in entity.__dict__.items():
+            if k != 'id' and not k.startswith('_'):
+                kv[k] = v
+            
+        self._table.update([("id","=",id)], kv)
+
+    def update(self, conditions, kv):
+        self._table.update(conditions, kv)
