@@ -115,3 +115,20 @@ class AccountSystem(object):
         self._securityaccountdetail.update([("accountid","=",security_account_detail.accountid),
                                             ("securityid","=",security_account_detail.securityid)],
                                            security_account_detail.__dict__)
+
+class DealService1(DealService):
+    def set_account_system(self, account_system):
+        self._account_system = account_system
+        
+    def deal(self, buyer_id, seller_id, security, price, count):
+        money = price * count
+        buyer_money_account = self._account_system.find_money_account(buyer_id)
+        buyer_security_account = self._account_system.find_security_account(buyer_id)
+        seller_money_account = self._account_system.find_money_account(seller_id)
+        seller_security_account = self._account_system.find_security_account(seller_id)
+
+        buyer_money_account.substract(money)
+        seller_security_account.substract(security, count)
+        seller_money_account.add(money)
+        buyer_security_account.add(security, count)
+
