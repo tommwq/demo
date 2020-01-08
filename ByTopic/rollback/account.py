@@ -4,6 +4,9 @@ class DealService(object):
     
     def deal(self, buyer_id, seller_id, security, price, count):
         pass
+
+    def version(self):
+        raise Error("unsupported operation")
         
 class Customer(object):
     def __init__(self, entity, account_system):
@@ -143,6 +146,26 @@ class AccountSystem(object):
     def save_security_account(self, security_account):
         self._securityaccount.update_by_id(security_account)
 
+    def record_operation(self,
+                         buyer_money_account,
+                         buyer_security_account,
+                         seller_money_account,
+                         seller_security_account,
+                         security,
+                         price,
+                         count,
+                         version):
+        self._operationhistory.insert(csvdb.Entity(
+            buyermoneyaccount=buyer_money_account.id,
+            sellermoneyaccount=seller_money_account.id,
+            buyersecurityaccount=buyer_security_account.id,
+            sellersecurityaccount=seller_security_account.id,
+            securityid=security,
+            price=price,
+            count=count,
+            version=version).__dict__)
+
+        
 class DealService1(DealService):
     '''版本1。'''
     def set_account_system(self, account_system):
@@ -159,6 +182,17 @@ class DealService1(DealService):
         seller_security_account.substract(security, count)
         seller_money_account.add(money)
         buyer_security_account.add(security, count)
+        self._account_system.record_operation(buyer_money_account,
+                                              buyer_security_account,
+                                              seller_money_account,
+                                              seller_security_account,
+                                              security,
+                                              price,
+                                              count,
+                                              self.version())
+
+    def version(self):
+        return '1'
 
 class DealService2(DealService):
     '''版本2。'''
@@ -177,4 +211,14 @@ class DealService2(DealService):
         # defect
         seller_money_account.add(2 * money)
         buyer_security_account.add(security, count)
-    
+        self._account_system.record_operation(buyer_money_account,
+                                              buyer_security_account,
+                                              seller_money_account,
+                                              seller_security_account,
+                                              security,
+                                              price,
+                                              count,
+                                              self.version())
+
+    def version(self):
+        return '2'

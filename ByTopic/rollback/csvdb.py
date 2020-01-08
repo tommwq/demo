@@ -127,7 +127,6 @@ keyvalues: {key:value}
 
         self._sync_to_disk()
 
-
     def delete(self, conditions):
         self._rows = [row for row in self._rows if not self._make_filter(conditions).filter(row)]
         self._sync_to_disk()
@@ -155,6 +154,15 @@ op: > < = !=
         print(self._column_names)
         for row in self._rows.values():
             print(list(row))
+
+    def next_id(self):
+        
+        if 'id' in self._column_names:
+            id_list = [int(row['id']) for row in self._rows]
+            id_list.append(0)
+            return 1 + max(id_list)
+        else:
+            return 1 + len(self._rows)
         
 
 class Database(object):
@@ -218,8 +226,13 @@ class Repository(object):
             return None
         return rows[0]
 
-    def select_many(self, column, value):
-        return [Entity(**row) for row in self._table.select([(column,"=",value)])]
+    def select_many(self, column=None, value=None):
+        if not column:
+            conditions = []
+        else:
+            conditions = [(column,"=",value)]
+            
+        return [Entity(**row) for row in self._table.select(conditions)]
 
     def select_by_id(self, id):
         return self.select_one("id", id)
@@ -235,3 +248,9 @@ class Repository(object):
 
     def update(self, conditions, kv):
         self._table.update(conditions, kv)
+
+    def insert(self, record):
+        if 'id' in self._table._column_names and 'id' not in record:
+            record['id'] = self._table.next_id()
+            
+        self._table.insert(record)
