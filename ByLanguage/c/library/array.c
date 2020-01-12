@@ -64,7 +64,7 @@ void* array_get(const Array *array, uint32_t position) {
     return target;
 }
 
-void array_visit(Array *array, ElementVisitor visitor, void *parameter) {
+void array_visit(Array *array, Visitor visitor, void *parameter) {
     if (array == NULL) {
         panic();
     }

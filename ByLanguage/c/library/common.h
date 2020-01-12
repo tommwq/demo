@@ -8,7 +8,7 @@
 #include <string.h>
 #include <wchar.h>
 
-typedef void (*ElementVisitor)(void* element, void* parameter);
+typedef void (*Visitor)(void* element, void* parameter);
 
 #define panic() _panic(__FILE__, __LINE__)
 void _panic(const char *file, int line);
@@ -20,5 +20,17 @@ void _panic(const char *file, int line);
 #endif
 void _debug(const char *file, int line, const char *format, ...);
 
-#define create(t) malloc(sizeof(t))
+#define create(t) (t*) malloc(sizeof(t))
 #define delete(p) free(p)
+
+enum Boolean {
+    true = 0,
+    false
+};
+typedef enum Boolean Boolean;
+
+struct Buffer {
+    char* offset;
+    uint32_t size;
+};
+typedef struct Buffer Buffer;

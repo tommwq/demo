@@ -15,3 +15,4 @@ void _debug(const char *file, int line, const char *format, ...) {
     va_end(argument_list);
     fprintf(stderr, "\n");
 }
+

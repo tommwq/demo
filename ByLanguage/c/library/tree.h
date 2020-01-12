@@ -1,12 +1,14 @@
 #pragma once
 
-// TODO put to common.h
-typedef int (*ElementVisitor)(void *element, void *parameter);
-typedef unsigned int uint;
-
 struct Tree;
 typedef struct Tree Tree;
 
-Tree* tree_create(uint block_size, uint element_capacity);
+struct Tree_node;
+typedef struct Tree_node;
+
+Tree* tree_create();
 void tree_delete(Tree *tree);
-int tree_visit(Tree *tree, ElementVisitor visitor);
+void tree_visit(Tree *tree, Visitor visitor, void* parameter);
+
+void tree_insert(Tree* tree, Tree_node* parent, Tree_node* node);
+
