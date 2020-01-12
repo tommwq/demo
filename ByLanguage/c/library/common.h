@@ -34,3 +34,9 @@ struct Buffer {
     uint32_t size;
 };
 typedef struct Buffer Buffer;
+
+struct Pair {
+    void* first;
+    void* second;
+};
+typedef struct Pair Pair;

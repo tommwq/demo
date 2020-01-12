@@ -14,7 +14,7 @@ void list_insert(List *list, List_node *node);
 void list_remove(List *list, List_node *node);
 void list_visit(List *list, Visitor visitor, void* parameter);
 uint32_t list_length(const List *list);
-
+List_node* list_head(const List *list);
 
 List_node* list_node_create();
 void list_node_delete(List_node* node);

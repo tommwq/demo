@@ -12,6 +12,10 @@ struct Tree {
     Tree_node* root;
 };
 
+void tree_visit_pre_order(Tree_node *node, Visitor visitor, void* parameter);
+void tree_visit_in_order(Tree_node *node, Visitor visitor, void* parameter);
+void tree_visit_post_order(Tree_node *node, Visitor visitor, void* parameter);
+
 Tree* tree_create() {
     Tree* tree = create(Tree);
     if (tree != NULL) {
@@ -27,7 +31,24 @@ void tree_delete(Tree *tree) {
 }
 
 void tree_visit(Tree *tree, Visitor visitor, void* parameter, Tree_visit_order visit_order) {
-    // TODO
+
+    if (tree == NULL || visitor == NULL) {
+        panic();
+    }
+
+    switch (visit_order) {
+    case Pre_order:
+        tree_visit_pre_order(tree->root, visitor, parameter);
+        break;
+    case In_order:
+        tree_visit_in_order(tree->root, visitor, parameter);
+        break;
+    case Post_order:
+        tree_visit_post_order(tree->root, visitor, parameter);
+        break;
+    default:
+        break;
+    }
 }
 
 void tree_insert(Tree* tree, Tree_node* parent, Tree_node* node) {
@@ -73,3 +94,28 @@ void tree_node_set_value(Tree_node* node, Buffer buffer) {
     }
     node->buffer = buffer;
 }
+
+void tree_visit_pre_order(Tree_node *node, Visitor visitor, void* parameter) {
+    visitor(node->buffer.offset, parameter);
+    List_node* list_node = list_head(node->children);
+    while (list_node != NULL) {
+        Tree_node *tree_node = (Tree_node*) list_node_get_value(list_node).offset;
+        tree_visit_pre_order(tree_node, visitor, parameter);
+        list_node = list_node_next(list_node);
+    }
+}
+
+void tree_visit_in_order(Tree_node *node, Visitor visitor, void* parameter) {
+    panic();
+}
+
+void tree_visit_post_order(Tree_node *node, Visitor visitor, void* parameter) {
+    List_node* list_node = list_head(node->children);
+    while (list_node != NULL) {
+        Tree_node *tree_node = (Tree_node*) list_node_get_value(list_node).offset;
+        tree_visit_post_order(tree_node, visitor, parameter);
+        list_node = list_node_next(list_node);
+    }
+    visitor(node->buffer.offset, parameter);
+}
+

@@ -125,3 +125,10 @@ List_node* list_node_previous(const List_node* node) {
     return node->previous;
 }
 
+List_node* list_head(const List *list) {
+    if (list == NULL) {
+        panic();
+    }
+
+    return list->head;
+}
