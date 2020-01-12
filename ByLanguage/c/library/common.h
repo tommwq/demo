@@ -30,7 +30,7 @@ enum Boolean {
 typedef enum Boolean Boolean;
 
 struct Buffer {
-    char* offset;
+    void* offset;
     uint32_t size;
 };
 typedef struct Buffer Buffer;
