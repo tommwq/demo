@@ -1,7 +1,17 @@
 #include <stdio.h>
 
-int left_most_bit(unsigned int x) {
-    return x & 0x
+unsigned int left_most_bit(unsigned int x) {
+    // 假设x=0001010...，根据x构造y=0001111...，然后通过(y+1) >> 1得到结果。如果y+1=0，直接返回0x80000000。
+
+    unsigned int y = x;
+    y |= (y >> 1);
+    y |= (y >> 2);
+    y |= (y >> 4);
+    y |= (y >> 8);
+    y |= (y >> 16);
+
+    (y = (y + 1) >> 1) || (y = 0x80000000);
+    return y;
 }
 
 int main() {
