@@ -3,9 +3,10 @@
 
 #define VAR_WATCH() printf("nDividend=%d, nDivisor=%d, nResult=%d.\n", nDividend, nDivisor, nResult)
 
-int nDividend = 22, nDivisor = 0, nResult = 100;
+
 
 int main(int argc, char* argv[]) {
+    int nDividend = 22, nDivisor = 0, nResult = 100;
 
     __try {
         printf("Before div in __try block:");
