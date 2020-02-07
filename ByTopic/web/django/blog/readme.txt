@@ -8,5 +8,3 @@
 
 TODO
 1. CSRF
-2. 会话
-3. redirect

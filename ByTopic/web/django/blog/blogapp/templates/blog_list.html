@@ -9,7 +9,7 @@
     <hr/>
     <ul>
       {% for blog in blog_list %}
-      <li><a href="blog/{{ blog.id }}">{{ blog.title }}</a> {{ blog.publish_date }} </li>
+      <li><a href="{{ blog.id }}">{{ blog.title }}</a> {{ blog.publish_date }} </li>
       {% endfor %}
     </ul>
   </body>
