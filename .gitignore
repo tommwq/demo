@@ -12,3 +12,4 @@ target
 *.obj
 *.o
 __pycache__
+*.sqlite3
