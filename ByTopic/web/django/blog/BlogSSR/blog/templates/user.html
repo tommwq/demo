@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>{{ user.username }}</p>
+    <table>
+      <tr>
+        <th>TITLE</th>
+        <th>PUBLISH DATE</th>
+      </tr>
+      {% for blog in user.blog_set.all %}
+      <tr>
+        <td><a href="{% url 'blog_detail' blog.id %}">{{ blog.title }}</a></td>
+        <td>{{ blog.publish_date }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  <body>
+</html>

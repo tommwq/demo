@@ -18,3 +18,8 @@ class Session(object):
         del self._session[_USER_ID_KEY]
         del self._session[_USERNAME_KEY]
         
+    def user_id(self):
+        if self.is_logged_in():
+            return self._session[_USER_ID_KEY]
+        else:
+            return None
