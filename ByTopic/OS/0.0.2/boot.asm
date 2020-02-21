@@ -75,19 +75,15 @@ Error16:
 
 segment_descriptor_table:
     dw 0x18
-    dq $ + 8
+    dq BOOT_LOADER_ADDRESS + $ + 8
     
 null_segment_descriptor:    
     new_segment_descriptor 0, 0, 0, 0, 0, 0, 0, 0, 0
 code_segment_descriptor:    
-    ;; new_segment_descriptor 0, 0xFFFFFFFF, 10, 1, 1, 1, 1, 1, 1
-    dw 0xffff, 0x0000
-    db 0x0, 0x9a, 0xcf, 0x00
+    new_segment_descriptor 0, 0xFFFF, 7, 1, 1, 1, 0, 0, 1
 data_segment_descriptor:    
-    ;; new_segment_descriptor 0, 0xFFFFFFFF, 7, 1, 1, 1, 0, 1, 1
-    dw 0xffff, 0x0000
-    db 0x0, 0x92, 0xcf, 0x00
-    
+    new_segment_descriptor 0, 0xFFFF, 7, 1, 1, 1, 0, 0, 1
+
 Boot:   
     call ClearScreen16
 
@@ -108,34 +104,12 @@ Boot:
     push message_read_floppy
     call Print16
     add sp, 2
-
-    lgdt [segment_descriptor_table]
-
-    push message_load_gdt
-    call Print16
-    add sp, 2
-
-    in  al, 0x92
-    or  al, 0x02
-    out 0x92, al
-
-    push message_open_a20
-    call Print16
-    add sp, 2
     
-    cli
-
-    mov eax, cr0
-    or  eax, 0x01
-    mov cr0, eax
-    
-    jmp 0x08:KERNEL_ADDRESS
-    
+    jmp BootOver
 BootError:  
     call Error16
 BootOver:
-    nop
-    jmp BootOver
+    jmp KERNEL_ADDRESS
 
 message_startup:
     db 'Start up', 0x0a, 0x0d, 0x00
@@ -145,12 +119,6 @@ message_reset_floppy:
 
 message_read_floppy:
     db 'Read floppy', 0x0a, 0x0d, 0x00
-
-message_load_gdt:
-    db 'Load GDT', 0x0a, 0x0d, 0x00
-
-message_open_a20:
-    db 'Open A20', 0x0a, 0x0d, 0x00
 
 message_error:
     db 'ERROR', 0x0a, 0x0d, 0x00

@@ -28,3 +28,10 @@
     %endmacro
     
     
+
+    %define DATA_SEGMENT 0x07e0
+    %define BOOT_LOADER_ADDRESS 0x7c00
+    %define BOOT_STACK 0x2000
+    %define BOOT_SECTOR_TAIL 0xaa55
+    %define KERNEL_ADDRESS 0x7e00
+

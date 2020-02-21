@@ -7,10 +7,9 @@
     xor ax, ax
     mov ds, ax
     mov ss, ax
-    mov es, ax
     mov sp, BOOT_STACK
 
-    jmp Boot
+    jmp boot
 
     ;; ClearScreen16()
 ClearScreen16:
@@ -48,76 +47,34 @@ Print16_NextChar:
 Print16_Over:
     ret
 
-    ;; FloppyReset16()
-FloppyReset16:
-    mov ah, 0
-    mov dl, 0
-    int 0x13
-    ret
-
-    ;; ReadFloppy16()
-ReadFloppy16:
-    mov ah, 2
-    mov al, 1
-    mov ch, 0
-    mov cl, 2
-    mov dh, 0
-    mov dl, 0
-    mov bx, KERNEL_ADDRESS
-    int 0x13
-
-    ;; Error16()
-Error16:
-    push message_error
-    call Print16
-    add sp, 2
-    ret
-
 segment_descriptor_table:
     dw 0x18
-    dq $ + 8
+    dq BOOT_LOADER_ADDRESS + $ + 8
     
 null_segment_descriptor:    
     new_segment_descriptor 0, 0, 0, 0, 0, 0, 0, 0, 0
 code_segment_descriptor:    
-    ;; new_segment_descriptor 0, 0xFFFFFFFF, 10, 1, 1, 1, 1, 1, 1
-    dw 0xffff, 0x0000
-    db 0x0, 0x9a, 0xcf, 0x00
+    new_segment_descriptor 0, 0xFFFF, 7, 1, 1, 1, 0, 0, 1
 data_segment_descriptor:    
-    ;; new_segment_descriptor 0, 0xFFFFFFFF, 7, 1, 1, 1, 0, 1, 1
-    dw 0xffff, 0x0000
-    db 0x0, 0x92, 0xcf, 0x00
-    
-Boot:   
+    new_segment_descriptor 0, 0xFFFF, 7, 1, 1, 1, 0, 0, 1
+
+boot:   
     call ClearScreen16
 
     push message_startup
     call Print16
     add sp, 2
 
-    call FloppyReset16
-    jc BootError
-
-    push message_reset_floppy
-    call Print16
-    add sp, 2
-
-    call ReadFloppy16
-    jc BootError
-
-    push message_read_floppy
-    call Print16
-    add sp, 2
-
-    lgdt [segment_descriptor_table]
+    lgdt [BOOT_LOADER_ADDRESS + segment_descriptor_table]
 
     push message_load_gdt
     call Print16
     add sp, 2
 
-    in  al, 0x92
+    mov dx, 0x92
+    in  al, dx
     or  al, 0x02
-    out 0x92, al
+    out dx, al
 
     push message_open_a20
     call Print16
@@ -129,32 +86,43 @@ Boot:
     or  eax, 0x01
     mov cr0, eax
     
-    jmp 0x08:KERNEL_ADDRESS
+    jmp 0x0040:pe_entry
+
+    bits 32
+
+    ;; Print32(char *s)
+Print32:
+    mov esi, [esp+2]
+    mov ah, 0x0e
+    mov bh, 0x00
+    mov bl, 0x01
+Print32_NextChar:
+    mov al, [si]
+    xor al, 0x00
+    jz Print32_Over
+    int 0x10
+    inc si
+    jmp Print32_NextChar
+Print32_Over:
+    ret
     
-BootError:  
-    call Error16
-BootOver:
-    nop
-    jmp BootOver
+pe_entry:
+
+    push message_switch_pe
+    call Print32
+    add esp, 2
+    
+    hlt
 
 message_startup:
     db 'Start up', 0x0a, 0x0d, 0x00
-
-message_reset_floppy:
-    db 'Reset floppy', 0x0a, 0x0d, 0x00
-
-message_read_floppy:
-    db 'Read floppy', 0x0a, 0x0d, 0x00
-
 message_load_gdt:
     db 'Load GDT', 0x0a, 0x0d, 0x00
-
+message_switch_pe:
+    db 'Switch PE', 0x0a, 0x0d, 0x00
 message_open_a20:
     db 'Open A20', 0x0a, 0x0d, 0x00
 
-message_error:
-    db 'ERROR', 0x0a, 0x0d, 0x00
-    
     times 510 - ($ - $$) db 0
     dw 0xaa55                   
     
