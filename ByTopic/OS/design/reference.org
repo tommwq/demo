@@ -1,0 +1,13 @@
+
+* VESA
+http://www.monstersoft.com/tutorial1/VESA_intro.html
+http://www.stanislavs.org/helppc/int_10.html
+http://www.stanislavs.org/helppc/int_13.html
+https://wiki.osdev.org/User:Omarrx024/VESA_Tutorial
+
+* 操作系统
+http://independent-software.com/operating-system-development.html
+
+* FAT32
+https://www.pjrc.com/tech/8051/ide/fat32.html
+https://www.ntfs.com/fat-32structure.htm
