@@ -1,0 +1,56 @@
+# -*- mode: org -*-
+
+#+startup: showeverything
+#+options: ^:nil
+#+todo: todo(t) in-action(i@/!) wait(w@/!) | done(d@/!) canceled(c@/!)
+
+#+title: todo
+#+date: 2020年02月22日
+
+
+* done 打印各加载阶段。
+* done 从磁盘加载kernel并跳转。
+* done 进入保护模式。
+* done 调用C。
+* 管理和构建。
+** todo 建立git仓库。
+** todo 编写Makefile。
+* 启动。
+** todo 读软盘中读取多个扇区。
+* 安装。
+** todo 安装到硬盘。
+* 系统。
+** todo 切换到实模式。
+** todo 重新设计内存布局。
+** todo 增加虚拟内存。
+** todo 增加分页。
+** todo 设计文件系统。
+** todo 增加进程调度。
+** todo 编写创建GDT和LDT的宏。
+** todo 设置IVT。
+* 设备。
+** todo 支持鼠标。
+** todo 支持键盘。
+** todo 支持U盘。
+* 界面。
+** todo 进入图形模式。
+** todo 绘制窗口。
+* 应用。
+** todo 文件管理器。
+** todo 文本编辑器。
+** todo 编译器。
+** todo 数据库。
+** todo 网页浏览器。
+** todo 计算器。
+** todo 任务管理器。
+* 库。
+** todo c库。
+
+
+
+* 参考
+http://www.monstersoft.com/tutorial1/VESA_intro.html
+http://www.stanislavs.org/helppc/int_10.html
+http://www.stanislavs.org/helppc/int_13.html
+https://wiki.osdev.org/User:Omarrx024/VESA_Tutorial
+

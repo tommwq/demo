@@ -23,6 +23,7 @@ Print:
     mov byte [edi + 6], 'N'
     mov byte [edi + 8], 'E'
     mov byte [edi + 10], 'L'
+    mov byte [edi + 12], 0x00
     ret
 
 KernelEntry:   
