@@ -1,0 +1,1 @@
+public class ConstantInfoBodyParser_Class extends ConstantInfoBodyParser_String {}

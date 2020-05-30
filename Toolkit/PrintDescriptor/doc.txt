@@ -1,0 +1,10 @@
+use case:
+1. User input a hexadecimal and descriptor type，program display descriptor's structure and it's fields' value.
+2. User input a descriptor type, then input every field's value, program generate a hexadecimal.
+
+design:
+1. Support task gate, interupt gate, trap gate, p193, segment descriptor p91
+2. Support ia32, x86.
+
+usage:
+  dptool.exe task_gate 0x12345678 0x12345678

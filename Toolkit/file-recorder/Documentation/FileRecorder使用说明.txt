@@ -1,0 +1,25 @@
+FileRecorder使用说明
+
+* 简介
+
+FileRecorder用于记录和回放文件变化。
+
+* 用法
+
+** 记录文件变化
+
+FileRecorder -watch FILE -save-to OUTPUT_FILE -record-time SECONDS
+
+监控文件FILE，将变化记录到文件OUTPUT_FILE，持续记录SECONDS秒。
+
+** 回放文件变化
+
+FileRecorder -record RECORD_FILE -replay-path FILE
+
+回放RECORD_FILE文件中记录的内容，输出到FILE文件。
+
+* 记录文件格式
+
+[启动时间戳/i64]
+[[时间偏移量/i64][长度/i32][内容/binary] ...]
+

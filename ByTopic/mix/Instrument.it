@@ -1,0 +1,84 @@
+
+namespace mix {
+
+    inline Byte Instrument::get_index() const {
+        return get_byte(3);
+    }
+
+    inline Byte Instrument::get_field() const {
+        return get_byte(4);
+    }
+
+    inline Byte Instrument::get_code() const {
+        return get_byte(5);
+    }
+
+    inline std::uint32_t Instrument::locate(const Machine& machine) const {
+        long base_address = 0;
+        
+        std::uint8_t index = get_index().to_unsigned();
+        if (index > 0 && index < 6) {
+            base_address = machine.get_ri(index).to_long();
+        }
+
+        long address = base_address + get_address().to_long();
+        if (address < 0) {
+            throw std::runtime_error("invalid memory address");
+        }
+
+        return static_cast<std::uint32_t>(address);
+    }
+
+    inline Word Instrument::get_address() const {
+        Word address;
+        if (is_negative()) {
+            address.set_negative();
+        }
+                
+        address.set_byte(4, get_byte(1));
+        address.set_byte(5, get_byte(2));
+        return address;
+    }
+
+    inline Word Instrument::load(const Machine& machine) const {
+        Word value = machine.read_memory(locate(machine));
+        std::uint8_t left = Field::get_left(get_field().to_unsigned());
+        std::uint8_t right = Field::get_right(get_field().to_unsigned());
+
+        if (left == 0) {
+            left++;
+        }
+        
+        Word result;
+        for (std::uint8_t pos = right; pos >= left; pos--) {
+            result.set_byte(5 + pos - right, value.get_byte(pos));
+        }
+
+        if (value.is_negative()) {
+            result.set_negative();
+        }
+
+        return result;
+    }
+
+    inline void Instrument::store(Machine& machine, const Word& value) const {
+
+        std::uint32_t address = locate(machine);
+        Word result = machine.read_memory(address);
+        
+        std::uint8_t left = Field::get_left(get_field().to_unsigned());
+        std::uint8_t right = Field::get_right(get_field().to_unsigned());
+
+        if (left == 0) {
+            value.is_positive() ? result.set_positive() : result.set_negative();
+            left++;
+        }
+
+        for (std::uint8_t pos = left; pos <= right; pos++) {
+            result.set_byte(pos, value.get_byte(5 - right + pos));
+        }
+
+        machine.write_memory(address, result);
+    }
+
+}

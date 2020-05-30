@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <form action="/blog/post" method="POST">
+      {% csrf_token %}
+      <p>标题</p>
+      <input type='text' name='title'/>
+      <p>内容</p>
+      <textarea name='content'></textarea>
+      <input type='submit' value='提交'/>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="component.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <simple-input v-on:create-industry-command="createIndustry"
+                    title="行业"
+                    buttontext="添加"
+                    eventname="create-industry-command" />
+    </div>
+
+    <script src="edit.js"></script>
+  </body>
+</html>

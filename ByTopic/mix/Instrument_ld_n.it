@@ -1,0 +1,18 @@
+
+namespace mix {
+    template<int Index>
+    void Instrument_ld_n<Index>::execute(Machine& machine) const {
+        Word result = load(machine);
+        if (Field::get_left(get_field().to_unsigned()) == 0) {
+            result.flip_sign();
+        } else {
+            result.set_positive();
+        }
+        
+        result.get_byte(1).clear();
+        result.get_byte(2).clear();
+        result.get_byte(3).clear();
+
+        machine.get_ri(Index) = result;
+    }
+}

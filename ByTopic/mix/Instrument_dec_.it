@@ -1,0 +1,7 @@
+namespace mix {
+    template<int Index>
+    void Instrument_dec_<Index>::execute(Machine& machine) const {
+        Word& ri = machine.get_ri(Index);
+        ri.assign(ri.to_long() - 1);
+    }
+}

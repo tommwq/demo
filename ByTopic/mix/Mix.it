@@ -1,0 +1,6 @@
+namespace mix {
+    inline Machine Mix::make_snapshot() const {
+        Machine snapshot = this->machine;
+	return snapshot;
+    }
+}

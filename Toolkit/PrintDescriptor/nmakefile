@@ -1,0 +1,13 @@
+
+print_descriptor.exe: main.c descriptor.c
+	$(CXX) /Fe$@ $**
+
+clean:
+	del *.obj *.exe
+
+test: clean print_descriptor.exe
+	print_descriptor.exe task_gate 0x0000e500 0x4d20000
+	print_descriptor.exe interrupt_gate 0x00000E00 0x4d20003
+	print_descriptor.exe trap_gate 0x00000F00 0x4d20003
+	print_descriptor.exe segment_descriptor 0x00000F00 0x4d20003
+	print_descriptor.exe segment_descriptor 0x00CF9200 0x0000FFFF

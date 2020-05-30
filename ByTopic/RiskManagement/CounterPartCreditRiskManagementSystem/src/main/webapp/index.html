@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <span>Counterpart</span>
+      <table>
+        <tr>
+          <th>counterpart</th>
+          <th>rate</th>
+        </tr>
+        <tr v-for="counterpart in counterpartList">
+          <td>{{counterpart.name}}</td>
+          <td>{{counterpart.rate}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="newCounterpartApp">
+      名字
+      类型
+      
+    </div>
+    
+    <script src="index.js"></script>
+  </body>
+</html>

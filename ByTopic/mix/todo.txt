@@ -1,0 +1,5 @@
+增加pch。
+支持将mix状态保存到文件，或从文件恢复。
+将使用std::uint8_t表示的field改换为Field类。
+学习https://github.com/gtryf/MIXWare/blob/master/src/MIXLib/Machine.cs。
+

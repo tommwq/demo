@@ -1,0 +1,65 @@
+
+objects=Byte.obj Word.obj Instrument.obj Mix.obj Simulator.obj Mix_instrument_set.obj Instrument_ld_.obj Instrument_ld_n.obj Instrument_st_.obj Instrument_add.obj Instrument_sub.obj Instrument_mul.obj Instrument_div.obj Instrument_ent_.obj Instrument_enn_.obj Instrument_inc_.obj Instrument_dec_.obj Instrument_cmp_.obj Instrument_jmp_.obj Instrument_move.obj Instrument_nop.obj Instrument_sla.obj Instrument_sra.obj Instrument_slax.obj Instrument_srax.obj Instrument_slc.obj Instrument_src.obj Instrument_hlt.obj Instrument_io_.obj Instrument_num.obj Instrument_char.obj
+
+assembler_objects=Byte.obj Word.obj Assembler.obj Token.obj Source_file.obj Source_line.obj Token_type.obj
+
+unittests=Byte_test.exe Word_test.exe Instrument_ld__test.exe Instrument_st__test.exe Instrument_add_test.exe Instrument_sub_test.exe Instrument_mul_test.exe Instrument_div_test.exe Instrument_sla_test.exe
+
+all: Simulator.exe Assembler.exe
+
+Simulator.exe: $(objects)
+	$(CXX) /Fe$@ $**
+
+Assembler.exe: $(assembler_objects)
+	$(CXX) /Fe$@ $**
+
+.cc.obj:
+	$(CXX) /c /EHsc $? 
+
+clean:
+	del *.obj *.exe
+
+test_assembler: Assembler.exe
+	Assembler.exe maximum.mixal 
+
+unittest: $(unittests)
+	Byte_test.exe
+	Word_test.exe
+	Instrument_ld__test.exe
+	Instrument_st__test.exe
+	Instrument_add_test.exe
+	Instrument_sub_test.exe
+	Instrument_mul_test.exe
+	Instrument_div_test.exe
+	Instrument_sla_test.exe
+
+Byte_test.exe: Byte_test.cc Byte.cc unittest.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Word_test.exe: Word_test.cc Word.cc unittest.cc Byte.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_ld__test.exe: Instrument_ld__test.cc Instrument.cc unittest.cc Byte.cc Instrument_ld_.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_st__test.exe: Instrument_st__test.cc Instrument.cc unittest.cc Byte.cc Instrument_st_.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_add_test.exe: Instrument_add_test.cc Instrument.cc unittest.cc Byte.cc Instrument_add.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_sub_test.exe: Instrument_sub_test.cc Instrument.cc unittest.cc Byte.cc Instrument_sub.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_mul_test.exe: Instrument_mul_test.cc Instrument.cc unittest.cc Byte.cc Instrument_mul.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_div_test.exe: Instrument_div_test.cc Instrument.cc unittest.cc Byte.cc Instrument_div.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_sla_test.exe: Instrument_sla_test.cc Instrument.cc unittest.cc Byte.cc Instrument_sla.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+
+Instrument_sra_test.exe: Instrument_sra_test.cc Instrument.cc unittest.cc Byte.cc Instrument_sra.cc Word.cc
+	$(CXX) /EHsc /Fe$@ $**
+

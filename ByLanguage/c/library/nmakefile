@@ -1,0 +1,23 @@
+
+all: common.obj unicode_string.obj
+
+test: unicode_string_test.exe array_test.exe list_test.exe
+	unicode_string_test.exe
+	array_test.exe
+	list_test.exe
+
+clean:
+	del *.obj *.exe
+
+.c.obj:
+	$(CC) /c $*
+
+unicode_string_test.exe: unicode_string_test.c unicode_string.c common.c
+	$(CC) /Fe$@ $**
+
+array_test.exe: array.c array_test.c common.c
+	$(CC) /Fe$@ $**
+
+list_test.exe: list.c list_test.c common.c
+	$(CC) /Fe$@ $**
+

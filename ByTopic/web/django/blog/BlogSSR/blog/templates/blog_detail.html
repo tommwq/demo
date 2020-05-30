@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+
+    <p>{{ blog.title }}</p>
+    <p>{{ blog.author.username }}</p>
+    <p>{{ blog.publish_date }}</p>
+    <p>{{ blog.content }}</p>
+
+    <p>评论</p>
+    {% for comment in blog.comment_set.all %}
+
+    <p>{{ comment.author.username }}</p>
+    <p>{{ comment.publish_date }}</p>
+    <p>{{ comment.content }}</p>
+    
+    {% endfor %}
+
+    <form action="/blog/{{ blog.id }}/comment" method="POST">
+      {% csrf_token %}
+      <p>发表评论</p>
+      <input type="text" name="content"/>
+      <input type="text" hidden="true" name="title" value=""/>
+      <input type="submit" value="提交"/>
+    </form>
+    
+  </body>
+</html>

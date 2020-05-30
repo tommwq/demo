@@ -1,0 +1,7 @@
+{
+    "proxyPort": 1081,
+    "serverHost": "127.0.0.1",
+    "serverPort": 1080,
+    "logFile": "DebugProxy.log",
+    "logLevel": "debug"
+}

@@ -1,0 +1,110 @@
+namespace mix {
+    inline Word& Machine::get_ra() {
+        return ra;
+    }
+
+    inline Word& Machine::get_rx() {
+        return rx;
+    }
+
+    inline Word& Machine::get_rj() {
+        return rj;
+    }
+
+    inline Word& Machine::get_ri(std::uint8_t index) {
+        if (index <= 0 || index > 6) {
+            throw std::runtime_error("invalid registry");
+        }
+        
+        return ri[index - 1];
+    }
+
+    inline bool Machine::is_overflow() const {
+        return overflow_toggle.is_on();
+    }
+
+    inline bool Machine::is_less() const {
+        return compare_indicator.is_less();
+    }
+
+    inline bool Machine::is_greater() const {
+        return compare_indicator.is_greater();
+    }
+
+    inline bool Machine::is_equal() const {
+        return compare_indicator.is_equal();
+    }
+
+    inline const Toggle& Machine::get_overflow_toggle() const {
+        return overflow_toggle;
+    }
+    
+    inline Toggle& Machine::get_overflow_toggle() {
+        return overflow_toggle;
+    }
+    
+    inline const Indicator& Machine::get_compare_indicator() const {
+        return compare_indicator;
+    }
+
+    inline Indicator& Machine::get_compare_indicator() {
+        return compare_indicator;
+    }
+
+    inline void Machine::check_memory_address(std::uint32_t real_address) const {
+        if (real_address >= memory.size()) {
+            throw std::runtime_error("invalid address");
+        }
+    }
+
+    inline Word Machine::read_memory(std::uint32_t real_address) const {
+        check_memory_address(real_address);
+        return memory[real_address - 1];
+    }
+    
+    inline void Machine::write_memory(std::uint32_t real_address, const Word& value) {
+        check_memory_address(real_address);
+        memory[real_address - 1] = value;
+    }
+
+    inline void Machine::reset() {
+        ra.clear();
+        rx.clear();
+        rj.clear();
+        for (auto& r: ri) {
+            r.clear();
+        }
+        overflow_toggle.turn_off();
+        compare_indicator.turn_equal();
+        memory.fill(Word{1, 0, 0, 0, 0});
+    }
+
+
+    inline const Word& Machine::get_ra() const {
+        return ra;
+    }
+
+    inline const Word& Machine::get_rx() const {
+        return rx;
+    }
+
+    inline const Word& Machine::get_rj() const {
+        return rj;
+    }
+    
+    inline const Word& Machine::get_ri(std::uint8_t index) const {
+        if (index <= 0 || index > 6) {
+            throw std::runtime_error("invalid registry");
+        }
+        
+        return ri[index - 1];
+    }
+
+    inline std::uint32_t& Machine::get_program_counter() {
+        return program_counter;
+    }
+
+    inline std::shared_ptr<Device> Machine::get_device(std::uint8_t device_number) {
+        return devices.at(device_number);
+    }
+}
