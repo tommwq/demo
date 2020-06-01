@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+
+    <a href="{% url 'blog_edit' %}">发表博客</a>
+
+    <form action="/user/login" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="is_logout" value="true"/>
+      <input type="submit" name="submit" value="退出登录"/>
+    </form>
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>TITLE</th>
+        <th>AUTHOR</th>
+        <th>PUBLISH DATE</th>
+      </tr>
+      {% for blog in blog_list %}
+      <tr>
+        <td>{{ blog.id }}</td>
+        <td><a href="{% url 'blog_detail' blog.id %}">{{ blog.title }}</td>
+        <td><a href="{% url 'user' blog.author.id %}">{{ blog.author.username }}</a></td>
+        <td>{{ blog.publish_date }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    
+  </body>
+</html>

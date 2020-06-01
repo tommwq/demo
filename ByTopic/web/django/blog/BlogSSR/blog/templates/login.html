@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <form method="POST" action="/user/login">
+      {% csrf_token %}
+      <span>用户</span>
+      <input type="text" name="username" value=""/>
+      <span>密码</span>
+      <input type="text" name="password" value=""/>
+      注册
+      <input type="checkbox" name="is_register" checked="false"/>
+      <input type="submit" name="submit" value="提交"/>
+    </form>
+  </body>
+</html>
