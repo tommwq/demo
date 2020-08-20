@@ -1,0 +1,1 @@
+Build.cmd && Run.cmd
