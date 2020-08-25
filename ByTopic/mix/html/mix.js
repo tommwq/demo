@@ -99,13 +99,29 @@ class SignBit {
 }
 
 // 寄存器
-class MixRegister {
+class Register {
     constructor() {
         this.signBit = new SignBit();
         this.word = new Word();
     }
 }
 
+// 地址寄存器
+class AddressRegister extends Register {
+}
+
 class MixMachine {
-    
+    constructor() {
+        this.registerA = new Register();
+        this.registerX = new Register();
+        this.registerI = new Array(
+            new AddressRegister(),
+            new AddressRegister(),
+            new AddressRegister(),
+            new AddressRegister(),
+            new AddressRegister(),
+            new AddressRegister()
+        );
+        this.registerJ = new AddressRegister();
+    }
 }
