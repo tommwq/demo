@@ -1,0 +1,1 @@
+纯Java读取resources目录下的application.properties。
