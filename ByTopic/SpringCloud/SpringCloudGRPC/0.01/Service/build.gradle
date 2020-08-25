@@ -1,0 +1,63 @@
+plugins {
+    id 'application'
+    id 'com.google.protobuf' version '0.8.8'
+}
+
+group 'springcloudgrpc'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+mainClassName = 'App'
+
+repositories {
+    maven {
+        url 'http://maven.aliyun.com/nexus/content/groups/public'
+    }
+
+    mavenCentral()
+}
+
+def grpcVersion = '1.28.0'
+def protobufVersion = '3.11.0'
+def protocVersion = protobufVersion
+
+dependencies {
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+
+    runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protocVersion}"
+    }
+
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+
+        proto {
+            srcDirs '../Protocol'
+        }
+    }
+}
