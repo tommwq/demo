@@ -1,5 +1,7 @@
 // OP ADDRESS, I(F)
 
+// TODO put Instrument to common.js
+
 class Instrument {
     constructor(operator, address, index, field) {
         this.operator = operator;

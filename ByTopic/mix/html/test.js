@@ -48,8 +48,18 @@ for (let testCase of testCaseList) {
     let text = testCase.text;
     let instrument = testCase.instrument;
     let actural = compiler.compile(text);
-    console.log(instrument, actural);
+    // console.log(instrument, actural);
     assertTrue(instrument.equal(actural));
 }
+
+let mix = new MixMachine();
+let value = Word.create(-80, 3, 5, 4);
+let address = 2000;
+mix.writeMemory(address, value);
+let inst = new Instrument(8,2000,0,5);
+mix.execute(inst);
+let result = mix.registerA().get();
+
+assertTrue(result.equal(value));
 
 console.log("test passed");

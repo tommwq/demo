@@ -1,3 +1,5 @@
+// TODO 规范get方法名
+
 const InvalidValueError = "invalid value"
 const ByteMin = 0;
 const ByteMax = 63;
@@ -64,6 +66,10 @@ class SignBit {
     setNegative() {
         this.is_positive = false;
     }
+
+    equal(other) {
+        return this.is_positive == other.is_positive;
+    }
 }
 
 // 位描述符
@@ -95,6 +101,25 @@ class Word {
         if (value != null) {
             this.set(value);
         }
+    }
+
+    static create(address, index, field, code) {
+        let word = new Word();
+        if (address < 0) {
+            word.setNegative();
+            address = -1 * address;
+        }
+
+        word.setByte(1, new Byte(address / 64));
+        word.setByte(2, new Byte(address % 64));
+        word.setByte(3, new Byte(index));
+        word.setByte(4, new Byte(field));
+        word.setByte(5, new Byte(code));
+        return word;
+    }
+
+    equal(other) {
+        return this.value == other.value && this.sign.equal(other.sign);
     }
     
     set(value) {
@@ -151,9 +176,9 @@ class Register {
 class AddressRegister extends Register {
     set(word) {
         let copy = new Word(word.get());
-        copy.setByte(3, 0);
-        copy.setByte(4, 0);
-        copy.setByte(5, 0);
+        copy.setByte(3, new Byte(0));
+        copy.setByte(4, new Byte(0));
+        copy.setByte(5, new Byte(0));
         this.word = copy;
     }
 
@@ -244,7 +269,27 @@ class MixMachine {
         for (let index = 0; index <= MemorySize; index++) {
             this.memory.push(new Word());
         }
-
         // TODO 外设 U0 ~ U20
+    }
+
+    registerA() {
+        return this.register_a;
+    }
+
+    writeMemory(offset, word) {
+        this.memory[offset] = word;;
+    }
+
+    readMemory(offset) {
+        return this.memory[offset];
+    }
+
+    execute(instrument) {
+        switch (instrument.operator) {
+        case 8:
+            let operand = this.readMemory(instrument.address);
+            this.register_a.set(operand);
+            break;
+        }
     }
 }
