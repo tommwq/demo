@@ -1,4 +1,4 @@
-// TODO 规范get方法名
+// TODO 规范get方法名，改为value()。
 
 const InvalidValueError = "invalid value"
 const ByteMin = 0;
@@ -21,6 +21,7 @@ function checkValue(value, min, max, error) {
     }
     
     if (value < min || value > max) {
+        console.debug(value, min, max);
         throw e;
     }
 }
@@ -72,7 +73,7 @@ class SignBit {
     }
 }
 
-// 位描述符
+// 位描述符 TODO 是否保留？
 class FieldDescriptor {
     constructor(value) {
         this.left_byte = value / 8;
@@ -101,6 +102,23 @@ class Word {
         if (value != null) {
             this.set(value);
         }
+    }
+
+    print() {
+        let text = [this.sign.isPositive() ? '+' : '-'];
+        for (let i = ByteFieldMin; i <= ByteFieldMax; i++) {
+            text.push(this.getByte(i).get());
+        }
+        return text.join(' ');
+    }
+
+    static copy(word) {
+        let result = new Word();
+        result.set(word.get());
+        if (word.sign.isNegative()) {
+            result.sign.setNegative();
+        }
+        return result;
     }
 
     static create(address, index, field, code) {
@@ -145,8 +163,9 @@ class Word {
     getByte(field) {
         checkValue(field, ByteFieldMin, ByteFieldMax);
         let byteOffset = (ByteFieldMax - field) * ByteBits;
-        let mask = (~0) << ByteBits;
-        return Byte((this.value >>> byteOffset) & mask);
+        let mask = ~((~0) << ByteBits);
+        let byte = new Byte((this.value >>> byteOffset) & mask);
+        return byte;
     }
 
     setByte(field, mixByte) {
@@ -273,21 +292,41 @@ class MixMachine {
     }
 
     registerA() {
-        return this.register_a;
+        return Word.copy(this.register_a.get());
     }
 
     writeMemory(offset, word) {
-        this.memory[offset] = word;;
+        this.memory[offset] = Word.copy(word);
     }
 
     readMemory(offset) {
-        return this.memory[offset];
+        return Word.copy(this.memory[offset]);
+    }
+
+    static adjustWordByField(word, left, right) {
+        let result = new Word();
+        if (left == 0) {
+            if (word.sign.isNegative()) {
+                result.sign.setNegative();
+            }
+            left++;
+        }
+
+        for (let i = left; i <= right; i++) {
+            let byte = word.getByte(i);
+            result.setByte(5 + i - right, byte);
+        }
+
+        return result;
     }
 
     execute(instrument) {
         switch (instrument.operator) {
         case 8:
             let operand = this.readMemory(instrument.address);
+            let left = Math.floor(instrument.field / 8);
+            let right = instrument.field % 8;
+            operand = MixMachine.adjustWordByField(operand, left, right);
             this.register_a.set(operand);
             break;
         }

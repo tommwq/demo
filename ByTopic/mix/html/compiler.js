@@ -2,6 +2,7 @@
 
 // TODO put Instrument to common.js
 
+// mix指令
 class Instrument {
     constructor(operator, address, index, field) {
         this.operator = operator;
@@ -19,6 +20,7 @@ class Instrument {
     }
 }
 
+// TODO 提取和TokenSequence相似的部分，做成基类。
 class Reader {
     constructor(str) {
         this.offset = 0;
