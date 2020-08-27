@@ -57,11 +57,14 @@ class Reader {
             ch = this.getChar();
         }
 
-        if (token == '') {
+        if (this.isEOL() && !this.isSeparator(ch)) {
+            token = token + ch;
+        } else if (token == '') {
             token = ch;
         } else {
             this.ungetChar();
         }
+        
         return token;
     }
 
@@ -77,6 +80,30 @@ class Reader {
 
     ungetChar() {
         this.offset--;
+    }
+}
+
+class TokenSequence {
+    constructor(tokens) {
+        this.tokens = tokens;
+        this.position = 0;
+    }
+
+    next() {
+        if (this.isOver()) {
+            throw 'token sequence overflow'; 
+        }
+        let t =  this.tokens[this.position];
+        this.position++;
+        return t
+    }
+
+    back() {
+        this.position--;
+    }
+
+    isOver() {
+        return this.position >= this.tokens.length;
     }
 }
 
@@ -99,14 +126,38 @@ class Compiler {
         let index = 0;
         let field = 0;
 
-        inst = this.translateInstrument(tokens[0]);
-        addr = parseInt(tokens[1]);
-        index = parseInt(tokens[3]);
-        let left = parseInt(tokens[5]);
-        let right = parseInt(tokens[7]);
+        let seq = new TokenSequence(tokens);
+        inst = this.translateInstrument(seq.next());
+        addr = parseInt(seq.next());
 
-        field = left * 8 + right;
+        if (!seq.isOver()) {
+            let t = seq.next();
+            if (t == ',') {
+                index = parseInt(seq.next());
+            } else if (t == '(') {
+                seq.back();
+            } else {
+                console.log(tokens);
+                throw 'syntax error 1';
+            }
+        }
+
+        let left = 0;
+        let right = 5;
+        if (!seq.isOver()) {
+            let t = seq.next();
+            if (t == '(') {
+                left = parseInt(seq.next());
+                if (seq.next() != ':') {
+                    throw 'syntax error 2';
+                }
+                right = parseInt(seq.next());
+            } else {
+                throw 'syntax error 3';
+            }
+        }
         
+        field = left * 8 + right;
         return new Instrument(inst, addr, index, field);
     }
 
