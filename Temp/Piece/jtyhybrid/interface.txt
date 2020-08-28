@@ -1,0 +1,9 @@
+clearCache
+terminateApp
+changeCacheMode
+cacheMode
+updateAttribute
+sendDataGram
+log
+reportDeviceInformation
+

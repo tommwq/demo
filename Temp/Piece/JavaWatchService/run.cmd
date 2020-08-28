@@ -1,0 +1,1 @@
+javac WatchFileSystem.java && java WatchFileSystem
