@@ -1,14 +1,29 @@
+// 错误
 const InvalidValueError = "invalid value"
+
+// 数据类型定义
 const ByteMin = 0;
 const ByteMax = 63;
 const ByteBits = 6;
 const WordMin = 0;
 const WordMax = 1073741823;
 const WordBits = 30;
+const ByteFieldMin = 1;
+const ByteFieldMax = 5;
+
+// 常量
 const Zero = 0;
-const ByteFieldMin = 1
-const ByteFieldMax = 5
-const MemorySize = 4000
+const MemorySize = 4000;
+
+// 指令
+const LDA = 8;
+const LD1 = 9;
+const LD2 = 10;
+const LD3 = 11;
+const LD4 = 12;
+const LD5 = 13;
+const LD6 = 14;
+const LDX = 15;
 
 
 // 检查值value是否大于min且小于max。
@@ -329,7 +344,7 @@ class MixMachine {
 
     execute(instrument) {
         switch (instrument.operator) {
-        case 8:
+        case LDA:
             let operand = this.readMemory(instrument.address);
             let left = Math.floor(instrument.field / 8);
             let right = instrument.field % 8;
