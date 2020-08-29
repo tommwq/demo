@@ -1,5 +1,5 @@
 // 错误
-const InvalidValueError = "invalid value"
+const InvalidValueError = "invalid value";
 
 // 数据类型定义
 const ByteMin = 0;
@@ -38,7 +38,7 @@ function checkValue(value, min, max, error) {
         throw e;
     }
 }
- 
+
 
 // 字节
 class Byte {
@@ -222,10 +222,6 @@ class AddressRegister extends Register {
         copy.assignByte(5, new Byte(0));
         this.word = copy;
     }
-
-    // get() {
-    //     return this.word;
-    // }
 }
 
 // 地址转移寄存器
@@ -293,9 +289,9 @@ class Indicator {
 // MIX机器
 class MixMachine {
     constructor() {
-        this.register_a = new Register();
-        this.register_x = new Register();
-        this.register_i = new Array(
+        this._rA = new Register();
+        this._rX = new Register();
+        this._rI = new Array(
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister(),
@@ -313,8 +309,16 @@ class MixMachine {
         // TODO 外设 U0 ~ U20
     }
 
-    registerA() {
-        return this.register_a.get();
+    rA() {
+        return this._rA.get();
+    }
+
+    rX() {
+        return this._rA.get();
+    }
+
+    rI(index) {
+        return this._rI[i - 1].get();
     }
 
     writeMemory(offset, word) {
@@ -342,14 +346,43 @@ class MixMachine {
         return result;
     }
 
+    _load(register, instrument) {
+        let operand = this.readMemory(instrument.address);
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let result = MixMachine.adjustWordByField(operand, left, right);
+        register.set(result);
+    }
+
     execute(instrument) {
+        let operand;
+        let left;
+        let right;
+        
         switch (instrument.operator) {
         case LDA:
-            let operand = this.readMemory(instrument.address);
-            let left = Math.floor(instrument.field / 8);
-            let right = instrument.field % 8;
-            operand = MixMachine.adjustWordByField(operand, left, right);
-            this.register_a.set(operand);
+            this._load(this._rA, instrument);
+            break;
+        case LD1:
+            this._load(this._rI[0], instrument);
+            break;
+        case LD2:
+            this._load(this._rI[1], instrument);
+            break;
+        case LD3:
+            this._load(this._rI[2], instrument);
+            break;
+        case LD4:
+            this._load(this._rI[3], instrument);
+            break;
+        case LD5:
+            this._load(this._rI[4], instrument);
+            break;
+        case LD6:
+            this._load(this._rI[5], instrument);
+            break;
+        case LDX:
+            this._load(this._rX, instrument);
             break;
         }
     }
