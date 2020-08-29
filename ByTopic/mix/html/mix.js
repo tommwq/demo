@@ -363,7 +363,7 @@ class AddressRegister extends Register {
         copy.assignByte(3, new Byte(0));
         copy.assignByte(4, new Byte(0));
         copy.assignByte(5, new Byte(0));
-        this.word = copy;
+        this._word = copy;
     }
 }
 
@@ -371,7 +371,7 @@ class AddressRegister extends Register {
 class TransferAddressRegister extends AddressRegister {
     set(word) {
         super.set(word);
-        this.word.sign.setPositive();
+        this._word._sign.setPositive();
     }
 }
 
@@ -442,7 +442,7 @@ class MixMachine {
             new AddressRegister(),
             new AddressRegister()
         );
-        this.register_j = new TransferAddressRegister();
+        this._rJ = new TransferAddressRegister();
         this.compare_indicator = new Indicator();
         this.overflow_toggle = new Toggle();
         this.memory = new Array();
@@ -453,15 +453,19 @@ class MixMachine {
     }
 
     rA() {
-        return this._rA.get();
+        return this._rA;
     }
 
     rX() {
-        return this._rA.get();
+        return this._rX;
     }
 
     rI(index) {
-        return this._rI[i - 1].get();
+        return this._rI[i - 1];
+    }
+
+    rJ() {
+        return this._rJ;
     }
 
     writeMemory(offset, word) {
@@ -504,6 +508,26 @@ class MixMachine {
         let result = MixMachine.adjustWordByField(operand, left, right);
         result.flipSign();
         register.set(result);
+    }
+
+    _store(register, instrument) {
+        let operand = Word.copy(register.get());
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let result = this.readMemory(instrument.address);
+        if (left == 0) {
+            operand.isPositive() ? result.setPositive() : result.setNegative();
+            left = 1;
+        }
+        for (let i = left; i <= right; i++) {
+            result.assignByte(i, operand.getByte(i));
+        }
+        
+        this.writeMemory(instrument.address, result);
+    }
+
+    _store_zero(instrument) {
+        this.writeMemory(instrument.address, new Word(true, 0));
     }
 
     execute(instrument) {
@@ -560,8 +584,38 @@ class MixMachine {
         case LDXN:
             this._loadNegative(this._rX, instrument);
             break;
+        case STA:
+            this._store(this._rA, instrument);
+            break;
+        case ST1:
+            this._store(this._rI[0], instrument);
+            break;
+        case ST2:
+            this._store(this._rI[1], instrument);
+            break;
+        case ST3:
+            this._store(this._rI[2], instrument);
+            break;
+        case ST4:
+            this._store(this._rI[3], instrument);
+            break;
+        case ST5:
+            this._store(this._rI[4], instrument);
+            break;
+        case ST6:
+            this._store(this._rI[5], instrument);
+            break;
+        case STX:
+            this._store(this._rX, instrument);
+            break;
+        case STJ:
+            this._store(this._rJ, instrument);
+            break;
+        case STZ:
+            this._store_zero(instrument);
+            break;
         default:
-            throw `invalid instrument ${instrument}`;
+            throw `invalid instrument ${instrument.operator}`;
             break;
         }
     }
