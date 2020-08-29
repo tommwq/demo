@@ -1,5 +1,3 @@
-// TODO 规范get方法名，改为value()。
-
 const InvalidValueError = "invalid value"
 const ByteMin = 0;
 const ByteMax = 63;
@@ -30,26 +28,26 @@ function checkValue(value, min, max, error) {
 // 字节
 class Byte {
     constructor(value) {
-        this.value = Zero;
+        this._value = Zero;
         if (value != null) {
-            this.set(value);
+            this.assign(value);
         }
     }
 
-    set(value) {
+    assign(value) {
         checkValue(value, ByteMin, ByteMax);
-        this.value = value;
+        this._value = value;
     }
 
-    get() {
-        return this.value;
+    value() {
+        return this._value;
     }
 }
 
 // 符号位
 class SignBit {
-    constructor() {
-        this.is_positive = true;
+    constructor(isPositive) {
+        this.is_positive = isPositive;
     }
 
     isPositive() {
@@ -96,68 +94,77 @@ class FieldDescriptor {
 
 // 字
 class Word {
-    constructor(value) {
-        this.sign = new SignBit();
-        this.value = Zero;
+    // true/false, value
+    constructor(sign, value) {
+        this._sign = new SignBit(sign);
+        this._value = Zero;
         if (value != null) {
-            this.set(value);
+            this.assign(value);
         }
     }
 
     print() {
-        let text = [this.sign.isPositive() ? '+' : '-'];
+        let text = [this._sign.isPositive() ? '+' : '-'];
         for (let i = ByteFieldMin; i <= ByteFieldMax; i++) {
-            text.push(this.getByte(i).get());
+            text.push(this.getByte(i).value());
         }
         return text.join(' ');
     }
 
     static copy(word) {
-        let result = new Word();
-        result.set(word.get());
-        if (word.sign.isNegative()) {
-            result.sign.setNegative();
+        let result = new Word(true, 0);
+        result.assign(word.value());
+        if (word._sign.isNegative()) {
+            result._sign.setNegative();
         }
         return result;
     }
 
     static create(address, index, field, code) {
-        let word = new Word();
+        let word = new Word(true, 0);
         if (address < 0) {
             word.setNegative();
             address = -1 * address;
         }
 
-        word.setByte(1, new Byte(address / 64));
-        word.setByte(2, new Byte(address % 64));
-        word.setByte(3, new Byte(index));
-        word.setByte(4, new Byte(field));
-        word.setByte(5, new Byte(code));
+        word.assignByte(1, new Byte(address / 64));
+        word.assignByte(2, new Byte(address % 64));
+        word.assignByte(3, new Byte(index));
+        word.assignByte(4, new Byte(field));
+        word.assignByte(5, new Byte(code));
         return word;
     }
 
     equal(other) {
-        return this.value == other.value && this.sign.equal(other.sign);
+        return this.value == other.value && this._sign.equal(other._sign);
     }
     
-    set(value) {
+    assign(value) {
         checkValue(Math.abs(value), WordMin, WordMax);
-        this.value = Math.abs(value);
+        this._value = Math.abs(value);
         if (value < 0) {
             this.setNegative();
         }
     }
 
+    isPositive() {
+        return this._sign.isPositive();
+    }
+
+    isNegative() {
+        return this._sign.isNegative();
+    }
+
     setNegative() {
-        this.sign.setNegative();
+        this._sign.setNegative();
     }
 
     setPositive() {
-        this.sign.setPositive();
+        this._sign.setPositive();
     }
 
-    get() {
-        return this.value;
+    value() {
+        return this._value;
     }
 
     getByte(field) {
@@ -168,42 +175,42 @@ class Word {
         return byte;
     }
 
-    setByte(field, mixByte) {
+    assignByte(field, mixByte) {
         checkValue(field, ByteFieldMin, ByteFieldMax);
         let byteOffset = (ByteFieldMax - field) * ByteBits;
         let byteMask = ~((~0) << ByteBits) << byteOffset;
-        this.set((this.value & ~byteMask) | (mixByte.get() << byteOffset));
+        this.assign((this.value & ~byteMask) | (mixByte.value() << byteOffset));
     }
 }
 
 // 寄存器
 class Register {
     constructor() {
-        this.word = new Word();
+        this._word = new Word(true, 0);
     }
 
     set(word) {
-        this.word = word;
+        this._word = new Word(word.isPositive(), word.value());
     }
 
     get() {
-        return this.word;
+        return new Word(this._word.isPositive(), this._word.value());
     }
 }
 
 // 地址寄存器
 class AddressRegister extends Register {
     set(word) {
-        let copy = new Word(word.get());
-        copy.setByte(3, new Byte(0));
-        copy.setByte(4, new Byte(0));
-        copy.setByte(5, new Byte(0));
+        let copy = new Word(word.isPositive(), word.value());
+        copy.assignByte(3, new Byte(0));
+        copy.assignByte(4, new Byte(0));
+        copy.assignByte(5, new Byte(0));
         this.word = copy;
     }
 
-    get() {
-        return this.word;
-    }
+    // get() {
+    //     return this.word;
+    // }
 }
 
 // 地址转移寄存器
@@ -286,13 +293,13 @@ class MixMachine {
         this.overflow_toggle = new Toggle();
         this.memory = new Array();
         for (let index = 0; index <= MemorySize; index++) {
-            this.memory.push(new Word());
+            this.memory.push(new Word(true, 0));
         }
         // TODO 外设 U0 ~ U20
     }
 
     registerA() {
-        return Word.copy(this.register_a.get());
+        return this.register_a.get();
     }
 
     writeMemory(offset, word) {
@@ -304,17 +311,17 @@ class MixMachine {
     }
 
     static adjustWordByField(word, left, right) {
-        let result = new Word();
+        let result = new Word(true, 0);
         if (left == 0) {
-            if (word.sign.isNegative()) {
-                result.sign.setNegative();
+            if (word._sign.isNegative()) {
+                result._sign.setNegative();
             }
             left++;
         }
 
         for (let i = left; i <= right; i++) {
             let byte = word.getByte(i);
-            result.setByte(5 + i - right, byte);
+            result.assignByte(5 + i - right, byte);
         }
 
         return result;
