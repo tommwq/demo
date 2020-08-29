@@ -24,6 +24,14 @@ const LD4 = 12;
 const LD5 = 13;
 const LD6 = 14;
 const LDX = 15;
+const LDAN = 16;
+const LD1N = 17;
+const LD2N = 18;
+const LD3N = 19;
+const LD4N = 20;
+const LD5N = 21;
+const LD6N = 22;
+const LDXN = 23;
 
 
 // 检查值value是否大于min且小于max。
@@ -81,6 +89,10 @@ class SignBit {
         this.is_positive = false;
     }
 
+    flip() {
+        this.is_positive = !this.is_positive;
+    }
+
     equal(other) {
         return this.is_positive == other.is_positive;
     }
@@ -116,6 +128,10 @@ class Word {
         if (value != null) {
             this.assign(value);
         }
+    }
+
+    flipSign() {
+        this._sign.flip();
     }
 
     print() {
@@ -354,6 +370,15 @@ class MixMachine {
         register.set(result);
     }
 
+    _loadNegative(register, instrument) {
+        let operand = this.readMemory(instrument.address);
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let result = MixMachine.adjustWordByField(operand, left, right);
+        result.flipSign();
+        register.set(result);
+    }
+
     execute(instrument) {
         let operand;
         let left;
@@ -383,6 +408,33 @@ class MixMachine {
             break;
         case LDX:
             this._load(this._rX, instrument);
+            break;
+        case LDAN:
+            this._loadNegative(this._rA, instrument);
+            break;
+        case LD1N:
+            this._loadNegative(this._rI[0], instrument);
+            break;
+        case LD2N:
+            this._loadNegative(this._rI[1], instrument);
+            break;
+        case LD3N:
+            this._loadNegative(this._rI[2], instrument);
+            break;
+        case LD4N:
+            this._loadNegative(this._rI[3], instrument);
+            break;
+        case LD5N:
+            this._loadNegative(this._rI[4], instrument);
+            break;
+        case LD6N:
+            this._loadNegative(this._rI[5], instrument);
+            break;
+        case LDXN:
+            this._loadNegative(this._rX, instrument);
+            break;
+        default:
+            throw `invalid instrument ${instrument}`;
             break;
         }
     }
