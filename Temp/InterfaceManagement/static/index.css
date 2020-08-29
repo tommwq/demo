@@ -1,0 +1,53 @@
+body {
+    font-size: 20px;
+}
+
+.function_description {
+    table-layout: fixed;
+}
+
+div {
+    margin: 10px;
+}
+
+li {
+    list-style: none;
+}
+
+div#edit_panel {
+    position: fixed;
+    top: 0px;
+}
+
+div#main {
+    margin-top: 50px;
+    float: left;
+}
+
+span.data-dict {
+    text-decoration: underline;
+    color: blue;
+}
+
+table {
+    border-collapse: collapse;
+    border: none;
+}
+
+table.function-parameter,
+table.function-parameter tr,
+table.function-parameter td,
+table.function-parameter th {
+    border: 1px solid black;
+}
+
+table.lbm-func {
+    width: 100%;
+}
+
+table.lbm-func th {
+    text-align: left;
+    font-size: 32px;
+    margin: 0;
+    background: bisque; 
+}
