@@ -1,4 +1,3 @@
-
 let word1 = new Word(true, 0);
 assert(0, word1.value());
 
@@ -20,5 +19,8 @@ assert(640, word2.value());
 let fd = new FieldDescriptor(0);
 assert(0, fd.left());
 assert(0, fd.right());
+
+word1 = Word.create(1, 2, 3, 4);
+assert("[+ 0 1 2 3 4]", word1.print());
 
 console.log("test mix pass");

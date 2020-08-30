@@ -2,14 +2,14 @@
 const InvalidValueError = "invalid value";
 
 // 数据类型定义
-const ByteMin = 0;
-const ByteMax = 63;
-const ByteBits = 6;
-const WordMin = 0;
-const WordMax = 1073741823;
-const WordBits = 30;
-const ByteFieldMin = 1;
-const ByteFieldMax = 5;
+const MIN_BYTE = 0;
+const MAX_BYTE = 63;
+const BITS_PER_BYTE = 6;
+const MIN_WORD = 0;
+const MAX_WORD = 1073741823;
+const BITS_PER_WORD = 30;
+const MIN_BYTE_FIELD = 1;
+const MAX_BYTE_FIELD = 5;
 
 // 常量
 const Zero = 0;
@@ -169,7 +169,6 @@ function checkValue(value, min, max, error) {
     }
     
     if (value < min || value > max) {
-        console.debug(value, min, max);
         throw e;
     }
 }
@@ -185,7 +184,7 @@ class Byte {
     }
 
     assign(value) {
-        checkValue(value, ByteMin, ByteMax);
+        checkValue(value, MIN_BYTE, MAX_BYTE);
         this._value = value;
     }
 
@@ -198,6 +197,10 @@ class Byte {
 class SignBit {
     constructor(isPositive) {
         this.is_positive = isPositive;
+    }
+
+    isSame(sign) {
+        return this.is_positive == sign.is_positive;
     }
 
     isPositive() {
@@ -263,10 +266,14 @@ class Word {
 
     print() {
         let text = [this._sign.isPositive() ? '+' : '-'];
-        for (let i = ByteFieldMin; i <= ByteFieldMax; i++) {
+        for (let i = MIN_BYTE_FIELD; i <= MAX_BYTE_FIELD; i++) {
             text.push(this.getByte(i).value());
         }
-        return text.join(' ');
+        return '[' + text.join(' ') + ']';
+    }
+
+    isSameSign(word) {
+        return this._sign.isSame(word._sign);
     }
 
     static copy(word) {
@@ -294,11 +301,11 @@ class Word {
     }
 
     equal(other) {
-        return this.value == other.value && this._sign.equal(other._sign);
+        return this._value == other._value && this._sign.equal(other._sign);
     }
     
     assign(value) {
-        checkValue(Math.abs(value), WordMin, WordMax);
+        checkValue(Math.abs(value), MIN_WORD, MAX_WORD);
         this._value = Math.abs(value);
         if (value < 0) {
             this.setNegative();
@@ -326,18 +333,18 @@ class Word {
     }
 
     getByte(field) {
-        checkValue(field, ByteFieldMin, ByteFieldMax);
-        let byteOffset = (ByteFieldMax - field) * ByteBits;
-        let mask = ~((~0) << ByteBits);
-        let byte = new Byte((this.value >>> byteOffset) & mask);
+        checkValue(field, MIN_BYTE_FIELD, MAX_BYTE_FIELD);
+        let byteOffset = (MAX_BYTE_FIELD - field) * BITS_PER_BYTE;
+        let mask = ~((~0) << BITS_PER_BYTE);
+        let byte = new Byte((this._value >>> byteOffset) & mask);
         return byte;
     }
 
     assignByte(field, mixByte) {
-        checkValue(field, ByteFieldMin, ByteFieldMax);
-        let byteOffset = (ByteFieldMax - field) * ByteBits;
-        let byteMask = ~((~0) << ByteBits) << byteOffset;
-        this.assign((this.value & ~byteMask) | (mixByte.value() << byteOffset));
+        checkValue(field, MIN_BYTE_FIELD, MAX_BYTE_FIELD);
+        let byteOffset = (MAX_BYTE_FIELD - field) * BITS_PER_BYTE;
+        let byteMask = ~((~0) << BITS_PER_BYTE) << byteOffset;
+        this.assign((this._value & ~byteMask) | (mixByte.value() << byteOffset));
     }
 }
 
@@ -378,54 +385,54 @@ class TransferAddressRegister extends AddressRegister {
 // 溢出开关
 class Toggle {
     constructor() {
-        this.is_turn_on = false;
+        this._on = false;
     }
 
-    isTurnOn() {
-        return this.is_turn_on;
+    isOn() {
+        return this._on;
     }
 
-    isTurnOff() {
-        return !this.is_turn_on;
+    isOff() {
+        return !this._on;
     }
 
     turnOn() {
-        this.is_turn_on = true;
+        this._on = true;
     }
 
     turnOff() {
-        this.is_turn_on = false;
+        this._on = false;
     }
 }
 
 // 比较指示器
 class Indicator {
     constructor() {
-        this.value = 'less';
+        this._value = 'less';
     }
 
     turnLess() {
-        this.value = 'less';
+        this._value = 'less';
     }
 
     turnGreater() {
-        this.value = 'greater';
+        this._value = 'greater';
     }
 
     turnEqual() {
-        this.value = 'equal';
+        this._value = 'equal';
     }
 
     isLess() {
-        return this.value == 'less';
+        return this._value == 'less';
     }
 
     isGreater() {
-        return this.value == 'greater';
+        return this._value == 'greater';
     }
 
     isEqual() {
-        return this.value = 'equal';
+        return this._value = 'equal';
     }
 }
 
@@ -443,11 +450,11 @@ class MixMachine {
             new AddressRegister()
         );
         this._rJ = new TransferAddressRegister();
-        this.compare_indicator = new Indicator();
-        this.overflow_toggle = new Toggle();
-        this.memory = new Array();
+        this._compare_indicator = new Indicator();
+        this._overflow_toggle = new Toggle();
+        this._memory = new Array();
         for (let index = 0; index <= MemorySize; index++) {
-            this.memory.push(new Word(true, 0));
+            this._memory.push(new Word(true, 0));
         }
         // TODO 外设 U0 ~ U20
     }
@@ -469,18 +476,18 @@ class MixMachine {
     }
 
     writeMemory(offset, word) {
-        this.memory[offset] = Word.copy(word);
+        this._memory[offset] = Word.copy(word);
     }
 
     readMemory(offset) {
-        return Word.copy(this.memory[offset]);
+        return Word.copy(this._memory[offset]);
     }
 
     static adjustWordByField(word, left, right) {
         let result = new Word(true, 0);
         if (left == 0) {
-            if (word._sign.isNegative()) {
-                result._sign.setNegative();
+            if (word.isNegative()) {
+                result.setNegative();
             }
             left++;
         }
@@ -520,7 +527,7 @@ class MixMachine {
             left = 1;
         }
         for (let i = left; i <= right; i++) {
-            result.assignByte(i, operand.getByte(i));
+            result.assignByte(i, operand.getByte(MAX_BYTE_FIELD + i - right));
         }
         
         this.writeMemory(instrument.address, result);
@@ -528,6 +535,93 @@ class MixMachine {
 
     _store_zero(instrument) {
         this.writeMemory(instrument.address, new Word(true, 0));
+    }
+
+    _add(instrument) {
+        let operand = this.readMemory(instrument.address);
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let tmp = MixMachine.adjustWordByField(operand, left, right);
+        let rA = this.rA().get();
+
+        let op1 = BigInt(rA.value() * (rA.isPositive() ? 1 : -1));
+        let op2 = BigInt(tmp.value() * (tmp.isPositive() ? 1 : -1));
+
+        let result = op1 + op2;
+        let abs = result > 0 ? result : -result;
+
+        if (abs > MAX_WORD) {
+            this._overflow_toggle.turnOn();
+            abs = MAX_WORD;
+        }
+
+        this.rA().set(new Word(result > 0, Number(abs)));
+    }
+    
+    _sub(instrument) {
+        let operand = this.readMemory(instrument.address);
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let tmp = MixMachine.adjustWordByField(operand, left, right);
+        let rA = this.rA().get();
+        
+        let op1 = BigInt(rA.value() * (rA.isPositive() ? 1 : -1));
+        let op2 = BigInt(tmp.value() * (tmp.isPositive() ? 1 : -1));
+
+        let result = op1 - op2;
+        let abs = result > 0 ? result : -result;
+
+        if (abs > MAX_WORD) {
+            this._overflow_toggle.turnOn();
+            abs = MAX_WORD;
+        }
+
+        this.rA().set(new Word(result > 0, Number(abs)));
+    }
+
+    _mul(instrument) {
+        let operand = this.readMemory(instrument.address);
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let tmp = MixMachine.adjustWordByField(operand, left, right);
+        let rA = this.rA().get();
+
+        let op1 = BigInt(rA.value() * (rA.isPositive() ? 1 : -1));
+        let op2 = BigInt(tmp.value() * (tmp.isPositive() ? 1 : -1));
+
+        let result = op1 * op2;
+        let abs = result > 0 ? result : -result;
+
+        let high = abs / BigInt(MAX_WORD + 1);
+        let low = abs % BigInt(MAX_WORD + 1);
+
+        this.rA().set(new Word(result > 0, Number(high)));
+        this.rX().set(new Word(result > 0, Number(low)));
+    }
+    
+    _div(instrument) {
+        let high = this.rA().get().value();
+        let low = this.rX().get().value();
+
+        let operand = this.readMemory(instrument.address);
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let tmp = MixMachine.adjustWordByField(operand, left, right);
+        if (high >= tmp.value()) {
+            this._overflow_toggle().turnOn();
+            return;
+        }
+
+        let positive = this.rA().get().isSameSign(tmp);
+        let oldRASign = this.rA().get().isPositive();
+        let op1 = BigInt(high) * BigInt(MAX_WORD + 1) + BigInt(low);
+        let op2 = BigInt(tmp.value());
+
+        let quotient = Number(op1 / op2);
+        let remainder = Number(op1 % op2);
+
+        this.rA().set(new Word(positive, quotient));
+        this.rX().set(new Word(oldRASign, remainder));
     }
 
     execute(instrument) {
@@ -613,6 +707,18 @@ class MixMachine {
             break;
         case STZ:
             this._store_zero(instrument);
+            break;
+        case ADD:
+            this._add(instrument);
+            break;
+        case SUB:
+            this._sub(instrument);
+            break;
+        case MUL:
+            this._mul(instrument);
+            break;
+        case DIV:
+            this._div(instrument);
             break;
         default:
             throw `invalid instrument ${instrument.operator}`;
