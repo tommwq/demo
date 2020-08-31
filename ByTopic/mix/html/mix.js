@@ -367,9 +367,9 @@ class Register {
 class AddressRegister extends Register {
     set(word) {
         let copy = new Word(word.isPositive(), word.value());
+        copy.assignByte(1, new Byte(0));
+        copy.assignByte(2, new Byte(0));
         copy.assignByte(3, new Byte(0));
-        copy.assignByte(4, new Byte(0));
-        copy.assignByte(5, new Byte(0));
         this._word = copy;
     }
 }
@@ -441,18 +441,18 @@ class MixMachine {
     constructor() {
         this._rA = new Register();
         this._rX = new Register();
-        this._rI = new Array(
+        this._rI = [
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister()
-        );
+        ];
         this._rJ = new TransferAddressRegister();
         this._compare_indicator = new Indicator();
         this._overflow_toggle = new Toggle();
-        this._memory = new Array();
+        this._memory = [];
         for (let index = 0; index <= MemorySize; index++) {
             this._memory.push(new Word(true, 0));
         }
@@ -481,6 +481,15 @@ class MixMachine {
 
     readMemory(offset) {
         return Word.copy(this._memory[offset]);
+    }
+
+    getAddress(instrument) {
+        let offset = instrument.address;
+        let base = 0;
+        if (instrument.index >= 1 && instrument.index <= 6) {
+            base = this.rI(instrument.index).get().value();
+        }
+        return base + offset;
     }
 
     static adjustWordByField(word, left, right) {
@@ -623,7 +632,64 @@ class MixMachine {
         this.rA().set(new Word(positive, quotient));
         this.rX().set(new Word(oldRASign, remainder));
     }
+    
+    _enter(instrument, register) {
+        switch (instrument.field) {
+        case 0:
+            this._inc(instrument, register);
+            break;
+        case 1:
+            this._dec(instrument, register);
+            break;
+        case 2:
+            this._ent(instrument, register);
+            break;
+        case 3:
+            this._enn(instrument, register);
+            break;
+        }
+    }
 
+    _inc(instrument, register) {
+        let op1 = this.getAddress(instrument);
+        let op2 = register.get().value();
+        let overflow = false;
+        let result = op1 + op2;
+        if (Math.abs(result) > MAX_WORD) {
+            result = result % (MAX_WORD + 1);
+            overflow = true;
+        }
+
+        register.set(result);
+        if (overflow) {
+            this._overflow_toggle.turnOn();
+        }
+    }
+
+    _dec(instrument, register) {
+        let op1 = this.getAddress(instrument);
+        let op2 = register.get().value();
+        let overflow = false;
+        let result = op1 - op2;
+        if (Math.abs(result) > MAX_WORD) {
+            result = result % (MAX_WORD + 1);
+            overflow = true;
+        }
+
+        register.set(result);
+        if (overflow) {
+            this._overflow_toggle.turnOn();
+        }
+    }
+
+    _ent(instrument, register) {
+        register.set(this.getAddress(instrument));
+    }
+
+    _enn(instrument, register) {
+        register.set(-1 * this.getAddress(instrument));
+    }
+    
     execute(instrument) {
         let operand;
         let left;
@@ -719,6 +785,30 @@ class MixMachine {
             break;
         case DIV:
             this._div(instrument);
+            break;
+        case ENTA:
+            this._enter(instrument, this._rA);
+            break;
+        case ENT1:
+            this._enter(instrument, this._rI[0]);
+            break;
+        case ENT2:
+            this._enter(instrument, this._rI[1]);
+            break;
+        case ENT3:
+            this._enter(instrument, this._rI[2]);
+            break;
+        case ENT4:
+            this._enter(instrument, this._rI[3]);
+            break;
+        case ENT5:
+            this._enter(instrument, this._rI[4]);
+            break;
+        case ENT6:
+            this._enter(instrument, this._rI[5]);
+            break;
+        case ENTX:
+            this._enter(instrument, this._rX);
             break;
         default:
             throw `invalid instrument ${instrument.operator}`;
