@@ -510,7 +510,7 @@ class MixMachine {
     }
 
     _load(register, instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let result = MixMachine.adjustWordByField(operand, left, right);
@@ -518,7 +518,7 @@ class MixMachine {
     }
 
     _loadNegative(register, instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let result = MixMachine.adjustWordByField(operand, left, right);
@@ -530,7 +530,7 @@ class MixMachine {
         let operand = Word.copy(register.get());
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
-        let result = this.readMemory(instrument.address);
+        let result = this.readMemory(this.getAddress(instrument));
         if (left == 0) {
             operand.isPositive() ? result.setPositive() : result.setNegative();
             left = 1;
@@ -547,7 +547,7 @@ class MixMachine {
     }
 
     _add(instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let tmp = MixMachine.adjustWordByField(operand, left, right);
@@ -568,7 +568,7 @@ class MixMachine {
     }
     
     _sub(instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let tmp = MixMachine.adjustWordByField(operand, left, right);
@@ -589,7 +589,7 @@ class MixMachine {
     }
 
     _mul(instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let tmp = MixMachine.adjustWordByField(operand, left, right);
@@ -612,7 +612,7 @@ class MixMachine {
         let high = this.rA().get().value();
         let low = this.rX().get().value();
 
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let tmp = MixMachine.adjustWordByField(operand, left, right);
@@ -689,12 +689,112 @@ class MixMachine {
     _enn(instrument, register) {
         register.set(-1 * this.getAddress(instrument));
     }
+
+    _compare(instrument, register) {
+        let operand = this.readMemory(this.getAddress(instrument));
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let op1 = register.get().value();
+        let op2 = adjustWordByField(operand, left, right);
+        if (op1 == op2) {
+            this._compare_indicator.turnEqual();
+        } else if (op1 < op2) {
+            this._compare_indicator.turnLess();
+        } else {
+            this._compare_indicator.turnGreater();
+        }
+    }
+
+    _jump_reg(instrument, register) {
+        [this._jn, this._jz, this._jp, this._jnn,
+         this._jnz, this._jnp][instrument.field](instrument, register);
+    }
+
+    _jn(instrument, register) {
+        if (register.get().isNegative()) {
+            this._jmp(instrument);
+        }
+    }
+    _jz(instrument, register) {
+        if (register.get().value() == 0) {
+            this._jmp(instrument);
+        }
+    }
+    _jp(instrument, register) {
+        if (register.get().isPositive()) {
+            this._jmp(instrument);
+        }
+    }
+    _jnn(instrument, register) {
+        if (!register.get().isNegative()) {
+            this._jmp(instrument);
+        }
+    }
+    _jnz(instrument, register) {
+        if (register.get().value() != 0) {
+            this._jmp(instrument);
+        }
+    }
+    _jnp(instrument, register) {
+        if (!register.get().isPositive()) {
+            this._jmp(instrument);
+        }
+    }
+
+    _jump(instrument) {
+        [this._jmp, this._jsj, this._jov, this._jnov,
+         this._jl, this._je, this._jg, this._jge,
+         this._jne, this._jle][instrument.field](instrument);
+    }
     
+    _jmp(instrument) {
+        this._rJ.set(this.getAddress(instrument));
+    }
+    _jsj(instrument) {
+        // TODO 实现JSJ
+    }
+    _jov(instrument) {
+        if (this._overflow_toggle.isOn()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jnov(instrument) {
+        if (this._overflow_toggle.isOff()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jl(instrument) {
+        if (this._compare_indicator.isLess()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _je(instrument) {
+        if (this._compare_indicator.isEqual()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jg(instrument) {
+        if (this._compare_indicator.isGreater()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jge(instrument) {
+        if (!this._compare_indicator.isLess() ) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jne(instrument) {
+        if (!this._compare_indicator.isEqual()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jle(instrument) {
+        if (!this._compare_indicator.isGreater() ) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+
     execute(instrument) {
-        let operand;
-        let left;
-        let right;
-        
         switch (instrument.operator) {
         case LDA:
             this._load(this._rA, instrument);
@@ -809,6 +909,57 @@ class MixMachine {
             break;
         case ENTX:
             this._enter(instrument, this._rX);
+            break;
+        case CMPA:
+            this._compare(instrument, this._rA);
+            break;
+        case CMP1:
+            this._compare(instrument, this._rI[0]);
+            break;
+        case CMP2:
+            this._compare(instrument, this._rI[1]);
+            break;
+        case CMP3:
+            this._compare(instrument, this._rI[2]);
+            break;
+        case CMP4:
+            this._compare(instrument, this._rI[3]);
+            break;
+        case CMP5:
+            this._compare(instrument, this._rI[4]);
+            break;
+        case CMP6:
+            this._compare(instrument, this._rI[5]);
+            break;
+        case CMPX:
+            this._compare(instrument, this._rX);
+            break;
+        case JMP:
+            this._jump(instrument);
+            break;
+        case JAN:
+            this._jump_reg(instrument, this._rA)
+            break;
+        case J1N:
+            this._jump_reg(instrument, this._rI[1])
+            break;
+        case J2N:
+            this._jump_reg(instrument, this._rI[2])
+            break;
+        case J3N:
+            this._jump_reg(instrument, this._rI[3])
+            break;
+        case J4N:
+            this._jump_reg(instrument, this._rI[4])
+            break;
+        case J5N:
+            this._jump_reg(instrument, this._rI[5])
+            break;
+        case J6N:
+            this._jump_reg(instrument, this._rI[6])
+            break;
+        case JXN:
+            this._jump_reg(instrument, this._rX)
             break;
         default:
             throw `invalid instrument ${instrument.operator}`;
