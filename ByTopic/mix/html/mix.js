@@ -435,6 +435,23 @@ class Indicator {
     }
 }
 
+class Device {
+    constructor(blockSize) {
+        this._blockSize = blockSize;
+    }
+
+    getBlockSize() {
+        return this._blockSize;
+    }
+
+    // TODO
+    // read(address) {
+    // }
+
+    // write(address, block) {
+    // }
+}
+
 // MIX机器
 class MixMachine {
     constructor() {
@@ -455,7 +472,29 @@ class MixMachine {
         for (let index = 0; index <= MemorySize; index++) {
             this._memory.push(new Word(true, 0));
         }
-        // TODO 外设 U0 ~ U20
+        this._devices = [
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(100),
+            new Device(16),
+            new Device(16),
+            new Device(24),
+            new Device(14),
+            new Device(14),
+        ];
     }
 
     rA() {
@@ -1015,6 +1054,22 @@ class MixMachine {
         // TODO 如何实现halt?
     }
 
+    _ioc(instrument) {
+        // TODO
+    }
+    _in(instrument) {
+        // TODO
+    }
+    _out(instrument) {
+        // TODO
+    }
+    _jred(instrument) {
+        // TODO
+    }
+    _jbus(instrument) {
+        // TODO
+    }
+    
     execute(instrument) {
         switch (instrument.operator) {
         case LDA:
@@ -1195,6 +1250,21 @@ class MixMachine {
             [
                 this._num, this._char, this._hlt
             ][instrument.field].bind(this)(instrument);
+            break;
+        case IOC:
+            this._ioc(instrument);
+            break;
+        case IN:
+            this._in(instrument);
+            break;
+        case OUT:
+            this._out(instrument);
+            break;
+        case JRED:
+            this._jred(instrument);
+            break;
+        case JBUS:
+            this._jbus(instrument);
             break;
         default:
             throw `invalid instrument ${instrument.operator}`;
