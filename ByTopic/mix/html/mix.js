@@ -161,6 +161,66 @@ const CMP5 = 61;
 const CMP6 = 62;
 const CMPX = 63;
 
+// 字符表
+const Alphabet = [
+    " ",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "\u0394",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "\u03a3",
+    "\u03a0",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    ".",
+    ",",
+    "(",
+    ")",
+    "+",
+    "-",
+    "*",
+    "/",
+    "=",
+    "$",
+    "<",
+    ">",
+    "@",
+    ";",
+    ":",
+    "'",
+];
+
 // 检查值value是否大于min且小于max。
 function checkValue(value, min, max, error) {
     let e = InvalidValueError;
@@ -1078,6 +1138,18 @@ class MixMachine {
     }
     _jbus(instrument) {
         // do nothing
+    }
+    _fadd(instrument) {
+        // todo
+    }
+    _fsub(instrument) {
+        // todo
+    }
+    _fmul(instrument) {
+        // todo
+    }
+    _fdiv(instrument) {
+        // todo
     }
     execute(instrument) {
         switch (instrument.operator) {
