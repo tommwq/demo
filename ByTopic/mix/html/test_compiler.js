@@ -4,7 +4,7 @@ let testCaseList = [
     {"text": "LDA 2000,2(1:3)", "instrument": new Instrument(8,2000,2,11)},
     {"text": "LDA 2000(1:3)", "instrument": new Instrument(8,2000,0,11)},
     {"text": "LDA 2000", "instrument": new Instrument(8,2000,0,5)},
-    {"text": "LDA -2000,4", "instrument": new Instrument(8,-2000,4,5)}
+    {"text": "LDA -2000,4", "instrument": new Instrument(8,-2000,4,5)},
 ];
 
 for (let testCase of testCaseList) {
