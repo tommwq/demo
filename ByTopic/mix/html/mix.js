@@ -785,6 +785,7 @@ class MixMachine {
     }
     _jov(instrument) {
         if (this._overflow_toggle.isOn()) {
+            this._overflow_toggle.turnOff();
             this._rJ.set(this.getAddress(instrument));
         }
     }
