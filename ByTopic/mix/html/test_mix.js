@@ -16,10 +16,6 @@ word2.assignByte(4, new Byte(10));
 assert(640, word2.value());
 
 
-let fd = new FieldDescriptor(0);
-assert(0, fd.left());
-assert(0, fd.right());
-
 word1 = Word.create(1, 2, 3, 4);
 assert("[+ 0 1 2 3 4]", word1.print());
 

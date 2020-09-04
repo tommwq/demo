@@ -161,13 +161,72 @@ const CMP5 = 61;
 const CMP6 = 62;
 const CMPX = 63;
 
+// 字符表
+const Alphabet = [
+    " ",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "\u0394",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "\u03a3",
+    "\u03a0",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    ".",
+    ",",
+    "(",
+    ")",
+    "+",
+    "-",
+    "*",
+    "/",
+    "=",
+    "$",
+    "<",
+    ">",
+    "@",
+    ";",
+    ":",
+    "'",
+];
+
 // 检查值value是否大于min且小于max。
 function checkValue(value, min, max, error) {
     let e = InvalidValueError;
     if (error != null) {
         e = error;
     }
-    
     if (value < min || value > max) {
         throw e;
     }
@@ -198,54 +257,26 @@ class SignBit {
     constructor(isPositive) {
         this.is_positive = isPositive;
     }
-
     isSame(sign) {
         return this.is_positive == sign.is_positive;
     }
-
     isPositive() {
         return this.is_positive;
     }
-
     isNegative() {
         return !this.is_positive;
     }
-
     setPositive() {
         this.is_positive = true;
     }
-
     setNegative() {
         this.is_positive = false;
     }
-
     flip() {
         this.is_positive = !this.is_positive;
     }
-
     equal(other) {
         return this.is_positive == other.is_positive;
-    }
-}
-
-// 位描述符 TODO 是否保留？
-class FieldDescriptor {
-    constructor(value) {
-        this.left_byte = value / 8;
-        this.right_byte = value % 8;
-    }
-
-    assign(left, right) {
-        this.left_byte = left;
-        this.right_byte = right;
-    }
-
-    left() {
-        return this.left_byte;
-    }
-
-    right() {
-        return this.right_byte;
     }
 }
 
@@ -259,11 +290,9 @@ class Word {
             this.assign(value);
         }
     }
-
     flipSign() {
         this._sign.flip();
     }
-
     print() {
         let text = [this._sign.isPositive() ? '+' : '-'];
         for (let i = MIN_BYTE_FIELD; i <= MAX_BYTE_FIELD; i++) {
@@ -271,11 +300,9 @@ class Word {
         }
         return '[' + text.join(' ') + ']';
     }
-
     isSameSign(word) {
         return this._sign.isSame(word._sign);
     }
-
     static copy(word) {
         let result = new Word(true, 0);
         result.assign(word.value());
@@ -284,7 +311,6 @@ class Word {
         }
         return result;
     }
-
     static create(address, index, field, code) {
         let word = new Word(true, 0);
         if (address < 0) {
@@ -299,11 +325,9 @@ class Word {
         word.assignByte(5, new Byte(code));
         return word;
     }
-
     equal(other) {
         return this._value == other._value && this._sign.equal(other._sign);
     }
-    
     assign(value) {
         checkValue(Math.abs(value), MIN_WORD, MAX_WORD);
         this._value = Math.abs(value);
@@ -311,27 +335,21 @@ class Word {
             this.setNegative();
         }
     }
-
     isPositive() {
         return this._sign.isPositive();
     }
-
     isNegative() {
         return this._sign.isNegative();
     }
-
     setNegative() {
         this._sign.setNegative();
     }
-
     setPositive() {
         this._sign.setPositive();
     }
-
     value() {
         return this._value;
     }
-
     getByte(field) {
         checkValue(field, MIN_BYTE_FIELD, MAX_BYTE_FIELD);
         let byteOffset = (MAX_BYTE_FIELD - field) * BITS_PER_BYTE;
@@ -339,7 +357,6 @@ class Word {
         let byte = new Byte((this._value >>> byteOffset) & mask);
         return byte;
     }
-
     assignByte(field, mixByte) {
         checkValue(field, MIN_BYTE_FIELD, MAX_BYTE_FIELD);
         let byteOffset = (MAX_BYTE_FIELD - field) * BITS_PER_BYTE;
@@ -353,11 +370,9 @@ class Register {
     constructor() {
         this._word = new Word(true, 0);
     }
-
     set(word) {
         this._word = new Word(word.isPositive(), word.value());
     }
-
     get() {
         return new Word(this._word.isPositive(), this._word.value());
     }
@@ -367,9 +382,9 @@ class Register {
 class AddressRegister extends Register {
     set(word) {
         let copy = new Word(word.isPositive(), word.value());
+        copy.assignByte(1, new Byte(0));
+        copy.assignByte(2, new Byte(0));
         copy.assignByte(3, new Byte(0));
-        copy.assignByte(4, new Byte(0));
-        copy.assignByte(5, new Byte(0));
         this._word = copy;
     }
 }
@@ -387,19 +402,15 @@ class Toggle {
     constructor() {
         this._on = false;
     }
-
     isOn() {
         return this._on;
     }
-
     isOff() {
         return !this._on;
     }
-
     turnOn() {
         this._on = true;
     }
-
     turnOff() {
         this._on = false;
     }
@@ -410,29 +421,108 @@ class Indicator {
     constructor() {
         this._value = 'less';
     }
-
     turnLess() {
         this._value = 'less';
     }
-
     turnGreater() {
         this._value = 'greater';
     }
-
     turnEqual() {
         this._value = 'equal';
     }
-
     isLess() {
         return this._value == 'less';
     }
-
     isGreater() {
         return this._value == 'greater';
     }
-
     isEqual() {
         return this._value = 'equal';
+    }
+}
+
+class Device {
+    constructor(blockSize) {
+        this._blockSize = blockSize;
+        this._data = [];
+        this._position = 0;
+    }
+    seek(position) {
+        throw "not supported";
+    }
+    forward(blockCount) {
+        throw "not supported";
+    }
+    backward(blockCount) {
+        throw "not supported";
+    }
+    rewind() {
+        throw "not supported";
+    }
+    paperFeed() {
+        throw "not supported";
+    }
+    setData(words) {
+        this._data = words;
+        this._position = 0;
+    }
+    getBlockSize() {
+        return this._blockSize;
+    }
+    // 从设备中读取数据，返回[word]
+    read() {
+        let block = this._data.slice(this._position, this._position + this._blockSize);
+        this._position += this._blockSize;
+        return block;
+    }
+    // block = [word]
+    write(block) {
+        for (let word of block) {
+            this._data[this._position++] = Word.copy(word);
+        }
+    }
+}
+
+// 磁带
+class Tape extends Device {
+    constructor() {
+        super(100);
+    }
+    forward(blockCount) {
+        this._position += (blockCount * this._blockSize);
+    }
+    backward(blockCount) {
+        this._position -= (blockCount * this._blockSize);
+    }
+    rewind() {
+        this._position = 0;
+    }
+}
+
+class Disk extends Device {
+    constructor() {
+        super(100);
+    }
+    seek(position) {
+        this._position = position;
+    }
+}
+
+class LinePrinter extends Device {
+    constructor() {
+        super(24);
+    }
+    paperFeed() {
+        // TODO
+    }
+}
+
+class PunchPaperTape extends Device {
+    constructor() {
+        super(16);
+    }
+    rewind() {
+        this._position = 0;
     }
 }
 
@@ -441,48 +531,71 @@ class MixMachine {
     constructor() {
         this._rA = new Register();
         this._rX = new Register();
-        this._rI = new Array(
+        this._rI = [
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister(),
             new AddressRegister()
-        );
+        ];
         this._rJ = new TransferAddressRegister();
         this._compare_indicator = new Indicator();
         this._overflow_toggle = new Toggle();
-        this._memory = new Array();
+        this._memory = [];
         for (let index = 0; index <= MemorySize; index++) {
             this._memory.push(new Word(true, 0));
         }
-        // TODO 外设 U0 ~ U20
+        this._devices = [
+            new Tape(),
+            new Tape(),
+            new Tape(),
+            new Tape(),
+            new Tape(),
+            new Tape(),
+            new Tape(),
+            new Tape(),
+            new Disk(),
+            new Disk(),
+            new Disk(),
+            new Disk(),
+            new Disk(),
+            new Disk(),
+            new Disk(),
+            new Disk(),
+            new PunchPaperTape(),
+            new Device(16), // 卡片穿孔机
+            new LinePrinter(), 
+            new Device(14), // 打字机终端
+            new Device(14), // 纸带
+        ];
     }
-
     rA() {
         return this._rA;
     }
-
     rX() {
         return this._rX;
     }
-
     rI(index) {
         return this._rI[i - 1];
     }
-
     rJ() {
         return this._rJ;
     }
-
     writeMemory(offset, word) {
         this._memory[offset] = Word.copy(word);
     }
-
     readMemory(offset) {
         return Word.copy(this._memory[offset]);
     }
-
+    getAddress(instrument) {
+        let offset = instrument.address;
+        let base = 0;
+        if (instrument.index >= 1 && instrument.index <= 6) {
+            base = this.rI(instrument.index).get().value();
+        }
+        return base + offset;
+    }
     static adjustWordByField(word, left, right) {
         let result = new Word(true, 0);
         if (left == 0) {
@@ -499,29 +612,26 @@ class MixMachine {
 
         return result;
     }
-
     _load(register, instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let result = MixMachine.adjustWordByField(operand, left, right);
         register.set(result);
     }
-
     _loadNegative(register, instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let result = MixMachine.adjustWordByField(operand, left, right);
         result.flipSign();
         register.set(result);
     }
-
     _store(register, instrument) {
         let operand = Word.copy(register.get());
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
-        let result = this.readMemory(instrument.address);
+        let result = this.readMemory(this.getAddress(instrument));
         if (left == 0) {
             operand.isPositive() ? result.setPositive() : result.setNegative();
             left = 1;
@@ -530,15 +640,13 @@ class MixMachine {
             result.assignByte(i, operand.getByte(MAX_BYTE_FIELD + i - right));
         }
         
-        this.writeMemory(instrument.address, result);
+        this.writeMemory(this.getAddress(instrument), result);
     }
-
     _store_zero(instrument) {
-        this.writeMemory(instrument.address, new Word(true, 0));
+        this.writeMemory(this.getAddress(instrument), new Word(true, 0));
     }
-
     _add(instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let tmp = MixMachine.adjustWordByField(operand, left, right);
@@ -557,9 +665,8 @@ class MixMachine {
 
         this.rA().set(new Word(result > 0, Number(abs)));
     }
-    
     _sub(instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let tmp = MixMachine.adjustWordByField(operand, left, right);
@@ -578,9 +685,8 @@ class MixMachine {
 
         this.rA().set(new Word(result > 0, Number(abs)));
     }
-
     _mul(instrument) {
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let tmp = MixMachine.adjustWordByField(operand, left, right);
@@ -598,12 +704,11 @@ class MixMachine {
         this.rA().set(new Word(result > 0, Number(high)));
         this.rX().set(new Word(result > 0, Number(low)));
     }
-    
     _div(instrument) {
         let high = this.rA().get().value();
         let low = this.rX().get().value();
 
-        let operand = this.readMemory(instrument.address);
+        let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
         let tmp = MixMachine.adjustWordByField(operand, left, right);
@@ -623,12 +728,430 @@ class MixMachine {
         this.rA().set(new Word(positive, quotient));
         this.rX().set(new Word(oldRASign, remainder));
     }
+    _enter(instrument, register) {
+        switch (instrument.field) {
+        case 0:
+            this._inc(instrument, register);
+            break;
+        case 1:
+            this._dec(instrument, register);
+            break;
+        case 2:
+            this._ent(instrument, register);
+            break;
+        case 3:
+            this._enn(instrument, register);
+            break;
+        }
+    }
+    _inc(instrument, register) {
+        let op1 = this.getAddress(instrument);
+        let op2 = register.get().value();
+        let overflow = false;
+        let result = op1 + op2;
+        if (Math.abs(result) > MAX_WORD) {
+            result = result % (MAX_WORD + 1);
+            overflow = true;
+        }
 
-    execute(instrument) {
-        let operand;
-        let left;
-        let right;
+        register.set(result);
+        if (overflow) {
+            this._overflow_toggle.turnOn();
+        }
+    }
+    _dec(instrument, register) {
+        let op1 = this.getAddress(instrument);
+        let op2 = register.get().value();
+        let overflow = false;
+        let result = op1 - op2;
+        if (Math.abs(result) > MAX_WORD) {
+            result = result % (MAX_WORD + 1);
+            overflow = true;
+        }
+
+        register.set(result);
+        if (overflow) {
+            this._overflow_toggle.turnOn();
+        }
+    }
+    _ent(instrument, register) {
+        register.set(this.getAddress(instrument));
+    }
+    _enn(instrument, register) {
+        register.set(-1 * this.getAddress(instrument));
+    }
+    _compare(instrument, register) {
+        let operand = this.readMemory(this.getAddress(instrument));
+        let left = Math.floor(instrument.field / 8);
+        let right = instrument.field % 8;
+        let op1 = register.get().value();
+        let op2 = adjustWordByField(operand, left, right);
+        if (op1 == op2) {
+            this._compare_indicator.turnEqual();
+        } else if (op1 < op2) {
+            this._compare_indicator.turnLess();
+        } else {
+            this._compare_indicator.turnGreater();
+        }
+    }
+    _jump_reg(instrument, register) {
+        [
+            this._jn, this._jz, this._jp, this._jnn,
+            this._jnz, this._jnp
+        ][instrument.field].bind(this)(instrument, register);
+    }
+    _jn(instrument, register) {
+        if (register.get().isNegative()) {
+            this._jmp(instrument);
+        }
+    }
+    _jz(instrument, register) {
+        if (register.get().value() == 0) {
+            this._jmp(instrument);
+        }
+    }
+    _jp(instrument, register) {
+        if (register.get().isPositive()) {
+            this._jmp(instrument);
+        }
+    }
+    _jnn(instrument, register) {
+        if (!register.get().isNegative()) {
+            this._jmp(instrument);
+        }
+    }
+    _jnz(instrument, register) {
+        if (register.get().value() != 0) {
+            this._jmp(instrument);
+        }
+    }
+    _jnp(instrument, register) {
+        if (!register.get().isPositive()) {
+            this._jmp(instrument);
+        }
+    }
+    _jump(instrument) {
+        [
+            this._jmp, this._jsj, this._jov, this._jnov,
+            this._jl, this._je, this._jg, this._jge,
+            this._jne, this._jle
+        ][instrument.field].bind(this)(instrument);
+    }
+    _jmp(instrument) {
+        this._rJ.set(this.getAddress(instrument));
+    }
+    _jsj(instrument) {
+        // TODO 实现JSJ
+    }
+    _jov(instrument) {
+        if (this._overflow_toggle.isOn()) {
+            this._overflow_toggle.turnOff();
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jnov(instrument) {
+        if (this._overflow_toggle.isOff()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jl(instrument) {
+        if (this._compare_indicator.isLess()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _je(instrument) {
+        if (this._compare_indicator.isEqual()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jg(instrument) {
+        if (this._compare_indicator.isGreater()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jge(instrument) {
+        if (!this._compare_indicator.isLess() ) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jne(instrument) {
+        if (!this._compare_indicator.isEqual()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _jle(instrument) {
+        if (!this._compare_indicator.isGreater()) {
+            this._rJ.set(this.getAddress(instrument));
+        }
+    }
+    _shift(instrument) {
+        [
+            this._sla, this._sra, this._slax, this._srax,
+            this._slc, this._src
+        ][instrument.field].bind(this)(instrument);
+    }
+    _sla(instrument) {
+        let operand = this.getAddress(instrument);
+        if (operand <= 0) {
+            return;
+        }
+        if (operand >= 5) {
+            operand = 5;
+        }
+        let word = this._rA.get();
+        for (let i = 1; i <= 5; i++) {
+            let value = 0;
+            let shiftIndex = i + operand;
+            if (shiftIndex <= 5) {
+                value = word.getByte(shiftIndex).value();
+            }
+            word.assignByte(i, new Byte(value));
+        }
+        this._rA.set(word);
+    }
+    _sra(instrument) {
+        let operand = this.getAddress(instrument);
+        if (operand <= 0) {
+            return;
+        }
+        if (operand >= 5) {
+            operand = 5;
+        }
+        let word = this._rA.get();
+        for (let i = 5; i >= 1; i--) {
+            let value = 0;
+            let shiftIndex = i - operand;
+            if (shiftIndex >= 1) {
+                value = word.getByte(shiftIndex).value();
+            }
+            word.assignByte(i, new Byte(value));
+        }
+        this._rA.set(word);
+    }
+    _slax(instrument) {
+        let operand = this.getAddress(instrument);
+        if (operand <= 0) {
+            return;
+        }
+        if (operand >= 10) {
+            operand = 10;
+        }
+        let word1 = this._rA.get();
+        let word2 = this._rX.get();
+        for (let i = 1; i <= 10; i++) {
+            let value = 0;
+            let shiftIndex = i + operand;
+            if (shiftIndex <= 5) {
+                value = word1.getByte(shiftIndex).value();
+            } else if (6 <= shiftIndex && shiftIndex <= 10) {
+                value = word2.getByte(shiftIndex - 5).value();
+            }
+            if (i <= 5) {
+                word1.assignByte(i, new Byte(value));
+            } else {
+                word2.assignByte(i - 5, new Byte(value));
+            }
+        }
+        this._rA.set(word1);
+        this._rX.set(word2);
+    }
+    _srax(instrument) {
+        let operand = this.getAddress(instrument);
+        if (operand <= 0) {
+            return;
+        }
+        if (operand >= 10) {
+            operand = 10;
+        }
+        let word1 = this._rA.get();
+        let word2 = this._rX.get();
+        for (let i = 10; i >= 1; i--) {
+            let value = 0;
+            let shiftIndex = i - operand;
+            if (1 <= shiftIndex && shiftIndex <= 5) {
+                value = word1.getByte(shiftIndex).value();
+            } else if (6 <= shiftIndex && shiftIndex <= 10) {
+                value = word2.getByte(shiftIndex - 5).value();
+            }
+            if (i <= 5) {
+                word1.assignByte(i, new Byte(value));
+            } else {
+                word2.assignByte(i - 5, new Byte(value));
+            }
+        }
+        this._rA.set(word1);
+        this._rX.set(word2);
+    }
+    _slc(instrument) {
+        let operand = this.getAddress(instrument);
+        if (operand < 0) {
+            return;
+        }
+        operand = operand % 10;
+        if (operand == 0) {
+            return;
+        }
+        let ra = this._rA.get();
+        let rx = this._rX.get();
+        let word1 = this._rA.get();
+        let word2 = this._rX.get();
+        for (let i = 1; i <= 10; i++) {
+            let value = 0;
+            let shiftIndex = i + operand;
+            if (shiftIndex <= 5) {
+                value = word1.getByte(shiftIndex).value();
+            } else if (6 <= shiftIndex && shiftIndex <= 10) {
+                value = word2.getByte(shiftIndex - 5).value();
+            } else {
+                value = word1.getByte(shiftIndex - 10).value();
+            }
+            if (i <= 5) {
+                ra.assignByte(i, new Byte(value));
+            } else {
+                rx.assignByte(i - 5, new Byte(value));
+            }
+        }
+        this._rA.set(ra);
+        this._rX.set(rx);
+    }
+    _src(instrument) {
+        let operand = this.getAddress(instrument);
+        if (operand < 0) {
+            return;
+        }
+        operand = operand % 10;
+        if (operand == 0) {
+            return;
+        }
+        let ra = this._rA.get();
+        let rx = this._rX.get();
+        let word1 = this._rA.get();
+        let word2 = this._rX.get();
+        for (let i = 10; i >= 1; i--) {
+            let value = 0;
+            let shiftIndex = i - operand;
+            if (shiftIndex < 1) {
+                shiftIndex += 10;
+            }
+            if (shiftIndex <= 5) {
+                value = word1.getByte(shiftIndex).value();
+            } else if (6 <= shiftIndex && shiftIndex <= 10) {
+                value = word2.getByte(shiftIndex - 5).value();
+            } else {
+                value = word1.getByte(shiftIndex + 10).value();
+            }
+            if (i <= 5) {
+                ra.assignByte(i, new Byte(value));
+            } else {
+                rx.assignByte(i - 5, new Byte(value));
+            }
+        }
+        this._rA.set(ra);
+        this._rX.set(rx);
+    }
+    _move(instrument) {
+        let base = this.getAddress(instrument);
+        let count = instrument.field;
+        if (count <= 0) {
+            return;
+        }
+        let ri1 = this._rI[0].get().value();
+        for (let i = 0; i < count; i++) {
+            this.writeMemory(ri1 + i, this.readMemory(base + i));
+        }
+        this._rI[0].set(new Word(true, ri1 + count));
+    }
+    _nop() {
+        // do nothing
+    }
+    _char(instrument) {
+        let ra = this._rA.get();
+        let rx = this._rX.get();
+        let value = ra.value();
+        for (let i = 10; i >= 1; i--) {
+            let digit = 30 + value % 10;
+            value /= 10;
+            if (i <= 5) {
+                ra.assignByte(i, new Byte(digit));
+            } else {
+                rx.assignByte(i - 5, new Byte(digit));
+            }
+        }
+        this._rA.set(ra);
+        this._rX.set(rx);
+    }
+    _num(instrument) {
+        let ra = this._rA.get();
+        let rx = this._rX.get();
+        let value = 0;
+        for (let i = 1; i <= 10; i++) {
+            let digit;
+            if (i <= 5) {
+                digit = ra.getByte(i).value();
+            } else {
+                digit = rx.getByte(i - 5).value();
+            }
+            value = value * 10 + (digit % 10);
+        }
+        value %= (MAX_WORD + 1);
+        this._rA.set(new Word(ra.isPositive(), value));
+    }
+    _hlt(instrument) {
+        // do nothing
+    }
+    _ioc(instrument) {
+        let m = this.getAddress(instrument);
+        let deviceNumber = instrument.field;
+        let device = this._device[deviceNumber];
+        if (m == 0) {
+            if (deviceNumber <= 7 || deviceNumber == 16) {
+                device.rewind();
+            } else if (deviceNumber <= 15) {
+                device.seek(this._rX.get().value());
+            }
+        }
         
+        if (deviceNumber <= 7 && m != 0) {
+            if (m < 0) {
+                device.backword(-m);
+            } else {
+                device.forward(m);
+            }
+        }
+    }
+    _in(instrument) {
+        let base = this.getAddress(instrument);
+        let device = this._devices[instrument.field];
+        let block = device.read();
+        for (let word of block) {
+            this.writeMemory(base++, word);
+        }
+    }
+    _out(instrument) {
+        let base = this.getAddress(instrument);
+        let device = this._devices[instrument.field];
+        let block = this._memory.slice(base, base + device.getBlockSize());
+        device.write(block);
+    }
+    _jred(instrument) {
+        this._jmp(instrument);
+    }
+    _jbus(instrument) {
+        // do nothing
+    }
+    _fadd(instrument) {
+        // todo
+    }
+    _fsub(instrument) {
+        // todo
+    }
+    _fmul(instrument) {
+        // todo
+    }
+    _fdiv(instrument) {
+        // todo
+    }
+    execute(instrument) {
         switch (instrument.operator) {
         case LDA:
             this._load(this._rA, instrument);
@@ -719,6 +1242,110 @@ class MixMachine {
             break;
         case DIV:
             this._div(instrument);
+            break;
+        case ENTA:
+            this._enter(instrument, this._rA);
+            break;
+        case ENT1:
+            this._enter(instrument, this._rI[0]);
+            break;
+        case ENT2:
+            this._enter(instrument, this._rI[1]);
+            break;
+        case ENT3:
+            this._enter(instrument, this._rI[2]);
+            break;
+        case ENT4:
+            this._enter(instrument, this._rI[3]);
+            break;
+        case ENT5:
+            this._enter(instrument, this._rI[4]);
+            break;
+        case ENT6:
+            this._enter(instrument, this._rI[5]);
+            break;
+        case ENTX:
+            this._enter(instrument, this._rX);
+            break;
+        case CMPA:
+            this._compare(instrument, this._rA);
+            break;
+        case CMP1:
+            this._compare(instrument, this._rI[0]);
+            break;
+        case CMP2:
+            this._compare(instrument, this._rI[1]);
+            break;
+        case CMP3:
+            this._compare(instrument, this._rI[2]);
+            break;
+        case CMP4:
+            this._compare(instrument, this._rI[3]);
+            break;
+        case CMP5:
+            this._compare(instrument, this._rI[4]);
+            break;
+        case CMP6:
+            this._compare(instrument, this._rI[5]);
+            break;
+        case CMPX:
+            this._compare(instrument, this._rX);
+            break;
+        case JMP:
+            this._jump(instrument);
+            break;
+        case JAN:
+            this._jump_reg(instrument, this._rA);
+            break;
+        case J1N:
+            this._jump_reg(instrument, this._rI[1]);
+            break;
+        case J2N:
+            this._jump_reg(instrument, this._rI[2]);
+            break;
+        case J3N:
+            this._jump_reg(instrument, this._rI[3]);
+            break;
+        case J4N:
+            this._jump_reg(instrument, this._rI[4]);
+            break;
+        case J5N:
+            this._jump_reg(instrument, this._rI[5]);
+            break;
+        case J6N:
+            this._jump_reg(instrument, this._rI[6]);
+            break;
+        case JXN:
+            this._jump_reg(instrument, this._rX);
+            break;
+        case SLA:
+            this._shift(instrument);
+            break;
+        case MOVE:
+            this._move(instrument);
+            break;
+        case NOP:
+            this._nop();
+            break;
+        case HLT:
+            [
+                this._num, this._char, this._hlt
+            ][instrument.field].bind(this)(instrument);
+            break;
+        case IOC:
+            this._ioc(instrument);
+            break;
+        case IN:
+            this._in(instrument);
+            break;
+        case OUT:
+            this._out(instrument);
+            break;
+        case JRED:
+            this._jred(instrument);
+            break;
+        case JBUS:
+            this._jbus(instrument);
             break;
         default:
             throw `invalid instrument ${instrument.operator}`;

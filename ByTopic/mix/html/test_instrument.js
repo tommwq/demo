@@ -190,4 +190,74 @@ result = mix.rX().get();
 expect = new Word(false, 65);
 assert(expect.print(), result.print());
 
+
+inst = new Instrument(SLA, 2, 0, 0);
+mix.rA().set(Word.create(1, 2, 3, 4));
+mix.execute(inst);
+expect = Word.create(131, 4, 0, 0);
+result = mix.rA().get();
+assert(expect.print(), result.print());
+
+inst = new Instrument(SRA, 2, 0, 1);
+mix.rA().set(Word.create(391, 8, 9, 2));
+mix.execute(inst);
+expect = Word.create(0, 6, 7, 8);
+result = mix.rA().get();
+assert(expect.print(), result.print());
+
+
+inst = new Instrument(SRAX, 1, 0, 3);
+mix.rA().set(Word.create(66, 3, 4, 5));
+mix.rX().set(Word.create(-391, 8, 9, 10));
+mix.execute(inst);
+expect = Word.create(1, 2, 3, 4);
+result = mix.rA().get();
+assert(expect.print(), result.print());
+expect = Word.create(-326, 7, 8, 9);
+result = mix.rX().get();
+assert(expect.print(), result.print());
+
+
+inst = new Instrument(SLC, 501, 0, 4);
+mix.rA().set(Word.create(0, 6, 7, 8));
+mix.rX().set(Word.create(-196, 0, 0, 5));
+mix.execute(inst);
+expect = Word.create(6, 7, 8, 3);
+result = mix.rA().get();
+assert(expect.print(), result.print());
+expect = Word.create(-256, 0, 5, 0);
+result = mix.rX().get();
+assert(expect.print(), result.print());
+
+
+inst = new Instrument(SRC, 4, 0, 5);
+mix.rA().set(Word.create(131, 4, 0, 0));
+mix.rX().set(Word.create(-326, 7, 8, 9));
+mix.execute(inst);
+expect = Word.create(391, 8, 9, 2);
+result = mix.rA().get();
+assert(expect.print(), result.print());
+expect = Word.create(-196, 0, 0, 5);
+result = mix.rX().get();
+assert(expect.print(), result.print());
+
+
+inst = new Instrument(NUM, 0, 0, 0);
+mix.rA().set(Word.create(0, 31, 32, 39));
+mix.rX().set(Word.create(2425, 47, 30, 30));
+mix.execute(inst);
+expect = new Word(true, 12977700);
+result = mix.rA().get();
+assert(expect.print(), result.print());
+
+inst = new Instrument(CHAR, 0, 0, 1);
+mix.rA().set(new Word(false, 12977699));
+mix.execute(inst);
+expect = Word.create(-1950, 31, 32, 39);
+result = mix.rA().get();
+assert(expect.print(), result.print());
+expect = Word.create(2405, 36, 39, 39);
+result = mix.rX().get();
+assert(expect.print(), result.print());
+
 console.log("test instrument pass");
