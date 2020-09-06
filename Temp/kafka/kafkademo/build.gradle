@@ -1,0 +1,19 @@
+apply plugin: 'application'
+
+repositories {
+    maven {
+        url  "http://maven.aliyun.com/nexus/content/groups/public/" 
+    }
+}
+
+dependencies {
+    compile "org.apache.kafka:kafka-clients:2.6.0"
+    compile "org.apache.kafka:kafka_2.13:2.6.0"
+}
+
+mainClassName = "com.tq.test.KafkaDemoApplication"
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"  
+}
+
