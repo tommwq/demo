@@ -37,23 +37,6 @@ public class BuildInfoGenerator {
     }
 
     public static String generateJavaSource(BuildInfo buildInfo) throws IOException {
-        // TODO 使用模板
-        // String javaSourceFormat = "package build;\n\npublic final class BuildInfo {\n    public static final String HEAD = \"%s\";\n    public static final String ORIG_HEAD = \"%s\";\n    public static final String BRANCH = \"%s\";\n    public static final boolean HAVE_UNCOMMITTED_CHANGES = %s;\n}\n";
-        // boolean haveUncommittedChanges = !buildInfo.isClean;
-        // String javaSource = String.format(javaSourceFormat,
-        //                                   buildInfo.head,
-        //                                   buildInfo.origHead,
-        //                                   buildInfo.branch,
-        //                                   haveUncommittedChanges ? "true" : "false");
-        // return javaSource;
-
-        // boolean haveUncommittedChanges = !buildInfo.isClean;
-        // String javaSource = String.format(javaSourceFormat,
-        //                                   buildInfo.head,
-        //                                   buildInfo.origHead,
-        //                                   buildInfo.branch,
-        //                                   haveUncommittedChanges ? "true" : "false");
-
         Map<String, String> values = new HashMap<>();
         values.put("HEAD", buildInfo.head);
         values.put("ORIG_HEAD", buildInfo.origHead);

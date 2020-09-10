@@ -4,3 +4,4 @@
 * todo 解析jztrade.xml，记录接口调用情况。
 * todo 解析dll，记录接口和数据表关联。
 * todo 解析dll，记录错误消息和数据表关联。
+* todo 将InterfaceManagement代码合并到DevMng。
