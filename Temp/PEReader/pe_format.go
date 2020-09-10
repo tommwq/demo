@@ -1,27 +1,10 @@
 package main
 
-const DOS = 0x5a4d    // MZ
-const OS2 = 0x454e    // NE
-const OS2_LE = 0x454c // LE
-const NT = 0x00004550 // PE00
-
-const (
-	IMAGE_DIRECTORY_ENTRY_EXPORT = iota
-	IMAGE_DIRECTORY_ENTRY_IMPORT
-	IMAGE_DIRECTORY_ENTRY_RESOURCE
-	IMAGE_DIRECTORY_ENTRY_EXCEPTION
-	IMAGE_DIRECTORY_ENTRY_SECURITY
-	IMAGE_DIRECTORY_ENTRY_BASERELOC
-	IMAGE_DIRECTORY_ENTRY_DEBUG
-	IMAGE_DIRECTORY_ENTRY_ARCHITECTURE
-	IMAGE_DIRECTORY_ENTRY_GLOBALPTR
-	IMAGE_DIRECTORY_ENTRY_TLS
-	IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG
-	IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT
-	IMAGE_DIRECTORY_ENTRY_IAT
-	IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT
-	IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR
-)
+// https://docs.microsoft.com/zh-cn/windows/win32/debug/pe-format?redirectedfrom=MSDN
+// https://resources.infosecinstitute.com/2-malware-researchers-handbook-demystifying-pe-file/
+// https://tech-zealots.com/malware-analysis/pe-portable-executable-structure-malware-analysis-part-2/
+// http://csn.ul.ie/~caolan/pub/winresdump/winresdump/doc/pefile2.html
+// http://www.sunshine2k.de/reversing/tuts/tut_pe.htm
 
 // MS-DOS头
 type ImageDosHeader struct {
@@ -48,6 +31,7 @@ type ImageDosHeader struct {
 
 // PE文件头
 type ImageFileHeader struct {
+	Signature            uint32
 	Machine              uint16
 	NumberOfSections     uint16
 	TimeDateStamp        uint32
@@ -87,41 +71,6 @@ type ImageOptionalHeader struct {
 	SizeOfStackCommit           uint32
 	SizeOfHeapReserve           uint32
 	SizeOfHeapCommit            uint32
-	LoaderFlags                 uint32
-	NumberOfRvaAndSizes         uint32
-	DataDirectory               [16]ImageDataDirectory
-}
-
-// PE可选头
-type ImageOptionalHeader64 struct {
-	Magic                       uint16
-	MajorLinkerVersion          uint8
-	MinorLinkerVersion          uint8
-	SizeOfCode                  uint32
-	SizeOfInitializedData       uint32
-	SizeOfUninitializedData     uint32
-	AddressOfEntryPoint         uint32
-	BaseOfCode                  uint32
-	BaseOfData                  uint32
-	ImageBase                   uint64
-	SectionAlignment            uint32
-	FileAlignment               uint32
-	MajorOperatingSystemVersion uint16
-	MinorOperatingSystemVersion uint16
-	MajorImageVersion           uint16
-	MinorImageVersion           uint16
-	MajorSubsystemVersion       uint16
-	MinorSubsystemVersion       uint16
-	Win32VersionValue           uint32
-	SizeOfImage                 uint32
-	SizeOfHeaders               uint32
-	CheckSum                    uint32
-	Subsystem                   uint16
-	DllCharacteristics          uint16
-	SizeOfStackReserve          uint64
-	SizeOfStackCommit           uint64
-	SizeOfHeapReserve           uint64
-	SizeOfHeapCommit            uint64
 	LoaderFlags                 uint32
 	NumberOfRvaAndSizes         uint32
 	DataDirectory               [16]ImageDataDirectory

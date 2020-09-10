@@ -6,11 +6,29 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
+	"unicode"
 )
 
+func StringIsPrint(s string) bool {
+	for _, b := range []byte(s) {
+		r := rune(b)
+		if !unicode.IsPrint(r) {
+			return false
+		}
+	}
+	return true
+}
+
 func main() {
-	fileName := "C:/Users/WangQian/Game/duizhanpingtai/ClientInt/bin64/platform/Osg3D/sqlite3.dll"
+
+	if len(os.Args) < 2 {
+		log.Printf("usage: %s a.dll\n", os.Args[0])
+		return
+	}
+
+	fileName := os.Args[1]
 	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		log.Fatal(err)
@@ -30,62 +48,42 @@ func main() {
 		log.Fatal(err)
 	}
 
-	optionalHeader := ImageOptionalHeader64{}
+	optionalHeader := ImageOptionalHeader{}
 	err = binary.Read(reader, binary.LittleEndian, &optionalHeader)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	keywords := []string{
-		"select",
-		"insert",
-		"update",
-		"delete",
+	isPE32Plus := optionalHeader.Magic == PE32_PLUS
+	if isPE32Plus {
+		log.Println("64-bit")
+	} else {
+		log.Println("32-bit")
 	}
 
+	log.Printf("SECTION COUNT: %v\n", imageFileHeader.NumberOfSections)
+
 	sectionHeader := ImageSectionHeader{}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < int(imageFileHeader.NumberOfSections); i++ {
 		err = binary.Read(reader, binary.LittleEndian, &sectionHeader)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		sectionName := strings.Trim(string(sectionHeader.Name[:]), "\000")
-		if sectionName == "" {
-			break
-		} else if sectionName == ".rdata" {
-			log.Println(sectionHeader.PointerToRawData, sectionHeader.SizeOfRawData, len(data))
-			sectionData := data[sectionHeader.PointerToRawData : sectionHeader.PointerToRawData+sectionHeader.SizeOfRawData]
-			for _, block := range bytes.Split(sectionData, []byte("\000")) {
-				s := strings.Trim(string(block), "\000")
-				for _, keyword := range keywords {
-					if strings.Contains(s, keyword) || strings.Contains(s, strings.ToUpper(keyword)) {
-						log.Println(s)
-					}
-				}
-			}
+		log.Printf("SECTION %v\n", sectionName)
+
+		if sectionName != ".rdata" {
+			continue
 		}
 
-		log.Println(sectionName)
+		log.Println(sectionHeader.PointerToRawData, sectionHeader.SizeOfRawData, len(data))
+		sectionData := data[sectionHeader.PointerToRawData : sectionHeader.PointerToRawData+sectionHeader.SizeOfRawData]
+		for _, block := range bytes.Split(sectionData, []byte("\000")) {
+			str := strings.Trim(string(block), "\000")
+			if len(str) > 0 && StringIsPrint(str) {
+				log.Println(str)
+			}
+		}
 	}
-
-	// symbolTable := imageFileHeader.PointerToSymbolTable
-	// symbol := ImageSymbol{}
-	// log.Println(symbolTable)
-	// reader = bytes.NewReader(data[symbolTable:len(data)])
-	// for i := 0; i < int(imageFileHeader.NumberOfSymbols); i++ {
-	// 	err = binary.Read(reader, binary.LittleEndian, &symbol)
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	log.Println(symbol)
-	// }
-
-	dirEntry := optionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT]
-	log.Println(dirEntry.VirtualAddress, dirEntry.Size)
-
-	reader = bytes.NewReader(data[dirEntry.VirtualAddress : dirEntry.VirtualAddress+dirEntry.Size])
-	dir := ImageExportDirectory{}
-	err = binary.Read(reader, binary.LittleEndian, &dir)
-	log.Printf("%v %x %x\n", err, dir.NumberOfFunctions, dir.NumberOfNames)
 }
