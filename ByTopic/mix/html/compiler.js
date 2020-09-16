@@ -320,3 +320,124 @@ class Compiler {
         return tokens;
     }
 }
+
+const TOKEN = {
+    "Symbol": 1,
+    "Number": 2,
+    "Punctuation": 3,
+    "EQU": "EQU",
+    "ORIG": "ORIG",
+    "CON": "CON",
+    "ALF": "ALF",
+    "END": "END",
+};
+
+class Token {
+    constructor(type, word) {
+        this.type = type;
+        this.word = word;
+    }
+    isSymbol() {
+        return this.type == TOKEN.Symbol;
+    }
+    isNumber() {
+        return this.type == TOKEN.Number;
+    }
+    isPunctuation() {
+        return this.type == TOKEN.Punctuation;
+    }
+    isSpecialSymbol() {
+        let word = this.word;
+        if (word.length != 2) {
+            return false;
+        }
+
+        let c = word[1];
+        return CType.isdigit(word[0]) && (c == 'H' || c == 'B' || c == 'F');
+    }    
+}
+
+var CType = {
+    "isalpha": (c) => {
+        return ("a" <= c && c <= "z") || ("A" <= c && c <= "Z");
+    },
+    "isdigit": (c) => {
+        return "0" <= c && c <= "9";
+    },
+    "isalnum": (c) => {
+        return CType.isalpha(c) || CType.isdigit(c);
+    },
+    "ispunct": (c) => {
+        let x = c.charCodeAt(0);
+        return (33 <= x && x <= 47) ||
+            (58 <= x && x <= 64) ||
+            (91 <= x && x <= 96) ||
+            (123 <= x && x <= 126);
+    },
+    "isspace": (c) => {
+        return c in {
+            " ": true,
+            "\n": true,
+            "\t": true,
+            "\v": true,
+            "\r": true,
+        };
+    },
+};
+
+function parseLine(line) {
+    let tokens = [];
+    for (let pos = 0; pos < line.length; pos++) {
+        let ch = line[pos];
+        if (CType.isspace(ch)) {
+            continue;
+        }
+
+        let word = "";
+        if (CType.ispunct(ch)) {
+            word = ch;
+            if (ch == "/" && pos + 1 < line.length && line[pos + 1] == "/") {
+                pos++;
+                word = "//";
+            }
+            tokens.push(new Token(TOKEN.Punctuation, word));
+            continue;
+        }
+
+        let isNumber = true;
+        while (pos < line.length) {
+            ch = line[pos];
+            if (!CType.isalnum(ch)) {
+                pos--;
+                break;
+            }
+            word = word + ch;
+            if (CType.isalpha(ch)) {
+                isNumber = false;
+            }
+            pos++;
+        }
+        if (word.length > 0) {
+            let token;
+            if (isNumber) {
+                token = new Token(TOKEN.Number, word);
+            } else {
+                token = new Token(TOKEN.Symbol, word);
+            }
+            tokens.push(token);
+        }
+    }
+
+    return tokens;
+}
+
+export {
+    Instrument,
+    Compiler,
+    TOKEN,
+    Token,
+    parseLine,
+    CType,    
+};
+
+

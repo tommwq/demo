@@ -1,369 +1,7 @@
-// 错误
-const InvalidValueError = "invalid value";
+import { Byte, Word, SignBit } from './datatype.js';
+import { mix } from './value.js';
 
-// 数据类型定义
-const MIN_BYTE = 0;
-const MAX_BYTE = 63;
-const BITS_PER_BYTE = 6;
-const MIN_WORD = 0;
-const MAX_WORD = 1073741823;
-const BITS_PER_WORD = 30;
-const MIN_BYTE_FIELD = 1;
-const MAX_BYTE_FIELD = 5;
-
-// 常量
-const Zero = 0;
-const MemorySize = 4000;
-
-// 指令
-const NOP = 0;
-const ADD = 1;
-const SUB = 2;
-const MUL = 3;
-const DIV = 4;
-const HLT = 5;
-const NUM = 5;
-const CHAR = 5;
-const SLA = 6;
-const SRA = 6;
-const SLAX = 6;
-const SRAX = 6;
-const SLC = 6;
-const SRC = 6;
-const MOVE = 7;
-const LDA = 8;
-const LD1 = 9;
-const LD2 = 10;
-const LD3 = 11;
-const LD4 = 12;
-const LD5 = 13;
-const LD6 = 14;
-const LDX = 15;
-const LDAN = 16;
-const LD1N = 17;
-const LD2N = 18;
-const LD3N = 19;
-const LD4N = 20;
-const LD5N = 21;
-const LD6N = 22;
-const LDXN = 23;
-const STA = 24;
-const ST1 = 25;
-const ST2 = 26;
-const ST3 = 27;
-const ST4 = 28;
-const ST5 = 29;
-const ST6 = 30;
-const STX = 31;
-const STJ = 32;
-const STZ = 33;
-const JBUS = 34;
-const IOC = 35;
-const IN = 36;
-const OUT = 37;
-const JRED = 38;
-const JMP = 39;
-const JSJ = 39;
-const JOV = 39;
-const JNOV = 39;
-const JL = 39;
-const JE = 39;
-const JG = 39;
-const JGE = 39;
-const JNE = 39;
-const JLE = 39;
-const JAN = 40;
-const JAZ = 40;
-const JAP = 40;
-const JANN = 40;
-const JANZ = 40;
-const JANP = 40;
-const J1N = 41;
-const J1Z = 41;
-const J1P = 41;
-const J1NN = 41;
-const J1NZ = 41;
-const J1NP = 41;
-const J2N = 42;
-const J2Z = 42;
-const J2P = 42;
-const J2NN = 42;
-const J2NZ = 42;
-const J2NP = 42;
-const J3N = 43;
-const J3Z = 43;
-const J3P = 43;
-const J3NN = 43;
-const J3NZ = 43;
-const J3NP = 43;
-const J4N = 44;
-const J4Z = 44;
-const J4P = 44;
-const J4NN = 44;
-const J4NZ = 44;
-const J4NP = 44;
-const J5N = 45;
-const J5Z = 45;
-const J5P = 45;
-const J5NN = 45;
-const J5NZ = 45;
-const J5NP = 45;
-const J6N = 46;
-const J6Z = 46;
-const J6P = 46;
-const J6NN = 46;
-const J6NZ = 46;
-const J6NP = 46;
-const JXN = 47;
-const JXZ = 47;
-const JXP = 47;
-const JXNN = 47;
-const JXNZ = 47;
-const JXNP = 47;
-const ENTA = 48;
-const ENT1 = 49;
-const ENT2 = 50;
-const ENT3 = 51;
-const ENT4 = 52;
-const ENT5 = 53;
-const ENT6 = 54;
-const ENTX = 55;
-const ENNA = 48;
-const ENN1 = 49;
-const ENN2 = 50;
-const ENN3 = 51;
-const ENN4 = 52;
-const ENN5 = 53;
-const ENN6 = 54;
-const ENNX = 55;
-const INCA = 48;
-const INC1 = 49;
-const INC2 = 50;
-const INC3 = 51;
-const INC4 = 52;
-const INC5 = 53;
-const INC6 = 54;
-const INCX = 55;
-const DECA = 48;
-const DEC1 = 49;
-const DEC2 = 50;
-const DEC3 = 51;
-const DEC4 = 52;
-const DEC5 = 53;
-const DEC6 = 54;
-const DECX = 55;
-const CMPA = 56;
-const CMP1 = 57;
-const CMP2 = 58;
-const CMP3 = 59;
-const CMP4 = 60;
-const CMP5 = 61;
-const CMP6 = 62;
-const CMPX = 63;
-
-// 字符表
-const Alphabet = [
-    " ",
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "\u0394",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "\u03a3",
-    "\u03a0",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    ".",
-    ",",
-    "(",
-    ")",
-    "+",
-    "-",
-    "*",
-    "/",
-    "=",
-    "$",
-    "<",
-    ">",
-    "@",
-    ";",
-    ":",
-    "'",
-];
-
-// 检查值value是否大于min且小于max。
-function checkValue(value, min, max, error) {
-    let e = InvalidValueError;
-    if (error != null) {
-        e = error;
-    }
-    if (value < min || value > max) {
-        throw e;
-    }
-}
-
-
-// 字节
-class Byte {
-    constructor(value) {
-        this._value = Zero;
-        if (value != null) {
-            this.assign(value);
-        }
-    }
-
-    assign(value) {
-        checkValue(value, MIN_BYTE, MAX_BYTE);
-        this._value = value;
-    }
-
-    value() {
-        return this._value;
-    }
-}
-
-// 符号位
-class SignBit {
-    constructor(isPositive) {
-        this.is_positive = isPositive;
-    }
-    isSame(sign) {
-        return this.is_positive == sign.is_positive;
-    }
-    isPositive() {
-        return this.is_positive;
-    }
-    isNegative() {
-        return !this.is_positive;
-    }
-    setPositive() {
-        this.is_positive = true;
-    }
-    setNegative() {
-        this.is_positive = false;
-    }
-    flip() {
-        this.is_positive = !this.is_positive;
-    }
-    equal(other) {
-        return this.is_positive == other.is_positive;
-    }
-}
-
-// 字
-class Word {
-    // true/false, value
-    constructor(sign, value) {
-        this._sign = new SignBit(sign);
-        this._value = Zero;
-        if (value != null) {
-            this.assign(value);
-        }
-    }
-    flipSign() {
-        this._sign.flip();
-    }
-    print() {
-        let text = [this._sign.isPositive() ? '+' : '-'];
-        for (let i = MIN_BYTE_FIELD; i <= MAX_BYTE_FIELD; i++) {
-            text.push(this.getByte(i).value());
-        }
-        return '[' + text.join(' ') + ']';
-    }
-    isSameSign(word) {
-        return this._sign.isSame(word._sign);
-    }
-    static copy(word) {
-        let result = new Word(true, 0);
-        result.assign(word.value());
-        if (word._sign.isNegative()) {
-            result._sign.setNegative();
-        }
-        return result;
-    }
-    static create(address, index, field, code) {
-        let word = new Word(true, 0);
-        if (address < 0) {
-            word.setNegative();
-            address = -1 * address;
-        }
-
-        word.assignByte(1, new Byte(address / 64));
-        word.assignByte(2, new Byte(address % 64));
-        word.assignByte(3, new Byte(index));
-        word.assignByte(4, new Byte(field));
-        word.assignByte(5, new Byte(code));
-        return word;
-    }
-    equal(other) {
-        return this._value == other._value && this._sign.equal(other._sign);
-    }
-    assign(value) {
-        checkValue(Math.abs(value), MIN_WORD, MAX_WORD);
-        this._value = Math.abs(value);
-        if (value < 0) {
-            this.setNegative();
-        }
-    }
-    isPositive() {
-        return this._sign.isPositive();
-    }
-    isNegative() {
-        return this._sign.isNegative();
-    }
-    setNegative() {
-        this._sign.setNegative();
-    }
-    setPositive() {
-        this._sign.setPositive();
-    }
-    value() {
-        return this._value;
-    }
-    getByte(field) {
-        checkValue(field, MIN_BYTE_FIELD, MAX_BYTE_FIELD);
-        let byteOffset = (MAX_BYTE_FIELD - field) * BITS_PER_BYTE;
-        let mask = ~((~0) << BITS_PER_BYTE);
-        let byte = new Byte((this._value >>> byteOffset) & mask);
-        return byte;
-    }
-    assignByte(field, mixByte) {
-        checkValue(field, MIN_BYTE_FIELD, MAX_BYTE_FIELD);
-        let byteOffset = (MAX_BYTE_FIELD - field) * BITS_PER_BYTE;
-        let byteMask = ~((~0) << BITS_PER_BYTE) << byteOffset;
-        this.assign((this._value & ~byteMask) | (mixByte.value() << byteOffset));
-    }
-}
+// MIX机器
 
 // 寄存器
 class Register {
@@ -527,7 +165,7 @@ class PunchPaperTape extends Device {
 }
 
 // MIX机器
-class MixMachine {
+class MIXMachine {
     constructor() {
         this._rA = new Register();
         this._rX = new Register();
@@ -543,7 +181,7 @@ class MixMachine {
         this._compare_indicator = new Indicator();
         this._overflow_toggle = new Toggle();
         this._memory = [];
-        for (let index = 0; index <= MemorySize; index++) {
+        for (let index = 0; index <= mix.constant.MemorySize; index++) {
             this._memory.push(new Word(true, 0));
         }
         this._devices = [
@@ -616,14 +254,14 @@ class MixMachine {
         let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
-        let result = MixMachine.adjustWordByField(operand, left, right);
+        let result = MIXMachine.adjustWordByField(operand, left, right);
         register.set(result);
     }
     _loadNegative(register, instrument) {
         let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
-        let result = MixMachine.adjustWordByField(operand, left, right);
+        let result = MIXMachine.adjustWordByField(operand, left, right);
         result.flipSign();
         register.set(result);
     }
@@ -637,7 +275,7 @@ class MixMachine {
             left = 1;
         }
         for (let i = left; i <= right; i++) {
-            result.assignByte(i, operand.getByte(MAX_BYTE_FIELD + i - right));
+            result.assignByte(i, operand.getByte(mix.constant.MAX_BYTE_FIELD + i - right));
         }
         
         this.writeMemory(this.getAddress(instrument), result);
@@ -649,7 +287,7 @@ class MixMachine {
         let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
-        let tmp = MixMachine.adjustWordByField(operand, left, right);
+        let tmp = MIXMachine.adjustWordByField(operand, left, right);
         let rA = this.rA().get();
 
         let op1 = BigInt(rA.value() * (rA.isPositive() ? 1 : -1));
@@ -658,9 +296,9 @@ class MixMachine {
         let result = op1 + op2;
         let abs = result > 0 ? result : -result;
 
-        if (abs > MAX_WORD) {
+        if (abs > mix.constant.MAX_WORD) {
             this._overflow_toggle.turnOn();
-            abs = MAX_WORD;
+            abs = mix.constant.MAX_WORD;
         }
 
         this.rA().set(new Word(result > 0, Number(abs)));
@@ -669,7 +307,7 @@ class MixMachine {
         let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
-        let tmp = MixMachine.adjustWordByField(operand, left, right);
+        let tmp = MIXMachine.adjustWordByField(operand, left, right);
         let rA = this.rA().get();
         
         let op1 = BigInt(rA.value() * (rA.isPositive() ? 1 : -1));
@@ -678,9 +316,9 @@ class MixMachine {
         let result = op1 - op2;
         let abs = result > 0 ? result : -result;
 
-        if (abs > MAX_WORD) {
+        if (abs > mix.constant.MAX_WORD) {
             this._overflow_toggle.turnOn();
-            abs = MAX_WORD;
+            abs = mix.constant.MAX_WORD;
         }
 
         this.rA().set(new Word(result > 0, Number(abs)));
@@ -689,7 +327,7 @@ class MixMachine {
         let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
-        let tmp = MixMachine.adjustWordByField(operand, left, right);
+        let tmp = MIXMachine.adjustWordByField(operand, left, right);
         let rA = this.rA().get();
 
         let op1 = BigInt(rA.value() * (rA.isPositive() ? 1 : -1));
@@ -698,8 +336,8 @@ class MixMachine {
         let result = op1 * op2;
         let abs = result > 0 ? result : -result;
 
-        let high = abs / BigInt(MAX_WORD + 1);
-        let low = abs % BigInt(MAX_WORD + 1);
+        let high = abs / BigInt(mix.constant.MAX_WORD + 1);
+        let low = abs % BigInt(mix.constant.MAX_WORD + 1);
 
         this.rA().set(new Word(result > 0, Number(high)));
         this.rX().set(new Word(result > 0, Number(low)));
@@ -711,7 +349,7 @@ class MixMachine {
         let operand = this.readMemory(this.getAddress(instrument));
         let left = Math.floor(instrument.field / 8);
         let right = instrument.field % 8;
-        let tmp = MixMachine.adjustWordByField(operand, left, right);
+        let tmp = MIXMachine.adjustWordByField(operand, left, right);
         if (high >= tmp.value()) {
             this._overflow_toggle().turnOn();
             return;
@@ -719,7 +357,7 @@ class MixMachine {
 
         let positive = this.rA().get().isSameSign(tmp);
         let oldRASign = this.rA().get().isPositive();
-        let op1 = BigInt(high) * BigInt(MAX_WORD + 1) + BigInt(low);
+        let op1 = BigInt(high) * BigInt(mix.constant.MAX_WORD + 1) + BigInt(low);
         let op2 = BigInt(tmp.value());
 
         let quotient = Number(op1 / op2);
@@ -749,8 +387,8 @@ class MixMachine {
         let op2 = register.get().value();
         let overflow = false;
         let result = op1 + op2;
-        if (Math.abs(result) > MAX_WORD) {
-            result = result % (MAX_WORD + 1);
+        if (Math.abs(result) > mix.constant.MAX_WORD) {
+            result = result % (mix.constant.MAX_WORD + 1);
             overflow = true;
         }
 
@@ -764,8 +402,8 @@ class MixMachine {
         let op2 = register.get().value();
         let overflow = false;
         let result = op1 - op2;
-        if (Math.abs(result) > MAX_WORD) {
-            result = result % (MAX_WORD + 1);
+        if (Math.abs(result) > mix.constant.MAX_WORD) {
+            result = result % (mix.constant.MAX_WORD + 1);
             overflow = true;
         }
 
@@ -1093,7 +731,7 @@ class MixMachine {
             }
             value = value * 10 + (digit % 10);
         }
-        value %= (MAX_WORD + 1);
+        value %= (mix.constant.MAX_WORD + 1);
         this._rA.set(new Word(ra.isPositive(), value));
     }
     _hlt(instrument) {
@@ -1153,198 +791,198 @@ class MixMachine {
     }
     execute(instrument) {
         switch (instrument.operator) {
-        case LDA:
+        case mix.code.LDA:
             this._load(this._rA, instrument);
             break;
-        case LD1:
+        case mix.code.LD1:
             this._load(this._rI[0], instrument);
             break;
-        case LD2:
+        case mix.code.LD2:
             this._load(this._rI[1], instrument);
             break;
-        case LD3:
+        case mix.code.LD3:
             this._load(this._rI[2], instrument);
             break;
-        case LD4:
+        case mix.code.LD4:
             this._load(this._rI[3], instrument);
             break;
-        case LD5:
+        case mix.code.LD5:
             this._load(this._rI[4], instrument);
             break;
-        case LD6:
+        case mix.code.LD6:
             this._load(this._rI[5], instrument);
             break;
-        case LDX:
+        case mix.code.LDX:
             this._load(this._rX, instrument);
             break;
-        case LDAN:
+        case mix.code.LDAN:
             this._loadNegative(this._rA, instrument);
             break;
-        case LD1N:
+        case mix.code.LD1N:
             this._loadNegative(this._rI[0], instrument);
             break;
-        case LD2N:
+        case mix.code.LD2N:
             this._loadNegative(this._rI[1], instrument);
             break;
-        case LD3N:
+        case mix.code.LD3N:
             this._loadNegative(this._rI[2], instrument);
             break;
-        case LD4N:
+        case mix.code.LD4N:
             this._loadNegative(this._rI[3], instrument);
             break;
-        case LD5N:
+        case mix.code.LD5N:
             this._loadNegative(this._rI[4], instrument);
             break;
-        case LD6N:
+        case mix.code.LD6N:
             this._loadNegative(this._rI[5], instrument);
             break;
-        case LDXN:
+        case mix.code.LDXN:
             this._loadNegative(this._rX, instrument);
             break;
-        case STA:
+        case mix.code.STA:
             this._store(this._rA, instrument);
             break;
-        case ST1:
+        case mix.code.ST1:
             this._store(this._rI[0], instrument);
             break;
-        case ST2:
+        case mix.code.ST2:
             this._store(this._rI[1], instrument);
             break;
-        case ST3:
+        case mix.code.ST3:
             this._store(this._rI[2], instrument);
             break;
-        case ST4:
+        case mix.code.ST4:
             this._store(this._rI[3], instrument);
             break;
-        case ST5:
+        case mix.code.ST5:
             this._store(this._rI[4], instrument);
             break;
-        case ST6:
+        case mix.code.ST6:
             this._store(this._rI[5], instrument);
             break;
-        case STX:
+        case mix.code.STX:
             this._store(this._rX, instrument);
             break;
-        case STJ:
+        case mix.code.STJ:
             this._store(this._rJ, instrument);
             break;
-        case STZ:
+        case mix.code.STZ:
             this._store_zero(instrument);
             break;
-        case ADD:
+        case mix.code.ADD:
             this._add(instrument);
             break;
-        case SUB:
+        case mix.code.SUB:
             this._sub(instrument);
             break;
-        case MUL:
+        case mix.code.MUL:
             this._mul(instrument);
             break;
-        case DIV:
+        case mix.code.DIV:
             this._div(instrument);
             break;
-        case ENTA:
+        case mix.code.ENTA:
             this._enter(instrument, this._rA);
             break;
-        case ENT1:
+        case mix.code.ENT1:
             this._enter(instrument, this._rI[0]);
             break;
-        case ENT2:
+        case mix.code.ENT2:
             this._enter(instrument, this._rI[1]);
             break;
-        case ENT3:
+        case mix.code.ENT3:
             this._enter(instrument, this._rI[2]);
             break;
-        case ENT4:
+        case mix.code.ENT4:
             this._enter(instrument, this._rI[3]);
             break;
-        case ENT5:
+        case mix.code.ENT5:
             this._enter(instrument, this._rI[4]);
             break;
-        case ENT6:
+        case mix.code.ENT6:
             this._enter(instrument, this._rI[5]);
             break;
-        case ENTX:
+        case mix.code.ENTX:
             this._enter(instrument, this._rX);
             break;
-        case CMPA:
+        case mix.code.CMPA:
             this._compare(instrument, this._rA);
             break;
-        case CMP1:
+        case mix.code.CMP1:
             this._compare(instrument, this._rI[0]);
             break;
-        case CMP2:
+        case mix.code.CMP2:
             this._compare(instrument, this._rI[1]);
             break;
-        case CMP3:
+        case mix.code.CMP3:
             this._compare(instrument, this._rI[2]);
             break;
-        case CMP4:
+        case mix.code.CMP4:
             this._compare(instrument, this._rI[3]);
             break;
-        case CMP5:
+        case mix.code.CMP5:
             this._compare(instrument, this._rI[4]);
             break;
-        case CMP6:
+        case mix.code.CMP6:
             this._compare(instrument, this._rI[5]);
             break;
-        case CMPX:
+        case mix.code.CMPX:
             this._compare(instrument, this._rX);
             break;
-        case JMP:
+        case mix.code.JMP:
             this._jump(instrument);
             break;
-        case JAN:
+        case mix.code.JAN:
             this._jump_reg(instrument, this._rA);
             break;
-        case J1N:
+        case mix.code.J1N:
             this._jump_reg(instrument, this._rI[1]);
             break;
-        case J2N:
+        case mix.code.J2N:
             this._jump_reg(instrument, this._rI[2]);
             break;
-        case J3N:
+        case mix.code.J3N:
             this._jump_reg(instrument, this._rI[3]);
             break;
-        case J4N:
+        case mix.code.J4N:
             this._jump_reg(instrument, this._rI[4]);
             break;
-        case J5N:
+        case mix.code.J5N:
             this._jump_reg(instrument, this._rI[5]);
             break;
-        case J6N:
+        case mix.code.J6N:
             this._jump_reg(instrument, this._rI[6]);
             break;
-        case JXN:
+        case mix.code.JXN:
             this._jump_reg(instrument, this._rX);
             break;
-        case SLA:
+        case mix.code.SLA:
             this._shift(instrument);
             break;
-        case MOVE:
+        case mix.code.MOVE:
             this._move(instrument);
             break;
-        case NOP:
+        case mix.code.NOP:
             this._nop();
             break;
-        case HLT:
+        case mix.code.HLT:
             [
                 this._num, this._char, this._hlt
             ][instrument.field].bind(this)(instrument);
             break;
-        case IOC:
+        case mix.code.IOC:
             this._ioc(instrument);
             break;
-        case IN:
+        case mix.code.IN:
             this._in(instrument);
             break;
-        case OUT:
+        case mix.code.OUT:
             this._out(instrument);
             break;
-        case JRED:
+        case mix.code.JRED:
             this._jred(instrument);
             break;
-        case JBUS:
+        case mix.code.JBUS:
             this._jbus(instrument);
             break;
         default:
@@ -1353,3 +991,19 @@ class MixMachine {
         }
     }
 }
+
+
+export {
+    Register,
+    AddressRegister,
+    TransferAddressRegister,
+    Toggle,
+    Indicator,
+    Device,
+    Tape,
+    Disk,
+    LinePrinter,
+    PunchPaperTape,
+    MIXMachine,
+};
+
