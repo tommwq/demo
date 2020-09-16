@@ -71,13 +71,13 @@ func main() {
 		}
 
 		sectionName := strings.Trim(string(sectionHeader.Name[:]), "\000")
-		log.Printf("SECTION %v\n", sectionName)
+		// log.Printf("SECTION %v\n", sectionName)
 
 		if sectionName != ".rdata" {
 			continue
 		}
 
-		log.Println(sectionHeader.PointerToRawData, sectionHeader.SizeOfRawData, len(data))
+		// log.Println(sectionHeader.PointerToRawData, sectionHeader.SizeOfRawData, len(data))
 		sectionData := data[sectionHeader.PointerToRawData : sectionHeader.PointerToRawData+sectionHeader.SizeOfRawData]
 		for _, block := range bytes.Split(sectionData, []byte("\000")) {
 			str := strings.Trim(string(block), "\000")
