@@ -23,11 +23,13 @@ function listTestScripts(callback) {
 }
 
 function runTestScript(fileName) {
-    console.log(fileName);
+    // console.log(fileName);
     let command = `node --experimental-vm-modules ${fileName}`;
     child_process.exec(command, (error, stdout, stderr) => {
         if (error != null) {
-            console.log(error, stdout, stderr);
+            console.warn(error, stdout, stderr);
+        } else if (stdout.length > 0 || stderr.length > 0) {
+            console.log(stdout, stderr);
         }
     });
 }

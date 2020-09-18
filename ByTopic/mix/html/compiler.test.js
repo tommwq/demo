@@ -35,9 +35,7 @@ EXIT JMP *
 `;
 
 for (let line of program1.split("\n")) {
-    for (let x of parseLine(line)) {
-        console.log(x);
-    }
+    console.log(parseLine(line).map((token) => token.string()).join(" "));
 }
 
 

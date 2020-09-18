@@ -322,9 +322,9 @@ class Compiler {
 }
 
 const TOKEN = {
-    "Symbol": 1,
-    "Number": 2,
-    "Punctuation": 3,
+    "Symbol": "Symbol",
+    "Number": "Number",
+    "Punctuation": "Punctuation",
     "EQU": "EQU",
     "ORIG": "ORIG",
     "CON": "CON",
@@ -336,6 +336,9 @@ class Token {
     constructor(type, word) {
         this.type = type;
         this.word = word;
+    }
+    string() {
+        return `Token(${this.type},"${this.word}")`;
     }
     isSymbol() {
         return this.type == TOKEN.Symbol;
