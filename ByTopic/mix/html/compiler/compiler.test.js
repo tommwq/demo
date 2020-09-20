@@ -1,5 +1,6 @@
-import { Instrument, Compiler, TOKEN, Token } from "./compiler.js";
-import { assert } from "./test/test.js";
+import { Compiler, Token } from "./compiler.js";
+import { Instrument } from "../instrument.js";
+import { assert } from "../test/test.js";
 
 
 let compiler = new Compiler();

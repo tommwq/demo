@@ -1,5 +1,5 @@
 import { StateMachine } from "./statemachine.js";
-import { assert } from "./test/test.js";
+import { assert } from "../test/test.js";
 
 let machine = new StateMachine("a");
 machine.addState("b");
