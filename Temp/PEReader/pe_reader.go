@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -55,13 +56,14 @@ func main() {
 	}
 
 	isPE32Plus := optionalHeader.Magic == PE32_PLUS
-	if isPE32Plus {
-		log.Println("64-bit")
-	} else {
-		log.Println("32-bit")
-	}
+	_ = isPE32Plus
+	// if isPE32Plus {
+	// 	log.Println("64-bit")
+	// } else {
+	// 	log.Println("32-bit")
+	// }
 
-	log.Printf("SECTION COUNT: %v\n", imageFileHeader.NumberOfSections)
+	// log.Printf("SECTION COUNT: %v\n", imageFileHeader.NumberOfSections)
 
 	sectionHeader := ImageSectionHeader{}
 	for i := 0; i < int(imageFileHeader.NumberOfSections); i++ {
@@ -80,10 +82,24 @@ func main() {
 		// log.Println(sectionHeader.PointerToRawData, sectionHeader.SizeOfRawData, len(data))
 		sectionData := data[sectionHeader.PointerToRawData : sectionHeader.PointerToRawData+sectionHeader.SizeOfRawData]
 		for _, block := range bytes.Split(sectionData, []byte("\000")) {
+			if len(block) > 0 && !unicode.Is(unicode.Latin, rune(block[0])) {
+				continue
+			}
 			str := strings.Trim(string(block), "\000")
-			if len(str) > 0 && StringIsPrint(str) {
-				log.Println(str)
+			if len(str) > 0 && StringIsPrint(str) && matchKeyword(str, []string{"update ", "select ", "insert ", "delete "}) {
+				fmt.Println(str)
 			}
 		}
 	}
+}
+
+func matchKeyword(text string, keywords []string) bool {
+	lower := strings.ToLower(text)
+	for _, keyword := range keywords {
+		if strings.Index(lower, strings.ToLower(keyword)) != -1 {
+			return true
+		}
+	}
+
+	return false
 }
