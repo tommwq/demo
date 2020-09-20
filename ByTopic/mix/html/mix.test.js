@@ -2,7 +2,7 @@ import { Word, Byte, SignBit } from "./datatype.js";
 import { MIXMachine } from "./mix.js";
 import { Instrument } from "./compiler.js";
 import { mix as mixvalue } from "./value.js";
-import { assert } from "./test.js";
+import { assert } from "./test/test.js";
 
 
 let mix = new MIXMachine();

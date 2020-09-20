@@ -1,5 +1,4 @@
-import { StateMachine } from './statemachine.js';
-import { Reader } from './reader.js';
+import { Reader } from './util/reader.js';
 // OP ADDRESS, I(F)
 
 // TODO put Instrument to common.js
@@ -7,11 +6,14 @@ import { Reader } from './reader.js';
 class CodeSegment {
     constructor(baseAddress) {
         this.baseAddress = baseAddress;
+        this.currentAddress = baseAddress;
         this.instruments = [];
     }
 
     addInstrument(instrument) {
+        // console.debug(`add instrument ${instrument}`);
         this.instruments.push(instrument);
+        this.currentAddress++;
     }        
 }
 
@@ -19,18 +21,40 @@ class CompileContext {
     constructor() {
         this.symbols = {};
         this.codeSegments = [];
+        // this.symbolDependencies = {}; // symbol -> [symbol]
     }
 
-    isDefinedSymbol(symbol) {
+    addInstrument(instrument) {
+        this.getCurrentCodeSegment().addInstrument(instrument);
+    }
+    
+    clearCodeSegments() {
+        this.codeSegments = [];
+    }
+
+    isSymbolDefined(symbol) {
         return symbol in this.symbols;
     }
 
+    // A resolved symbol's value is determined.
+    isSymbolResolved(symbol) {
+        // TODO
+    }
+
+    // getSymbolDependencies(symbol) {
+    //     if (symbol in this.symbolDependencies) {
+    //         return this.symbolDependencies[symbol];
+    //     }
+    //     return [];
+    // }
+
     defineSymbol(symbol, definition) {
+        console.debug(`define ${symbol} = ${definition}`);
         this.symbols[symbol] = definition;
     }
 
-    getDefinition(symbol) {
-        if (!this.isDefinedSymbol(symbol)) {
+    getSymbolValue(symbol) {
+        if (!this.isSymbolDefined(symbol)) {
             throw `symbol not defined: "${symbol}"`;
         }
         return this.symbols[symbol];
@@ -40,6 +64,13 @@ class CompileContext {
         let segment = new CodeSegment(baseAddress);
         this.codeSegments.push(segment);
         return segment;
+    }
+
+    getCurrentCodeSegment() {
+        if (this.codeSegments.length == 0) {
+            throw `no code segments defined`;
+        }
+        return this.codeSegments[this.codeSegments.length-1];
     }
 }
 
@@ -415,10 +446,76 @@ class Compiler {
 
     compile(source) {
         let context = new CompileContext();
-        source.split("\n")
-            .map(sourceLine => this.parse(sourceLine))
-            .forEach(tokenLine => this.compileLine(tokenLine, context));
+        let tokenLines =source.split("\n")
+            .map(sourceLine => this.parse(sourceLine));
+        tokenLines.forEach(tokenLine => this._resolveSymbol(tokenLine, context));
+        tokenLines.forEach(tokenLine => this.compileLine(tokenLine, context));
         return context;
+    }
+
+    _resolveSymbol(tokenLine, context) {
+        let tokens = new Reader(tokenLine);
+        if (tokens.isEnd()) {
+            return;
+        }
+        
+        let token = tokens.get();
+        if (token.isStar()) {
+            // ignore comment
+            return;
+        }
+        
+        if (token.isKeyword_ORIG()) {
+            if (tokens.isEnd()) {
+                throw `compile error: missing ADDRESS`;
+            }
+
+            let nextToken = tokens.get();
+            if (!nextToken.isNumber()) {
+                throw `compile error: require NUMBER`;
+            }
+
+            let address = parseInt(nextToken.word);
+            context.createCodeSegment(address);
+            return;
+        }
+
+        if (token.isSpecialSymbol()) {
+            // TODO
+            context.getCurrentCodeSegment().addInstrument(null);
+        } else if (token.isSymbol() && !token.isInstrument()) {
+            if (tokens.isEnd()) {
+                throw `syntax error: missing instrument or equ statement`;
+            }
+            
+            let nextToken = tokens.get();
+            if (nextToken.isKeyword_EQU()) {
+                if (tokens.isEnd()) {
+                    throw `syntax error: missing equ value`;
+                }
+                let symbol = token.word;
+                token = tokens.get();
+                if (tokens.isEnd()) {
+                    if (token.isNumber()) {
+                        let value = parseInt(token.word);
+                        context.defineSymbol(symbol, value);
+                    } else if (token.isSymbol()) {
+                        // TODO resolve symbol
+                    } else {
+                        // TODO error
+                    }
+                } else {
+                    // TODO 处理形式 X EQU Y + 1
+                }
+                return;
+            } else {
+                let symbol = token.word;
+                let definition = context.getCurrentCodeSegment().currentAddress;
+                context.defineSymbol(symbol, definition);
+                context.getCurrentCodeSegment().addInstrument(null);
+                return;
+            }
+        }
     }
 
     compileLine(tokenLine, context) {
@@ -459,7 +556,8 @@ class Compiler {
         }
 
         if (token.isInstrument()) {
-            // TODO
+            tokens.unget();
+            context.addInstrument(this.compileInstrument(tokens.remainder(), context));
             return;
         }
 
@@ -479,25 +577,100 @@ class Compiler {
             }
             
             let nextToken = tokens.get();
-            if (nextToken.isKeyword_EQU()) {
+            if (!nextToken.isKeyword_EQU()) {
+                tokens.unget();
+                context.addInstrument(this.compileInstrument(tokens.remainder(), context));
+            }
+            
+            return;
+        }
+
+        throw `invalid statement: ${tokenLine.map(x=>x.string())}`;
+    }
+
+    compileInstrument(tokenList, context) {
+        // 替换符号
+        tokenList = tokenList.map(x => {
+            if (x.isSymbol() && !x.isInstrument()) {
+                return new Token(TOKEN.Number, context.getSymbolValue(x.word));
+            }
+            return x;
+        });
+
+        let tokens = new Reader(tokenList);
+        let code = 0;
+        let address = 0;
+        let index = 0;
+        let field = 0;
+
+        if (tokens.isEnd()) {
+            throw `missing instrument code`;
+        }
+        let token = tokens.get();
+        if (!(token.word in MIXInstrumentTable)) {
+            throw `invalid instrument: ${token.word}`;
+        }
+        code = MIXInstrumentTable[token.word];
+
+        if (tokens.isEnd()) {
+            throw `missing instrument address`;
+        }
+        token = tokens.get();
+        if (token.isStar()) {
+            // TODO 处理 JGE *+3格式的指令
+            // address = context.current
+        } else if (token.isNumber()) {
+                 address = parseInt(token.word);   
+        } else {
+            throw `invalid address: ${token.word}`;
+        }
+
+        if (!tokens.isEnd()) {
+            token = tokens.get();
+            if (token.isComma()) {
                 if (tokens.isEnd()) {
-                    throw `syntax error: missing equ value`;
+                    throw `missing instrument index`;
                 }
-                let symbol = token.word;
-                let definition = tokens.remainder();
-                context.defineSymbol(symbol, definition);
-                return;
+                token = tokens.get();
+                if (!token.isNumber()) {
+                    throw `invalid index: ${token.word}`;
+                }
+                index = parseInt(token.word);
+            } else if (token.isLeftParenthesis()) {
+                tokens.unget();
             } else {
-                // TODO
-                // compileInstrument()
+                throw `invalid syntax`;
             }
         }
 
-        throw `syntax error: invalid syntax: ${tokenLine.map(x=>x.string())}`;
-    }
+        let left = 0;
+        let right =5;
+        if (!tokens.isEnd()) {
+            token = tokens.get();
+            if (token.isLeftParenthesis()) {
+                if (tokens.isEnd()) {
+                    throw `missing field`;
+                }
+                left = parseInt(tokens.get().word);
+                if (tokens.isEnd()) {
+                    throw `invalid field`;
+                }
+                token = tokens.get();
+                if (!token.isColon() || tokens.isEnd()) {
+                    throw `invalid field`;
+                }
+                token = tokens.get();
+                if (!token.isNumber()) {
+                    throw `invalid field`;
+                }
+                right = parseInt(token.word);
+            } else {
+                throw `invalid syntax`;
+            }
+        }
 
-    compileInstrument(tokens) {
-        // TODO
+        field = left * 8 + right;
+        return new Instrument(code, address, index, field);
     }
 }
 
@@ -564,6 +737,9 @@ class Token {
     }
     isDoubleDivide() {
         return this.isPunctuation() && this.word == "//";
+    }
+    isComma() {
+        return this.isPunctuation() && this.word == ",";
     }
     isInstrument() {
         return this.isSymbol() && this.word in MIXInstrumentTable;

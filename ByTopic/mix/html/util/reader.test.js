@@ -1,5 +1,5 @@
 import { Reader } from "./reader.js";
-import { assert } from "./test.js";
+import { assert } from "../test/test.js";
 
 let reader = new Reader([1, 2, 3]);
 

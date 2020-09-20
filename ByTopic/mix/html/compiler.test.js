@@ -1,5 +1,5 @@
 import { Instrument, Compiler, TOKEN, Token } from "./compiler.js";
-import { assert } from "./test.js";
+import { assert } from "./test/test.js";
 
 
 let compiler = new Compiler();
@@ -36,8 +36,3 @@ EXIT JMP *
 `;
 
 compiler.compile(program1);
-
-// TODO
-// for (let line of program1.split("\n")) {
-//     console.log(compiler.parse(line).map((token) => token.string()).join(" "));
-// }
