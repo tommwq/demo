@@ -266,5 +266,3 @@ assert(expect.print(), result.print());
 expect = Word.create(2405, 36, 39, 39);
 result = mix.rX().get();
 assert(expect.print(), result.print());
-
-console.log("test instrument pass");

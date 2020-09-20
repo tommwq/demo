@@ -1,10 +1,15 @@
+// 断言
+// assert(condition)
+// assert(expect, actural)
 function assert() {
     try {
         
         switch (arguments.length) {
         case 1:
             let condition = arguments[0];
-            throw `assertion failed`;
+            if (!condition) {
+                throw `assertion failed: ${condition}`;
+            }
             break;
         case 2:
             let expect = arguments[0];

@@ -2,6 +2,197 @@
 
 // TODO put Instrument to common.js
 
+class CodeSegment {
+    constructor(baseAddress) {
+        this.baseAddress = baseAddress;
+        this.instruments = [];
+    }
+
+    addInstrument(instrument) {
+        this.instruments.push(instrument);
+    }        
+}
+
+class CompileContext {
+    constructor() {
+        this.symbols = {};
+        this.codeSegments = [];
+    }
+
+    isDefinedSymbol(symbol) {
+        return symbol in this.symbols;
+    }
+
+    getDefinition(symbol) {
+        if (!this.isDefinedSymbol(symbol)) {
+            throw `symbol not defined: "${symbol}"`;
+        }
+        return this.symbols[symbol];
+    }
+    
+    createCodeSegment(baseAddress) {
+        let segment = new CodeSegment(baseAddress);
+        this.codeSegments.push(segment);
+        return segment;
+    }
+}
+
+
+const MIXInstrumentTable = {
+    "NOP": 0,
+    "ADD": 1,
+    "SUB": 2,
+    "MUL": 3,
+    "DIV": 4,
+    "HLT": 5,
+    "NUM": 5,
+    "CHAR": 5,
+    "SLA": 6,
+    "SRA": 6,
+    "SLAX": 6,
+    "SRAX": 6,
+    "SLC": 6,
+    "SRC": 6,
+    "MOVE": 7,
+    "LDA": 8,
+    "LD1": 9,
+    "LD2": 10,
+    "LD3": 11,
+    "LD4": 12,
+    "LD5": 13,
+    "LD6": 14,
+    "LDX": 15,
+    "LDAN": 16,
+    "LD1N": 17,
+    "LD2N": 18,
+    "LD3N": 19,
+    "LD4N": 20,
+    "LD5N": 21,
+    "LD6N": 22,
+    "LDXN": 23,
+    "STA": 24,
+    "ST1": 25,
+    "ST2": 26,
+    "ST3": 27,
+    "ST4": 28,
+    "ST5": 29,
+    "ST6": 30,
+    "STX": 31,
+    "STJ": 32,
+    "STZ": 33,
+    "JBUS": 34,
+    "IOC": 35,
+    "IN": 36,
+    "OUT": 37,
+    "JRED": 38,
+    "JMP": 39,
+    "JSJ": 39,
+    "JOV": 39,
+    "JNOV": 39,
+    "JL": 39,
+    "JE": 39,
+    "JG": 39,
+    "JGE": 39,
+    "JNE": 39,
+    "JLE": 39,
+    "JAN": 40,
+    "JAZ": 40,
+    "JAP": 40,
+    "JANN": 40,
+    "JANZ": 40,
+    "JANP": 40,
+    "J1N": 41,
+    "J1Z": 41,
+    "J1P": 41,
+    "J1NN": 41,
+    "J1NZ": 41,
+    "J1NP": 41,
+    "J2N": 42,
+    "J2Z": 42,
+    "J2P": 42,
+    "J2NN": 42,
+    "J2NZ": 42,
+    "J2NP": 42,
+    "J3N": 43,
+    "J3Z": 43,
+    "J3P": 43,
+    "J3NN": 43,
+    "J3NZ": 43,
+    "J3NP": 43,
+    "J4N": 44,
+    "J4Z": 44,
+    "J4P": 44,
+    "J4NN": 44,
+    "J4NZ": 44,
+    "J4NP": 44,
+    "J5N": 45,
+    "J5Z": 45,
+    "J5P": 45,
+    "J5NN": 45,
+    "J5NZ": 45,
+    "J5NP": 45,
+    "J6N": 46,
+    "J6Z": 46,
+    "J6P": 46,
+    "J6NN": 46,
+    "J6NZ": 46,
+    "J6NP": 46,
+    "JXN": 47,
+    "JXZ": 47,
+    "JXP": 47,
+    "JXNN": 47,
+    "JXNZ": 47,
+    "JXNP": 47,
+    "ENTA": 48,
+    "ENT1": 49,
+    "ENT2": 50,
+    "ENT3": 51,
+    "ENT4": 52,
+    "ENT5": 53,
+    "ENT6": 54,
+    "ENTX": 55,
+    "ENNA": 48,
+    "ENN1": 49,
+    "ENN2": 50,
+    "ENN3": 51,
+    "ENN4": 52,
+    "ENN5": 53,
+    "ENN6": 54,
+    "ENNX": 55,
+    "INCA": 48,
+    "INC1": 49,
+    "INC2": 50,
+    "INC3": 51,
+    "INC4": 52,
+    "INC5": 53,
+    "INC6": 54,
+    "INCX": 55,
+    "DECA": 48,
+    "DEC1": 49,
+    "DEC2": 50,
+    "DEC3": 51,
+    "DEC4": 52,
+    "DEC5": 53,
+    "DEC6": 54,
+    "DECX": 55,
+    "CMPA": 56,
+    "CMP1": 57,
+    "CMP2": 58,
+    "CMP3": 59,
+    "CMP4": 60,
+    "CMP5": 61,
+    "CMP6": 62,
+    "CMPX": 63,
+};
+
+const MIXALKeyword = {
+    "EQU": "EQU",
+    "ORIG": "ORIG",
+    "CON": "CON",
+    "ALF": "ALF",
+    "END": "END"
+};
+
 // mix指令
 class Instrument {
     constructor(operator, address, index, field) {
@@ -21,7 +212,7 @@ class Instrument {
 }
 
 // TODO 提取和TokenSequence相似的部分，做成基类。
-class Reader {
+class Reader_old {
     constructor(str) {
         this.offset = 0;
         this.str = str;
@@ -113,161 +304,11 @@ class TokenSequence {
 
 class Compiler {
 
-    constructor() {
-        this.instrumentTable = {
-            "LDA": 8,
-            "NOP": 0,
-            "ADD": 1,
-            "SUB": 2,
-            "MUL": 3,
-            "DIV": 4,
-            "HLT": 5,
-            "NUM": 5,
-            "CHAR": 5,
-            "SLA": 6,
-            "SRA": 6,
-            "SLAX": 6,
-            "SRAX": 6,
-            "SLC": 6,
-            "SRC": 6,
-            "MOVE": 7,
-            "LDA": 8,
-            "LD1": 9,
-            "LD2": 10,
-            "LD3": 11,
-            "LD4": 12,
-            "LD5": 13,
-            "LD6": 14,
-            "LDX": 15,
-            "LDAN": 16,
-            "LD1N": 17,
-            "LD2N": 18,
-            "LD3N": 19,
-            "LD4N": 20,
-            "LD5N": 21,
-            "LD6N": 22,
-            "LDXN": 23,
-            "STA": 24,
-            "ST1": 25,
-            "ST2": 26,
-            "ST3": 27,
-            "ST4": 28,
-            "ST5": 29,
-            "ST6": 30,
-            "STX": 31,
-            "STJ": 32,
-            "STZ": 33,
-            "JBUS": 34,
-            "IOC": 35,
-            "IN": 36,
-            "OUT": 37,
-            "JRED": 38,
-            "JMP": 39,
-            "JSJ": 39,
-            "JOV": 39,
-            "JNOV": 39,
-            "JL": 39,
-            "JE": 39,
-            "JG": 39,
-            "JGE": 39,
-            "JNE": 39,
-            "JLE": 39,
-            "JAN": 40,
-            "JAZ": 40,
-            "JAP": 40,
-            "JANN": 40,
-            "JANZ": 40,
-            "JANP": 40,
-            "J1N": 41,
-            "J1Z": 41,
-            "J1P": 41,
-            "J1NN": 41,
-            "J1NZ": 41,
-            "J1NP": 41,
-            "J2N": 42,
-            "J2Z": 42,
-            "J2P": 42,
-            "J2NN": 42,
-            "J2NZ": 42,
-            "J2NP": 42,
-            "J3N": 43,
-            "J3Z": 43,
-            "J3P": 43,
-            "J3NN": 43,
-            "J3NZ": 43,
-            "J3NP": 43,
-            "J4N": 44,
-            "J4Z": 44,
-            "J4P": 44,
-            "J4NN": 44,
-            "J4NZ": 44,
-            "J4NP": 44,
-            "J5N": 45,
-            "J5Z": 45,
-            "J5P": 45,
-            "J5NN": 45,
-            "J5NZ": 45,
-            "J5NP": 45,
-            "J6N": 46,
-            "J6Z": 46,
-            "J6P": 46,
-            "J6NN": 46,
-            "J6NZ": 46,
-            "J6NP": 46,
-            "JXN": 47,
-            "JXZ": 47,
-            "JXP": 47,
-            "JXNN": 47,
-            "JXNZ": 47,
-            "JXNP": 47,
-            "ENTA": 48,
-            "ENT1": 49,
-            "ENT2": 50,
-            "ENT3": 51,
-            "ENT4": 52,
-            "ENT5": 53,
-            "ENT6": 54,
-            "ENTX": 55,
-            "ENNA": 48,
-            "ENN1": 49,
-            "ENN2": 50,
-            "ENN3": 51,
-            "ENN4": 52,
-            "ENN5": 53,
-            "ENN6": 54,
-            "ENNX": 55,
-            "INCA": 48,
-            "INC1": 49,
-            "INC2": 50,
-            "INC3": 51,
-            "INC4": 52,
-            "INC5": 53,
-            "INC6": 54,
-            "INCX": 55,
-            "DECA": 48,
-            "DEC1": 49,
-            "DEC2": 50,
-            "DEC3": 51,
-            "DEC4": 52,
-            "DEC5": 53,
-            "DEC6": 54,
-            "DECX": 55,
-            "CMPA": 56,
-            "CMP1": 57,
-            "CMP2": 58,
-            "CMP3": 59,
-            "CMP4": 60,
-            "CMP5": 61,
-            "CMP6": 62,
-            "CMPX": 63,
-        };
-    }
-
     translateInstrument(str) {
         return this.instrumentTable[str.toUpperCase()];
     }
     
-    compile(source) {
+    compile_old(source) {
         let tokens = this.parse(source);
         let inst = 0;
         let addr = 0;
@@ -309,8 +350,8 @@ class Compiler {
         return new Instrument(inst, addr, index, field);
     }
 
-    parse(source) {
-        let reader = new Reader(source);
+    parse_old(source) {
+        let reader = new Reader_old(source);
         let tokens = [];
         let token = reader.nextToken();
         while (token != null) {
@@ -319,6 +360,101 @@ class Compiler {
         }
         return tokens;
     }
+
+    parse(line) {
+        let tokens = [];
+        for (let pos = 0; pos < line.length; pos++) {
+            let ch = line[pos];
+            if (CType.isspace(ch)) {
+                continue;
+            }
+
+            let word = "";
+            if (CType.ispunct(ch)) {
+                word = ch;
+                if (ch == "/" && pos + 1 < line.length && line[pos + 1] == "/") {
+                    pos++;
+                    word = "//";
+                }
+                tokens.push(new Token(TOKEN.Punctuation, word));
+                continue;
+            }
+
+            let isNumber = true;
+            while (pos < line.length) {
+                ch = line[pos];
+                if (!CType.isalnum(ch)) {
+                    pos--;
+                    break;
+                }
+                word = word + ch;
+                if (CType.isalpha(ch)) {
+                    isNumber = false;
+                }
+                pos++;
+            }
+            if (word.length > 0) {
+                let token;
+                if (isNumber) {
+                    token = new Token(TOKEN.Number, word);
+                } else {
+                    token = new Token(TOKEN.Symbol, word);
+                }
+                tokens.push(token);
+            }
+        }
+
+        return tokens;
+    }
+
+    compile(source) {
+        let context = new CompileContext();
+        source.split("\n")
+            .map(sourceLine => this.parse(sourceLine))
+            .forEach(tokenLine => this.compileLine(tokenLine, context));
+        return context;
+    }
+
+    compileLine(tokenLine, context) {
+        let tokens = new Reader(tokenLine);
+        let inst = 0;
+        let addr = 0;
+        let index = 0;
+        let field = 0;
+
+        inst = this.translateInstrument(seq.next());
+        addr = parseInt(seq.next());
+
+        if (!seq.isOver()) {
+            let t = seq.next();
+            if (t == ',') {
+                index = parseInt(seq.next());
+            } else if (t == '(') {
+                seq.back();
+            } else {
+                console.log(tokens);
+                throw 'syntax error 1';
+            }
+        }
+
+        let left = 0;
+        let right = 5;
+        if (!seq.isOver()) {
+            let t = seq.next();
+            if (t == '(') {
+                left = parseInt(seq.next());
+                if (seq.next() != ':') {
+                    throw 'syntax error 2';
+                }
+                right = parseInt(seq.next());
+            } else {
+                throw 'syntax error 3';
+            }
+        }
+        
+        field = left * 8 + right;
+        return new Instrument(inst, addr, index, field);
+    }   
 }
 
 const TOKEN = {
@@ -357,7 +493,62 @@ class Token {
 
         let c = word[1];
         return CType.isdigit(word[0]) && (c == 'H' || c == 'B' || c == 'F');
-    }    
+    }
+    isStar() {
+        return this.isPunctuation() && this.word == "*";
+    }
+    isLeftParenthesis() {
+        return this.isPunctuation() && this.word == "(";
+    }
+    isRightParenthesis() {
+        return this.isPunctuation() && this.word == ")";
+    }
+    isRightParenthesis() {
+        return this.isPunctuation() && this.word == ")";
+    }
+    isPlus() {
+        return this.isPunctuation() && this.word == "+";
+    }
+    isMinus() {
+        return this.isPunctuation() && this.word == "-";
+    }
+    isColon() {
+        return this.isPunctuation() && this.word == ":";
+    }
+    isDivide() {
+        return this.isPunctuation() && this.word == "/";
+    }
+    isDoubleDivide() {
+        return this.isPunctuation() && this.word == "//";
+    }
+    isInstrument() {
+        return this.isSymbol() && this.word in MIXInstrumentTable;
+    }
+    isKeyword() {
+        return this.isSymbol() && this.word in MIXALKeyword;
+    }
+    isKeyword_EQU() {
+        return this.isKeyword() && this.word == "EQU";
+    }
+    isKeyword_ORIG() {
+        return this.isKeyword() && this.word == "ORIG";
+    }
+    isKeyword_CON() {
+        return this.isKeyword() && this.word == "CON";
+    }
+    isKeyword_ALF() {
+        return this.isKeyword() && this.word == "ALF";
+    }
+    isKeyword_END() {
+        return this.isKeyword() && this.word == "END";
+    }
+    toInstrumentCode() {
+        if (!this.isInstrument()) {
+            throw `not an instrument: "${this.word}"`;
+        }
+        
+        return MIXInstrumentTable[this.word];
+    }
 }
 
 var CType = {
@@ -388,58 +579,11 @@ var CType = {
     },
 };
 
-function parseLine(line) {
-    let tokens = [];
-    for (let pos = 0; pos < line.length; pos++) {
-        let ch = line[pos];
-        if (CType.isspace(ch)) {
-            continue;
-        }
-
-        let word = "";
-        if (CType.ispunct(ch)) {
-            word = ch;
-            if (ch == "/" && pos + 1 < line.length && line[pos + 1] == "/") {
-                pos++;
-                word = "//";
-            }
-            tokens.push(new Token(TOKEN.Punctuation, word));
-            continue;
-        }
-
-        let isNumber = true;
-        while (pos < line.length) {
-            ch = line[pos];
-            if (!CType.isalnum(ch)) {
-                pos--;
-                break;
-            }
-            word = word + ch;
-            if (CType.isalpha(ch)) {
-                isNumber = false;
-            }
-            pos++;
-        }
-        if (word.length > 0) {
-            let token;
-            if (isNumber) {
-                token = new Token(TOKEN.Number, word);
-            } else {
-                token = new Token(TOKEN.Symbol, word);
-            }
-            tokens.push(token);
-        }
-    }
-
-    return tokens;
-}
-
 export {
     Instrument,
     Compiler,
     TOKEN,
     Token,
-    parseLine,
     CType,    
 };
 
