@@ -23,8 +23,7 @@ function listTestScripts(callback) {
 }
 
 function runTestScript(fileName) {
-    // console.log(fileName);
-    let command = `node --experimental-vm-modules ${fileName}`;
+    let command = `node --trace-uncaught --experimental-vm-modules ${fileName}`;
     child_process.exec(command, (error, stdout, stderr) => {
         if (error != null) {
             console.warn(error, stdout, stderr);

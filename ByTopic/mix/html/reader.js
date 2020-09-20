@@ -28,6 +28,11 @@ class Reader {
         } 
         this.position--;
     }
+
+    // 返回剩余未读取的元素。
+    remainder() {
+        return this.objects.splice(this.position);
+    }
 }
 
 export {

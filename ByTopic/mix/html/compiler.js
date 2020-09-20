@@ -1,3 +1,5 @@
+import { StateMachine } from './statemachine.js';
+import { Reader } from './reader.js';
 // OP ADDRESS, I(F)
 
 // TODO put Instrument to common.js
@@ -21,6 +23,10 @@ class CompileContext {
 
     isDefinedSymbol(symbol) {
         return symbol in this.symbols;
+    }
+
+    defineSymbol(symbol, definition) {
+        this.symbols[symbol] = definition;
     }
 
     getDefinition(symbol) {
@@ -304,9 +310,9 @@ class TokenSequence {
 
 class Compiler {
 
-    translateInstrument(str) {
-        return this.instrumentTable[str.toUpperCase()];
-    }
+    // translateInstrument(str) {
+    //     return this.instrumentTable[str.toUpperCase()];
+    // }
     
     compile_old(source) {
         let tokens = this.parse(source);
@@ -417,44 +423,82 @@ class Compiler {
 
     compileLine(tokenLine, context) {
         let tokens = new Reader(tokenLine);
-        let inst = 0;
-        let addr = 0;
-        let index = 0;
-        let field = 0;
-
-        inst = this.translateInstrument(seq.next());
-        addr = parseInt(seq.next());
-
-        if (!seq.isOver()) {
-            let t = seq.next();
-            if (t == ',') {
-                index = parseInt(seq.next());
-            } else if (t == '(') {
-                seq.back();
-            } else {
-                console.log(tokens);
-                throw 'syntax error 1';
-            }
-        }
-
-        let left = 0;
-        let right = 5;
-        if (!seq.isOver()) {
-            let t = seq.next();
-            if (t == '(') {
-                left = parseInt(seq.next());
-                if (seq.next() != ':') {
-                    throw 'syntax error 2';
-                }
-                right = parseInt(seq.next());
-            } else {
-                throw 'syntax error 3';
-            }
+        if (tokens.isEnd()) {
+            return;
         }
         
-        field = left * 8 + right;
-        return new Instrument(inst, addr, index, field);
-    }   
+        let token = tokens.get();
+        if (token.isKeyword_ORIG()) {
+            if (tokens.isEnd()) {
+                throw `compile error: missing ADDRESS`;
+            }
+
+            let nextToken = tokens.get();
+            if (!nextToken.isNumber()) {
+                throw `compile error: require NUMBER`;
+            }
+
+            let address = parseInt(nextToken.word);
+            context.createCodeSegment(address);
+            return;
+        }
+
+        if (token.isKeyword_CON()) {
+            // TODO
+            return;
+        }
+
+        if (token.isKeyword_ALF()) {
+            // TODO
+            return;
+        }
+
+        if (token.isKeyword_END()) {
+            // TODO
+            return;
+        }
+
+        if (token.isInstrument()) {
+            // TODO
+            return;
+        }
+
+        if (token.isSpecialSymbol()) {
+            // TODO
+            return;
+        }
+
+        if (token.isStar()) {
+            // ignore comment
+            return;
+        }
+
+        if (token.isSymbol() && !token.isInstrument()) {
+            if (tokens.isEnd()) {
+                throw `syntax error: missing instrument or equ statement`;
+            }
+            
+            let nextToken = tokens.get();
+            if (nextToken.isKeyword_EQU()) {
+                if (tokens.isEnd()) {
+                    throw `syntax error: missing equ value`;
+                }
+                let symbol = token.word;
+                let definition = tokens.remainder();
+                context.defineSymbol(symbol, definition);
+                return;
+            } else {
+                // TODO
+                // compileInstrument()
+            }
+        }
+
+        throw `syntax error: invalid syntax: ${tokenLine.map(x=>x.string())}`;
+    }
+
+    compileInstrument(tokens) {
+        // TODO
+    }
 }
 
 const TOKEN = {

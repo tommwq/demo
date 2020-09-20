@@ -7,7 +7,7 @@ machine.addState("c");
 machine.addState("d", true);
 
 function printTransfer(from, input, to) {
-    console.log(`${from.name}(${input}) => ${to.name}`);
+    // console.log(`${from.name}(${input}) => ${to.name}`);
 }
 
 machine.addTransfer("a", "1", "b", printTransfer);

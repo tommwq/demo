@@ -35,6 +35,8 @@ J3P LOOP
 EXIT JMP *
 `;
 
+compiler.compile(program1);
+
 // TODO
 // for (let line of program1.split("\n")) {
 //     console.log(compiler.parse(line).map((token) => token.string()).join(" "));
