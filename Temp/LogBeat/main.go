@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/fsnotify/fsnotify"
 
@@ -24,6 +25,7 @@ type BizLog struct {
 	Rsp         interface{} `json:"rsp"`
 	RPCContext  interface{} `json:"rpcContext"`
 	Attachments interface{} `json:"attachments"`
+	// TODO GetMobile ...
 }
 
 func collectNewData(file *os.File) {
@@ -37,16 +39,35 @@ func collectNewData(file *os.File) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Print(bl)
-
-	sql := fmt.Sprintf("insert into T_QUICK_LOCATE_REQUEST_DETAIL_gstrade_20200918 (COMPONENT, TRACE_ID, REQ_TIME, REQ_DATE, REQ_METHOD, REQ_CONTENT) VALUES ('%v','%v','%v','%v','%v','%v')",
+	sql := fmt.Sprintf("insert into T_QUICK_LOCATE_REQUEST_DETAIL_gstrade_%s (COMPONENT, TRACE_ID, REQ_TIME, REQ_DATE, REQ_METHOD, REQ_CONTENT) VALUES ('%v','%v','%v','%v','%v','%v')",
+		time.Now().Format("20060102"),
 		"gsbp",
 		"0",
 		bl.Time,
-		20200918, // bl.Time,
+		time.Now().Format("20060102"),
 		bl.Method,
 		fmt.Sprintf("%v", bl))
 	result, err := database.Exec(sql)
+
+	log.Println(result, err)
+	sql = fmt.Sprintf("insert into T_QUICK_LOCATE_REQUEST_gstrade_%s (COMPONENT, CLUSTER_NAME, HOST_NAME, TRACE_ID, REQ_METHOD, PKG, MOBILE, FUND_ID, SOFT_NAME, SOFT_VERSION, REQ_TIME, CLIENT_REQ_TIME, REQ_DATE, MEMORY_USER, INPUT_TYPE) VALUES('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v')",
+		time.Now().Format("20060102"),
+		"gsbp",
+		"cluster_0",
+		"host_0",
+		"trace_id_0",
+		bl.Method,
+		"pkg_0",
+		"1234567",
+		"fund_id",
+		"android_ios",
+		"5.4.3.2.1",
+		bl.Time,
+		bl.Time,
+		time.Now().Format("20060102"),
+		"0",
+		"1")
+	result, err = database.Exec(sql)
 	log.Println(result, err)
 }
 
