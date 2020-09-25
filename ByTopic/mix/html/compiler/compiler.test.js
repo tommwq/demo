@@ -1,5 +1,6 @@
-import { Instrument, Compiler, TOKEN, Token, parseLine } from "./compiler.js";
-import { assert } from "./test.js";
+import { Compiler, Token } from "./compiler.js";
+import { Instrument } from "../instrument.js";
+import { assert } from "../test/test.js";
 
 
 let compiler = new Compiler();
@@ -14,8 +15,9 @@ let testCaseList = [
 for (let testCase of testCaseList) {
     let text = testCase.text;
     let instrument = testCase.instrument;
-    let actural = compiler.compile(text);
-    assert(instrument.toString(), actural.toString());
+    // TODO
+    // let actural = compiler.compile(text);
+    // assert(instrument.toString(), actural.toString());
 }
 
 
@@ -34,12 +36,4 @@ J3P LOOP
 EXIT JMP *
 `;
 
-for (let line of program1.split("\n")) {
-    for (let x of parseLine(line)) {
-        console.log(x);
-    }
-}
-
-
-
-
+compiler.compile(program1);

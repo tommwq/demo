@@ -1,5 +1,5 @@
 import { Word, Byte, SignBit } from "./datatype.js";
-import { assert } from "./test.js";
+import { assert } from "./test/test.js";
 
 let word1 = new Word(true, 0);
 assert(0, word1.value());

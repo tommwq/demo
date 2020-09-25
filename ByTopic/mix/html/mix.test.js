@@ -1,8 +1,8 @@
 import { Word, Byte, SignBit } from "./datatype.js";
 import { MIXMachine } from "./mix.js";
-import { Instrument } from "./compiler.js";
+import { Instrument } from "./instrument.js";
 import { mix as mixvalue } from "./value.js";
-import { assert } from "./test.js";
+import { assert } from "./test/test.js";
 
 
 let mix = new MIXMachine();
@@ -266,5 +266,3 @@ assert(expect.print(), result.print());
 expect = Word.create(2405, 36, 39, 39);
 result = mix.rX().get();
 assert(expect.print(), result.print());
-
-console.log("test instrument pass");
