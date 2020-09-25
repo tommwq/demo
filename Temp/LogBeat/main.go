@@ -1,5 +1,7 @@
 package main
 
+// TODO 处理文件CREATE事件
+
 import (
 	"database/sql"
 	"encoding/json"

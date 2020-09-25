@@ -26,8 +26,13 @@ func readConfig() (Config, error) {
 
 func main() {
 	config, err := readConfig()
-	log.Println(config, err)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	server := NewServer()
+	server, err := NewServer(config)
+	if err != nil {
+		log.Fatal(err)
+	}
 	server.Serve()
 }
