@@ -1,0 +1,2724 @@
+<?xml version="1.0" encoding="gb2312"?>
+<ENOTradeDefine version="1.0" date="2010/12/17" desc="金证3.0交易接口配置文件">
+
+    <!-- 数据类型type大概分为S(字符串)、T(unicode串)、Cxx(char xx代表长度)、Dxx(unicode char)、B(二进制)、
+         Nxx(表示数字)、Uxx(无符号数)、Mxx(表示money=smallmoney,2=money)等 F4(代表float)F8代表(double) P代表(passwd) L代表长数据-->
+    
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- NO      Date            Author  For what                                                -->
+    <!-- 1、     2014/03/26      fanzy   test                                                    -->
+    <!-- 字段名的修改可以用这种方式：xp服务原返回a,想对外返回成b的话，可以这么配置：
+         item id="b" mapvalue="a" mapid=""
+         map中的response里配置b
+    -->
+    
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <DataItems>
+        <item id="logkind" mapid="" default="" type="C1" />     
+        <item id="tacode" mapid="" default="" type="C1">
+            <dict code="1" mapcode="1" />
+            <dict code="2" mapcode="2" />
+            <dict code="3" mapcode="3" />
+            <dict code="4" mapcode="4" />
+        </item> 
+        
+        <!-- common param begin-->
+        <item id="F_FUNCTION" mapid="" default="" type="S" />   
+        <item id="F_SUBSYS" mapid="" default="" type="S" />   
+        <item id="F_OP_USER" mapid="" default="" type="S" />   
+        <item id="F_OP_ROLE" mapid="" default="" type="S" />   
+        <item id="F_OP_SITE" mapid="" default="" type="S" />   
+        <item id="F_CHANNEL" mapid="" default="" type="S" />   
+        <item id="F_SESSION" mapid="" default="" type="S" />   
+        <item id="F_RUNTIME" mapid="" default="" type="S" />   
+        <item id="F_REMOTE_OP_ORG" mapid="" default="" type="S" />   
+        <item id="F_REMOTE_OP_USER" mapid="" default="" type="S" />   
+        <item id="F_OP_ORG" mapid="" default="" type="S" />
+        <item id="F_ZDXX" mapid="" default="" type="S" />   
+        <!-- common param end-->
+        
+        <!-- add by jianghuib -->
+        <item id="NS_BIZ" mapid="" default="" type="S">
+            <dict code="A1" mapcode="A1" />
+            <dict code="A2" mapcode="A2" />
+            <dict code="A3" mapcode="A3" />
+            <dict code="A4" mapcode="A4" />
+            <dict code="A5" mapcode="A5" />
+            <dict code="A6" mapcode="A6" />
+            <dict code="A7" mapcode="A7" />
+            <dict code="A8" mapcode="A8" />
+            <dict code="A9" mapcode="A9" />
+            <dict code="Aa" mapcode="Aa" />
+            <dict code="Ab" mapcode="Ab"/>
+            <dict code="Ac" mapcode="Ac"/>
+            <dict code="Ad" mapcode="Ad"/>
+            <dict code="E1" mapcode="E1" />
+            <dict code="D1" mapcode="D1" />
+            <dict code="B1" mapcode="B1" />
+            <dict code="B2" mapcode="B2" />
+            <dict code="B3" mapcode="B3" />
+            <dict code="L1" mapcode="L1"/>
+            
+        </item> 
+        
+        <item id="msgok" mapid="" default="" type="S">
+            <dict code="1" mapcode="1" />
+            <dict code="2" mapcode="2" />
+            <dict code="3" mapcode="3" />
+            <dict code="4" mapcode="4" />
+        </item> 
+        
+        <item id="OP_USER" mapid="" default="" type="N" />   
+        <item id="QUERY_TYPE" mapid="" default="" type="S" />   
+        <item id="mobile" mapid="" default="" type="S" />   
+        <item id="g_funcid" mapid="" default="" type="S" />   
+        <item id="CHANNEL" mapid="" default="" type="S" />   
+        
+
+        <item id="Mobile" mapid="" default="" type="S" />   
+        <item id="Province" mapid="" default="" type="S" />   
+        <item id="City" mapid="" default="" type="S" />   
+        
+        
+
+        
+        <item id="DD_NAME" mapid="" default="" type="N" />   
+        <item id="DD_TYPE" mapid="" default="" type="N" />   
+        <item id="DD_ID" mapid="" default="" type="N" />   
+        <item id="DD_ITEM" mapid="" default="" type="N" />   
+        <item id="DD_ITEM_NAME" mapid="" default="" type="T" />   
+        
+        <item id="BGN_DATE" mapid="" default="" type="N" />   
+        <item id="END_DATE" mapid="" default="" type="N" />   
+        <item id="NONSCENE_TYPES" mapid="" default="" type="S" />   
+        
+        
+        <item id="SERIAL_NO" mapid="" default="" type="N" />    
+        <item id="TRD_DATE" mapid="" default="" type="N" />  
+        <item id="INT_ORG" mapid="" default="" type="N" />
+        <item id="INT_ORGS" mapid="" default="" type="S" />
+        <item id="NONSCENE_TYPE" mapid="" default="" type="C1" />
+        <item id="ID_TYPE" mapid="" default="" type="C2" />
+        <item id="ID_CODE" mapid="" default="" type="S" />
+        <item id="CUST_NAME" mapid="" default="" type="T" />
+        <item id="CUST_FNAME" mapid="" default="" type="T" />
+        <item id="CUST_CODE" mapid="" default="" type="N" />
+        <item id="CUACCT_CODE" mapid="" default="" type="N" />
+        <item id="BROKER_CODE" mapid="" default="" type="N" />
+        <item id="OPER_CODE" mapid="" default="" type="N" />
+        <item id="MOBILE" mapid="" default="" type="S" />
+        <item id="EXT_ORG" mapid="" default="" type="N" />
+        <item id="BANK_ACCT" mapid="" default="" type="S" />
+        <item id="SECUSZA" mapid="" default="" type="S" />
+        <item id="SECUSHA" mapid="" default="" type="S" />
+        <item id="SECUSZJ" mapid="" default="" type="S" />
+        <item id="SECUSHJ" mapid="" default="" type="S" />
+        <item id="SECUSZA_FLAG" mapid="" default="" type="C1" />
+        <item id="SECUSHA_FLAG" mapid="" default="" type="C1" />
+        <item id="SECUSZJ_FLAG" mapid="" default="" type="C1" />
+        <item id="SECUSHJ_FLAG" mapid="" default="" type="C1" />
+        <item id="NETSERVERFLAG" mapid="" default="" type="C1" />
+        <item id="NETSERVERPASS" mapid="" default="" type="S" />
+        <item id="IMG_CLSES" mapid="" default="" type="S" />
+        <item id="IMG_SNES" mapid="" default="" type="L" />
+        <item id="BARCODES" mapid="" default="" type="S" />
+        <item id="VIDEO_TYPE" mapid="" default="" type="S" />
+        <item id="VIDEO_SN" mapid="" default="" type="N" />
+        <item id="CUST_AGMT_TYPES" mapid="" default="" type="S" />
+        <item id="NONSCENE_STEP" mapid="" default="" type="C1" />
+        <item id="COMPLETE_STEPS" mapid="" default="" type="S" />
+        <item id="COMPLETE_STEPS_EX" mapid="" default="" type="S" />
+        <item id="RETURN_MSG" mapid="" default="" type="T" />
+        <item id="REMARK" mapid="" default="" type="T" />
+        <item id="CERT_TEL" mapid="" default="" type="S" />
+        <item id="SPECIAL_FLAGS" mapid="" default="" type="S" />
+        <!-- add by lengjinjun -->
+        <item id="BANK_SALE" mapid="" default="" type="S" />
+        <item id="BANK_BRH" mapid="" default="" type="S" />
+        <item id="BANK_NET" mapid="" default="" type="S" />
+        <item id="SPECIAL_FLAGS_EX" mapid="" default="" type="S" />
+        <item id="GEMOPEN_FLAG" mapid="" default="" typs="S" />
+        <!-- Add by kongwt on 2016-8-23 -->
+        <item id="SPECIAL_FALGS" mapid="" default="" type="S"/>
+        <item id="BANK_CODE" mapid="" default="" type="S"/> 
+        <item id="BANK_ID" mapid="" default="" type="S"/>
+        <item id="E_USER_ID" mapid="" default="" type="S"/>
+        <item id="REFERRER" mapid="" default="" type="S"/>
+        <item id="CUSTNO" mapid="" default="" type="S"/>
+        <item id="FUNDNO" mapid="" default="" type="S"/>
+        <item id="FULL_FLAG" mapid="" default="" type="S"/>
+        <item id="OPER_TYPE" mapid="" default="" type="S"/>
+        <item id="SALE_BIZ" mapid="" default="" type="S"/>
+        <item id="TRADE" mapid="" default="" type="S">
+            <dict code="0" mapcode="0" />
+            <dict code="1" mapcode="1" />
+            <dict code="2" mapcode="2" />
+            <dict code="3" mapcode="3" />
+            <dict code="4" mapcode="4" />   
+            <dict code="5" mapcode="5" />
+            <dict code="6" mapcode="6" />
+            <dict code="7" mapcode="7" />
+            <dict code="8" mapcode="8" />           
+            <dict code="9" mapcode="9" />
+            <dict code="a" mapcode="a" />
+            <dict code="b" mapcode="b" />
+            <dict code="c" mapcode="c" />
+            <dict code="d" mapcode="d" />   
+            <dict code="e" mapcode="e" />
+            <dict code="f" mapcode="f" />
+            <dict code="g" mapcode="g" />
+            <dict code="h" mapcode="h" />   
+            <dict code="i" mapcode="i" />
+            <dict code="j" mapcode="j" />
+            <dict code="k" mapcode="k" />
+            <dict code="l" mapcode="l" />   
+            <dict code="m" mapcode="m" />
+            <dict code="n" mapcode="n" />
+            <dict code="o" mapcode="o" />
+            <dict code="p" mapcode="p" />   
+            <dict code="q" mapcode="q" />
+            <dict code="r" mapcode="r" />
+            <dict code="s" mapcode="s" />   
+        </item>
+        <item id="POSITION" mapid="" default="" type="T"/>
+        <item id="OP_TYPE" mapid="" default="" type="S" />
+        <item id="WORKPLACE" mapid="" default="" type="T"/>
+        <item id="SURVEY_CELL_VAL" mapid="" default="" type="C1" />
+        <item id="PRO_RISKTYPE" mapid="" default="" type="S"/>
+        <!-- Add by kongwt End -->
+        
+        <item id="CHK_CODE" mapid="" default="" type="S" />
+        <item id="CHK_FLAG" mapid="" default="" type="C1" />
+        
+        <item id="MSG_FLAG" mapid="" default="" type="S" />
+        
+        <item id="CHK_RESULT" mapid="" default="" type="N" />
+        
+        <item id="APPT_CHNL" mapid="" default="" type="C1" />
+        <item id="APPT_BIZ" mapid="" default="" type="C2" />
+        
+        <item id="USER_TYPE" mapid="" default="" type="C1"/>    
+        
+        <item id="ID_ISS_AGCY" mapid="" default="" type="T" />
+        <item id="ID_BEG_DATE" mapid="" default="" type="N" />
+        <item id="ID_EXP_DATE" mapid="" default="" type="N" />
+        <item id="ZIP_CODE" mapid="" default="" type="S" />
+        <item id="ID_ADDR" mapid="" default="" type="T" />
+        <item id="ADDRESS" mapid="" default="" type="T" />
+        <item id="TEL" mapid="" default="" type="S" />
+        <!-- add by jinjunleng -->
+        <item id="CNO" mapid="" default="" type="S" />
+        <item id="TRDACCT_TAR" mapid="" default="" type="S" />
+        <item id="CUACCT_TAR" mapid="" default="" type="S" />
+        <item id="GEMFLAG_TAR" mapid="" default="" type="S" />
+        <item id="TRDACCT_SRC" mapid="" default="" type="S" />
+        <item id="CUACCT_SRC" mapid="" default="" type="S" />
+        <item id="GEMFLAG_SRC" mapid="" default="" type="S" />
+        <item id="DEAL_STATUS" mapid="" default="" type="S" />
+        <item id="SIGN_PLACE" mapid="" default="" type="S" />
+        <item id="OPEN_TYPE_WIN" mapid="" default="" type="S" />
+        <item id="OLD_SIGN_DATE" mapid="" default="" type="S" />
+        <item id="SIGN_TIME" mapid="" default="" type="S" />
+        <item id="OLD_EFT_DATE" mapid="" default="" type="S" />
+        <item id="OID" mapid="" default="" type="S" />
+        <item id="MAIL_ADDR" mapid="" default="" type="T" />
+        <item id="MAIL_ZIP_CODE" mapid="" default="" type="S" />
+        
+        
+        <item id="MOBILE_TEL" mapid="" default="" type="S" />
+        <item id="CITIZENSHIP" mapid="" default="" type="C3" />
+        <item id="NATIVE_PLACE" mapid="" default="" type="T" />
+        <item id="EDUCATION" mapid="" default="" type="C1" >
+            <dict code="0" mapcode="0" />
+            <dict code="1" mapcode="1" />
+            <dict code="2" mapcode="2" />
+            <dict code="3" mapcode="3" />
+            <dict code="4" mapcode="4" />   
+            <dict code="5" mapcode="5" />
+            <dict code="6" mapcode="6" />
+            <dict code="7" mapcode="7" />
+            <dict code="Z" mapcode="Z" />
+        </item>
+        <item id="SEX" mapid="" default="" type="C1" />
+        <item id="LINKTEL_ORDER" mapid="" default="" type="C1" />
+        <item id="LINKADDR_ORDER" mapid="" default="" type="C1" />
+        <item id="VOCATION" mapid="" default="" type="S" />
+        <item id="EMAIL" mapid="" default="" type="S" />
+        <item id="BIRTHDAY" mapid="" default="" type="N" />
+        <item id="OCCU_TYPE" mapid="" default="" type="S" >
+            <dict code="01" mapcode="01" />
+            <dict code="011" mapcode="011" />
+            <dict code="012" mapcode="012" />
+            <dict code="02" mapcode="02" />
+            <dict code="03" mapcode="03" /> 
+            <dict code="04" mapcode="04" />
+            <dict code="041" mapcode="041" />
+            <dict code="042" mapcode="042" />
+            <dict code="05" mapcode="05" />
+            <dict code="06" mapcode="06" />
+            <dict code="07" mapcode="07" />
+            <dict code="08" mapcode="08" />
+            <dict code="09" mapcode="09" />
+            <dict code="10" mapcode="10" /> 
+            <dict code="11" mapcode="11" />
+            <dict code="12" mapcode="12" />
+            <dict code="13" mapcode="13" />
+            <dict code="14" mapcode="14" />
+            <dict code="99" mapcode="99" />
+        </item>
+        
+        <item id="OCCU_TYPE_EX" mapid="" default="" type="S" />
+        <item id="GX_BS" mapid="" default="" type="N" />
+
+        
+        <item id="VERIFY_TYPE" mapid="" default="" type="C1" />
+        <item id="VERIFY_ATTRIBUTE" mapid="" default="" type="C1" />
+        <item id="CNINFO" mapid="" default="" type="T" />
+        <item id="DN_CODE" mapid="" default="" type="S" />
+        <item id="NONSCENE_SERIAL" mapid="" default="" type="N" />
+        <item id="REF_NO" mapid="" default="" type="S" />
+        <item id="AUTH_CODE" mapid="" default="" type="S" />
+        <item id="CERT_SN" mapid="" default="" type="S" />
+        <item id="P10" mapid="" default="" type="S" />
+        <item id="CERT_TYPE" mapid="" default="" type="C2" />
+        <item id="VERIFY_DATA" mapid="" default="" type="L" />
+        <item id="CERT_DN" mapid="" default="" type="S" />
+        
+        <item id="OPEN_TYPE" mapid="" default="" type="C2" />
+        <item id="NATIONALITY" mapid="" default="" type="S" />
+        <item id="REQUEST_TYPE" mapid="" default="" type="C2" />
+        
+        <!-- add by lengjinjun -->
+        <item id="TEL_SERIAL_NO" mapid="" default="" type="S" />
+        <item id="STAFF_NAME" mapid="" default="" type="S" />
+        <item id="STAFF_NO" mapid="" default="" type="S" />
+        <item id="USED" mapid="" default="" type="S" />
+
+        
+        <item id="CONTRACT_CLS" mapid="" default="" type="S" />
+        <item id="CONTRACT_NAME" mapid="" default="" type="T" />
+        <item id="VERSION" mapid="" default="" type="N" />
+        <item id="TOTAL_DATA_SIZE" mapid="" default="" type="N" />
+        <item id="CONTRACT" mapid="" default="" type="B" />
+        <item id="CONTRACT_LEN" mapid="" default="" type="N" />
+        <item id="CONTRACT_TEXT" mapid="" default="" type="B" />
+        <item id="CONTRACT_T_LEN" mapvalue="CONTRACT_TEXT_LEN" mapid="" default="" type="N" />
+
+        <item id="SIGN_TYPES" mapid="" default="" type="S" />
+        <item id="SIGN_EXINFO" mapid="" default="" type="S" />
+        <item id="BEGIN_DATE" mapid="" default="" type="N" />
+        <item id="CONTRACT_MD5" mapid="" default="" type="S" />
+        
+        <item id="SURVEY_CLS" mapid="" default="" type="C1" />
+        <item id="SURVEY_SN" mapid="" default="" type="N" />
+        <item id="SURVEY_GR" mapid="" default="" type="N" />
+        <item id="SURVEY_COL" mapid="" default="" type="N" />
+        <item id="SURVEY_CELL" mapid="" default="" type="N" />
+        <item id="SURVEY_CELLTEXT" mapvalue="SURVEY_CELL_TEXT" mapid="" default="" type="T" />
+        <item id="SURVEY_COL_TEXT" mapid="" default="" type="T" />
+        <item id="SURVEY_COL_OPT" mapid="" default="" type="C1" />
+        
+        <item id="APPT_SERIAL_NO" mapid="" default="" type="N" />
+        <item id="SURVEY_COLS" mapid="" default="" type="S" />
+        <item id="SURVEY_ANS_VAL" mapid="" default="" type="N" />
+        <item id="ANS_STATUS" mapid="" default="" type="C1" />
+        <item id="SURVEY_SCORE" mapid="" default="" type="N" />
+        <item id="RATING_LVL" mapid="" default="" type="N" />
+        <item id="RATING_LVL_NAME" mapid="" default="" type="T" />
+        <item id="RATING_DATE" mapid="" default="" type="N" />
+        
+        <item id="NATIVE_PLACE" mapid="" default="" type="T" />
+        <item id="USER_NAME" mapid="" default="" type="T" />
+        <item id="USER_FNAME" mapid="" default="" type="T" />
+        <item id="USER_CODE" mapid="" default="" type="N" />
+        <item id="USER_ROLES" mapid="" default="" type="C1" />
+        <item id="OPEN_DATE" mapid="" default="" type="N" />
+        
+        <item id="CYB_FLAG" mapid="" default="" type="C1" />
+        <item id="RETURN_FLAG" mapid="" default="" type="C1" />
+
+        <item id="SIGN_TYPE" mapid="" default="" type="S" />
+        <item id="SIGN_TEXT" mapid="" default="" type="S" />
+        <item id="STRING" mapid="" default="" type="S" />
+        
+        <item id="CURRENCY" mapid="" default="" type="C1" />
+        <item id="BANK_CTRLFLAGS" mapid="" default="" type="S" />
+        <item id="CUBSB_TYPE" mapid="" default="" type="C1" />
+        <item id="ORG_NAME" mapid="" default="" type="T" />
+        <item id="PRIORIDEX" mapid="" default="" type="N" />
+        <item id="SIGN_FLAG" mapid="" default="" type="C1" />
+
+        <item id="CUBSB_TRD_ID" mapid="" default="" type="S" />
+        <item id="CHK_ID" mapid="" default="" type="C1" />
+        <item id="CHK_FUND_PWD" mapid="" default="" type="C1" />
+        <item id="CHK_BANK_PWD" mapid="" default="" type="C1" />
+        <item id="CHK_BANK_ACCT" mapid="" default="" type="C1" />
+        <item id="SEND_TO_BANK" mapid="" default="" type="C1" />
+        <item id="SEND_CUACCT" mapid="" default="" type="C1" />
+        <item id="CHANNELS" mapid="" default="" type="T" />
+        <item id="USER_TYPES" mapid="" default="" type="T" />
+        <item id="CUACCT_ATTRS" mapid="" default="" type="T" />
+        <item id="WEEK_DAYS" mapid="" default="" type="S" />
+        <item id="BGN_STIME" mapid="" default="" type="N" />
+        <item id="END_STIME" mapid="" default="" type="N" />
+        
+        <item id="OPERATION_TYPE" mapid="" default="" type="C1" />
+        <item id="OLD_AUTH_DATA" mapid="" default="" type="PA" />
+        <item id="NEW_AUTH_DATA" mapid="" default="" type="PA" />
+        
+        <item id="CONTRACT_STATUS" mapid="" default="" type="C1" />
+        
+        <item id="BANK_AUTH_DATA" mapid="" default="" type="PA" />
+        <item id="OCCUR_DATE" mapid="" default="" type="N" />
+        
+        <item id="kd_user_id" mapid="" default="" type="S" />
+        <item id="Kd_gydm" mapid="" default="" type="S" />
+        <item id="kd_gymm" mapid="" default="" type="S" />
+        <item id="Kd_czfs" mapid="" default="" type="S" />
+        <item id="in_zjlx" mapid="" default="" type="S" />
+        <item id="in_kh_id_no" mapid="" default="" type="S" />
+        <item id="in_fgsid" mapid="" default="" type="S" />
+        <item id="in_jgid" mapid="" default="" type="S" />
+        <item id="out_fhdm" mapid="" default="" type="S" />
+        <item id="out_fhxx" mapid="" default="" type="S" />
+
+        <item id="Fwnrsm" mapid="" default="" type="TL" />
+        
+        <item id="ID_CODE_CHKRLT" mapid="" default="" type="T" />
+        <item id="USERNAME_CHKRLT" mapvalue="USER_NAME_CHKRLT" mapid="" default="" type="T" />
+        <item id="SEX_CHKRLT" mapid="" default="" type="T" />
+        <item id="NATION_CHKRLT" mapvalue="NATIONALITY_CHKRLT" mapid="" default="" type="T" />
+        <item id="BIRTHDAY_CHKRLT" mapid="" default="" type="S" />
+        <item id="CHK_STATUS" mapid="" default="" type="C1" />
+        <item id="IMG_DATA" mapid="" default="" type="B" />
+        
+        <item id="DATA_LEN" mapid="" default="" type="N" />
+        <item id="IMG_CLS" mapid="" default="" type="S" />
+        <item id="IMG_SN" mapid="" default="" type="N" />
+        <item id="RELA_PATH" mapid="" default="" type="S" />
+        <item id="FILE_NAME" mapid="" default="" type="S" />
+        <item id="USER_ROLE" mapid="" default="" type="C1" />
+        <item id="VIDEO_FMT" mapid="" default="" type="C1" />
+        <item id="VIDEO_CLS" mapid="" default="" type="S" />
+        <item id="VIDEO_STATUS" mapid="" default="" type="C1" />
+        <item id="VIDEO_TAG" mapid="" default="" type="S" />
+        <item id="VIDEO_REMARK" mapid="" default="" type="S" />
+        <item id="MD5_CODE" mapid="" default="" type="S" />
+        
+        <item id="ENCRYPTED_DATA" mapid="" default="" type="S" />
+        
+        <item id="APPT_DATE" mapid="" default="" type="N" />
+        <item id="DATE_TYPE" mapid="" default="" type="N" />
+        <item id="BGN_TIME" mapid="" default="" type="C2" />
+        <item id="APPT_OPER" mapid="" default="" type="N" />
+        <item id="SER_CUST_TIME" mapid="" default="" type="N" />
+        <item id="AVL_CNT" mapid="" default="" type="N" />
+        <item id="APPTED_CNT" mapid="" default="" type="N" />
+        <item id="LEFT_CNT" mapid="" default="" type="N" />
+        <item id="APPT_CNT" mapid="" default="" type="N" />     
+        
+        <item id="APPT_BGN_DATE" mapid="" default="" type="N" />
+        <item id="APPT_END_DATE" mapid="" default="" type="N" />
+        <item id="END_TIME" mapid="" default="" type="C2" />
+        <item id="APPT_STATUS" mapid="" default="" type="C1" />
+        
+        <item id="serverid" mapid="" default="" type="N" />
+        <item id="sno" mapid="" default="" type="N" />
+        <item id="sysdate" mapid="" default="" type="N" />
+        <item id="operdate" mapid="" default="" type="N" />
+        <item id="status" mapid="" default="" type="C1" />
+        <item id="strikeflag" mapid="" default="" type="C1" />
+        <item id="linksno" mapid="" default="" type="N" />
+        <item id="strikesno" mapid="" default="" type="N" />
+        <item id="orgid" mapid="" default="" type="C4" />
+        <item id="bankcode" mapid="" default="" type="C4" />
+        <item id="sourcetype" mapid="" default="" type="C1" />
+        <item id="banktranid" mapid="" default="" type="C1" />
+        <item id="custid" mapid="" default="" type="N" />
+        <item id="brhid" mapid="" default="" type="C4" />
+        <item id="fundid" mapid="" default="" type="N" />
+        <item id="moneytype" mapid="" default="" type="C1" />
+        <item id="GENRPCLBMNO" mapid="" default="" type="S" />
+        <item id="syserrid" mapid="" default="" type="S" />
+        <item id="bankmsgid" mapid="" default="" type="S" />
+        <item id="bankmsg" mapid="" default="" type="T" />
+        <item id="PER_USER_CODE" mapid="" default="" type="S" />
+        <item id="ECHANNEL" mapid="" default="" type="S" />
+        <item id="EBIZ_TYPE" mapid="" default="" type="S" />
+        <item id="TEAM_CODE" mapid="" default="" type="N" />
+        <item id="TEAM_NAME" mapid="" default="" type="T" />
+        <item id="TEAM_TYPE" mapid="" default=" " type="C1" />
+        <item id="BIZ_DATE" mapid="" default="" type="N" />
+        <item id="OCCUR_TIME" mapid="" default="" type="S" />
+        <item id="BRK_STATUS" mapid="" default="" type="C1" />
+
+        <!--
+            两融开户
+        -->
+        <item id="SZCREDITFLAG" mapid="" default="" type="C1" />
+        <item id="SHCREDITFLAG" mapid="" default="" type="C1" />
+        <item id="SZCREDITACCT" mapid="" default="" type="S" />
+        <item id="SHCREDITACCT" mapid="" default="" type="S" />
+        <item id="RZRQ_STATUS" mapid="" default="" type="C1" />
+        <item id="RZRQ_COMPLED_STATUS" mapid="" default="" type="S" />
+        <item id="APPLY_LMT" mapid="" default="" type="N" />
+        <item id="APPLY_QTY" mapid="" default="" type="N" />
+        <item id="RELATEACCT" mapid="" default="" type="T" />
+        <item id="STKCODE" mapid="" default="" type="S" />
+        <item id="STKCODE2" mapid="" default="" type="S" />
+        <item id="STKLIMIT" mapid="" default="" type="T" />
+        <item id="STATUS" mapid="" default="" type="C1" />
+        <item id="COMPLETE_STATUS_EX" mapid="" default="" type="S" />
+        <item id="COMPLITE_STATUS" mapid="" default="" type="S" />
+        <item id="RIGHTFLAG" mapid="" default="" type="C1" />
+        <item id="CHNSINGLEFLAG" mapid="" default="" type="C1" />
+        <item id="OPENTIMEFLAG" mapid="" default="" type="C1" />
+        <item id="ASSETFLAG" mapid="" default="" type="C1" />
+        <item id="AGEFLAG" mapid="" default="" type="C1" />
+        <item id="IDEFFECTFLAG" mapid="" default="" type="C1" />
+        <item id="BLACKCUSTFLAG" mapid="" default="" type="C1" />
+        <item id="AGENTFLAG" mapid="" default="" type="C1" />
+        <item id="AMLFLAG" mapid="" default="" type="C1" />
+        <item id="SECUIDFLAG" mapid="" default="" type="C1" />
+
+        <item id="questno" mapid="" default="" type="N" />
+        <item id="groupno" mapid="" default="" type="N" />
+        <item id="questtype" mapid="" default="" type="C1" />
+        <item id="question" mapid="" default="" type="T" />
+        <item id="score" mapid="" default="" type="N" />
+        <item id="counttype" mapid="" default="" type="C1" />
+        <item id="option_A" mapid="" default="" type="T" />
+        <item id="option_B" mapid="" default="" type="T" />
+        <item id="option_C" mapid="" default="" type="T" />
+        <item id="option_D" mapid="" default="" type="T" />
+        <item id="rightopt" mapid="" default="" type="C1" />
+
+        <item id="GROUPNO" mapid="" default="" type="N" />
+        <item id="QUESTNOS" mapid="" default="" type="S" />
+        <item id="OPTIONS" mapid="" default="" type="S" />
+        <item id="EXT" mapid="" default="" type="S" />
+
+        <item id="totalscore" mapid="" default="" type="N" />
+        <item id="knowledgescore" mapid="" default="" type="N" />
+        <item id="psychtestscore" mapid="" default="" type="N" />
+        <item id="passflag" mapid="" default="" type="C1" />
+        
+        <item id="MATCH_BIZ_TYPE" mapid="" default="" type="S" />
+        <item id="PRO_CODE" mapid="" default="" type="S" />
+        <item id="VISION_FLAG" mapid="" default="" type="C1" />
+        <item id="INVEST_TYPE" mapid="" default="" type="S" />
+        <item id="INVEST_LIMIT" mapid="" default="" type="S" />
+        <item id="RATING_LVL" mapid="" default="" type="C1" />
+        <item id="MATCH_FLAG" mapid="" default="" type="C1" />
+        <item id="MATCH_DATE" mapid="" default="" type="N" />
+        <item id="MATCH_RESULT" mapid="" default="" type="C1" />
+        <item id="PRATING_LVL" mapid="" default="" type="C1" />
+        <item id="PINVEST_LIMIT" mapid="" default="" type="S" />
+        <item id="PINVEST_TYPE" mapid="" default="" type="S" />
+        <item id="PRO_RISTTYPE" mapid="" default="" type="S" />
+        <item id="RATING_TIME" mapid="" default="" type="S" />
+        <item id="PIVTYPE_SVCOL" mapid="" default="" type="S" />
+        <item id="DIVTYPE_SVCOL" mapid="" default="" type="S" />
+        <item id="PIVLIMIT_SVCOL" mapid="" default="" type="S" />
+        <item id="DIVLIMIT_SVCOL" mapid="" default="" type="S" />
+        <item id="CONFIRM_STATUS" mapid="" default="" type="C1" />
+        <item id="CONFIRM_DATE" mapid="" default="" type="N" />
+
+        <item id="PRO_RISTTYPE" mapid="" default="" type="C1" />
+        <item id="PRO_INVESTTYPE" mapid="" default="" type="S" />
+        <item id="CONFIRM_FLAG" mapid="" default="" type="C1" />
+
+        <item id="TOTALASSET" mapid="" default="" type="N" />
+        <item id="TOTALDEBIT" mapid="" default="" type="N" />
+        <item id="NETASSET" mapid="" default="" type="N" />
+        <item id="MAXAPPLY" mapid="" default="" type="N" />
+
+        <item id="BIZ_TYPE" mapid="" default="" type="C1" />
+        <item id="C_CUACCT_CODE" mapid="" default="" type="N" />
+
+        <item id="CUACCT_CLS" mapid="" default="" type="C1" />
+        <item id="CUACCT_GRP" mapid="" default="" type="C1" />
+        <item id="CUACCT_LVL" mapid="" default="" type="C1" />
+        <item id="INT_RATE" mapid="" default="" type="T" />
+
+        <item id="USE_FLAG" mapid="" default="" type="C1" />
+        <item id="begindate" mapid="" default="" type="N" />
+        <item id="enddate" mapid="" default="" type="N" />
+        <item id="norfundid" mapid="" default="" type="N" />
+        <item id="creditfundid" mapid="" default="" type="N" />
+
+        <item id="approveid" mapid="" default="" type="N" />
+        <item id="approvetype" mapid="" default="" type="C1" />
+        <item id="currentnode" mapid="" default="" type="C1" />
+        <item id="checkflag" mapid="" default="" type="C1" />
+        <item id="contractno" mapid="" default="" type="S" />
+        <item id="limitamt" mapid="" default="" type="N" />
+        <item id="opername" mapid="" default="" type="S" />
+        <item id="operid" mapid="" default="" type="N" />
+        <item id="BROKER_NAME" mapid="" default="" type="T" />
+        <item id="COMMISSIONRATE" mapid="" default="" type="N" />
+        <item id="RZRQ_COMMISSIONRATE" mapid="" default="" type="N" />
+        <item id="RZ_INT_RATE" mapid="" default="" type="N" />
+        <item id="RQ_INT_RATE" mapid="" default="" type="N" />
+        <item id="checkamt" mapid="" default="" type="N" />
+        
+        <!--
+            工行一站式签约 add by jianghb
+        -->
+        <item id="LINK_FLAG" mapid="" default="" type="C1" />
+        <item id="LINK_ACCID" mapid="" default="" type="S" />
+        <item id="linkaccid" mapid="" default="" type="S" />
+
+        <!--
+            两融开户资质判断柜台新增参数 add by jianghb
+        -->
+        <item id="SEXFLAG" mapid="" default="" type="C1" />
+        <item id="EDUFLAG" mapid="" default="" type="C1" />
+        <item id="ADDRFLAG" mapid="" default="" type="C1" />
+        <item id="POSTFLAG" mapid="" default="" type="C1" />
+        <item id="OCCUTYPEFLAG" mapid="" default="" type="C1" />
+
+        <!--
+            掌上业务办理 add by jianghuib
+        --> 
+        <item id="NS_BIZ" mapid="" default="" type="C2" />
+        <item id="CURR_STATUS" mapid="" default="" type="C1" />
+        <item id="CURR_PHASE" mapid="" default="" type="T" />
+        <item id="BIZ_DATA" mapid="" default="" type="S" />
+        <item id="OP_NAME" mapid="" default="" type="S" />
+        <item id="OP_ORG" mapid="" default="" type="N" />
+        <item id="OP_REMARK" mapid="" default="" type="S" />
+        
+        
+        <item id="STATUS" mapid="" default="" type="C1" />
+        <item id="STATUS_EX" mapid="" default="" type="C1" />
+        
+        <item id="FUND_PWD" mapid="" default="" type="PA" />
+        <item id="TRD_PWD" mapid="" default="" type="PA" />
+        <item id="MOBIL" mapid="" default="" type="S" />
+        
+        <item id="FAX" mapid="" default="" type="S" />
+        <item id="MARRY" mapid="" default="" type="C1" />
+        <item id="AVOCATION" mapid="" default="" type="S" />
+        <item id="VEHICLE" mapid="" default="" type="C1" /> 
+        <item id="HOUSE_OWNER" mapid="" default="" type="C1" />
+        <item id="OFFICE_TEL" mapid="" default="" type="S" />
+        <item id="WELL_TEL" mapid="" default="" type="S" />
+        <item id="CORP_ADDR" mapid="" default="" type="T" />
+        
+        
+        <item id="IMG_CLS_LIST" mapid="" default="" type="S" />
+        <item id="IMG_STATUS_LIST" mapid="" default="" type="S" /> 
+        <item id="IMG_STATUS" mapid="" default="" type="C1" />
+        <item id="IMG_SIZE" mapid="" default="" type="N" />
+        <item id="IMG_WIDTH" mapid="" default="" type="N" /> 
+        <item id="IMG_HEIGHT" mapid="" default="" type="N" />
+        <item id="BITMAP_BITS" mapid="" default="" type="N" />
+        <item id="BITMAP_XDPI" mapid="" default="" type="N" /> 
+        <item id="BITMAP_YDPI" mapid="" default="" type="N" />
+        <item id="BITMAP_TYPE" mapid="" default="" type="C1" />
+        <item id="IMG_TAG" mapid="" default="" type="S" /> 
+        <item id="IMG_MAC" mapid="" default="" type="S" />
+        <item id="IMG_REMARK" mapid="" default="" type="S" />
+        <item id="OP_ROLE" mapid="" default="" type="C1" />
+        <item id="OP_SITE" mapid="" default="" type="S" />
+        <item id="IMG_FMT" mapid="" default="" type="C1" />
+        <item id="FILE_DATE" mapid="" default="" type="N" />
+        <item id="UP_DATE" mapid="" default="" type="N" />
+        <item id="CHK_DATE" mapid="" default="" type="N" />
+        <item id="CHK_READ_FLAG" mapid="" default="" type="C1" />
+        <item id="IMG_RTN_DATE" mapid="" default="" type="C1" />
+        <item id="FST_CHK_READ_FLAG" mapid="" default="" type="C1" />
+        
+        <item id="STKEX" mapid="" default="" type="C1" />
+        <item id="STKBD" mapid="" default="" type="C2">
+            <dict code="00" mapcode="00" />
+            <dict code="01" mapcode="01" />
+            <dict code="10" mapcode="10" />
+            <dict code="11" mapcode="11" />
+            <dict code="12" mapcode="12" />
+            <dict code="20" mapcode="20" />
+            <dict code="21" mapcode="21" />
+        </item>
+        <item id="TRDACCT" mapid="" default="" type="C10" />
+        <item id="TRDACCT_SN" mapid="" default="" type="N" />
+        <item id="TRDACCT_TYPE" mapid="" default="" type="C1" />
+        <item id="TRDACCT_EXID" mapid="" default="" type="C10" />
+        <item id="TRDACCT_EXCLS" mapid="" default="" type="C1" />
+        <item id="TRDACCT_NAME" mapid="" default="" type="T" />
+        <item id="TRDACCT_STATUS" mapid="" default="" type="C1" />
+        <item id="TREG_STATUS" mapid="" default="" type="C1" />
+        <item id="BREG_STATUS" mapid="" default="" type="C1" />
+        <item id="STKPBU" mapid="" default="" type="C8" />
+        <item id="FIRMID" mapid="" default="" type="C8" />
+        <item id="YMT_CODE" mapid="" default="" type="S" />
+        
+        <item id="MOBILE" mapid="" default="" type="S" /> 
+        <item id="CUST_AGMT_TYPE" mapid="" default="" type="C1" /> 
+        <item id="REMOTE_SYS" mapid="" default="" type="S" /> 
+        <item id="EFT_DATE" mapid="" default="" type="N" /> 
+        <item id="EXP_DATE" mapid="" default="" type="N" /> 
+        <item id="UPD_DATE" mapid="" default="" type="N" /> 
+        
+        <item id="PROC_FLAG" mapid="" default="" type="C1" />
+        <item id="ID_FLAG" mapid="" default="" type="C1" />
+        
+        <item id="USE_SCOPE" mapid="" default="" type="C1" />
+        <item id="AUTH_TYPE" mapid="" default="" type="C1" />
+        
+        <item id="CUST_AGMT_LIST" mapid="" default="" type="S" />
+        <item id="FUND_AUTH_DATA" mapid="" default="" type="PA" />
+        <item id="FRT_BIZ_SN" mapid="" default="" type="N" />
+        <item id="CUST_CLS" mapid="" default="" type="C1" />
+        <item id="BANK_FLAG" mapid="" default="" type="C1" />
+        <item id="OPEN_FLAG" mapid="" default="" type="C1" />
+        <item id="AUTH_DATA" mapid="" default="" type="PA" />
+        
+        <item id="CUBSB_TRD_IDS" mapid="" default="" type="S" /> 
+        <item id="CUBSB_TRD_STATUS" mapid="" default="" type="S" /> 
+        
+        <item id="CUACCT_STATUS" mapid="" default="" type="S" />
+        <item id="MAIN_FLAG" mapid="" default="" type="C1" />
+        <item id="CUACCT_ATTR" mapid="" default="" type="C1" />
+        
+        <item id="TAB_CODE" mapid="" default="" type="C1" />
+        <item id="FLD_CODE" mapid="" default="" type="C1" />
+        <item id="PKG_TYPE" mapid="" default="" type="C1" />
+        
+        <item id="ORG_ID_CODE" mapid="" default="" type="S" />
+        <item id="ORG_ID_EXP_DATE" mapid="" default="" type="N" />
+        <item id="BUSINESS_TAX_NO" mapid="" default="" type="S" />
+        <item id="TAX_NO_EXP_DATE" mapid="" default="" type="N" />
+        <item id="BUSINESS_LICENCE_NO" mapid="" default="" type="C1" />
+        <item id="LICENCE_NO_EXP_DATE" mapid="" default="" type="C1" />
+        
+        <item id="EXT_ORG_NEW" mapid="" default="" type="N" />
+        <item id="BANK_ACCT_NEW" mapid="" default="" type="S" />
+        
+        <item id="EXT_ORG1" mapid="" default="" type="N" />
+        <item id="BANK_ACCT1" mapid="" default="" type="S" />
+        <item id="CUACCT_CODE1" mapid="" default="" type="S" />
+        
+        <item id="EXT_ORG2" mapid="" default="" type="N" />
+        <item id="BANK_ACCT2" mapid="" default="" type="S" />
+        <item id="CUACCT_CODE2" mapid="" default="" type="S" />
+        
+        <item id="EXT_ORG3" mapid="" default="" type="N" />
+        <item id="BANK_ACCT3" mapid="" default="" type="S" />
+        <item id="CUACCT_CODE3" mapid="" default="" type="S" />
+        
+        <item id="EXT_ORG4" mapid="" default="" type="N" />
+        <item id="BANK_ACCT4" mapid="" default="" type="S" />
+        <item id="CUACCT_CODE4" mapid="" default="" type="S" />
+        
+        <item id="STEP" mapid="" default="" type="C1" />
+        <item id="REASON" mapid="" default="" type="T" />
+        
+        <item id="COMPLETE_STATUS" mapid="" default="" type="S" />
+        <item id="MD_TYPE" mapid="" default="" type="S" />
+        <item id="OLD_VALUE" mapid="" default="" type="S" />
+        <item id="MD_VALUE" mapid="" default="" type="S" />
+        <item id="APPLY_DATE" mapid="" default="" type="N" />
+        <item id="APPLY_WAY" mapid="" default="" type="S" />
+        <item id="APPLY_ADDR" mapid="" default="" type="T" />
+        <item id="APPLY_REASON" mapid="" default="" type="T" />
+        <item id="REMARK" mapid="" default="" type="T" />
+        <item id="STATUS" mapid="" default="" type="S" />
+        <!-- 机构见证开户 add by kongwt -->
+        <item id="ORG_CODE" mapid="" default="" type="N" />
+        <item id="ORG_TYPE" mapid="" default="" type="C1"  />
+        <item id="ORG_CLS" mapid="" default="" type="S" />
+        <item id="ORG_FULL_NAME" mapid="" default="" type="T" />
+        <item id="ORG_STATUS" mapid="" default="" type="C1" />
+        <item id="PARENT_ORG" mapid="" default="" type="N" />
+        <item id="ACCT_LEN" mapid="" default="" type="N" />
+        <item id="ACCT_PREFIX" mapid="" default="" type="S" />
+        <item id="AREA_NO" mapid="" default="" type="S" />
+        <item id="RIGHT_FLAG" mapid="" default="" type="C1" />
+        <item id="APPT_ADDR" mapid="" default="" type="T" />
+        <item id="APPT_OPER1" mapid="" default="" type="N" />
+        <item id="APPT_OPER2" mapid="" default="" type="N" />
+        <item id="RELA_NOSCENE_NO" mapid="" default="" type="N" />
+        <item id="ID_ZIP_CODE" mapid="" default="" type="S" />
+        <item id="LEGAL_REP" mapid="" default="" type="T" />
+        <item id="LEGAL_REP_ID_TYPE" mapid="" default="" type="C2" />
+        <item id="LEGAL_REP_ID_CODE" mapid="" default="" type="S" />
+        <item id="LEGAL_ID_EXP_DATE" mapid="" default="" type="N" />
+        <item id="LINKMAN" mapid="" default="" type="T" />
+        <item id="LINKMAN_ID_TYPE" mapid="" default="" type="C2" />
+        <item id="LINKMAN_ID_CODE" mapid="" default="" type="S" />
+        <item id="LINKMAN_MOBILE" mapid="" default="" type="S" />
+        <item id="LINKMAN_TEL" mapid="" default="" type="S" />
+        <item id="LINKMAN_CUST_RELA" mapid="" default="" type="C2" />
+        <item id="LINKMAN_ZIP" mapid="" default="" type="S" />
+        <item id="LINKMAN_ADDRESS" mapid="" default="" type="T" />
+        <item id="CHK_APP_SN" mapid="" default="" type="N" />
+        <item id="CHK_REMARK" mapid="" default="" type="T" />
+        <item id="CUBSB_LOG_SN" mapid="" default="" type="N" />
+        <item id="PROC_DATE" mapid="" default="" type="N" />
+        <item id="PROC_REMARK" mapid="" default="" type="T" />
+        <item id="OFFICE_ADDR" mapid="" default="" type="T" />
+        <item id="BDMF_ACCT" mapid="" default="" type="S" />
+        <item id="CORP_EXTYPE" mapid="" default="" type="S" />
+        <item id="YEAR_CHK_DATE" mapid="" default="" type="N" />
+        <item id="LEGAL_REP_TYPE" mapid="" default="" type="S" />
+        <item id="INDUS_EXTYPE" mapid="" default="" type="S" />
+        <item id="CONTROLLER" mapid="" default="" type="T" />
+        <item id="SUBJECT_IDENTITY" mapid="" default="" type="S" />
+        <item id="ORG_MOBILE_TEL" mapid="" default="" type="S" />
+        <item id="REGISTER_FUND" mapid="" default="" type="S" />
+        <item id="ORG_FNAME" mapid="" default="" type="T" />
+        <item id="ORG_ID_ISS_AGCY" mapid="" default="" type="T" />
+        <item id="ORG_ID_ADDR" mapid="" default="" type="T" />
+        <item id="ORG_BIRTHDAY" mapid="" default="" type="N" />
+        <item id="O_MB" mapid="" default="" type="S" />
+        <item id="MOBILE_CHECKPASS" mapid="" default="" type="S" />
+        <item id="RASERIAL_NO" mapid="" default="" type="N" />
+        <item id="CHK_OPER_CODE" mapid="" default="" type="N" />
+        <item id="ORG_ID_TYPE" mapid="" default="" type="C2" />
+        <item id="ORG_CUST_NAME" mapid="" default="" type="T" />
+        <item id="AGT_CODE" mapid="" default="" type="N" />
+        <item id="UPDATE_DATE" mapid="" default="" type="N" />
+        <item id="UPDATE_TIME" mapid="" default="" type="N" />
+        <item id="RETURN_STEP" mapid="" default="" type="C1" />
+        <item id="UPDATE_FLAG" mapid="" default="" type="S" />
+        <item id="CONFIRM_OPER1" mapid="" default="" type="N" />
+        <item id="CONFIRM_OPER2" mapid="" default="" type="N" />
+        <item id="UPDATE_RTNTIME" mapid="" default="" type="N" />
+        <item id="INPUT_TIME" mapid="" default="" type="N" />
+        <item id="FILE_SN" mapid="" default="" type="S" />
+        <item id="FILE_TYPE" mapid="" default="" type="S" />
+        <item id="FILE_STATUS" mapid="" default="" type="S" />
+        <item id="DRAW_TIME" mapid="" default="" type="S" />
+        <item id="RETURN_TIME" mapid="" default="" type="N" />
+        <item id="RETURN_CONFIRMER" mapid="" default="" type="S" />
+        <item id="RELA_APPT_NO" mapid="" default="" type="S" />
+        <item id="ORG_NAME" mapid="" default="" type="T" />
+        <item id="BUSINESS" mapid="" default="" type="T" />
+        <item id="OPERATOR_TYPE" mapid="" default="" type="S" />
+        <item id="LINKMAN_NO" mapid="" default="" type="S" />
+        <item id="LINKMAN_MOBILE" mapid="" default="" type="S" />
+        <!-- add by lengjinjun -->
+        <item id="ORIGIN" mapid="" default="" type="S" />
+        <item id="LEVEL" mapid="" default="" type="S" />
+        <item id="STAFF_EXIST" mapid="" default="" type="S" />
+        <item id="QUEUE_LOCATION" mapid="" default="" type="S" />
+        <item id="SERVER_ROOMNO" mapid="" default="" type="S" />
+        <item id="ABNORMAL_EXIT" mapid="" default="" type="S" />
+        <item id="FLAG" mapid="" default="" type="S" />
+        <item id="ACCTBIZ_EXCODE" mapid="" default="" type="S" />
+        <item id="ACCTBIZ_STATUS" mapid="" default="" type="S" />
+        <item id="YMT_STATUS" mapid="" default="" type="S" />
+        <item id="ACCT_TYPE" mapid="" default="" type="S" />
+        <item id="ACCT_STATUS" mapid="" default="" type="S" />
+        <item id="RELATION_FLAG" mapid="" default="" type="S" />
+        <item id="RTN_ERR_CODE" mapid="" default="" type="S" />
+        <!-- add by lengjinjun hlt -->
+        <item id="OTHERCORE" mapid="" default="" type="S" />
+        <item id="ASSET_VAL" mapid="" default="" type="S" />
+        <item id="LAST_ASSET_VAL" mapid="" default="" type="S" />
+        <item id="FISL" mapid="" default="" type="S" />
+        <item id="LAST_FLAG" mapid="" default="" type="S" />
+        <!-- add by lengjinjun end -->
+        
+        <!-- 手机开户适当性匹配 add by jianghui begin-->
+        <item id="BENEFIT_FLAG" mapid="" default="" type="S" />
+        <item id="BNF_NAME" mapid="" default="" type="T" />
+        <item id="BNF_IDCODE" mapid="" default="" type="S" />
+        <item id="BNF_IDTYPE" mapid="" default="" type="S" />
+        <item id="BNF_IDEXPDATE" mapid="" default="" type="S" />
+        <item id="CREDIT_FLAG" mapid="" default="" type="S" />
+        <item id="CREDIT_RECORD" mapid="" default="" type="T" />
+        <item id="LOW_INCOME_FLAG" mapid="" default="" type="S" />
+        <!-- add by lengjinjun -->
+        <item id="FILEDATE" mapid="" default="" type="S" />
+        <item id="VIDEO_FLAG" mapid="" default="" type="S" />
+        
+        <item id="tcdm" mapid="" default="" type="T" />
+        <item id="fxjb" mapid="" default="" type="S" />
+        <item id="tzpz" mapid="" default="" type="S" />
+        <item id="tzqx" mapid="" default="" type="S" />
+        <item id="khqx" mapid="" default="" type="S" />
+        
+        <item id="sfyz" mapid="" default="" type="S" />
+        <item id="sfjg" mapid="" default="" type="S" />
+        <item id="yzyxq" mapid="" default="" type="S" />
+        <item id="yzje" mapid="" default="" type="S" />
+        <item id="fwqd" mapid="" default="" type="S" />
+        <item id="tqfs" mapid="" default="" type="T" />
+        <item id="tcmc" mapid="" default="" type="T" />
+        
+        <item id="RATING_EXP_DATE" mapid="" default="" type="S" />
+        
+        <item id="RATING_LVL_MATCH" mapid="" default="" type="S" />
+        <item id="INVEST_TYPE_MATCH" mapid="" default="" type="S" />
+        <item id="INVEST_LIMIT_MATCH" mapid="" default="" type="S" />
+        
+        <item id="PRO_INVESTLIMIT" mapid="" default="" type="S" />
+        
+        <item id="PROF_INVESTOR_TYPE" mapid="" default="" type="S" />
+        <item id="PROF_INVESTOR_SOURCE" mapid="" default="" type="S" />
+        <item id="PROF_SIGN_DATE" mapid="" default="" type="S" />
+        <item id="PROF_EXP_DATE" mapid="" default="" type="S" />
+        <item id="SIGN_DATE" mapid="" default="" type="S" />
+        <item id="INVEST_LMT" mapid="" default="" type="S" />           
+        <item id="INVEST_PRO" mapid="" default="" type="S" />                   
+        <item id="EXPECT_INCOME" mapid="" default="" type="S" />                        
+        
+        <!-- 手机开户适当性匹配 add by jianghui end -->
+        
+        <!-- 金太阳OTC适当性改造 add by jianghui begin -->
+        <item id="LEGAL_REP_ID_EXP_DATE" mapid="" default="" type="S" />
+        <item id="INDUS_TYPE" mapid="" default="" type="S" />
+        <item id="LAND_TAX_NO" mapid="" default="" type="S" />
+        <item id="LAND_TAX_NO_EXP_DATE" mapid="" default="" type="S" />
+        <item id="ASSIGN_PERSON_NAME" mapid="" default="" type="T" />
+        <item id="ASSIGN_PERSON_ID_TYPE" mapid="" default="" type="S" />
+        <item id="ASSIGN_PERSON_ID" mapid="" default="" type="S" />
+        <item id="ASSIGN_PERSON_ID_DAT" mapid="" default="" type="S" />
+        <item id="REAL_NEED" mapid="" default="" type="S" />
+        <item id="DERIVATIVE_INVEST_TIME" mapid="" default="" type="S" />
+        <item id="IF_MONEY_LAUNDERING" mapid="" default="" type="S" />
+        <item id="ANTI_MONEY_LAUNDERSYS" mapid="" default="" type="S" />
+        
+        <item id="BENEFICIARY_OWNER" mapid="" default="" type="T" />
+        <item id="CBENEFICIARY_NAME" mapid="" default="" type="T" />
+        <item id="BENEFICIARY_SFZH" mapid="" default="" type="S" />
+        <item id="BENEFICIARY_PHONE" mapid="" default="" type="S" />
+        <item id="BENEFICIARY_RELA" mapid="" default="" type="S" />
+        
+        <item id="ASSOCIATE_TYPE" mapid="" default="" type="S" />
+        <item id="ASSOCIATE_NAME" mapid="" default="" type="T" />
+        
+        <item id="CREDIT_TYPE" mapid="" default="" type="S" />
+        
+        <item id="ANSWER" mapid="" default="" type="T" />
+        <item id="VALID_FLAG" mapid="" default="" type="S" />
+
+        
+        <!-- 金太阳OTC适当性改造 add by jianghui end -->
+        
+        <!-- 业务办理 add by kongwt begin -->
+        <item id="market" mapid="" default="" type="S" />
+        <item id="secuid" mapid="" default="" type="S" />
+        <item id="cybflag" mapid="" default="" type="S" />
+        <item id="effectday" mapid="" default="" type="S" />
+        <!-- 业务办理 add by kongwt end -->
+        
+        <!-- 涉税信息 add by jianghuib begin -->
+        <item id="TAX_FLAG" mapid="" default="" type="S" />
+        <item id="FIRST_NAME" mapid="" default="" type="T" />
+        <item id="LAST_NAME" mapid="" default="" type="T" />
+        <item id="BIRTH_DAY" mapid="" default="" type="S" />
+        <item id="COUNTRY" mapid="" default="" type="S" />
+        <item id="PROVINCE" mapid="" default="" type="T" />
+        <item id="CITY" mapid="" default="" type="T" />
+        <item id="STREET1" mapid="" default="" type="T" />
+        <item id="STREET2" mapid="" default="" type="T" />
+        
+        <item id="BRH_COUNTRY" mapid="" default="" type="T" />
+        <item id="BRH_PROVINCE" mapid="" default="" type="T" />
+        <item id="BRH_CITY" mapid="" default="" type="T" />
+        <item id="BRH_STREET1" mapid="" default="" type="T" />
+        <item id="BRH_STREET2" mapid="" default="" type="T" />
+        <item id="ORG_TYPE" mapid="" default="" type="S" />
+        <item id="TAX_ID_FLAG" mapid="" default="" type="S" />
+        <item id="TAX_ID_RESON" mapid="" default="" type="T" />
+        <item id="TAX_ID_CONTENT" mapid="" default="" type="S" />
+        <item id="QUALIFY_CERT_NO" mapid="" default="" type="S" />
+        <!-- 涉税信息 add by jianghuib end -->
+
+
+        <!-- 机构开户 add by kaven begin -->
+        <item id="AGE" mapid="" default="" type="N" />
+        <item id="ID_ADDRESS" mapid="" default="" type="T" />
+        <item id="RELATION_TYPE" mapid="" default="" type="C2" />
+        <item id="RELATION_TYPE_EXP" mapid="" default="" type="T" />
+        <item id="ACCTBIZ_AGTCODE" mapid="" default="" type="S" />
+        <item id="ACCTBIZ_ORGCODE" mapid="" default="" type="S" />
+        <item id="ADMIN_DIVISIONS" mapid="" default="" type="S" />
+        <item id="BUS_SCOPE" mapid="" default="" type="T" />
+        <item id="BUS_STATUS" mapid="" default="" type="S" />
+        <item id="BUSS_ADDR " mapid="" default="" type="T" />
+        <item id="CHECK_FLAG" mapid="" default="" type="S" />
+        <item id="DECLARE_DATE" mapid="" default="" type="N" />
+        <item id="ECONOMIC_CLS" mapid="" default="" type="S" />
+        <item id="ECONOMIC_INDUSTRY" mapid="" default="" type="T" />
+        <item id="ID_CODE2" mapid="" default="" type="S" />
+        <item id="LAST_DATE" mapid="" default="" type="S" />
+        <item id="LEADER_DEPARTMENT" mapid="" default="" type="T" />
+        <item id="MANAGER_FNAME" mapid="" default="" type="T" />
+        <item id="MANAGER_NAME" mapid="" default="" type="T" />
+        <item id="OPERATING_BEGIN" mapid="" default="" type="S" />
+        <item id="OPERATING_END" mapid="" default="" type="S" />
+        <item id="OPPUGN_FLAG" mapid="" default="" type="S" />
+        <item id="ORG_SITE" mapid="" default="" type="S" />
+        <item id="ORGANIZATION_TYPE" mapid="" default="" type="S" />
+        <item id="PROD_IS_STRUCTURE" mapid="" default="" type="S" />
+        <item id="PROD_MANAGER_CLS" mapid="" default="" type="S" />
+        <item id="PROD_MANAGER_WEBSITE" mapid="" default="" type="S" />
+        <item id="PROD_OTHER_ORG" mapid="" default="" type="S" />
+        <item id="PRODUCT_ARCHIVE_DATE" mapid="" default="" type="S" />
+        <item id="PRODUCT_ARCHIVE_NO" mapid="" default="" type="S" />
+        <item id="PRODUCT_ARCHIVE_ORG" mapid="" default="" type="S" />
+        <item id="PRODUCT_CLS" mapid="" default="" type="S" />
+        <item id="PRODUCT_DURATION_DATE" mapid="" default="" type="S" />
+        <item id="PRODUCT_FOUND_DATE" mapid="" default="" type="S" />
+        <item id="PRODUCT_FULL_NAME" mapid="" default="" type="T" />
+        <item id="PRODUCT_LEVERAGE" mapid="" default="" type="S" />
+        <item id="PRODUCT_NAME" mapid="" default="" type="T" />
+        <item id="PRODUCT_SIZE" mapid="" default="" type="S" />
+        <item id="PRODUCT_TYPE" mapid="" default="" type="S" />
+        <item id="REG_CAPITAL" mapid="" default="" type="S" />
+        <item id="REGORG_NAME" mapid="" default="" type="T" />
+        <item id="STAFF_NUMS" mapid="" default="" type="S" />
+        <item id="YMT_STATUS" mapid="" default="" type="S" />
+        <item id="CORP_ZIP_CODE" mapid="" default="" type="S" />
+        <item id="CORP_TEL" mapid="" default="" type="S" />
+        <item id="ZD_REMARK1" mapid="" default="" type="T" />
+        <item id="ZD_REMARK2" mapid="" default="" type="T" />
+        <item id="REG_DATE" mapid="" default="" type="S" />
+        <item id="QUALITY_CERT_TYPE" mapid="" default="" type="S" />
+        <item id="QUALITY_CERT_NO" mapid="" default="" type="S" />
+        <item id="CONTROLER_TAX_FLAG" mapid="" default="" type="S" />
+
+        <!-- 机构开户 add by kaven end -->
+        
+        <!-- 涉税信息 add by lengjj end -->
+        <item id="CREDIT_TYPE_EXP" mapid="" default="" type="T" />
+        <item id="CUST_TYPE" mapid="" default="" type="S" />
+        <item id="CUST_STATUS" mapid="" default="" type="S" />
+        <item id="CARD_ID" mapid="" default="" type="S" />
+        <item id="CRITERION" mapid="" default="" type="S" />
+        <item id="RISK_FACTOR" mapid="" default="" type="S" />
+        <item id="CREDIT_LVL" mapid="" default="" type="S" />
+        <item id="REMOTE_PROTOCOL" mapid="" default="" type="S" />
+        <item id="CUST_SOURCE" mapid="" default="" type="S" />
+        <item id="SERVICE_LVL" mapid="" default="" type="S" />
+        <item id="AML_LVL" mapid="" default="" type="S" />
+        <item id="FILINGCABINET_NO" mapid="" default="" type="S" />
+        <item id="CUST_GRP" mapid="" default="" type="S" />
+        <item id="IDCARD_TYPE" mapid="" default="" type="S" />
+        <item id="IDCARD_CHECK_FLAG" mapid="" default="" type="S" />
+        <item id="CUST_EXT_ATTR" mapid="" default="" type="T" />
+        <item id="OPER_ORG" mapid="" default="" type="S" />
+        <item id="OPEN_AGENT" mapid="" default="" type="S" />
+        <item id="INOUTSIDE_IDENTITY" mapid="" default="" type="S" />
+        <item id="SPECIAL_STATUS" mapid="" default="" type="S" />
+        <item id="ENTERPRISE_LEVEL" mapid="" default="" type="S" />
+        <item id="SZORGTYPE" mapid="" default="" type="S" />
+        <item id="NATIONAL_ATTR" mapid="" default="" type="S" />
+        <item id="LISTED_ATTR" mapid="" default="" type="S" />
+        <item id="CAPITAL_ATTR" mapid="" default="" type="S" />
+        <item id="SMFUND_MANAGER_ID" mapid="" default="" type="S" />
+        <item id="CUST_TAX_TYPE" mapid="" default="" type="S" />
+        
+        <item id="FIRST_NAME_EN" mapid="" default="" type="T" />
+        <item id="LAST_NAME_EN" mapid="" default="" type="T" />
+        <item id="DECLARE_FILE_FLAG" mapid="" default="" type="S" />
+        <item id="COUNTRY_EN" mapid="" default="" type="T" />
+        <item id="PROVINCE_EN" mapid="" default="" type="T" />
+        <item id="CITY_EN" mapid="" default="" type="T" />
+        <item id="BRH_COUNTRY_EN" mapid="" default="" type="T" />
+        <item id="BRH_PROVINCE_EN" mapid="" default="" type="T" />
+        <item id="BRH_CITY_EN" mapid="" default="" type="T" />
+        <item id="STREET1_EN" mapid="" default="" type="T" />
+        <item id="STREET2_EN" mapid="" default="" type="T" />
+        <item id="BRH_STREET1_EN" mapid="" default="" type="T" />
+        <item id="BRH_STREET2_EN" mapid="" default="" type="T" />
+        
+        <!-- 手机号修改 add by jinjun.leng -->
+        <item id="VERIFY_FLAG" mapid="" default="" type="S" />
+        <item id="ACTIVE_DATE" mapid="" default="" type="S"     />
+        <item id="PER_VERIFY_FLAG" mapid="" default="" type="S" />
+        
+        <item id="OPEN_BIZ_CFG" mapid="" default="" type="S" />
+        <item id="CFG_VAL" mapid="" default="" type="S" />
+        
+        <item id="SUBACCT_CODE" mapid="" default="" type="S" />
+        <item id="SUBACCT_TYPE" mapid="" default="" type="S" />
+        <item id="SUBACCT_STATUS" mapid="" default="" type="S" />
+        <item id="CLOSE_DATE" mapid="" default="" type="S" />
+        <item id="SUBACCT" mapid="" default="" type="S" />
+        <item id="TOTAL_SCORE" mapid="" default="" type="S" />
+        <item id="OPT_TRDACCT_LVL" mapid="" default="" type="S" />
+        <item id="MONITOR_CTRL_FLAG" mapid="" default="" type="S" />
+        <item id="REGKEY_ID" mapid="" default="" type="S" />
+        <item id="REGKEY_NAME" mapid="" default="" type="T" />
+        <item id="REGKEY_VAL" mapid="" default="" type="S" />
+        <item id="BIZ_NAME" mapid="" default="" type="T" />
+        <item id="RESULT" mapid="" default="" type="T" />
+        <item id="STK_SUBACCT_SH" mapid="" default="" type="S" />
+        <item id="OPT_TRDACCT_LVL" mapid="" default="" type="S" />
+        <item id="STK_SUBACCT_SZ" mapid="" default="" type="S" />
+        <item id="STKACCT_SZ" mapid="" default="" type="S" />
+        <item id="CUST_ASSET" mapid="" default="" type="S" />
+        
+        
+        <!-- add by jianghuib 20180801 for 提交远程业务办理资料(小集合理财合格投资者资质审核) begin-->
+        <item id="CUST_ASSET" mapid="" default="" type="S" />
+        <item id="FIRST_TRD_DATE" mapid="" default="" type="S" />
+        <item id="SUBBIZ_TYPE" mapid="" default="" type="S" />
+        <item id="SUITABLEASSET" mapid="" default="" type="S" />
+        <!-- add by jianghuib 20180801 for 提交远程业务办理资料(小集合理财合格投资者资质审核) end-->
+        
+        <!-- add by jiangbin begin-->
+        <item id="APP_CODE" mapid="" default="" type="S" />
+        <item id="REQ_AUTH_INFO" mapid="" default="" type="S" />
+        <item id="RESPONSE_CODE" mapid="" default="" type="S" />
+        <item id="TEMPL_CODE" mapid="" default="" type="S" />
+        <item id="ANS_AUTH_INFO" mapid="" default="" type="L" />
+        <item id="CERT_INFO" mapid="" default="" type="L" />
+        <item id="CONTEXT" mapid="" default="" type="T" />
+        <item id="SEAL_PERSON" mapid="" default="" type="T" />
+        <item id="SEAL_LOCATION" mapid="" default="" type="S" />
+        <item id="SEAL_REASON" mapid="" default="" type="S" />
+        <item id="CERT_ENTITY" mapid="" default="" type="L" />
+        <item id="PDF_HASH" mapid="" default="" type="L" />
+        <item id="PDF_ID" mapid="" default="" type="S" />
+        <item id="SIGNATURE" mapid="" default="" type="L" />
+        <item id="CERTSN" mapid="" default="" type="L" />
+        <item id="VERIFY_STATUS" mapid="" default="" type="S" />
+
+        <item id="APPT_BIZ_TYPE" mapid="" default="" type="S" />
+        <item id="CLOSE_ACCT_CAUSE" mapid="" default="" type="T" />
+        <item id="CAUSE_EXP" mapid="" default="" type="T" />
+        <item id="STK_CLOSE_FLAG" mapid="" default="" type="S" />
+        <item id="APPT_REASON" mapid="" default="" type="T" />
+        <item id="APPT_REASON_EXP" mapid="" default="" type="T" />
+        <item id="SUCCESS_FLAG" mapid="" default="" type="S" />
+        <item id="ACCTBIZ_CLS" mapid="" default="" type="S" />
+        <item id="PROPER_CLS" mapid="" default="" type="S" />
+        <item id="ACCT_OPENTYPE" mapid="" default="" type="S" />
+        <item id="SIGN_CLS" mapid="" default="" type="S" />
+        <item id="QRY_REC" mapid="" default="" type="S" />
+        <item id="POS_STR" mapid="" default="" type="S" />
+        <item id="MARKET" mapid="" default="" type="S" />
+        <item id="CUACCT_CODE_SRC" mapid="" default="" type="S" />
+        <item id="OPT_CUACCT_CODE" mapid="" default="" type="S" />
+        <item id="PWD_INIT" mapid="" default="" type="S" />
+        <item id="LEGAL_REP_EXTYPE" mapid="" default="" type="S" />
+        <item id="BROKER_ID" mapid="" default="" type="S" />
+        <item id="OCCU_EXTYPE" mapid="" default="" type="S" />
+        <item id="CHK_RST" mapid="" default="" type="S" />
+        <!-- add by jiangbin end-->
+        
+        <!-- add by jiangbin for 场外中登基金账户对应关系维护 begin-->
+        <item id="TA_TRDACCT" mapid="" default="" type="S" />
+        <item id="TA_ACCT_TYPE" mapid="" default="" type="S" />
+        <item id="OF_TRDACCT" mapid="" default="" type="S" />
+        <item id="OFACCT" mapid="" default="" type="S" />
+        <item id="OFACCT_STATUS" mapid="" default="" type="S" />
+        <item id="BIND_TRDACCT" mapid="" default="" type="S" />
+        <item id="BIND_DATE" mapid="" default="" type="S" />
+        <!-- add by jiangbin end-->
+        
+        <!-- add by jiangbin for T-60至T-21日期间日终资产高于50万的天数,T-20至T-1日期间资金转入大于或等于50万的笔数 begin-->
+        <item id="KCB_REACH_DAYS" mapid="" default="" type="N" />
+        <item id="TRANSINNUMS" mapid="" default="" type="N" />
+        <!-- add by jiangbin end-->
+        
+        <!-- add by jiangbin 20190524 for 失联名单及长期不使用名单维护 begin-->
+        <item id="SPECIAL_FLAG_TYPE" mapid="" default="" type="S" />
+        <item id="INPUT_DATE" mapid="" default="" type="N" />
+        <item id="PAGE_INDEX" mapid="" default="" type="N" />
+        <item id="PAGE_RECCNT" mapid="" default="" type="N" />
+        <item id="BIZ_CODE" mapid="" default="" type="S" />
+        <!-- by jiangbin for 失联名单及长期不使用名单维护 end-->
+
+        <!-- add by jianghuib 20190416 for 个税递延养老基金 begin-->
+        <item id="INVEST_ACCT" mapid="" default="" type="S" />
+        <item id="WORK_UNIT" mapid="" default="" type="S" />
+        <item id="ACCT_STAT" mapid="" default="" type="S" />
+        <item id="SOCIAL_CREDIT_CODE" mapid="" default="" type="S" />
+        <item id="TAX_NO" mapid="" default="" type="S" />
+        <item id="TAX_IDEN_CODE" mapid="" default="" type="S" />
+        <item id="BIND_AGMT_FLAG" mapid="" default="" type="S" />
+        <item id="IMG_SNOS" mapid="" default="" type="S" />
+        <item id="APP_DATE" mapid="" default="" type="S" />
+        <item id="UPD_TIME" mapid="" default="" type="S" />
+        <item id="BIZ_ORD_TYPE" mapid="" default="" type="S" />
+        <item id="AVL_LIMIT" mapid="" default="" type="S" />
+        <item id="FRZ_LIMIT" mapid="" default="" type="S" />
+        <item id="SY_YEAR" mapid="" default="" type="S" />
+        <item id="SY_APP_STAT" mapid="" default="" type="S" />
+        <item id="CSDC_SNO" mapid="" default="" type="S" />
+        <item id="RET_CODE" mapid="" default="" type="S" />
+        <item id="RET_MSG" mapid="" default="" type="T" />
+        <!-- add by jianghuib 20190416 for 个税递延养老基金 end-->
+        <!-- add by jianghuib 20190419 for 资管小集合风险揭示书审核 begin-->
+        <item id="PRD_CODE" mapid="" default="" type="S" />
+        <item id="PRD_NAME" mapid="" default="" type="T" />
+        <item id="TA_CODE" mapid="" default="" type="S" />
+        <item id="AGMT_STR" mapid="" default="" type="S" />
+        <!-- add by jianghuib 20190419 for 资管小集合风险揭示书审核 end-->
+        
+        <!-- add by jiangbin 20190611 for 融资行权额度申请 begin-->
+        <item id="WYSFZH" mapid="" default="" type="S" />
+        <item id="WYGDDM" mapid="" default="" type="S" />
+        <item id="WYZQMC" mapid="" default="" type="S" />
+        <item id="WYXWDM" mapid="" default="" type="S" />
+        <item id="WYGDXM" mapid="" default="" type="S" />
+        <item id="WYZQMC" mapid="" default="" type="S" />
+        <!-- add by jiangbin 20190611 for 融资行权额度申请 end-->
+        
+        <!-- add by jiangbin 20190716 for 客户已开权限及协议查询 begin-->
+        <item id="AGMT_CLS" mapid="" default="" type="S" />
+        <item id="AGMT_TYPE" mapid="" default="" type="S" />
+        <item id="AGMT_NAME" mapid="" default="" type="T" />
+        <!-- add by jiangbin 20190716 for 客户已开权限及协议查询 end-->
+        
+        <!-- add by jiangbin 20190825 for 业务办理一人多户 begin-->
+        <item id="CUST_CODES" mapid="" default="" type="S" />
+        <item id="MULTI_CUST_ID" mapid="" default="" type="S" />
+        <!-- add by jiangbin 20190825 for 业务办理一人多户 end-->
+        
+        <!-- add by jiangbin 20191015 for H股全流通开户 begin-->
+        <item id="OPENTMPL_CFG" mapid="" default="" type="S" />
+        <item id="FUND_TYPE" mapid="" default="" type="S" />
+        <item id="INT_RATE_SN" mapid="" default="" type="S" />
+        <!-- add by jiangbin 20191015 for H股全流通开户 end-->
+        
+        <!-- add by jiangbin 20191112 for orc一人多户 begin-->
+        <item id="SAME_CUST_LIST" mapid="" default="" type="S" />
+        <!-- add by jiangbin 20191112 for orc一人多户 end-->
+
+        <!-- add by jiangbin 20191212 begin-->
+        <item id="NS_CTRL_TYPE" mapid="" default="" type="S" />
+        <!-- add by jiangbin 20191212 end-->
+        
+        
+        <!-- add by jiangbin 20191219 for 股转 begin-->
+        <item id="RPT_STATUS" mapid="" default="" type="S" />
+        <item id="INVESTOR_PROFTYPE" mapid="" default="" type="S" />
+        <item id="FUND_AMT" mapid="" default="" type="S" />
+        <item id="EFT_DUR" mapid="" default="" type="S" />
+        <item id="PRO_ACCT_TYPE" mapid="" default="" type="S" />
+        <!-- add by jiangbin 20191219 for 股转 end-->
+        
+        <!-- add by jiangbin 20200106 for 开通港股通 begin-->
+        <item id="APPLY_TYPE" mapid="" default="" type="S" />
+        <!-- add by jiangbin 20200106 for 开通港股通 end-->
+        
+        <!-- add by jiangbin 20200421 for 身份信息更新、人脸识别 begin-->
+        <item id="CONTROL_FLAG" mapid="" default="" type="S" />
+        <item id="SECUSZG_FLAG" mapid="" default="" type="S" />
+        <item id="SECUSZG" mapid="" default="" type="S" />
+        <item id="FACE_RECOGNITION_RATE" mapid="" default="" type="S" />
+        <item id="BENEFICIARY_NAME" mapid="" default="" type="T" />
+        <!-- add by jiangbin 20200421 for 身份信息更新、人脸识别 end-->
+        
+        <!-- add by jiangbin 202005026 for 5.6.0 begin-->
+        <item id="VTM_B_SNO" mapid="" default="" type="S" />
+        <item id="SH_TRDACCT" mapid="" default="" type="S" />
+        <item id="BUSI_CODE" mapid="" default="" type="S" />
+        <item id="fundbal" mapid="" default="" type="S" />
+        <item id="fundload" mapid="" default="" type="S" />
+        <item id="fundavl" mapid="" default="" type="S" />
+        <item id="intr" mapid="" default="" type="S" />
+        <item id="brokername" mapid="" default="" type="T" />
+        <item id="OTHER_ID_CODE" mapid="" default="" type="S" />
+        <item id="OTHER_ID_EXP_DATE" mapid="" default="" type="S" />
+        <item id="OTHER_CUST_NAME" mapid="" default="" type="T" />
+        <item id="OTHER_ID_TYPE" mapid="" default="" type="S" />
+        <item id="PRO_NAME" mapid="" default="" type="T" />
+        <item id="USER_ID_TYPE" mapid="" default="" type="S" />
+        <item id="USER_ID_INFO" mapid="" default="" type="S" />
+        <item id="OBJ_USERID_TYPE" mapid="" default="" type="S" />
+        <item id="OBJ_USER_ID" mapid="" default="" type="S" />
+        <item id="USER_ID" mapid="" default="" type="S" />
+        <item id="CUACCT_EXT_ATTR" mapid="" default="" type="S" />
+        <item id="STK_CODE" mapid="" default="" type="S" />
+        <item id="CONTRACT_FLAG" mapid="" default="" type="S" />
+        <item id="EXT_MSG_TEXT" mapid="" default="" type="T" />
+        <item id="LOAN_MONEY" mapid="" default="" type="S" />
+        <!-- add by jiangbin 202005026 for 5.6.0 end-->
+        <item id="WHITE_TYPE" mapid="" default="" type="S" />
+        <item id="ADJ_ENABLE" mapid="" default="" type="S" />
+        <item id="ERROR_MSG" mapid="" default="" type="T" />
+        <item id="AUTO_FLAG" mapid="" default="" type="S" />
+        <item id="OPT_TRDACCT_FLAG_SZ" mapid="" default="" type="S" />
+        <item id="OPT_TRDACCT_FLAG_SH" mapid="" default="" type="S" />
+        <item id="BROKER_MOBILE" mapid="" default="" type="S" />
+        <item id="ASSET" mapid="" default="" type="F4" />
+        <item id="STK_SUBACCT" mapid="" default="" type="S" />
+        <item id="SUBSYS_SN" mapid="" default="" type="S" />
+        <item id="ACCT_ID" mapid="" default="" type="S" />
+        <item id="SUBSYS_SN_ADJ" mapid="" default="" type="S" />
+        <item id="THD__SUBSYS_SN" mapid="" default="" type="S" />
+        <item id="SUBSYS_STATUS" mapid="" default="" type="S" />
+        <item id="SUBSYS" mapid="" default="" type="S" />
+        <item id="NODE_TYPE" mapid="" default="" type="S" />
+        <item id="CORP_TYPE" mapid="" default="" type="S" />
+        <item id="ORG_QUALITY_CERT_TYPE" mapid="" default="" type="S" />
+        <item id="inputtype" mapid="" default="" type="S" />
+        <item id="IS_SALE_CUST" mapid="" default="" type="S" />
+        <item id="CONTROL_TAX_INFO" mapid="" default="" type="S" />
+        <item id="UNQUALI_FLAG" mapid="" default="" type="S" />
+        <item id="PRIVACY_LEVEL" mapid="" default="" type="S" />
+        <item id="EMPLOYLEE_COUNT" mapid="" default="" type="S" />
+        <item id="TRAFFIC_PREFER" mapid="" default="" type="S" />
+        <item id="EN_PRODUCT_CODE" mapid="" default="" type="S" />
+        <item id="ID_EXP_DATE_AGENT" mapid="" default="" type="S" />
+        <item id="OF_TRDACCTS" mapid="" default="" type="S" />
+        <item id="CUACCT_PWD" mapid="" default="" type="S" />
+        <item id="EXT_ORG_HK" mapid="" default="" type="S" />
+        <item id="WLT_CARD_NO" mapid="" default="" type="S" />
+        <item id="INTEREST" mapid="" default="" type="S" />
+        <item id="DR_RATE_GRPS" mapid="" default="" type="S" />
+        <item id="PAPER_RISK" mapid="" default="" type="S" />
+        <item id="REVENUE" mapid="" default="" type="S" />
+        <item id="BANK_ACCT_US" mapid="" default="" type="S" />
+        <item id="PAY_MODE" mapid="" default="" type="S" />
+        <item id="IMG_TYPE" mapid="" default="" type="S" />
+        <item id="RELA_FILE_NO" mapid="" default="" type="S" />
+        <item id="APPT_OPEN_ACCT" mapid="" default="" type="S" />
+        <item id="MAIL_TYPE" mapid="" default="" type="S" />
+        <item id="PAPER_INVEST_APPENDIX" mapid="" default="" type="S" />
+        <item id="fundidtype" mapid="" default="" type="S" />
+        <item id="optioncnt" mapid="" default="" type="S" />
+        <item id="INT_RATE_SNS" mapid="" default="" type="S" />
+        <item id="PAPER_INVEST" mapid="" default="" type="S" />
+        <item id="CONTROLER_NAME" mapid="" default="" type="S" />
+        <item id="idtype" mapid="" default="" type="S" />
+        <item id="D_ISS_AGCY" mapid="" default="" type="S" />
+        <item id="INCOME" mapid="" default="" type="S" />
+        <item id="BANK_ACCT_HK" mapid="" default="" type="S" />
+        <item id="REG_ORG_TYPE" mapid="" default="" type="S" />
+        <item id="idno" mapid="" default="" type="S" />
+        <item id="TRDACCT_PWD" mapid="" default="" type="S" />
+        <item id="EXT_ORG_US" mapid="" default="" type="S" />
+        <item id="EXEMPTTIME" mapid="" default="" type="S" />
+        <item id="VERIFY_TYPES" mapid="" default="" type="S" />
+        <item id="VIERIFY_RIGHT" mapid="" default="" type="S" />
+        <item id="COMMENDER_ID_TYPE" mapid="" default="" type="S" />
+        <item id="OPEN_ORDER_ID" mapid="" default="" type="S" />
+        <item id="QUALITY_TYPE" mapid="" default="" type="S" />
+        <item id="ORG_QUALITY_CERT_EXP" mapid="" default="" type="S" />
+        <item id="QUALITY_CERT_EXP" mapid="" default="" type="S" />
+        <item id="inputid" mapid="" default="" type="S" />
+        <item id="USER_NAME_AGENT" mapid="" default="" type="S" />
+        <item id="ACCT_MANAGER" mapid="" default="" type="S" />
+        <item id="COMMENDER_ID_NO" mapid="" default="" type="S" />
+        <item id="custcert" mapid="" default="" type="S" />
+        <item id="BANK_ACCT5" mapid="" default="" type="S" />
+        <item id="DELIVER_FLAG" mapid="" default="" type="S" />
+        <item id="EMPLOYLEE_SALARY" mapid="" default="" type="S" />
+        <item id="BUSINESS_CROP_NO" mapid="" default="" type="S" />
+        <item id="AREA_ADDR" mapid="" default="" type="S" />
+        <item id="SECUSZB" mapid="" default="" type="S" />
+        <item id="APPT_SOURCE" mapid="" default="" type="S" />
+        <item id="COMMENDER_NAME" mapid="" default="" type="S" />
+        <item id="CONTROL_ORG_NAME" mapid="" default="" type="S" />
+        <item id="RISKTYPE" mapid="" default="" type="S" />
+        <item id="custlname" mapid="" default="" type="S" />
+        <item id="name" mapid="" default="" type="S" />
+        <item id="checkpwdflag" mapid="" default="" type="S" />
+        <item id="CONTROL_ORG_TAX_INFO" mapid="" default="" type="S" />
+        <item id="custname" mapid="" default="" type="S" />
+        <item id="FINISH" mapid="" default="" type="S" />
+        <item id="CUST_FLAG" mapid="" default="" type="S" />
+        <item id="BUSS_ADDR" mapid="" default="" type="S" />
+        <item id="INT_ORGACCTBIZ_CLS" mapid="" default="" type="S" />
+        <item id="RESIDENCE" mapid="" default="" type="S" />
+        <item id="ID_TYPE_AGENT" mapid="" default="" type="S" />
+        <item id="EXT_ORG5" mapid="" default="" type="S" />
+        <item id="CONTROL_ORG_ADDRESS" mapid="" default="" type="S" />
+        <item id="bankid" mapid="" default="" type="S" />
+        <item id="secuidtype" mapid="" default="" type="S" />
+        <item id="MARRIAGE" mapid="" default="" type="S" />
+        <item id="ID_CODE_AGENT" mapid="" default="" type="S" />
+        <item id="CONTRACE_CLS" mapid="" default="" type="S" />
+        <item id="SECUSHB" mapid="" default="" type="S" />
+        <item id="SMS_SERVICE" mapid="" default="" type="S" />
+        <item id="tcms" mapid="" default="" type="T" />
+        <item id="SECUSZGB_FLAG" default="" type="S" />
+        <item id="SECUSZGB" default="" type="S" />
+    </DataItems>
+    <!--
+        这里先定义：
+        request中的from数据传递格式为URL；response中的to数据传递格式为RecordSet模式
+        Map中的from数据格式说明：
+        from有一到多个的 [类型ID[:位置序号N]] 内容组成，其中类型ID为DataItems中的Item的ID；
+        当convtype的值为string时，需要通过位置序号N来获取由delimit指定分隔的第N个位置的字符串内容；
+        当convtype的值为其它值时，则不需要（我们通过对应的mapid来用API获取或者直接提取URL内容）；
+        特别说明：
+        类型ID均指ENO的定义ID，即DataItems定义中的Item的ID值；并且不在DataItems定义范围内的ID不被处理
+        from中的每一个[]描述，表示需要提取该类型数据，并保存到变量中；
+        to中的描述则根据request和response不同而有所不同，request中为要设置的数据类型描述，response中
+        则描述要构造的Recordset的数据种类和序列；
+        另外，如果我们使用URL来描述输入变量，则request from值就不会被用到。
+    -->
+    <ConvertMaps>
+        <map id="1" mapid="410301" desc="用户登录">
+            <request from="" to="[inputtype][inputid]" />
+            <response from="[custcert][market][secuid][name][fundid][custid][custname][orgid][moneytype][secuidtype][fundidtype][checkpwdflag]" 
+                      to="[custcert][market][secuid][name][fundid][custid][custname][orgid][moneytype][~market][secuidtype][fundidtype][checkpwdflag]" />
+        </map>
+        
+        <map id="100" mapid="773002" desc="手机归属地查询">
+            <request from="" to="[OP_USER][g_funcid][mobile]" />
+            <response from="[Mobile][Province][City]" 
+                      to="[Mobile][Province][City]" />
+        </map>
+        <map id="101" mapid="L1000010" desc="获取系统数据字典">
+            <request from="" to="[OP_USER][QUERY_TYPE][INT_ORG]" />
+            <response from="[DD_NAME][DD_TYPE][DD_ID][DD_ITEM][DD_ITEM_NAME][INT_ORG]" 
+                      to="[DD_NAME][DD_TYPE][DD_ID][DD_ITEM][DD_ITEM_NAME][INT_ORG]" />
+        </map>
+        
+        <map id="102" mapid="L1000011" desc="获取系统某项数据字典">
+            <request from="" to="[OP_USER][DD_ID][INT_ORG]" />
+            <response from="[DD_ID][DD_ITEM][DD_ITEM_NAME][INT_ORG]" 
+                      to="[DD_ID][DD_ITEM][DD_ITEM_NAME][INT_ORG]" />
+        </map>
+        
+        
+        
+        <map id="200" mapid="L1120121" desc="非现场开户数据查询">
+            <request from="" to="[OP_USER][SERIAL_NO][INT_ORG][BGN_DATE][END_DATE][ID_TYPE][ID_CODE][NONSCENE_TYPES][CUST_CODE][CUACCT_CODE]" />
+            <response from="[SERIAL_NO][TRD_DATE][INT_ORG][NONSCENE_TYPE][ID_TYPE][ID_CODE][CUST_NAME][CUST_CODE][CUACCT_CODE][BROKER_CODE][OPER_CODE][MOBILE][EXT_ORG][BANK_ACCT][SECUSZA][SECUSHA][SECUSZJ][SECUSHJ][SECUSZA_FLAG][SECUSHA_FLAG][SECUSZJ_FLAG][SECUSHJ_FLAG][NETSERVERFLAG][NETSERVERPASS][IMG_CLSES][IMG_SNES][BARCODES][VIDEO_TYPE][VIDEO_SN][CUST_AGMT_TYPES][NONSCENE_STEP][COMPLETE_STEPS][RETURN_MSG][REMARK][CERT_TEL][SPECIAL_FLAGS][MOBILE_CHECKPASS][RASERIAL_NO][][CHK_OPER_CODE][ORG_ID_TYPE][ORG_ID_CODE][ORG_CUST_NAME][USER_TYPE][AGT_CODE][CHANNEL][UPDATE_DATE][UPDATE_TIME][RETURN_STEP][UPDATE_FLAG][CONFIRM_OPER1][CONFIRM_OPER2][UPDATE_RTNTIME][TEAM_CODE][APPT_SERIAL_NO][INPUT_TIME][VERSION]" 
+                      to="[SERIAL_NO][TRD_DATE][INT_ORG][NONSCENE_TYPE][ID_TYPE][ID_CODE][CUST_NAME][CUST_CODE][CUACCT_CODE][BROKER_CODE][OPER_CODE][MOBILE][EXT_ORG][BANK_ACCT][SECUSZA][SECUSHA][SECUSZJ][SECUSHJ][SECUSZA_FLAG][SECUSHA_FLAG][SECUSZJ_FLAG][SECUSHJ_FLAG][NETSERVERFLAG][NETSERVERPASS][IMG_CLSES][IMG_SNES][BARCODES][VIDEO_TYPE][VIDEO_SN][CUST_AGMT_TYPES][NONSCENE_STEP][COMPLETE_STEPS][RETURN_MSG][REMARK][CERT_TEL][SPECIAL_FLAGS][MOBILE_CHECKPASS][RASERIAL_NO][][CHK_OPER_CODE][ORG_ID_TYPE][ORG_ID_CODE][ORG_CUST_NAME][USER_TYPE][AGT_CODE][CHANNEL][UPDATE_DATE][UPDATE_TIME][RETURN_STEP][UPDATE_FLAG][CONFIRM_OPER1][CONFIRM_OPER2][UPDATE_RTNTIME][TEAM_CODE][APPT_SERIAL_NO][INPUT_TIME][VERSION]"  />
+        </map>
+        
+        <map id="201" mapid="L1280004" desc="开户注册">
+            <request from="" to="[OP_USER][CHANNEL][ID_TYPE][ID_CODE][INT_ORG][NONSCENE_TYPE][USER_TYPE][CUST_NAME][MOBILE][MSG_FLAG][NONSCENE_STEP][VERSION]" />
+            <response from="[CHK_CODE]" 
+                      to="[CHK_CODE]" />
+        </map>
+        
+        <map id="202" mapid="L1120126" desc="开户登录">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][CHK_CODE][NONSCENE_TYPE][CHK_FLAG][MOBILE]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="203" mapid="L1120149" desc="证件开户情况查询">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][INT_ORG]" />
+            <response from="[CHK_RESULT][EXT_ORG][BANK_ACCT][CUACCT_CODE][CUST_CODE][INT_ORG]" 
+                      to="[CHK_RESULT][EXT_ORG][BANK_ACCT][CUACCT_CODE][CUST_CODE][INT_ORG]" />
+        </map>
+        
+        <map id="204" mapid="L1120120" desc="非现场开户数据设置">
+            <request from="" to="[OP_USER][SERIAL_NO][INT_ORG][NONSCENE_TYPE][ID_TYPE][ID_CODE][CUST_NAME][CUST_CODE][CUACCT_CODE][BROKER_CODE][OPER_CODE][MOBILE][BANK_ACCT][SECUSZA_FLAG][SECUSHA_FLAG][SECUSZJ_FLAG][SECUSHJ_FLAG][NONSCENE_STEP][COMPLETE_STEPS][COMPLETE_STEPS_EX][GX_BS][SPECIAL_FLAGS_EX][SPECIAL_FLAGS][VERSION][BANK_SALE][BANK_BRH][BANK_NET][EXT_ORG][NETSERVERPASS]" />
+            <response from="[SERIAL_NO]" 
+                      to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="205" mapid="L1202400" desc="预约开户资料登记">
+            <request from="" to="[OP_USER][APPT_CHNL][APPT_BIZ][INT_ORG][CUST_NAME][CUST_FNAME][USER_TYPE][ID_TYPE][ID_CODE][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ZIP_CODE][ID_ADDR][ADDRESS][TEL][MOBILE_TEL][CITIZENSHIP][EDUCATION][SEX][LINKTEL_ORDER][LINKADDR_ORDER][VOCATION]" />
+            <response from="[SERIAL_NO]" 
+                      to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="206" mapid="L1262400" desc="预约开户资料查询">
+            <request from="" to="[OP_USER][BGN_DATE][END_DATE][INT_ORG][ID_CODE]" />
+            <response from="[APPT_CHNL][APPT_BIZ][INT_ORG][CUST_NAME][CUST_FNAME][USER_TYPE][ID_TYPE][ID_CODE][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ZIP_CODE][ID_ADDR][ADDRESS][TEL][MOBILE_TEL][CITIZENSHIP][EDUCATION][SEX][LINKTEL_ORDER][LINKADDR_ORDER][VOCATION]" 
+                      to="[APPT_CHNL][APPT_BIZ][INT_ORG][CUST_NAME][CUST_FNAME][USER_TYPE][ID_TYPE][ID_CODE][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ZIP_CODE][ID_ADDR][ADDRESS][TEL][MOBILE_TEL][CITIZENSHIP][EDUCATION][SEX][LINKTEL_ORDER][LINKADDR_ORDER][VOCATION]" />
+        </map>
+        
+        <map id="207" mapid="L1120150" desc="证书申请">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][VERIFY_TYPE][VERIFY_ATTRIBUTE][OPEN_TYPE][CUST_NAME][NATIONALITY][ID_ADDR][CERT_TYPE][REQUEST_TYPE]" />
+            <response from="[CNINFO][DN_CODE][NONSCENE_SERIAL][REF_NO][AUTH_CODE][CERT_SN]" 
+                      to="[CNINFO][DN_CODE][NONSCENE_SERIAL][REF_NO][AUTH_CODE][CERT_SN]" 
+                      info="cert_dn"
+                      />
+        </map>
+        
+        <map id="208" mapid="L1120151" desc="证书下载">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][VERIFY_TYPE][P10][DN_CODE][REF_NO][AUTH_CODE][CERT_TYPE]" />
+            <response from="[VERIFY_DATA][ID_CODE][CERT_DN]" 
+                      to="[VERIFY_DATA][ID_CODE][CERT_DN]" 
+                      info="cert_data"
+                      />
+        </map>
+        
+        <map id="209" mapid="L1280208" desc="非现场客户开户资料查询">
+            <request from="" to="[OP_USER][NONSCENE_TYPE][ID_TYPE][ID_CODE][INT_ORG]" />
+            <response from="[SERIAL_NO][APPT_SERIAL_NO][INT_ORG][NONSCENE_TYPE][ID_TYPE][ID_CODE][CUST_NAME][CUST_FNAME][CUST_CODE][CUACCT_CODE][BROKER_CODE][MOBILE][EXT_ORG][BANK_ACCT][SECUSZA][SECUSHA][SECUSZJ][SECUSHJ][SECUSZA_FLAG][SECUSHA_FLAG][SECUSZJ_FLAG][SECUSHJ_FLAG][NONSCENE_STEP][COMPLETE_STEPS][SPECIAL_FLAGS][ID_ISS_AGCY][ID_EXP_DATE][ID_ADDR][ZIP_CODE][ADDRESS][EMAIL][CITIZENSHIP][NATIVE_PLACE][BIRTHDAY][NATIONALITY][EDUCATION][SEX][OCCU_TYPE][REMARK][VERSION][TRD_DATE][RETURN_MSG]" 
+                      to="[SERIAL_NO][APPT_SERIAL_NO][INT_ORG][NONSCENE_TYPE][ID_TYPE][ID_CODE][CUST_NAME][CUST_FNAME][CUST_CODE][CUACCT_CODE][BROKER_CODE][MOBILE][EXT_ORG][BANK_ACCT][SECUSZA][SECUSHA][SECUSZJ][SECUSHJ][SECUSZA_FLAG][SECUSHA_FLAG][SECUSZJ_FLAG][SECUSHJ_FLAG][NONSCENE_STEP][COMPLETE_STEPS][SPECIAL_FLAGS][ID_ISS_AGCY][ID_EXP_DATE][ID_ADDR][ZIP_CODE][ADDRESS][EMAIL][CITIZENSHIP][NATIVE_PLACE][BIRTHDAY][NATIONALITY][EDUCATION][SEX][OCCU_TYPE][REMARK][VERSION][TRD_DATE][RETURN_MSG]" />
+        </map>
+        
+        <map id="210" mapid="L1280207" desc="非现场客户开户资料修改">
+            <request from="" to="[OP_USER][SERIAL_NO][NONSCENE_TYPE][INT_ORG][USER_TYPE][ID_TYPE][ID_CODE][CUST_NAME][CUST_CODE][CUACCT_CODE][BROKER_CODE][MOBILE][EXT_ORG][BANK_ACCT][SECUSZA][SECUSHA][SECUSZJ][SECUSHJ][SECUSZA_FLAG][SECUSHA_FLAG][SECUSZJ_FLAG][SECUSHJ_FLAG][NONSCENE_STEP][COMPLETE_STEPS][COMPLETE_STEPS_EX][REMARK][GX_BS][SPECIAL_FLAGS][CUST_FNAME][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ID_ZIP_CODE][ID_ADDR][ZIP_CODE][ADDRESS][EMAIL][CITIZENSHIP][NATIVE_PLACE][BIRTHDAY][NATIONALITY][EDUCATION][SEX][OCCU_TYPE][CYB_FLAG][RETURN_FLAG][ORG_ID_TYPE][ORG_ID_CODE][ORG_CUST_NAME][VERSION]" />
+            <response from="[SERIAL_NO]" 
+                      to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="211" mapid="L1280204" desc="自助联合开户">
+            <request from="" to="[OP_USER][USER_NAME][USER_TYPE][INT_ORG][ID_TYPE][ID_CODE][USER_FNAME][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ID_ZIP_CODE][ID_ADDR][ZIP_CODE][ADDRESS][EMAIL][MOBILE_TEL][CITIZENSHIP][NATIONALITY][EDUCATION][OCCU_TYPE][APPT_SERIAL_NO][SURVEY_SN][NATIVE_PLACE][SEX][BIRTHDAY][NONSCENE_STEP][NONSCENE_TYPE]" />
+            <response from="[USER_CODE][USER_ROLES][INT_ORG][CUST_CODE][CUACCT_CODE][OPEN_DATE]" 
+                      to="[USER_CODE][USER_ROLES][INT_ORG][CUST_CODE][CUACCT_CODE][OPEN_DATE]" />
+        </map>
+        
+        <map id="212" mapid="L1280202" desc="非现场客户密码设置">
+            <request from="" to="[OP_USER][OPERATION_TYPE][USER_CODE][CUACCT_CODE][OLD_AUTH_DATA][NEW_AUTH_DATA][ID_TYPE][ID_CODE]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="213" mapid="L1280200" desc="理财联合开户">
+            <request from="" to="[OP_USER][USER_NAME][USER_TYPE][INT_ORG][ID_TYPE][ID_CODE][USER_FNAME][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ID_ZIP_CODE][ID_ADDR][ZIP_CODE][ADDRESS][EMAIL][MOBILE_TEL][CITIZENSHIP][NATIONALITY][EDUCATION][OCCU_TYPE][APPT_SERIAL_NO][SURVEY_SN][NATIVE_PLACE][SEX][BIRTHDAY][NONSCENE_STEP]" />
+            <response from="[USER_CODE][USER_ROLES][INT_ORG][CUST_CODE][CUACCT_CODE][OPEN_DATE]" 
+                      to="[USER_CODE][USER_ROLES][INT_ORG][CUST_CODE][CUACCT_CODE][OPEN_DATE]" />
+        </map>
+        
+        <map id="214" mapid="L1102019" desc="证书下载">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][CUACCT_CODE][BIZ_TYPE][P10][CUST_NAME][NATIONALITY][ID_ADDR][CERT_TYPE][REQUEST_TYPE][VERIFY_TYPE]" />
+            <response from="[VERIFY_DATA][ID_CODE]" 
+                      to="[VERIFY_DATA][ID_CODE]" 
+                      info="cert_data"
+                      />
+        </map>
+        
+        <map id="215" mapid="L1120122" desc="非现场影像（图片）上传">
+            <request from="" to="[OP_USER][ID_CODE][ID_TYPE][IMG_CLS][IMG_DATA][USER_CODE][DATA_LEN][IMG_SN][INT_ORG][NONSCENE_TYPE][BARCODES]" />
+            <response from="[IMG_SN]" 
+                      to="[IMG_SN]" 
+                      />
+        </map>
+        
+        <map id="216" mapid="L1120130" desc="非现场视频登记">
+            <request from="" to="[OP_USER][USER_CODE][ID_TYPE][ID_CODE][NONSCENE_TYPE][RELA_PATH][FILE_NAME][USER_ROLE][VIDEO_SN][VIDEO_FMT][DATA_LEN][INT_ORG][VIDEO_TYPE][VIDEO_CLS][VIDEO_STATUS][VIDEO_TAG][VIDEO_REMARK][MD5_CODE][VIDEO_FLAG][OID]" />
+            <response from="[VIDEO_SN]" 
+                      to="[VIDEO_SN]" 
+                      />
+        </map>
+        
+        <map id="300" mapid="L1120144" desc="电子协议查询">
+            <request from="" to="[OP_USER][CONTRACT_CLS][VERSION]" />
+            <response from="[SERIAL_NO][CONTRACT_CLS][CONTRACT_NAME][SIGN_TYPES][SIGN_EXINFO][BEGIN_DATE][END_DATE][VERSION][REMARK][CONTRACT_MD5]" 
+                      to="[SERIAL_NO][CONTRACT_CLS][CONTRACT_NAME][SIGN_TYPES][SIGN_EXINFO][BEGIN_DATE][END_DATE][VERSION][REMARK][CONTRACT_MD5]" 
+                      info="contract_list"/>
+        </map>
+        
+        <map id="301" mapid="L1120146" desc="电子协议下载">
+            <request from="" to="[OP_USER][SERIAL_NO][CONTRACT_CLS][VERSION]" />
+            <response from="[TOTAL_DATA_SIZE][CONTRACT][CONTRACT_LEN][CONTRACT_TEXT][CONTRACT_T_LEN]" 
+                      to="[TOTAL_DATA_SIZE][CONTRACT][CONTRACT_LEN][CONTRACT_TEXT][CONTRACT_T_LEN]" />
+        </map>
+        
+        <map id="302" mapid="L1100012" desc="获取调查表信息">
+            <request from="" to="[OP_USER][SURVEY_CLS]" />
+            <response from="[SURVEY_SN][SURVEY_GR][SURVEY_COL][SURVEY_COL_TEXT][SURVEY_COL_OPT][SURVEY_CELL][SURVEY_CELLTEXT][SURVEY_CELL_VAL]" 
+                      to="[SURVEY_SN][SURVEY_GR][SURVEY_COL][SURVEY_COL_TEXT][SURVEY_COL_OPT][SURVEY_CELL][SURVEY_CELLTEXT][SURVEY_CELL_VAL]" />
+        </map>
+        
+        <map id="303" mapid="L1120128" desc="风险评测答题（非现场批量答题）">
+            <request from="" to="[OP_USER][APPT_SERIAL_NO][SURVEY_SN][SURVEY_GR][SURVEY_COLS][SURVEY_ANS_VAL][ANS_STATUS]" />
+            <response from="[SURVEY_SN][APPT_SERIAL_NO][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE]" 
+                      to="[SURVEY_SN][APPT_SERIAL_NO][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE]" />
+        </map>
+        
+        <map id="304" mapid="L1120142" desc="电子协议签署">
+            <request from="" to="[OP_USER][CONTRACT_CLS][VERSION][ID_TYPE][ID_CODE][CUST_CODE][SIGN_TYPE][SIGN_TEXT][SIGN_EXINFO][STRING][REMARK][CHANNEL][CUACCT_CODE][BIZ_TYPE][NONSCENE_TYPE]" />
+            <response from="[SERIAL_NO]" 
+                      to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="305" mapid="L1102016" desc="风险评测答题（非现场批量答题）">
+            <request from="" to="[OP_USER][CUST_CODE][SURVEY_SN][SURVEY_GR][SURVEY_COLS][SURVEY_ANS_VAL][ANS_STATUS]" />
+            <response from="[SURVEY_SN][CUST_CODE][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE]" 
+                      to="[SURVEY_SN][CUST_CODE][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE]" />
+        </map>
+        
+        <map id="306" mapid="L1160011" desc="查询用户风险测评结果">
+            <request from="" to="[OP_USER][SURVEY_SN][USER_CODE][USER_ROLE][BGN_DATE][END_DATE]" />
+            <response from="[SURVEY_SN][USER_CODE][USER_ROLE][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE][SURVEY_SCORE][INVEST_TYPE][INVEST_LIMIT][RATING_EXP_DATE][RATING_TIME][ANSWER][VALID_FLAG]" 
+                      to="[SURVEY_SN][USER_CODE][USER_ROLE][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE][SURVEY_SCORE][INVEST_TYPE][INVEST_LIMIT][RATING_EXP_DATE][RATING_TIME][ANSWER][VALID_FLAG]" info="data"/>
+        </map>
+        
+        <map id="401" mapid="L1262560" desc="取银行配置信息">
+            <request from="" to="[OP_USER][CURRENCY][BANK_CTRLFLAGS][CUBSB_TYPE][INT_ORG][EXT_ORG]" />
+            <response from="[EXT_ORG][BANK_CTRLFLAGS][CURRENCY][ORG_NAME][PRIORIDEX][CONTRACT_CLS][REMARK]" 
+                      to="[EXT_ORG][BANK_CTRLFLAGS][CURRENCY][ORG_NAME][PRIORIDEX][CONTRACT_CLS][REMARK]" />
+        </map>
+        
+        <map id="402" mapid="L1262565" desc="查询银证交易配置信息">
+            <request from="" to="[OP_USER][CURRENCY][EXT_ORG][INT_ORG][CUBSB_TRD_ID]" />
+            <response from="[EXT_ORG][INT_ORG][CURRENCY][CUBSB_TRD_ID][CHK_ID][CHK_FUND_PWD][CHK_BANK_PWD][CHK_BANK_ACCT][SEND_TO_BANK][SEND_CUACCT][CHANNELS][USER_TYPES][CUACCT_ATTRS][WEEK_DAYS][BGN_STIME][END_STIME]" 
+                      to="[EXT_ORG][INT_ORG][CURRENCY][CUBSB_TRD_ID][CHK_ID][CHK_FUND_PWD][CHK_BANK_PWD][CHK_BANK_ACCT][SEND_TO_BANK][SEND_CUACCT][CHANNELS][USER_TYPES][CUACCT_ATTRS][WEEK_DAYS][BGN_STIME][END_STIME]" />
+        </map>
+        
+        <map id="403" mapid="L1262562" desc="客户银行签约信息查询">
+            <request from="" to="[OP_USER][CUACCT_CODE][CUST_CODE][CURRENCY][EXT_ORG]" />
+            <response from="[CUACCT_CODE][CURRENCY][EXT_ORG][BANK_ACCT][CONTRACT_STATUS]" 
+                      to="[CUACCT_CODE][CURRENCY][EXT_ORG][BANK_ACCT][CONTRACT_STATUS]" />
+        </map>
+        
+        <map id="404" mapid="L1280205" desc="非现场银行签约接口">
+            <request from="" to="[OP_USER][CUACCT_CODE][CURRENCY][EXT_ORG][BANK_ACCT][BANK_AUTH_DATA][USER_CODE][SIGN_FLAG][LINK_FLAG][LINK_ACCID]" />
+            <response from="[SERIAL_NO][OCCUR_DATE]" 
+                      to="[SERIAL_NO][OCCUR_DATE]" />
+        </map>
+        
+        <map id="405" mapid="L0001050" desc="取银证转帐流水-查三方存管状态">
+            <request from="" to="[OP_USER][GENRPCLBMNO][CUST_CODE][INT_ORG][orgid][bankcode][sno][fundid]" />
+            <response from="[serverid][sno][sysdate][operdate][status][strikeflag][linksno][strikesno][orgid][bankcode][sourcetype][banktranid][custid][brhid][fundid][moneytype][syserrid][bankmsgid][bankmsg][linkaccid][market][cybflag][effectday]" 
+                      to="[serverid][sno][sysdate][operdate][status][strikeflag][linksno][strikesno][orgid][bankcode][sourcetype][banktranid][custid][brhid][fundid][moneytype][syserrid][bankmsgid][bankmsg][linkaccid][market][cybflag][effectday]" />
+        </map>
+        
+        <map id="501" mapid="771018" desc="默认套餐预签约">
+            <request from="" to="[kd_user_id][Kd_gydm][kd_gymm][Kd_czfs][in_zjlx][in_kh_id_no][in_fgsid][in_jgid]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="502" mapid="771023" desc="查询默认套餐服务内容">
+            <request from="" to="[kd_user_id][Kd_gydm][kd_gymm][Kd_czfs][in_fgsid][in_jgid]" />
+            <response from="[Fwnrsm][tcdm][fxjb][tzpz][tzqx][khqx][sfyz][sfjg][yzyxq][yzje][fwqd][tqfs][tcmc][tcms]" 
+                      to="[Fwnrsm][tcdm][fxjb][tzpz][tzqx][khqx][sfyz][sfjg][yzyxq][yzje][fwqd][tqfs][tcmc][tcms]" 
+                      info="combo_info"
+                      />
+        </map>
+        
+        <map id="601" mapid="L1000018" desc="发起公安联网校验">
+            <request from="" to="[OP_USER][USER_NAME][ID_CODE][INT_ORG][NATIONALITY][SEX][BIRTHDAY][ID_CODE_CHKRLT][USERNAME_CHKRLT]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="602" mapid="L1000022" desc="公安联网校验查询">
+            <request from="" to="[OP_USER][USER_NAME][ID_CODE][NATIONALITY][SEX][BIRTHDAY]" />
+            <response from="[ID_CODE][ID_CODE_CHKRLT][USERNAME_CHKRLT][SEX_CHKRLT][NATION_CHKRLT][BIRTHDAY_CHKRLT][CHK_STATUS][IMG_DATA]" 
+                      to="[ID_CODE][ID_CODE_CHKRLT][USERNAME_CHKRLT][SEX_CHKRLT][NATION_CHKRLT][BIRTHDAY_CHKRLT][CHK_STATUS][IMG_DATA]"  
+                      info="id_check_info"
+                      />
+        </map>
+        
+        <!-- Add by kongwt for 荔枝理财 on 2016-8-23 -->
+        <map id="603" mapid="L1102200" desc="手机端理财帐户查询">
+            <request from="" to="[ID_CODE][MOBILE_TEL]"/>
+            <response from="[USER_CODE][USER_NAME][ID_TYPE][ID_CODE][BANK_CODE][BANK_ID][E_USER_ID][MOBILE_TEL][CUSTNO][FUNDNO][FULL_FLAG]" to="[USER_CODE][USER_NAME][ID_TYPE][ID_CODE][BANK_CODE][BANK_ID][E_USER_ID][MOBILE_TEL][CUSTNO][FUNDNO][FULL_FLAG]" info="licai_user_info"/>
+        </map>
+        
+        <map id="604" mapid="L1102208" desc="手机端理财实名注册">
+            <request from="" to="[INT_ORG][USER_CODE][USER_NAME][USER_FNAME][ID_TYPE][ID_CODE][SEX][BIRTHDAY][CITIZENSHIP][AUTH_DATA][BANK_CODE][BANK_ID][MOBILE_TEL][E_USER_ID][REFERRER]" />
+            <response from="[USER_CODE][CUACCT_CODE][CUSTNO][FUNDNO]" to="[USER_CODE][CUACCT_CODE][CUSTNO][FUNDNO]" info="licai_open_account" />
+        </map>
+        
+        <map id="605" mapid="L1100004" desc="账户系统用户普通资料修改接口">
+            <request from="" to="[USER_CODE][ZIP_CODE][ADDRESS][TEL][FAX][EMAIL][CITIZENSHIP][NATIONALITY][EDUCATION][NATIVE_PLACE][SEX][BIRTHDAY][ID_ISS_AGCY][ID_EXP_DATE][ID_BEG_DATE][ID_ZIP_CODE][ID_ADDR][MARRY][OCCU_TYPE][WORKPLACE][TRADE][POSITION][WELL_TEL][FULL_FLAG]" />
+            <response from="[msgok:1]" to="[~msgok]" info="edit_result"/>
+        </map>
+        
+        <map id="606" mapid="L1102209" desc="荔枝理财影像上传">
+            <request from="" to="[INT_ORG][USER_CODE][ID_CODE][ID_TYPE][IMG_CLS][IMG_DATA][DATA_LEN][IMG_SN][CHK_FLAG][SALE_BIZ]" />
+            <response from="[IMG_SN]" to="[IMG_SN]" info="upload_result"/>
+        </map>
+        <map id="607" mapid="L1102206" desc="手机端理财银行卡绑定/解绑">
+            <request from="" to="[INT_ORG][USER_CODE][CUACCT_CODE][AUTH_DATA][BANK_CODE][BANK_ID][MOBILE_TEL][OPER_TYPE]" />
+            <response from="[SPECIAL_FALGS]" to="[SPECIAL_FALGS]" info="result"/>
+        </map>
+        
+        <map id="608" mapid="L1120123" desc="影像数据查询接口">
+            <request from="" to="[USER_CODE][CUACCT_CODE][AUTH_DATA][BANK_CODE][BANK_ID][MOBILE_TEL][OPER_TYPE]" />
+            <response from="" to="" info="result"/>
+        </map>
+        <map id="609" mapid="L1102207" desc="荔枝理财手机号码变更接口">
+            <request from="" to="[INT_ORG][USER_CODE][AUTH_DATA][MOBILE_TEL]"/>
+            <response from="[msgok:1]" to="[~msgok]" info="result"/>
+        </map>
+        <!-- Add by kongwt for 荔枝理财 End -->
+        <!-- modify by jinjun.leng for gsbp-->
+        <map id="701" mapid="L1160001" desc="用户基本资料查询">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][OP_TYPE]" />
+            <response from="[USER_CODE][USER_ROLES][USER_NAME][USER_TYPE][INT_ORG][ID_TYPE][ID_CODE][ID_ISS_AGCY][ID_EXP_DATE][OPEN_DATE][USER_FNAME][ZIP_CODE][ADDRESS][TEL][MOBILE_TEL][EMAIL][FAX][CITIZENSHIP][NATIONALITY][EDUCATION][NATIVE_PLACE][SEX][ID_FLAG][BIRTHDAY][ID_BEG_DATE][ID_ZIP_CODE][ID_ADDR][MARRY][OCCU_TYPE][OCCU_TYPE_EX][TRADE][POSITION][WELL_TEL][WORKPLACE][LINKADDR_ORDER][CORP_ADDR][LINKTEL_ORDER][CUSTNO][~EDUCATION][~OCCU_TYPE][~TRADE][CERT_TEL][PER_VERIFY_FLAG][VERIFY_FLAG][MOBILE][ACTIVE_DATE][MAIL_ADDR][MAIL_ZIP_CODE][CNO][CUST_EXT_ATTR]" 
+                      to="[USER_CODE][USER_ROLES][USER_NAME][USER_TYPE][INT_ORG][ID_TYPE][ID_CODE][ID_ISS_AGCY][ID_EXP_DATE][OPEN_DATE][USER_FNAME][ZIP_CODE][ADDRESS][TEL][MOBILE_TEL][EMAIL][FAX][CITIZENSHIP][NATIONALITY][EDUCATION][NATIVE_PLACE][SEX][ID_FLAG][BIRTHDAY][ID_BEG_DATE][ID_ZIP_CODE][ID_ADDR][MARRY][OCCU_TYPE][OCCU_TYPE_EX][TRADE][POSITION][WELL_TEL][WORKPLACE][LINKADDR_ORDER][CORP_ADDR][LINKTEL_ORDER][CUSTNO][~EDUCATION][~OCCU_TYPE][~TRADE][CERT_TEL][PER_VERIFY_FLAG][VERIFY_FLAG][MOBILE][ACTIVE_DATE][MAIL_ADDR][MAIL_ZIP_CODE][CNO][CUST_EXT_ATTR]"  
+                      info="user_data"
+                      />
+        </map>
+        
+        <map id="702" mapid="L1120133" desc="单点登陆加密串检验">
+            <request from="" to="[OP_USER][ID_CODE][ENCRYPTED_DATA]" />
+            <response from="[ID_CODE]" 
+                      to="[ID_CODE]"  
+                      info="check_encrypted_data"
+                      />
+        </map>
+        
+        <map id="801" mapid="L1102007" desc="预约情况列表查询">
+            <request from="" to="[OP_USER][INT_ORG][APPT_DATE]" />
+            <response from="[INT_ORG][APPT_DATE][DATE_TYPE][BGN_TIME][APPT_OPER][SER_CUST_TIME][AVL_CNT][APPTED_CNT][LEFT_CNT]" 
+                      to="[INT_ORG][APPT_DATE][DATE_TYPE][BGN_TIME][APPT_OPER][SER_CUST_TIME][AVL_CNT][APPTED_CNT][LEFT_CNT]"  
+                      info="appt_info"
+                      />
+        </map>
+        
+        <map id="802" mapid="L1102006" desc="非现场客户预约">
+            <request from="" to="[OP_USER][INT_ORG][ID_TYPE][ID_CODE][APPT_DATE][BGN_TIME][MOBILE]" />
+            <response from="[APPT_DATE][BGN_TIME][AVL_CNT][APPT_CNT]" 
+                      to="[APPT_DATE][BGN_TIME][AVL_CNT][APPT_CNT]"  
+                      info="appt_result"
+                      />
+        </map>
+        
+        <map id="803" mapid="L1102008" desc="非现场客户预约">
+            <request from="" to="[OP_USER][INT_ORG][ID_TYPE][ID_CODE][MOBILE][APPT_BGN_DATE][APPT_END_DATE][BGN_TIME][END_TIME]" />
+            <response from="[INT_ORG][CUST_NAME][ID_TYPE][ID_CODE][APPT_DATE][MOBILE][BGN_TIME][APPT_STATUS]" 
+                      to="[INT_ORG][CUST_NAME][ID_TYPE][ID_CODE][APPT_DATE][MOBILE][BGN_TIME][APPT_STATUS]"  
+                      info="appt_list"
+                      />
+        </map>
+        <map id="804" mapid="L1120017" desc="开发服务组查询">
+            <request from="" to="[OP_USER][INT_ORG][TEAM_CODE][TEAM_NAME][TEAM_TYPE][BEGIN_DATE][END_DATE]" />
+            <response from="[TEAM_CODE][TEAM_NAME][TEAM_TYPE][INT_ORG][BIZ_DATE]" 
+                      to="[TEAM_CODE][TEAM_NAME][TEAM_TYPE][INT_ORG][BIZ_DATE]" 
+                      info="query_promot_group_info"
+                      
+                      />
+        </map>
+        <map id="805" mapid="L1102052" desc="客户渠道分类标志设置">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][USER_NAME][MOBILE][EMAIL][PER_USER_CODE][ECHANNEL][EBIZ_TYPE]" />
+            <response from="[INT_ORG][USER_CODE][USER_NAME][ID_TYPE][ID_CODE]" 
+                      to="[INT_ORG][USER_CODE][USER_NAME][ID_TYPE][ID_CODE]"  
+                      info="set_channel_flag"
+                      />
+        </map>
+
+        <map id="806" mapid="L1102099" desc="查询预约客户归属关系">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][INT_ORG]" />
+            <response from="[INT_ORG][ID_TYPE][ID_CODE][CUST_NAME][BROKER_CODE][OCCUR_DATE][OCCUR_TIME]" 
+                      to="[INT_ORG][ID_TYPE][ID_CODE][CUST_NAME][BROKER_CODE][OCCUR_DATE][OCCUR_TIME]"  
+                      info="pre_order_cust_rel"
+                      />
+        </map>
+
+        <map id="807" mapid="L1102108" desc="客户经理查询接口">
+            <request from="" to="[OP_USER][BROKER_CODE]" />
+            <response from="[BROKER_CODE][BRK_STATUS][OPEN_DATE][INT_ORG][BROKER_NAME][MOBILE_TEL][QUALIFY_CERT_NO]" 
+                      to="[BROKER_CODE][BRK_STATUS][OPEN_DATE][INT_ORG][BROKER_NAME][MOBILE_TEL][QUALIFY_CERT_NO]"  
+
+info="query_broker_info"
+/>
+        </map>
+
+        <!--
+            两融开户相关 added by yht
+        -->
+        <map id="900" mapid="L1102064" desc="自助信用账户开户资料查询">
+            <request from="" to="[OP_USER][CUST_CODE][CUACCT_CODE][STATUS]" />
+            <response from="[SERIAL_NO][INT_ORG][CUST_CODE][CUACCT_CODE][C_CUACCT_CODE][CUST_NAME][EXT_ORG][BANK_ACCT][SZCREDITFLAG][SHCREDITFLAG][SZCREDITACCT][SHCREDITACCT][RZRQ_STATUS][RZRQ_COMPLED_STATUS][APPLY_LMT][APPLY_QTY][RELATEACCT][STKCODE][STKCODE2][STKLIMIT][STATUS][REMARK]"
+                      to="[SERIAL_NO][INT_ORG][CUST_CODE][CUACCT_CODE][C_CUACCT_CODE][CUST_NAME][EXT_ORG][BANK_ACCT][SZCREDITFLAG][SHCREDITFLAG][SZCREDITACCT][SHCREDITACCT][RZRQ_STATUS][RZRQ_COMPLED_STATUS][APPLY_LMT][APPLY_QTY][RELATEACCT][STKCODE][STKCODE2][STKLIMIT][STATUS][REMARK]"
+                      info="get_rro_info" />
+        </map>
+        <map id="901" mapid="L1102063" desc="自助信用账户开户流程控制">
+            <request from="" to="[OP_USER][SERIAL_NO][CUST_CODE][CUACCT_CODE][INT_ORG][OPER_CODE][EXT_ORG][BANK_ACCT][SHCREDITFLAG][SZCREDITFLAG][SHCREDITACCT][SZCREDITACCT][RZRQ_STATUS][COMPLETE_STATUS_EX][COMPLITE_STATUS][APPLY_LMT][APPLY_QTY][RELATEACCT][STKCODE][STKLIMIT][STKCODE2][STATUS][REMARK]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]"
+                      info="set_rro_process" />
+        </map>
+        <map id="902" mapid="L1102057" desc="两融客户资格验证">
+            <request from="" to="[OP_USER][CUST_CODE][CUACCT_CODE]" />
+            <response from="[CUST_CODE][RIGHTFLAG][CHNSINGLEFLAG][OPENTIMEFLAG][ASSETFLAG][AGEFLAG][IDEFFECTFLAG][BLACKCUSTFLAG][AGENTFLAG][AMLFLAG][SECUIDFLAG][SEXFLAG][EDUFLAG][ADDRFLAG][POSTFLAG][OCCUTYPEFLAG]" to="[CUST_CODE][RIGHTFLAG][CHNSINGLEFLAG][OPENTIMEFLAG][ASSETFLAG][AGEFLAG][IDEFFECTFLAG][BLACKCUSTFLAG][AGENTFLAG][AMLFLAG][SECUIDFLAG][SEXFLAG][EDUFLAG][ADDRFLAG][POSTFLAG][OCCUTYPEFLAG]"
+                      info="get_rro_qualification_info" />
+        </map>
+        
+        <map id="903" mapid="L1102066" desc="融资业务测试题查询">
+            <request from="" to="[OP_USER]" />
+            <response from="[questno][groupno][questtype][question][score][counttype][optioncnt][option_A][option_B][option_C][option_D][rightopt]" to="[questno][groupno][questtype][question][score][counttype][optioncnt][option_A][option_B][option_C][option_D][rightopt]"
+                      info="get_rro_exam_questions" />
+        </map>
+        
+        <map id="904" mapid="L1102067" desc="融资业务测试成绩保存">
+            <request from="" to="[OP_USER][CUACCT_CODE][GROUPNO][QUESTNOS][OPTIONS][EXT]" />
+            <response from="[totalscore][knowledgescore][psychtestscore][passflag]" to="[totalscore][knowledgescore][psychtestscore][passflag]"
+                      info="save_rro_exam_score" />
+        </map>
+        
+        <map id="905" mapid="L1120173" desc="客户适当性业务匹配情况查询">
+            <request from="" to="[OP_USER][CUST_CODE][MATCH_BIZ_TYPE][PRO_CODE]" />
+            <response from="[CUST_CODE][MATCH_BIZ_TYPE][PRO_CODE][VISION_FLAG][INVEST_TYPE][INVEST_LIMIT][RATING_LVL][MATCH_FLAG][MATCH_DATE][MATCH_RESULT][PRATING_LVL][PINVEST_LIMIT][PINVEST_TYPE][PRO_RISTTYPE][RATING_DATE][RATING_TIME][SURVEY_SN][SURVEY_CLS][PIVTYPE_SVCOL][DIVTYPE_SVCOL][PIVLIMIT_SVCOL][DIVLIMIT_SVCOL][CONFIRM_STATUS][CONFIRM_DATE][RATING_LVL_MATCH][INVEST_TYPE_MATCH][INVEST_LIMIT_MATCH]" to="[CUST_CODE][MATCH_BIZ_TYPE][PRO_CODE][VISION_FLAG][INVEST_TYPE][INVEST_LIMIT][RATING_LVL][MATCH_FLAG][MATCH_DATE][MATCH_RESULT][PRATING_LVL][PINVEST_LIMIT][PINVEST_TYPE][PRO_RISTTYPE][RATING_DATE][RATING_TIME][SURVEY_SN][SURVEY_CLS][PIVTYPE_SVCOL][DIVTYPE_SVCOL][PIVLIMIT_SVCOL][DIVLIMIT_SVCOL][CONFIRM_STATUS][CONFIRM_DATE][RATING_LVL_MATCH][INVEST_TYPE_MATCH][INVEST_LIMIT_MATCH]"
+                      info="rro_march_info_query" />
+        </map>
+        
+        <map id="906" mapid="L1120172" desc="客户适当性匹配">
+            <request from="" to="[OP_USER][CUST_CODE][MATCH_BIZ_TYPE][PRO_CODE][PRO_RISKTYPE][PRO_INVESTTYPE][PRO_INVESTLIMIT][CONFIRM_FLAG]" />
+            <response from="[MATCH_BIZ_TYPE][MATCH_RESULT][CONFIRM_STATUS]" to="[MATCH_BIZ_TYPE][MATCH_RESULT][CONFIRM_STATUS]"
+                      info="rro_match" />
+        </map>
+        
+        <map id="907" mapid="L1102065" desc="客户净资产查询(查最高可申请信用额度)">
+            <request from="" to="[OP_USER][CUST_CODE][CUACCT_CODE][CURRENCY]" />
+            <response from="[CUST_CODE][CUACCT_CODE][CURRENCY][TOTALASSET][TOTALDEBIT][NETASSET][MAXAPPLY]" to="[CUST_CODE][CUACCT_CODE][CURRENCY][TOTALASSET][TOTALDEBIT][NETASSET][MAXAPPLY]"
+                      info="query_rro_credit_amount" />
+        </map>
+        
+        <map id="908" mapid="L1102058" desc="信用资金开户">
+            <request from="" to="[OP_USER][CUST_CODE][CUACCT_CODE][INT_ORG]" />
+            <response from="[CUST_CODE][C_CUACCT_CODE]" to="[CUST_CODE][C_CUACCT_CODE]"
+                      info="create_credit_account" />
+        </map>
+        
+        <map id="909" mapid="L1102069" desc="信用银行签约接口">
+            <request from="" to="[OP_USER][C_CUACCT_CODE][CURRENCY][EXT_ORG][BANK_ACCT][BANK_AUTH_DATA][USER_CODE][SIGN_FLAG]" />
+            <response from="[SERIAL_NO][OCCUR_DATE]" to="[SERIAL_NO][OCCUR_DATE]"
+                      info="set_credit_bank_info" />
+        </map>
+        
+        <map id="910" mapid="L1102059" desc="银行普通信用复用接口">
+            <request from="" to="[OP_USER][CUACCT_CODE][CURRENCY]" />
+            <response from="[CUACCT_CODE][EXT_ORG][BANK_ACCT][USE_FLAG]" to="[CUACCT_CODE][EXT_ORG][BANK_ACCT][USE_FLAG]"
+                      info="get_ordinary_bank_info" />
+        </map>
+        
+        <map id="911" mapid="L5450227" desc="征信审批记录查询">
+            <request from="" to="[OP_USER][INT_ORG][status][begindate][enddate][CUST_CODE][norfundid][creditfundid][CUST_NAME][ID_CODE]" />
+            <response from="[approveid][INT_ORG][brhid][CUST_CODE][CUST_NAME][approvetype][currentnode][begindate][enddate][status][serverid][checkflag][contractno][limitamt][opername][operid][checkamt]" to="[approveid][INT_ORG][brhid][CUST_CODE][CUST_NAME][approvetype][currentnode][begindate][enddate][status][serverid][checkflag][contractno][limitamt][opername][operid][checkamt]"
+                      info="query_credit_checked_record" />
+        </map>
+        
+        <map id="912" mapid="L1102105" desc="非现场信用资金账户信息查询">
+            <request from="" to="[OP_USER][C_CUACCT_CODE]" />
+            <response from="[C_CUACCT_CODE][INT_ORG][COMMISSIONRATE][RZRQ_COMMISSIONRATE][CUACCT_GRP][CUACCT_LVL][RZ_INT_RATE][RQ_INT_RATE]" to="[C_CUACCT_CODE][INT_ORG][COMMISSIONRATE][RZRQ_COMMISSIONRATE][CUACCT_GRP][CUACCT_LVL][RZ_INT_RATE][RQ_INT_RATE]"
+                      info="query_credit_account_info" />
+        </map>
+        
+        <!--
+            掌上业务办理 add by jianghuib
+        -->
+        <map id="913" mapid="L1102035" desc="查询远程业务信息">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][NS_BIZ][PRD_CODE]" />
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG][CURR_STATUS][CURR_PHASE][COMPLETE_STATUS][PROC_FLAG][REMARK][OCCUR_DATE][OCCUR_TIME][BIZ_DATA][OP_USER][OP_NAME][OP_ORG][OP_REMARK][ID_TYPE][ID_CODE][ID_EXP_DATE][USER_NAME][ID_ADDR][ID_ISS_AGCY][OCCU_TYPE][OCCU_TYPE_EX][ADDRESS][ZIP_CODE][EDUCATION][NATIONALITY][MOBILE_TEL][VERSION][CORP_ADDR][CORP_ZIP_CODE][WORKPLACE][AUTO_FLAG]"
+                      to="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG][CURR_STATUS][CURR_PHASE][COMPLETE_STATUS][PROC_FLAG][REMARK][OCCUR_DATE][OCCUR_TIME][BIZ_DATA][OP_USER][OP_NAME][OP_ORG][OP_REMARK][ID_TYPE][ID_CODE][ID_EXP_DATE][USER_NAME][ID_ADDR][ID_ISS_AGCY][OCCU_TYPE][OCCU_TYPE_EX][ADDRESS][ZIP_CODE][EDUCATION][NATIONALITY][MOBILE_TEL][VERSION][CORP_ADDR][CORP_ZIP_CODE][WORKPLACE][AUTO_FLAG]" />
+        </map>
+
+        <map id="914" mapid="L1102032" desc="初始化远程业务">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][NS_BIZ][VERSION]" />
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE]"
+                      to="[NS_BIZ][SERIAL_NO][USER_CODE]" />
+        </map>
+        
+        <map id="915" mapid="L1102054" desc="设置远程业务状态">
+            <request from="" to="[OP_USER][NS_BIZ][SERIAL_NO][STATUS][STATUS_EX][REMARK][VERSION]" />
+            <response from="[USER_CODE][NS_BIZ][SERIAL_NO][STATUS]"
+                      to="[USER_CODE][NS_BIZ][SERIAL_NO][STATUS]" />
+        </map>
+        
+        <map id="916" mapid="L1102034" desc="提交远程业务办理资料">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][ID_EXP_DATE][USER_NAME][ID_ADDR][ID_ISS_AGCY][OCCU_TYPE][NATIONALITY][CUACCT_CODE][CUST_NAME][ID_CODE][ID_TYPE][FUND_PWD][TRD_PWD][MOBIL][SECUSZA_FLAG][SECUSHA_FLAG][CUST_AGMT_LIST][BANK_FLAG][ID_EXP_DATE][ID_FLAG][CONTRACT_CLS][MOBILE_TEL][SECUSZA][GEMOPEN_FLAG][LINKMAN][LINKMAN_MOBILE][VERSION][SECUSZJ_FLAG][SECUSHJ_FLAG][REMARK][STK_SUBACCT_SH][OPT_TRDACCT_LVL][STK_SUBACCT_SZ][STKACCT_SZ][CUST_ASSET][TRDACCT][ADDRESS][EDUCATION][EMAIL][ZIP_CODE][TRADE][ID_BEG_DATE][CUST_CODES][NATIVE_PLACE][BIRTHDAY][SEX][CITIZENSHIP][PRO_ACCT_TYPE][FIRST_TRD_DATE][APPLY_TYPE][FACE_RECOGNITION_RATE][CORP_ADDR][CORP_ZIP_CODE][MOBILE][CONTROL_FLAG][BENEFIT_FLAG][TAX_FLAG][CREDIT_TYPE][CREDIT_TYPE_EXP][CNO][TEL][WORKPLACE][POSITION][OTHER_ID_CODE][OTHER_ID_EXP_DATE][OTHER_CUST_NAME][OTHER_ID_TYPE][STKBD][VTM_B_SNO][CONTRACT_FLAG][SECUSZG_FLAG][SECUSZG][AUTO_FLAG][SECUSZGB_FLAG][SECUSZGB]" />
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]"
+                      to="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]" />
+        </map>
+        
+        <map id="917" mapid="L1102033" desc="远程业务影像上传">
+            <request from="" to="[OP_USER][IMG_CLS][IMG_DATA][USER_CODE][DATA_LEN][IMG_SN][INT_ORG][NS_BIZ][SERIAL_NO][BARCODES][FINISH]" />
+            <response from="[IMG_SN]"
+                      to="[IMG_SN]" />
+        </map>
+        
+        <map id="918" mapid="L1102031" desc="查询客户需远程办理业务项">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][NS_BIZ]" />
+            <response from="[NS_BIZ][USER_CODE][USER_ROLE][PROC_FLAG][CURR_STATUS][CURR_PHASE][REMARK][~NS_BIZ]"
+                      to="[NS_BIZ][USER_CODE][USER_ROLE][PROC_FLAG][CURR_STATUS][CURR_PHASE][REMARK][~NS_BIZ]" />
+        </map>
+        
+        
+        <map id="919" mapid="L1100502" desc="获取用户影像查询">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][INT_ORG][IMG_CLS_LIST][IMG_STATUS_LIST][IMG_SN]" />
+            <response from="[USER_CODE][USER_ROLE][IMG_SN][IMG_TYPE][IMG_CLS][IMG_STATUS][IMG_SIZE][IMG_WIDTH][IMG_HEIGHT][BITMAP_BITS][BITMAP_XDPI][BITMAP_YDPI][BITMAP_TYPE][IMG_TAG][IMG_MAC][IMG_REMARK][OP_USER][OP_ROLE][OP_NAME][OP_ORG][OP_SITE][CHANNEL][INT_ORG][IMG_FMT][FILE_DATE][UP_DATE][CHK_DATE][CHK_READ_FLAG][IMG_RTN_DATE][FST_CHK_READ_FLAG]"
+                      to="[USER_CODE][USER_ROLE][IMG_SN][IMG_TYPE][IMG_CLS][IMG_STATUS][IMG_SIZE][IMG_WIDTH][IMG_HEIGHT][BITMAP_BITS][BITMAP_XDPI][BITMAP_YDPI][BITMAP_TYPE][IMG_TAG][IMG_MAC][IMG_REMARK][OP_USER][OP_ROLE][OP_NAME][OP_ORG][OP_SITE][CHANNEL][INT_ORG][IMG_FMT][FILE_DATE][UP_DATE][CHK_DATE][CHK_READ_FLAG][IMG_RTN_DATE][FST_CHK_READ_FLAG]" />
+        </map>
+        
+        <map id="920" mapid="L2160201" desc="证券账户查询">
+            <request from="" to="[OP_USER][STKEX][CUST_CODE][STKBD][TRDACCT]" />
+            <response from="[CUST_CODE][CUACCT_CODE][INT_ORG][STKBD][~STKBD][TRDACCT][TRDACCT_SN][TRDACCT_EXID][TRDACCT_TYPE][TRDACCT_EXCLS][TRDACCT_NAME][TRDACCT_STATUS][TREG_STATUS][BREG_STATUS][STKPBU][FIRMID][ID_TYPE][ID_CODE][D_ISS_AGCY][ID_EXP_DATE][OPEN_DATE][STKEX][YMT_CODE]"
+                      to="[CUST_CODE][CUACCT_CODE][INT_ORG][STKBD][~STKBD][TRDACCT][TRDACCT_SN][TRDACCT_EXID][TRDACCT_TYPE][TRDACCT_EXCLS][TRDACCT_NAME][TRDACCT_STATUS][TREG_STATUS][BREG_STATUS][STKPBU][FIRMID][ID_TYPE][ID_CODE][D_ISS_AGCY][ID_EXP_DATE][OPEN_DATE][STKEX][YMT_CODE]" />
+        </map>
+        
+        <map id="921" mapid="L1102095" desc="远程业务办理视频查询">
+            <request from="" to="[OP_USER][NS_BIZ][SERIAL_NO][INT_ORG][USER_CODE][VIDEO_SN]" />
+            <response from="[CUST_CODE][RELA_PATH][FILE_NAME][VIDEO_SN][VIDEO_FLAG][OID]"
+                      to="[CUST_CODE][RELA_PATH][FILE_NAME][VIDEO_SN][VIDEO_FLAG][OID]" />
+        </map>
+        
+        <map id="922" mapid="L1102056" desc="远程办理单向视频登记">
+            <request from="" to="[OP_USER][INT_ORG][USER_CODE][NS_BIZ][SERIAL_NO][VIDEO_SN][RELA_PATH][FILE_NAME][VIDEO_FLAG][OID][VIDEO_CLS][VIDEO_TAG][VIDEO_TYPE]" />
+            <response from="[VIDEO_SN]"
+                      to="[VIDEO_SN]" />
+        </map>
+        
+        <map id="923" mapid="L1102096" desc="远程办理身份验证">
+            <request from="" to="[OP_USER][INT_ORG][CUACCT_CODE][TRDACCT][ID_TYPE][ID_CODE][CUST_NAME]" />
+            <response from="[CUST_CODE][CUACCT_CODE][MOBILE][ID_FLAG][EXP_DATE]"
+                      to="[CUST_CODE][CUACCT_CODE][MOBILE][ID_FLAG][EXP_DATE]" />
+        </map>
+        
+        <map id="924" mapid="L1160109" desc="查询客户协议">
+            <request from="" to="[OP_USER][CUST_CODE][CUST_AGMT_TYPE][REMOTE_SYS][CUACCT_CODE][STKBD][TRDACCT]" />
+            <response from="[CUST_CODE][CUST_AGMT_TYPE][REMOTE_SYS][EFT_DATE][EXP_DATE][UPD_DATE][CUACCT_CODE][STKBD][TRDACCT]"
+                      to="[CUST_CODE][CUST_AGMT_TYPE][REMOTE_SYS][EFT_DATE][EXP_DATE][UPD_DATE][CUACCT_CODE][STKBD][TRDACCT]" />
+        </map>
+        
+        <map id="925" mapid="L1100009" desc="修改密码">
+            <request from="" to="[OP_USER][OPERATION_TYPE][USER_CODE][USER_ROLE][USE_SCOPE][AUTH_TYPE][OLD_AUTH_DATA][NEW_AUTH_DATA][OP_REMARK][CUACCT_CODE]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="926" mapid="L1102125" desc="查询远程业务银行资料同步标志">
+            <request from="" to="[OP_USER][CUST_CODE]" />
+            <response from="[CUST_CODE][BANK_FLAG]"
+                      to="[CUST_CODE][BANK_FLAG]" />
+        </map>
+        
+        <map id="927" mapid="L1202541" desc="券商发起同步客户资料">
+            <request from="" to="[OP_USER][CUACCT_CODE][CUST_CODE][CURRENCY][EXT_ORG][FUND_AUTH_DATA][BANK_AUTH_DATA][OP_REMARK][USER_TYPE][FRT_BIZ_SN]" />
+            <response from="[SERIAL_NO][OCCUR_DATE]"
+                      to="[SERIAL_NO][OCCUR_DATE]" />
+        </map>
+        
+        <map id="928" mapid="L1100107" desc="客户所属类别修改">
+            <request from="" to="[OP_USER][CUST_CLS][CUST_CODE][OP_REMARK]" />
+            <response from="[msgok:1]"
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="929" mapid="L0000504" desc="密码策略检测">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][USE_SCOPE][AUTH_TYPE][AUTH_DATA][OPEN_FLAG]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="930" mapid="L0000506" desc="密码校验">
+            <request from="" to="[OP_USER][USER_CODE][CUACCT_CODE][USER_ROLE][USE_SCOPE][AUTH_DATA]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="931" mapid="L1100123" desc="客户协议设置">
+            <request from="" to="[OP_USER][F_OP_USER][OPERATION_TYPE][CUST_CODE][CUACCT_CODE][CUST_AGMT_TYPE][EXP_DATE][EFT_DATE][TRDACCT][STKBD][OPEN_TYPE][DEAL_STATUS][SIGN_PLACE][OPEN_TYPE_WIN][SIGN_DATE][OLD_SIGN_DATE][OLD_EFT_DATE][CUST_NAME][OP_REMARK]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="932" mapid="L1160103" desc="客户资料查询，查涉税标记">
+            <request from="" to="[OP_USER][CUST_CODE][CUST_CLS][CUST_STATUS][INT_ORG]" />
+            <response from="[CUST_CODE][CUST_TYPE][CUST_CLS][CUST_STATUS][CARD_ID][CRITERION][RISK_FACTOR][INT_ORG][OPEN_DATE][CHANNELS][CREDIT_LVL][REMOTE_PROTOCOL][CUST_SOURCE][SERVICE_LVL][AML_LVL][FILINGCABINET_NO][REMARK][CUST_GRP][IDCARD_TYPE][IDCARD_CHECK_FLAG][CUST_EXT_ATTR][OPER_ORG][OPEN_AGENT][SUBJECT_IDENTITY][INOUTSIDE_IDENTITY][SPECIAL_STATUS][ENTERPRISE_LEVEL][SZORGTYPE][NATIONAL_ATTR][LISTED_ATTR][CAPITAL_ATTR][SMFUND_MANAGER_ID][ACTIVE_DATE][CREDIT_FLAG][CREDIT_TYPE][TAX_FLAG][CREDIT_TYPE_EXP]" 
+                      to="[CUST_CODE][CUST_TYPE][CUST_CLS][CUST_STATUS][CARD_ID][CRITERION][RISK_FACTOR][INT_ORG][OPEN_DATE][CHANNELS][CREDIT_LVL][REMOTE_PROTOCOL][CUST_SOURCE][SERVICE_LVL][AML_LVL][FILINGCABINET_NO][REMARK][CUST_GRP][IDCARD_TYPE][IDCARD_CHECK_FLAG][CUST_EXT_ATTR][OPER_ORG][OPEN_AGENT][SUBJECT_IDENTITY][INOUTSIDE_IDENTITY][SPECIAL_STATUS][ENTERPRISE_LEVEL][SZORGTYPE][NATIONAL_ATTR][LISTED_ATTR][CAPITAL_ATTR][SMFUND_MANAGER_ID][ACTIVE_DATE][CREDIT_FLAG][CREDIT_TYPE][TAX_FLAG][CREDIT_TYPE_EXP]" />
+        </map>
+        
+        <map id="933" mapid="L1262563" desc="查询银证业务流水">
+            <request from="" to="[OP_USER][CUACCT_CODE][CUBSB_TRD_IDS][CUBSB_TRD_STATUS][CURRENCY][EXT_ORG][INT_ORG][OCCUR_DATE][SERIAL_NO]" />
+            <response from="[CUBSB_TRD_STATUS][REMARK][EXT_MSG_TEXT]" 
+                      to="[CUBSB_TRD_STATUS][REMARK][EXT_MSG_TEXT]" />
+        </map>
+        
+        <map id="934" mapid="L1102126" desc="设置银行资料已同步标志">
+            <request from="" to="[OP_USER][CUST_CODE]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]" />
+        </map>
+        
+        <map id="935" mapid="L1102036" desc="查询用户上传影像">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][NS_BIZ][SERIAL_NO][IMG_CLS]" />
+            <response from="[USER_CODE][USER_ROLE][NS_BIZ][SERIAL_NO][IMG_CLS][IMG_SN]" 
+                      to="[USER_CODE][USER_ROLE][NS_BIZ][SERIAL_NO][IMG_CLS][IMG_SN]" />
+        </map>
+        
+        <map id="936" mapid="L1102034" desc="提交远程业务办理资料(适用于Aa、Ab、Ac业务）">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][REMARK][REASON][EXT_ORG][BANK_ACCT][CUST_AGMT_LIST][BANK_ACCT_NEW][CUACCT_CODE][EXT_ORG_NEW][EXT_ORG1][BANK_ACCT1][EXT_ORG2][BANK_ACCT2][EXT_ORG3][BANK_ACCT3][EXT_ORG4][BANK_ACCT4][VERSION]" />
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]"
+                      to="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]" />
+        </map>
+
+        <map id="937" mapid="L1202539" desc="券商发起银证销户">
+            <request from="" to="[OP_USER][INT_ORG][FRT_BIZ_SN][USER_TYPE][BANK_AUTH_DATA][FUND_AUTH_DATA][CURRENCY][EXT_ORG][CUBSB_TYPE][CUBSB_TRD_ID][BANK_ACCT][CUST_CODE][CUACCT_CODE][OP_REMARK]" />
+            <response from="[SERIAL_NO][OCCUR_DATE]" 
+                      to="[SERIAL_NO][OCCUR_DATE]" />
+        </map>
+        
+        <map id="938" mapid="L1202536" desc="券商发起银证开户">
+            <request from="" to="[OP_USER][CUACCT_CODE][CURRENCY][EXT_ORG][CUBSB_TYPE][CUBSB_TRD_ID][FUND_AUTH_DATA][BANK_AUTH_DATA][BANK_ACCT][OP_REMARK]" />
+            <response from="[SERIAL_NO][OCCUR_DATE]" 
+                      to="[SERIAL_NO][OCCUR_DATE]" />
+        </map>
+        
+        <map id="939" mapid="L1262001" desc="客户资产账户信息查询">
+            <request from="" to="[OP_USER][USER_CODE][CUACCT_CODE]" />
+            <response from="[USER_CODE][CUACCT_CODE][CUACCT_STATUS][CUACCT_ATTR][OPEN_DATE][CUACCT_CLS][CUACCT_LVL][CUACCT_GRP][INT_ORG][MAIN_FLAG]" 
+                      to="[USER_CODE][CUACCT_CODE][CUACCT_STATUS][CUACCT_ATTR][OPEN_DATE][CUACCT_CLS][CUACCT_LVL][CUACCT_GRP][INT_ORG][MAIN_FLAG]" />
+        </map>
+        
+        <map id="940" mapid="L1160012" desc="机构用户拓展信息查询">
+            <request from="" to="[OP_USER][USER_CODE][TAB_CODE][FLD_CODE][PKG_TYPE]" />
+            <response from="[USER_CODE][ORG_ID_CODE][ORG_ID_EXP_DATE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][ORG_ID_CODE][ORG_ID_EXP_DATE][YEAR_CHK_DATE][LEGAL_REP_TYPE][LEGAL_REP][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][LEGAL_REP_ID_EXP_DATE][INDUS_TYPE][CONTROLLER][LAND_TAX_NO][LAND_TAX_NO_EXP_DATE][ASSIGN_PERSON_NAME][ASSIGN_PERSON_ID_TYPE][ASSIGN_PERSON_ID][ASSIGN_PERSON_ID_DAT][REAL_NEED][DERIVATIVE_INVEST_TIME][IF_MONEY_LAUNDERING][ANTI_MONEY_LAUNDERSYS]" 
+                      to="[USER_CODE][ORG_ID_CODE][ORG_ID_EXP_DATE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][ORG_ID_CODE][ORG_ID_EXP_DATE][YEAR_CHK_DATE][LEGAL_REP_TYPE][LEGAL_REP][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][LEGAL_REP_ID_EXP_DATE][INDUS_TYPE][CONTROLLER][LAND_TAX_NO][LAND_TAX_NO_EXP_DATE][ASSIGN_PERSON_NAME][ASSIGN_PERSON_ID_TYPE][ASSIGN_PERSON_ID][ASSIGN_PERSON_ID_DAT][REAL_NEED][DERIVATIVE_INVEST_TIME][IF_MONEY_LAUNDERING][ANTI_MONEY_LAUNDERSYS]" />
+        </map>
+        
+        <map id="941" mapid="L1102168" desc="金三方资产账户开户">
+            <request from="" to="[OP_USER][INT_ORG][USER_CODE][CURRENCY][CUACCT_CODE]" />
+            <response from="[CUACCT_CODE][CURRENCY]" 
+                      to="[CUACCT_CODE][CURRENCY]" />
+        </map>
+        
+        <map id="942" mapid="L1102169" desc="查询三方变更办理情况">
+            <request from="" to="[OP_USER][INT_ORG][CUST_CODE]" />
+            <response from="[CUST_CODE][NS_BIZ][SERIAL_NO][STEP][BANK_ACCT][BANK_ACCT_NEW][CUACCT_CODE][EXT_ORG][EXT_ORG_NEW]" 
+                      to="[CUST_CODE][NS_BIZ][SERIAL_NO][STEP][BANK_ACCT][BANK_ACCT_NEW][CUACCT_CODE][EXT_ORG][EXT_ORG_NEW]" />
+        </map>
+        
+        <map id="943" mapid="L1102035" desc="查询查询金三方提交账户情况">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][NS_BIZ]" />
+            <response from="[SERIAL_NO][CURR_STATUS][EXT_ORG1][BANK_ACCT1][CUACCT_CODE1][EXT_ORG2][BANK_ACCT2][CUACCT_CODE2][EXT_ORG3][BANK_ACCT3][CUACCT_CODE3][EXT_ORG4][BANK_ACCT4][CUACCT_CODE4][VERSION]"
+                      to="[SERIAL_NO][CURR_STATUS][EXT_ORG1][BANK_ACCT1][CUACCT_CODE1][EXT_ORG2][BANK_ACCT2][CUACCT_CODE2][EXT_ORG3][BANK_ACCT3][CUACCT_CODE3][EXT_ORG4][BANK_ACCT4][CUACCT_CODE4][VERSION]" />
+        </map>
+        
+        <map id="944" mapid="L1102170" desc="设置三方变更办理已完成">
+            <request from="" to="[OP_USER][INT_ORG][CUST_CODE][NS_BIZ][SERIAL_NO]" />
+            <response from="[CUST_CODE][NS_BIZ][SERIAL_NO]" 
+                      to="[CUST_CODE][NS_BIZ][SERIAL_NO]" />
+        </map>
+        
+        
+        <map id="945" mapid="L1102187" desc="设置金三方开户信息">
+            <request from="" to="[OP_USER][SERIAL_NO][USER_CODE][BANK_ACCT][EXT_ORG][CUACCT_CODE]" />
+            <response from="[CUACCT_CODE][EXT_ORG][BANK_ACCT]" 
+                      to="[CUACCT_CODE][EXT_ORG][BANK_ACCT]" />
+        </map>
+        
+        <map id="946" mapid="L0001050" desc="查询普通证券创业板开户情况">
+            <request from="" to="[OP_USER][GENRPCLBMNO][CUST_CODE]" />
+            <response from="[custid][market][secuid][cybflag][effectday]" 
+                      to="[custid][market][secuid][cybflag][effectday]" />
+        </map>
+        <!-- add by lengjinjun -->
+        <map id="953" mapid="L0001050" desc="查询普通证券创业板开户情况">
+            <request from="" to="[OP_USER][GENRPCLBMNO][CUST_CODE]" />
+            <response from="[CUST_CODE][TRDACCT_TAR][CUACCT_TAR][GEMFLAG_TAR][TRDACCT_SRC][CUACCT_SRC][GEMFLAG_SRC]" 
+                      to="[CUST_CODE][TRDACCT_TAR][CUACCT_TAR][GEMFLAG_TAR][TRDACCT_SRC][CUACCT_SRC][GEMFLAG_SRC]" />
+        </map>
+        <!-- 机构见证开户接口 add by kongwt -->
+        <map id="1001" mapid="L1120124" desc="操作员客户经理登陆">
+            <request from="" to="[OP_USER][USER_CODE][USER_ROLE][AUTH_TYPE][AUTH_DATA]" />
+            <response from="[USER_CODE][USER_NAME][INT_ORG][ID_TYPE][ID_CODE]" to="[USER_CODE][USER_NAME][INT_ORG][ID_TYPE][ID_CODE]" />
+        </map>
+        <map id="1002" mapid="L0063001" desc="机构信息查询">
+            <request from="" to="[OP_USER][ORG_CODE][ORG_TYPE][RIGHT_FLAG]" />
+            <response from="[ORG_CODE][ORG_TYPE][ORG_CLS][ORG_NAME][ORG_FULL_NAME][ORG_STATUS][PARENT_ORG][ACCT_LEN][ACCT_PREFIX][AREA_NO][ZIP_CODE][AREA_ADDR][RIGHT_FLAG]" to="[ORG_CODE][ORG_TYPE][ORG_CLS][ORG_NAME][ORG_FULL_NAME][ORG_STATUS][PARENT_ORG][ACCT_LEN][ACCT_PREFIX][AREA_NO][ZIP_CODE][AREA_ADDR][RIGHT_FLAG]" />
+        </map>
+        <map id="1003" mapid="L1102224" desc="机构预约管理信息查询">
+            <request from="" to="[OP_USER][SERIAL_NO][USER_CODE][APPT_BGN_DATE][APPT_END_DATE][INT_ORG][APPT_STATUS]" />
+            <response from="[SERIAL_NO][USER_CODE][INT_ORG][ORG_NAME][APPT_DATE][APPT_ADDR][APPT_STATUS][APPT_OPER1][APPT_OPER2][RELA_NOSCENE_NO][REMARK]" to="[SERIAL_NO][USER_CODE][INT_ORG][ORG_NAME][APPT_DATE][APPT_ADDR][APPT_STATUS][APPT_OPER1][APPT_OPER2][RELA_FILE_NO][REMARK]" />
+        </map>
+        <map id="1004" mapid="L1102225" desc="机构预约管理信息修改">
+            <request from="" to="[OP_USER][SERIAL_NO][ORG_NAME][APPT_DATE][APPT_ADDR][APPT_STATUS][APPT_OPER1][APPT_OPER2][RELA_NOSCENE_NO][REMARK]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        <map id="1005" mapid="L1102226" desc="机构预约管理信息新增">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][ORG_NAME][APPT_DATE][APPT_ADDR][APPT_STATUS][REMARK]" />
+            <response from="[SERIAL_NO][USER_CODE][INT_ORG][ORG_NAME][APPT_DATE][APPT_ADDR][APPT_STATUS][APPT_OPER1][APPT_OPER2][RELA_NOSCENE_NO][REMARK]" to="[SERIAL_NO][USER_CODE][INT_ORG][ORG_NAME][APPT_DATE][APPT_ADDR][APPT_STATUS][APPT_OPER1][APPT_OPER2][RELA_FILE_NO][REMARK]" />
+        </map>
+        <map id="1006" mapid="L1102220" desc="预约开户资料查询">
+            <request from="" to="[OP_USER][SERIAL_NO]" />
+            <response from="[OCCUR_DATE][OCCUR_TIME][SERIAL_NO][APPT_CHNL][APPT_BIZ][APPT_STATUS][EXP_DATE][INT_ORG][CUST_CODE][CUST_NAME][CUST_FNAME][CUACCT_CODE][USER_TYPE][ID_TYPE][ID_CODE][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ID_ZIP_CODE][ID_ADDR][ZIP_CODE][ADDRESS][TEL][FAX][MOBILE_TEL][EMAIL][CITIZENSHIP][NATIVE_PLACE][BIRTHDAY][NATIONALITY][EDUCATION][SEX][LEGAL_REP][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][LINKMAN][LINKMAN_ID_TYPE][LINKMAN_ID_CODE][LINKMAN_TEL][LINKMAN_CUST_RELA][LINKMAN_ZIP][LINKMAN_ADDRESS][REMARK][CHK_APP_SN][CHK_STATUS][CHK_REMARK][CUBSB_LOG_SN][PROC_DATE][PROC_REMARK][OFFICE_TEL][WELL_TEL][LINKTEL_ORDER][OFFICE_ADDR][CORP_ADDR][LINKADDR_ORDER][EXT_ORG][BANK_ACCT][BDMF_ACCT][OCCU_TYPE][TRADE][WORKPLACE][CORP_EXTYPE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][ORG_ID_CODE][ORG_ID_EXP_DATE][YEAR_CHK_DATE][LEGAL_REP_TYPE][INDUS_EXTYPE][CONTROLLER][SUBJECT_IDENTITY][BUSINESS][REGISTER_FUND][ORG_FNAME][ORG_ID_ISS_AGCY][ORG_ID_EXP_DATE][ORG_ID_ADDR][ORG_BIRTHDAY][BENEFIT_FLAG][BNF_NAME][BNF_IDCODE][BNF_IDTYPE][BNF_IDEXPDATE][CREDIT_FLAG][CREDIT_TYPE][CREDIT_RECORD][LOW_INCOME_FLAG][POSITION][LEGAL_ID_EXP_DATE][CNO]"
+                      to="[OCCUR_DATE][OCCUR_TIME][SERIAL_NO][APPT_CHNL][APPT_BIZ][APPT_STATUS][EXP_DATE][INT_ORG][CUST_CODE][CUST_NAME][CUST_FNAME][CUACCT_CODE][USER_TYPE][ID_TYPE][ID_CODE][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ID_ZIP_CODE][ID_ADDR][ZIP_CODE][ADDRESS][TEL][FAX][MOBILE_TEL][EMAIL][CITIZENSHIP][NATIVE_PLACE][BIRTHDAY][NATIONALITY][EDUCATION][SEX][LEGAL_REP][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][LINKMAN][LINKMAN_ID_TYPE][LINKMAN_ID_CODE][LINKMAN_TEL][LINKMAN_CUST_RELA][LINKMAN_ZIP][LINKMAN_ADDRESS][REMARK][CHK_APP_SN][CHK_STATUS][CHK_REMARK][CUBSB_LOG_SN][PROC_DATE][PROC_REMARK][OFFICE_TEL][WELL_TEL][LINKTEL_ORDER][OFFICE_ADDR][CORP_ADDR][LINKADDR_ORDER][EXT_ORG][BANK_ACCT][BDMF_ACCT][OCCU_TYPE][TRADE][WORKPLACE][CORP_EXTYPE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][ORG_ID_CODE][ORG_ID_EXP_DATE][YEAR_CHK_DATE][LEGAL_REP_TYPE][INDUS_EXTYPE][CONTROLLER][SUBJECT_IDENTITY][BUSINESS][REGISTER_FUND][ORG_FNAME][ORG_ID_ISS_AGCY][ORG_ID_EXP_DATE][ORG_ID_ADDR][ORG_BIRTHDAY][BENEFIT_FLAG][BNF_NAME][BNF_IDCODE][BNF_IDTYPE][BNF_IDEXPDATE][CREDIT_FLAG][CREDIT_TYPE][CREDIT_RECORD][LOW_INCOME_FLAG][POSITION][LEGAL_ID_EXP_DATE][CNO]" />
+        </map>
+        <map id="1007" mapid="L1102221" desc="开户资料管理信息查询">
+            <request from="" to="[OP_USER][SERIAL_NO][USER_CODE][FILE_TYPE][FILE_SN][INT_ORG][FILE_STATUS][RELA_APPT_NO][USED]" />
+            <response from="[SERIAL_NO][FILE_TYPE][USER_CODE][USER_NAME][INT_ORG][FILE_SN][FILE_STATUS][DRAW_TIME][RETURN_TIME][RETURN_CONFIRMER][RELA_APPT_NO][ORG_NAME][REMARK]"
+                      to="[SERIAL_NO][FILE_TYPE][USER_CODE][USER_NAME][INT_ORG][FILE_SN][FILE_STATUS][DRAW_TIME][RETURN_TIME][RETURN_CONFIRMER][RELA_APPT_NO][ORG_NAME][REMARK]" />
+        </map>
+        <map id="1008" mapid="L1202404" desc="预约开户资料修改">
+            <request from="" to="[OP_USER][SERIAL_NO][EXP_DATE][INT_ORG][CUST_CODE][CUST_NAME][CUST_FNAME][CUACCT_CODE][USER_TYPE][ID_TYPE][ID_CODE][ID_ISS_AGCY][ID_BEG_DATE][ID_EXP_DATE][ID_ZIP_CODE][ID_ADDR][ZIP_CODE][ADDRESS][TEL][FAX][MOBILE_TEL][EMAIL][CITIZENSHIP][NATIVE_PLACE][BIRTHDAY][NATIONALITY][EDUCATION][SEX][LEGAL_REP][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][LINKMAN][LINKMAN_ID_TYPE][LINKMAN_ID_CODE][LINKMAN_CUST_RELA][LINKMAN_TEL][LINKMAN_ZIP][LINKMAN_ADDRESS][REMARK][CUBSB_LOG_SN][OFFICE_TEL][WELL_TEL][LINKTEL_ORDER][OFFICE_ADDR][CORP_ADDR][LINKADDR_ORDER][EXT_ORG][BANK_ACCT][BDMF_ACCT][OCCU_TYPE][VOCATION][TRADE][WORKPLACE][EXT_ORG2][EXT_ORG3][EXT_ORG4][EXT_ORG5][BANK_ACCT2][BANK_ACCT3][BANK_ACCT4][BANK_ACCT5][CHANNEL][APPT_SOURCE][ACCT_MANAGER][CUST_AGMT_TYPE][APPT_OPEN_ACCT][SECUSZA][SECUSZB][SECUSHA][SECUSHB][SECUSZJ][SECUSHJ][CORP_EXTYPE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][ORG_ID_CODE][ORG_ID_EXP_DATE][YEAR_CHK_DATE][LEGAL_REP_TYPE][INDUS_EXTYPE][CONTROLLER][SMS_SERVICE][DELIVER_FLAG][IS_SALE_CUST][WLT_CARD_NO][COMMENDER_NAME][COMMENDER_ID_TYPE][COMMENDER_ID_NO][MARRIAGE][INTEREST][TRAFFIC_PREFER][RESIDENCE][INCOME][EN_PRODUCT_CODE][LEGAL_ID_EXP_DATE][USER_NAME_AGENT][ID_TYPE_AGENT][ID_CODE_AGENT][ID_EXP_DATE_AGENT][OF_TRDACCTS][CUACCT_PWD][TRDACCT_PWD][EXT_ORG_HK][EXT_ORG_US][BANK_ACCT_HK][BANK_ACCT_US][CUST_TYPE][CUST_CLS][CUST_SOURCE][CREDIT_LVL][SERVICE_LVL][REMOTE_PROTOCOL][RISK_FACTOR][QUALITY_TYPE][OPEN_ORDER_ID][PRIVACY_LEVEL][PAY_MODE][MAIL_TYPE][INT_RATE_SNS][DR_RATE_GRPS][PAPER_RISK][PAPER_INVEST][PAPER_INVEST_APPENDIX][SUBJECT_IDENTITY][BUSINESS][REGISTER_FUND][ORG_FNAME][ORG_ID_ISS_AGCY][ORG_ID_EXP_DATE][ORG_ID_ADDR][ORG_BIRTHDAY][ORG_MOBILE_TEL][BENEFIT_FLAG][BNF_NAME][BNF_IDCODE][BNF_IDTYPE][BNF_IDEXPDATE][CREDIT_FLAG][CREDIT_TYPE][CREDIT_RECORD][LOW_INCOME_FLAG][POSITION][CNO][CREDIT_TYPE_EXP]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]"></response>
+            
+        </map>
+        <map id="1009" mapid="L1102222" desc="开户资料管理信息修改">
+            <request from="" to="[OP_USER][SERIAL_NO][USER_CODE][FILE_TYPE][FILE_SN][INT_ORG][FILE_STATUS][RETURN_CONFIRMER][RELA_APPT_NO][ORG_NAME][REMARK]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        <map id="1010" mapid="L1102230" desc="非现场开户数据设置">
+            <request from="" to="[OP_USER][OPERATOR_TYPE][SERIAL_NO][INT_ORG][NONSCENE_TYPE][ID_TYPE][ID_CODE][CUST_NAME][CUST_CODE][CUACCT_CODE][BROKER_CODE][OPER_CODE][MOBILE][BANK_ACCT][SECUSZA_FLAG][SECUSHA_FLAG][SECUSZJ_FLAG][SECUSHJ_FLAG][NONSCENE_STEP][COMPLETE_STEPS][COMPLETE_STEPS_EX][GX_BS][SPECIAL_FLAGS_EX][SPECIAL_FLAGS][USER_TYPE][ORG_ID_TYPE][ORG_ID_CODE][ORG_CUST_NAME]" />
+            <response from="[SERIAL_NO]" 
+                      to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="1011" mapid="L1102229" desc="修改客户联系手机接口">
+            <request from="" to="[OP_USER][SERIAL_NO][CUST_CODE][MOBILE_TEL]" />            
+            <response from="[msgok:1]" 
+                      to="[~msgok]"></response>       
+        </map>
+        
+        
+        <!-- 开户 add by lengjinjun begin -->
+        <map id="1012" mapid="L1102604" desc="非现场影响上传WOS">
+            <request from="" to="[OP_USER][ID_CODE][ID_TYPE][IMG_CLS][USER_CODE][IMG_SN][INT_ORG][NONSCENE_TYPE][BARCODES][OID][FILEDATE]" />       
+            <response from="[IMG_SN]" to="[IMG_SN]"></response>     
+        </map>
+        <map id="1013" mapid="L1102605" desc="远程业务影像上传接口WOS">
+            <request from="" to="[OP_USER][IMG_CLS][USER_CODE][IMG_SN][INT_ORG][NS_BIZ][SERIAL_NO][BARCODES][OID][FILEDATE]" />             
+            <response from="[IMG_SN]" to="[IMG_SN]"></response>     
+        </map>
+        
+        
+        <!-- 理财账户业务办理 add by jianghuib begin -->
+        <map id="946" mapid="L1102200" desc="理财账户资料查询">
+            <request from="" to="[OP_USER][ID_CODE][MOBILE_TEL][INT_ORG]" />
+            <response from="[USER_CODE][USER_NAME][CUACCT_CODE][ID_TYPE][ID_CODE][BANK_CODE][BANK_ID][E_USER_ID][MOBILE_TEL][CUSTNO][FUNDNO][FULL_FLAG]" 
+                      to="[USER_CODE][USER_NAME][CUACCT_CODE][ID_TYPE][ID_CODE][BANK_CODE][BANK_ID][E_USER_ID][MOBILE_TEL][CUSTNO][FUNDNO][FULL_FLAG]" 
+                      />
+        </map>
+        
+        <map id="947" mapid="L1102034" desc="提交远程业务办理资料(理财账户密码重置)">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][CUST_NAME][ID_CODE][ID_TYPE][TRD_PWD][MOBIL][ID_EXP_DATE][ID_FLAG]" />
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]"
+                      to="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]" />
+        </map>
+        
+        
+        <!-- 理财账户业务办理 add by jianghuib end-->
+        
+        <map id="1200" mapid="L1280213" desc="提交远程业务办理资料(理财账户密码重置)">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][CUST_NAME][ID_CODE][ID_TYPE][TRD_PWD][MOBIL][ID_EXP_DATE][ID_FLAG]" />
+            <response from="[INT_ORG][USER_CODE][EXEMPTTIME][VERIFY_TYPES][REMARK][VIERIFY_RIGHT]"
+                      to="[INT_ORG][USER_CODE][EXEMPTTIME][VERIFY_TYPES][REMARK][VIERIFY_RIGHT]" />
+        </map>
+        
+        <map id="1300" mapid="L1102055" desc="查询紧急联系人信息">
+            <request from="" to="[OP_USER][CUST_CODE][LINKMAN_NO]" />
+            <response from="[LINKMAN_NO][CUST_CODE][LINKMAN][LINKMAN_MOBILE][LINKMAN_TEL]"
+                      to="[LINKMAN_NO][CUST_CODE][LINKMAN][LINKMAN_MOBILE][LINKMAN_TEL]" />
+        </map> 
+        <map id="1301" mapid="L1102227" desc="查询紧急联系人信息">
+            <request from="" to="[OP_USER][CUST_CODE][LINKMAN][LINKMAN_MOBILE][LINKMAN_TEL]" />
+            <response from="[LINKMAN_NO][CUST_CODE][LINKMAN][LINKMAN_MOBILE][LINKMAN_TEL]"
+                      to="[LINKMAN_NO][LINKMAN][LINKMAN_MOBILE][LINKMAN_TEL]" />
+        </map>
+        <map id="1302" mapid="L1102229" desc="修改客户联系手机接口">
+            <request from="" to="[OP_USER][CUST_CODE][MOBILE_TEL][VERIFY_FLAG]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]"></response>       
+        </map>
+        <!-- modify by lengjinjun-->
+        <map id="1303" mapid="L1102228" desc="修改客户信息">
+            <request from="" to="[OP_USER][CUST_CODE][ADDRESS][ZIP_CODE][EMAIL][OCCU_TYPE][EDUCATION][TRADE][POSITION][WORKPLACE][CORP_ADDR][CNO][TEL][VERSION][CORP_ZIP_CODE][CONTROL_FLAG][BENEFIT_FLAG][TAX_FLAG][CREDIT_TYPE][CREDIT_TYPE_EXP]" />
+            <response from="[msgok:1]" 
+                      to="[~msgok]"></response>       
+        </map>
+        <map id="1304" mapid="L1120139" desc="查询金天盾客户审核情况">
+            <request from="" to="[OP_USER][INT_ORGS][CUST_CODE][MD_TYPE][BEGIN_DATE][END_DATE][STATUS]" />
+            <response from="[INT_ORG][CUST_CODE][MD_TYPE][OLD_VALUE][MD_VALUE][APPLY_DATE][STATUS][APPLY_WAY][APPLY_ADDR][APPLY_REASON][REMARK][USER_FNAME]"
+                      to="[INT_ORG][CUST_CODE][MD_TYPE][OLD_VALUE][MD_VALUE][APPLY_DATE][STATUS][APPLY_WAY][APPLY_ADDR][APPLY_REASON][REMARK][USER_FNAME]" />
+        </map>
+        <map id="1305" mapid="L1160012" desc="用户拓展信息查询">
+            <request from="" to="[OP_USER][USER_CODE][TAB_CODE][FLD_CODE][PKG_TYPE]" />
+            <response from="[USER_CODE][CORP_TYPE][EMPLOYLEE_COUNT][EMPLOYLEE_SALARY][BUSINESS][ASSET][REGISTER_FUND][REVENUE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][ORG_ID_CODE][ORG_ID_EXP_DATE][YEAR_CHK_DATE][LEGAL_REP_TYPE][LEGAL_REP][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][LEGAL_REP_ID_EXP_DATE][INDUS_TYPE][CONTROLLER][POSITION][OCCU_TYPE][TRADE][WORKPLACE]" 
+                      to="[USER_CODE][CORP_TYPE][EMPLOYLEE_COUNT][EMPLOYLEE_SALARY][BUSINESS][ASSET][REGISTER_FUND][REVENUE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][ORG_ID_CODE][ORG_ID_EXP_DATE][YEAR_CHK_DATE][LEGAL_REP_TYPE][LEGAL_REP][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][LEGAL_REP_ID_EXP_DATE][INDUS_TYPE][CONTROLLER][POSITION][OCCU_TYPE][TRADE][WORKPLACE]" />
+        </map>
+        
+        <!-- OTC适当性匹配改造 add by jianghuib begin-->
+        <map id="2012" mapid="L1160012" desc="OTC个人受益人信息查询">
+            <request from="" to="[OP_USER][USER_CODE][TAB_CODE][FLD_CODE][PKG_TYPE]" />
+            <response from="[BENEFICIARY_OWNER][CBENEFICIARY_NAME][BENEFICIARY_SFZH][BENEFICIARY_PHONE][BENEFICIARY_RELA]"
+                      to="[BENEFICIARY_OWNER][CBENEFICIARY_NAME][BENEFICIARY_SFZH][BENEFICIARY_PHONE][BENEFICIARY_RELA]" />
+        </map>
+        
+        <map id="2501" mapid="L1102501" desc="实际控制客户的自然人">
+            <request from="" to="[OP_USER][CUST_CODE][INT_ORG][ASSOCIATE_TYPE][ID_TYPE][ID_CODE]" />
+            <response from="[CUST_CODE][INT_ORG][ASSOCIATE_TYPE][ASSOCIATE_NAME][ID_TYPE][ID_CODE][ID_EXP_DATE][ID_ADDRESS][USER_TYPE][NATIONALITY][OCCU_TYPE][EDUCATION][MOBILE_TEL][ADDRESS][ZIP_CODE][EMAIL][REMARK][~EDUCATION]"
+                      to="[CUST_CODE][INT_ORG][ASSOCIATE_TYPE][ASSOCIATE_NAME][ID_TYPE][ID_CODE][ID_EXP_DATE][ID_ADDRESS][USER_TYPE][NATIONALITY][OCCU_TYPE][EDUCATION][MOBILE_TEL][ADDRESS][ZIP_CODE][EMAIL][REMARK][~EDUCATION]" />
+        </map>
+        <!-- OTC适当性匹配改造 add by jianghuib end-->
+        
+        <!-- 开户适当性匹配改造 add by jianghuib begin-->
+        <map id="2082" mapid="L1190082" desc="客户适当性信息查询">
+            <request from="" to="[OP_USER][CUST_CODE]" />
+            <response from="[CUST_CODE][INT_ORG][USER_TYPE][PROF_INVESTOR_TYPE][PROF_INVESTOR_SOURCE][PROF_SIGN_DATE][PROF_EXP_DATE][SIGN_DATE][EXP_DATE][INVEST_LMT][INVEST_PRO][EXPECT_INCOME][RATING_LVL][RATING_EXP_DATE]"
+                      to="[CUST_CODE][INT_ORG][USER_TYPE][PROF_INVESTOR_TYPE][PROF_INVESTOR_SOURCE][PROF_SIGN_DATE][PROF_EXP_DATE][SIGN_DATE][EXP_DATE][INVEST_LMT][INVEST_PRO][EXPECT_INCOME][RATING_LVL][RATING_EXP_DATE]" />
+        </map>
+        
+        <!-- 开户适当性匹配改造 add by jianghuib end-->
+        
+        <!-- 开户涉税信息提交 add by jianghuib begin 20170814-->
+        <map id="949" mapid="L1102237" desc="开户涉税信息提交">
+            <request from="" to="[OP_USER][SERIAL_NO][CUST_TAX_TYPE][TAX_FLAG][FIRST_NAME][LAST_NAME][BIRTH_DAY][COUNTRY][PROVINCE][CITY][STREET1][STREET2][BRH_COUNTRY][BRH_PROVINCE][BRH_CITY][BRH_STREET1][BRH_STREET2][ORG_TYPE][TAX_ID_FLAG][TAX_ID_RESON][TAX_ID_CONTENT][ORG_NAME][CONTROLER_TAX_FLAG][CONTROLER_NAME][CONTROL_TAX_INFO][CONTROL_ORG_NAME][CONTROL_ORG_ADDRESS][CONTROL_ORG_TAX_INFO][FIRST_NAME_EN][LAST_NAME_EN][DECLARE_FILE_FLAG][COUNTRY_EN][PROVINCE_EN][CITY_EN][BRH_COUNTRY_EN][BRH_PROVINCE_EN][BRH_CITY_EN][STREET1_EN][STREET2_EN][BRH_STREET1_EN][BRH_STREET2_EN]" />
+            <response from="[SERIAL_NO]"
+                      to="[SERIAL_NO]" />
+        </map>
+        
+        <!-- 开户涉税信息查询  add by lengjinjun -->
+        <map id="1014" mapid="L1102238" desc="查询客户预约涉税信息">
+            <request from="" to="[OP_USER][SERIAL_NO][CUST_TAX_TYPE]" />
+            <response from="[SERIAL_NO][CUST_TAX_TYPE][TAX_FLAG][FIRST_NAME][LAST_NAME][BIRTH_DAY][COUNTRY][PROVINCE][CITY][STREET1][STREET2][BRH_COUNTRY][BRH_PROVINCE][BRH_CITY][BRH_STREET1][BRH_STREET2][ORG_TYPE][TAX_ID_FLAG][TAX_ID_RESON][TAX_ID_CONTENT][ORG_NAME][CONTROLER_TAX_FLAG][CONTROLER_NAME][CONTROL_TAX_INFO][CONTROL_ORG_NAME][CONTROL_ORG_ADDRESS][CONTROL_ORG_TAX_INFO][FIRST_NAME_EN][LAST_NAME_EN][DECLARE_FILE_FLAG][COUNTRY_EN][PROVINCE_EN][CITY_EN][BRH_COUNTRY_EN][BRH_PROVINCE_EN][BRH_CITY_EN][STREET1_EN][STREET2_EN][BRH_STREET1_EN][BRH_STREET2_EN]"
+                      to="[SERIAL_NO][CUST_TAX_TYPE][TAX_FLAG][FIRST_NAME][LAST_NAME][BIRTH_DAY][COUNTRY][PROVINCE][CITY][STREET1][STREET2][BRH_COUNTRY][BRH_PROVINCE][BRH_CITY][BRH_STREET1][BRH_STREET2][ORG_TYPE][TAX_ID_FLAG][TAX_ID_RESON][TAX_ID_CONTENT][ORG_NAME][CONTROLER_TAX_FLAG][CONTROLER_NAME][CONTROL_TAX_INFO][CONTROL_ORG_NAME][CONTROL_ORG_ADDRESS][CONTROL_ORG_TAX_INFO][FIRST_NAME_EN][LAST_NAME_EN][DECLARE_FILE_FLAG][COUNTRY_EN][PROVINCE_EN][CITY_EN][BRH_COUNTRY_EN][BRH_PROVINCE_EN][BRH_CITY_EN][STREET1_EN][STREET2_EN][BRH_STREET1_EN][BRH_STREET2_EN]" />
+        </map>
+        
+        <!-- 开户涉税信息提交 add by jianghuib begin-->
+        
+        <!-- 客户账户密码解锁 add by Jinjun.Leng begin -->
+        <map id="950" mapid="L0001050" desc="客户账户密码解锁">
+            <request from="" to="[OP_USER][GENRPCLBMNO][INT_ORG][CUST_CODE]" />
+            <response from="[msgok:1]"
+                      to="[~msgok]" />
+        </map>
+        <!-- 客户账户密码解锁 add by Jinjun.Leng end -->
+        <map id="951" mapid="L1102098" desc="查询资金账号校验客户信息">
+            <request from="" to="[OP_USER][INT_ORG][ID_TYPE][ID_CODE][CUST_NAME]" />
+            <response from="[CUST_CODE][MOBILE]" to="[CUST_CODE][MOBILE]" />
+        </map>
+        <!-- 主股东账户设定 add by Jinjun.Leng end -->
+        <map id="954" mapid="L2100117" desc="主股东账户设定">
+            <request from="" to="[OP_USER][CUST_CODE][TRDACCT][STKBD][CUACCT_CODE]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        
+        <!-- 回访激活 add by Jinjun.Leng end -->
+        <map id="955" mapid="L1120136" desc="主股东账户设定">
+            <request from="" to="[OP_USER][TEL_SERIAL_NO][CUST_CODE][STAFF_NAME][STAFF_NO][OPEN_TYPE]" />
+            <response from="[CUACCT_CODE][CUST_CODE]" to="[CUACCT_CODE][CUST_CODE]" />
+        </map>
+        
+        <!-- 风险测评 add by fanzg begin -->
+        <map id="956" mapid="L1102248" desc="风险测评预答题">
+            <request from="" to="[OP_USER][CUST_CODE][SURVEY_SN][SURVEY_GR][SURVEY_COLS]" />
+            <response from="[SURVEY_SN][CUST_CODE][USER_ROLE][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE]" to="[SURVEY_SN][CUST_CODE][USER_ROLE][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE]" />
+        </map>
+        <map id="957" mapid="L1102249" desc="客户取消测评留痕">
+            <request from="" to="[OP_USER][CUST_CODE][REMARK]" />
+            <response from="[CUST_CODE]" to="[CUST_CODE]" />
+        </map>
+        <!-- 双向开户 add by Lengjj end -->
+        <map id="958" mapid="L0001050" desc="双向开户排队">
+            <request from="" to="[CUST_CODE][CUST_NAME][ORG_CODE][LEVEL][ORIGIN][BIZ_TYPE][GENRPCLBMNO]" />
+            <response from="[STAFF_EXIST][QUEUE_LOCATION][SERVER_ROOMNO]" to="[STAFF_EXIST][QUEUE_LOCATION][SERVER_ROOMNO]" />
+        </map>
+        <map id="959" mapid="L0001050" desc="双向开户取消排队">
+            <request from="" to="[CUST_CODE][BIZ_TYPE][ORG_CODE][ABNORMAL_EXIT][GENRPCLBMNO]" />
+            <response from="[FLAG]" to="[FLAG]" />
+        </map>
+        <map id="960" mapid="L1102239" desc="业务办理设置客户涉税信息">
+            <request from="" to="[OP_USER][CUST_CODE][CUST_TAX_TYPE][FIRST_NAME][LAST_NAME][BIRTH_DAY][COUNTRY][PROVINCE][CITY][STREET1][STREET2][BRH_COUNTRY][BRH_PROVINCE][BRH_CITY][BRH_STREET1][BRH_STREET2][ORG_TYPE][ORG_NAME][TAX_ID_FLAG][TAX_ID_RESON][TAX_ID_CONTENT][FIRST_NAME_EN][LAST_NAME_EN][DECLARE_FILE_FLAG][COUNTRY_EN][PROVINCE_EN][CITY_EN][BRH_COUNTRY_EN][BRH_PROVINCE_EN][BRH_CITY_EN][STREET1_EN][STREET2_EN][BRH_STREET1_EN][BRH_STREET2_EN]" />
+            <response from="[CUST_CODE]" to="[CUST_CODE]" />
+        </map>
+        <map id="961" mapid="L1102240" desc="业务办理查询客户涉税信息">
+            <request from="" to="[OP_USER][CUST_CODE][CUST_TAX_TYPE]" />
+            <response from="[CUST_CODE][CUST_TAX_TYPE][FIRST_NAME][LAST_NAME][BIRTH_DAY][COUNTRY][PROVINCE][CITY][STREET1][STREET2][BRH_COUNTRY][BRH_PROVINCE][BRH_CITY][BRH_STREET1][BRH_STREET2][ORG_TYPE][ORG_NAME][TAX_ID_FLAG][TAX_ID_RESON][TAX_ID_CONTENT][FIRST_NAME_EN][LAST_NAME_EN][DECLARE_FILE_FLAG][COUNTRY_EN][PROVINCE_EN][CITY_EN][BRH_COUNTRY_EN][BRH_PROVINCE_EN][BRH_CITY_EN][STREET1_EN][STREET2_EN][BRH_STREET1_EN][BRH_STREET2_EN]" to="[CUST_CODE][CUST_TAX_TYPE][FIRST_NAME][LAST_NAME][BIRTH_DAY][COUNTRY][PROVINCE][CITY][STREET1][STREET2][BRH_COUNTRY][BRH_PROVINCE][BRH_CITY][BRH_STREET1][BRH_STREET2][ORG_TYPE][ORG_NAME][TAX_ID_FLAG][TAX_ID_RESON][TAX_ID_CONTENT][FIRST_NAME_EN][LAST_NAME_EN][DECLARE_FILE_FLAG][COUNTRY_EN][PROVINCE_EN][CITY_EN][BRH_COUNTRY_EN][BRH_PROVINCE_EN][BRH_CITY_EN][STREET1_EN][STREET2_EN][BRH_STREET1_EN][BRH_STREET2_EN]" />
+        </map>
+        <map id="962" mapid="L1100110" desc="设置客户涉税标志">
+            <request from="" to="[OP_USER][CUST_CODE][TAX_FLAG][OPER_ORG][OPEN_AGENT][SUBJECT_IDENTITY][INOUTSIDE_IDENTITY][SPECIAL_STATUS][ENTERPRISE_LEVEL][SZORGTYPE][SMFUND_MANAGER_ID][NATIONAL_ATTR][LISTED_ATTR][CAPITAL_ATTR][CRITERION][RISK_FACTOR][OP_REMARK][CREDIT_LVL][REMOTE_PROTOCOL][CUST_SOURCE][SERVICE_LVL][ACTIVE_DATE][CREDIT_FLAG][CREDIT_TYPE][CREDIT_TYPE_EXP][IDCARD_TYPE][IDCARD_CHECK_FLAG][AML_LVL][CUST_GRP][CUST_FLAG]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <map id="963" mapid="L1102283" desc="查询非现场关联人资料信息">
+            <request from="" to="[OP_USER][SERIAL_NO][ASSOCIATE_TYPE][ID_CODE][ID_TYPE]" />
+            <response from="[SERIAL_NO][ASSOCIATE_TYPE][ASSOCIATE_NAME][ID_CODE][ID_TYPE][ID_EXP_DATE][ID_ADDRESS][CITIZENSHIP][NATIONALITY][OCCU_TYPE][EDUCATION][MOBILE_TEL][OFFICE_TEL][ADDRESS][EMAIL][ZIP_CODE][AGE][SEX][POSITION][RELATION_TYPE][RELATION_TYPE_EXP][ORG_QUALITY_CERT_TYPE][ORG_QUALITY_CERT_EXP][QUALITY_CERT_NO][BUSINESS_CROP_NO][REG_ORG_TYPE][REMARK]" to="[SERIAL_NO][ASSOCIATE_TYPE][ASSOCIATE_NAME][ID_CODE][ID_TYPE][ID_EXP_DATE][ID_ADDRESS][CITIZENSHIP][NATIONALITY][OCCU_TYPE][EDUCATION][MOBILE_TEL][OFFICE_TEL][ADDRESS][EMAIL][ZIP_CODE][AGE][SEX][POSITION][RELATION_TYPE][RELATION_TYPE_EXP][ORG_QUALITY_CERT_TYPE][ORG_QUALITY_CERT_EXP][QUALITY_CERT_NO][BUSINESS_CROP_NO][REG_ORG_TYPE][REMARK]" />
+        </map>
+        <map id="964" mapid="L1102282" desc="设置非现场关联人资料信息">
+            <request from="" to="[OP_USER][SERIAL_NO][ASSOCIATE_TYPE][ASSOCIATE_NAME][ID_CODE][ID_TYPE][ID_EXP_DATE][ID_ADDRESS][CITIZENSHIP][NATIONALITY][OCCU_TYPE][EDUCATION][MOBILE_TEL][OFFICE_TEL][ADDRESS][EMAIL][ZIP_CODE][AGE][SEX][POSITION][RELATION_TYPE][RELATION_TYPE_EXP][ORG_QUALITY_CERT_TYPE][ORG_QUALITY_CERT_EXP][QUALITY_CERT_NO][BUSINESS_CROP_NO][REG_ORG_TYPE][REMARK][OPER_TYPE]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <map id="965" mapid="L2100423" desc="证券账户业务查询(机构信息核查)">
+            <request from="" to="[OP_USER][SERIAL_NO]" />
+            <response from="[SERIAL_NO][CUST_FNAME][ID_CODE][ID_TYPE][ID_CODE2][ACCTBIZ_ORGCODE][ACCTBIZ_AGTCODE][DECLARE_DATE][RTN_ERR_CODE][RETURN_MSG][OPPUGN_FLAG][ADDRESS][ORGANIZATION_TYPE][BUS_SCOPE][BUS_STATUS][LEGAL_REP][REG_CAPITAL][CHECK_FLAG][BIRTHDAY][REGORG_NAME][ADMIN_DIVISIONS][OPERATING_BEGIN][OPERATING_END][ECONOMIC_CLS][LAST_DATE][BUSS_ADDR][ECONOMIC_INDUSTRY][LEADER_DEPARTMENT]" to="[SERIAL_NO][CUST_FNAME][ID_CODE][ID_TYPE][ID_CODE2][ACCTBIZ_ORGCODE][ACCTBIZ_AGTCODE][DECLARE_DATE][RTN_ERR_CODE][RETURN_MSG][OPPUGN_FLAG][ADDRESS][ORGANIZATION_TYPE][BUS_SCOPE][BUS_STATUS][LEGAL_REP][REG_CAPITAL][CHECK_FLAG][BIRTHDAY][REGORG_NAME][ADMIN_DIVISIONS][OPERATING_BEGIN][OPERATING_END][ECONOMIC_CLS][LAST_DATE][BUSS_ADDR][ECONOMIC_INDUSTRY][LEADER_DEPARTMENT]" />
+        </map>
+        <map id="966" mapid="L1102285" desc="查询非现场机构资料信息">
+            <request from="" to="[OP_USER][SERIAL_NO]" />
+            <response from="[SERIAL_NO][ID_TYPE][ID_CODE][CUST_NAME][ORG_FNAME][ID_ISS_AGCY][ID_ADDR][ID_BEG_DATE][ID_EXP_DATE][CITIZENSHIP][REGISTER_FUND][REG_DATE][BUSINESS][SUBJECT_IDENTITY][SPECIAL_STATUS][INOUTSIDE_IDENTITY][QUALITY_CERT_TYPE][QUALITY_CERT_EXP][QUALITY_CERT_NO][CREDIT_TYPE][CREDIT_TYPE_EXP][ORG_ID_CODE][ORG_ID_EXP_DATE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][NATIONAL_ATTR][CAPITAL_ATTR][LISTED_ATTR][SZORGTYPE][CORP_EXTYPE][OCCU_TYPE][MOBILE_TEL][CORP_TEL][CORP_ADDR][CORP_ZIP_CODE][EMAIL][FAX][NATIVE_PLACE]" to="[SERIAL_NO][ID_TYPE][ID_CODE][CUST_NAME][ORG_FNAME][ID_ISS_AGCY][ID_ADDR][ID_BEG_DATE][ID_EXP_DATE][CITIZENSHIP][REGISTER_FUND][REG_DATE][BUSINESS][SUBJECT_IDENTITY][SPECIAL_STATUS][INOUTSIDE_IDENTITY][QUALITY_CERT_TYPE][QUALITY_CERT_EXP][QUALITY_CERT_NO][CREDIT_TYPE][CREDIT_TYPE_EXP][ORG_ID_CODE][ORG_ID_EXP_DATE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][NATIONAL_ATTR][CAPITAL_ATTR][LISTED_ATTR][SZORGTYPE][CORP_EXTYPE][OCCU_TYPE][MOBILE_TEL][CORP_TEL][CORP_ADDR][CORP_ZIP_CODE][EMAIL][FAX][NATIVE_PLACE]" />
+        </map>
+        <map id="967" mapid="L2100407" desc="证券账户业务信息操作(新)">
+            <request from="" to="[OP_USER][CHK_STATUS][OPERATOR_TYPE][ACCTBIZ_EXCODE][CUST_FNAME][ID_TYPE][ID_CODE][INT_ORG]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        <map id="968" mapid="L2100410" desc="证券账户业务信息查询">
+            <request from="" to="[OP_USER][SERIAL_NO][ACCTBIZ_EXCODE]" />
+            <response from="[SERIAL_NO][ACCTBIZ_STATUS][YMT_CODE][YMT_STATUS][ID_TYPE][ID_CODE][TRDACCT][ACCT_TYPE][ACCT_STATUS][RELATION_FLAG][RTN_ERR_CODE][RETURN_MSG]" to="[SERIAL_NO][ACCTBIZ_STATUS][YMT_CODE][YMT_STATUS][ID_TYPE][ID_CODE][TRDACCT][ACCT_TYPE][ACCT_STATUS][RELATION_FLAG][RTN_ERR_CODE][RETURN_MSG]" />
+        </map>
+        <map id="969" mapid="L1102284" desc="设置非现场机构资料信息">
+            <request from="" to="[OP_USER][SERIAL_NO][ID_TYPE][ID_CODE][CUST_NAME][ORG_FNAME][ID_ISS_AGCY][ID_ADDR][ID_BEG_DATE][ID_EXP_DATE][CITIZENSHIP][REGISTER_FUND][REG_DATE][BUSINESS][SUBJECT_IDENTITY][SPECIAL_STATUS][INOUTSIDE_IDENTITY][QUALITY_CERT_TYPE][QUALITY_CERT_EXP][QUALITY_CERT_NO][CREDIT_TYPE][CREDIT_TYPE_EXP][ORG_ID_CODE][ORG_ID_EXP_DATE][BUSINESS_TAX_NO][TAX_NO_EXP_DATE][BUSINESS_LICENCE_NO][LICENCE_NO_EXP_DATE][NATIONAL_ATTR][CAPITAL_ATTR][LISTED_ATTR][SZORGTYPE][CORP_EXTYPE][OCCU_TYPE][MOBILE_TEL][CORP_TEL][CORP_ADDR][CORP_ZIP_CODE][EMAIL][FAX][NATIVE_PLACE]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        <map id="970" mapid="L1102281" desc="查询非现场产品账户资料信息">
+            <request from="" to="[OP_USER][SERIAL_NO]" />
+            <response from="[SERIAL_NO][PRODUCT_FULL_NAME][PRODUCT_NAME][PRODUCT_CLS][PRODUCT_ARCHIVE_ORG][PRODUCT_FOUND_DATE][PRODUCT_ARCHIVE_DATE][PRODUCT_ARCHIVE_NO][PRODUCT_DURATION_DATE][PRODUCT_TYPE][PRODUCT_SIZE][PRODUCT_LEVERAGE][MANAGER_FNAME][MANAGER_NAME][SMFUND_MANAGER_ID][PROD_MANAGER_CLS][PROD_MANAGER_WEBSITE][PROD_IS_STRUCTURE][PROD_OTHER_ORG]" to="[SERIAL_NO][PRODUCT_FULL_NAME][PRODUCT_NAME][PRODUCT_CLS][PRODUCT_ARCHIVE_ORG][PRODUCT_FOUND_DATE][PRODUCT_ARCHIVE_DATE][PRODUCT_ARCHIVE_NO][PRODUCT_DURATION_DATE][PRODUCT_TYPE][PRODUCT_SIZE][PRODUCT_LEVERAGE][MANAGER_FNAME][MANAGER_NAME][SMFUND_MANAGER_ID][PROD_MANAGER_CLS][PROD_MANAGER_WEBSITE][PROD_IS_STRUCTURE][PROD_OTHER_ORG]" />
+        </map>
+        <map id="971" mapid="L1102280" desc="设置非现场产品账户资料信息">
+            <request from="" to="[OP_USER][SERIAL_NO][PRODUCT_FULL_NAME][PRODUCT_NAME][PRODUCT_CLS][PRODUCT_ARCHIVE_ORG][PRODUCT_FOUND_DATE][PRODUCT_ARCHIVE_DATE][PRODUCT_ARCHIVE_NO][PRODUCT_DURATION_DATE][PRODUCT_TYPE][PRODUCT_SIZE][PRODUCT_LEVERAGE][MANAGER_FNAME][MANAGER_NAME][SMFUND_MANAGER_ID][PROD_MANAGER_CLS][PROD_MANAGER_WEBSITE][PROD_IS_STRUCTURE][PROD_OTHER_ORG]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+
+        <map id="972" mapid="L2100407" desc="证券账户业务信息操作(新)">
+            <request from="" to="[OP_USER][CHK_STATUS][OPERATOR_TYPE][ACCTBIZ_EXCODE][CUST_CODE][CUST_FNAME][ID_TYPE][ID_CODE][INT_ORG]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        <map id="973" mapid="L2100410" desc="证券账户业务信息查询">
+            <request from="" to="[OP_USER][SERIAL_NO][ACCTBIZ_EXCODE]" />
+            <response from="[SERIAL_NO][ACCTBIZ_STATUS][YMT_CODE][YMT_STATUS][ID_TYPE][ID_CODE][TRDACCT][ACCT_TYPE][ACCT_STATUS][RELATION_FLAG][RTN_ERR_CODE][RETURN_MSG][OPEN_DATE]" to="[SERIAL_NO][ACCTBIZ_STATUS][YMT_CODE][YMT_STATUS][ID_TYPE][ID_CODE][TRDACCT][ACCT_TYPE][ACCT_STATUS][RELATION_FLAG][RTN_ERR_CODE][RETURN_MSG][OPEN_DATE]" />
+        </map>
+        <map id="974" mapid="L2100423" desc="证券账户业务查询(机构信息核查)">
+            <request from="" to="[OP_USER][SERIAL_NO]" />
+            <response from="[SERIAL_NO][CUST_FNAME][ID_CODE][ID_TYPE][ID_CODE2][ACCTBIZ_ORGCODE][ACCTBIZ_AGTCODE][DECLARE_DATE][RTN_ERR_CODE][RETURN_MSG][OPPUGN_FLAG][ADDRESS][ORGANIZATION_TYPE][BUS_SCOPE][BUS_STATUS][LEGAL_REP][REG_CAPITAL][CHECK_FLAG][BIRTHDAY][REGORG_NAME][ADMIN_DIVISIONS][OPERATING_BEGIN][OPERATING_END][ECONOMIC_CLS][LAST_DATE][BUSS_ADDR ][ECONOMIC_INDUSTRY][LEADER_DEPARTMENT][TEL][EMAIL][STAFF_NUMS][ORG_SITE][ZD_REMARK1][ZD_REMARK2]" to="[SERIAL_NO][CUST_FNAME][ID_CODE][ID_TYPE][ID_CODE2][ACCTBIZ_ORGCODE][ACCTBIZ_AGTCODE][DECLARE_DATE][RTN_ERR_CODE][RETURN_MSG][OPPUGN_FLAG][ADDRESS][ORGANIZATION_TYPE][BUS_SCOPE][BUS_STATUS][LEGAL_REP][REG_CAPITAL][CHECK_FLAG][BIRTHDAY][REGORG_NAME][ADMIN_DIVISIONS][OPERATING_BEGIN][OPERATING_END][ECONOMIC_CLS][LAST_DATE][BUSS_ADDR ][ECONOMIC_INDUSTRY][LEADER_DEPARTMENT][TEL][EMAIL][STAFF_NUMS][ORG_SITE][ZD_REMARK1][ZD_REMARK2]" />
+        </map>
+        
+        <!-- add by jianghuib 20180801 for 提交远程业务办理资料(小集合理财合格投资者资质审核) begin-->
+        <map id="975" mapid="L1102034" desc="提交远程业务办理资料">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][CUST_ASSET][FIRST_TRD_DATE][VERSION][BIZ_TYPE]" />
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]"
+                      to="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]" />
+        </map>
+        
+        <map id="976" mapid="L0001050" desc="计算适当性转入资产">
+            <request from="" to="[OP_USER][CUST_CODE][CUACCT_CODE][INT_ORG][BIZ_TYPE][SUBBIZ_TYPE][GENRPCLBMNO]" />
+            <response from="[CUST_CODE][CUACCT_CODE][INT_ORG][SUITABLEASSET]" 
+                      to="[CUST_CODE][CUACCT_CODE][INT_ORG][SUITABLEASSET]" />
+        </map>
+        <!-- add by jianghuib 20180801 for 提交远程业务办理资料(小集合理财合格投资者资质审核) end-->
+        
+        <map id="977" mapid="L2100413" desc="证券账户业务信息拓展查询">
+            <request from="" to="[OP_USER][SERIAL_NO]" />
+            <response from="[SERIAL_NO][ACCTBIZ_STATUS][UNQUALI_FLAG][RELATION_FLAG]"
+                      to="[SERIAL_NO][ACCTBIZ_STATUS][UNQUALI_FLAG][RELATION_FLAG]" />
+        </map>
+        <!-- add by lengjinjun 20180903 for 非现场开户销户 -->
+        <map id="978" mapid="L1280005" desc="非现场客户销户">
+            <request from="" to="[OP_USER][INT_ORG][NONSCENE_TYPE][ID_TYPE][ID_CODE][CUST_NAME][CUST_CODE][CUACCT_CODE][NONSCENE_STEP][REMARK]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <map id="979" mapid="L1160120" desc="沪伦通20日均资产查询">
+            <request from="" to="[OP_USER][INT_ORG][CUST_CODE][CUACCT_CODE][CURRENCY][FISL][CREDIT_FLAG][LAST_FLAG][OTHERCORE][BIZ_TYPE][SUBBIZ_TYPE]" />
+            <response from="[CUST_CODE][ASSET_VAL][LAST_ASSET_VAL][KCB_REACH_DAYS][TRANSINNUMS][LOAN_MONEY]" to="[CUST_CODE][ASSET_VAL][LAST_ASSET_VAL][KCB_REACH_DAYS][TRANSINNUMS][LOAN_MONEY]" />
+        </map>
+        
+        <!-- add by jiangbin 20181127 for 证书 begin -->
+        <map id="980" mapid="L1102310" desc="证书认证接口">
+            <request from="" to="[OP_USER][CUST_CODE][APP_CODE][REQ_AUTH_INFO]" />
+            <response from="[RESPONSE_CODE][ANS_AUTH_INFO]" to="[RESPONSE_CODE][ANS_AUTH_INFO]" />
+        </map>
+        
+        <map id="981" mapid="L1102311" desc="证书申请接口">
+            <request from="" to="[OP_USER][CUST_CODE][REQ_AUTH_INFO]" />
+            <response from="[ANS_AUTH_INFO]" to="[ANS_AUTH_INFO]" />
+        </map>
+        
+        <map id="982" mapid="L1102312" desc="证书下载接口">
+            <request from="" to="[OP_USER][CUST_CODE][REQ_AUTH_INFO]" />
+            <response from="[ANS_AUTH_INFO][CERTSN]" to="[ANS_AUTH_INFO][CERTSN]" />
+        </map>
+        
+        <map id="983" mapid="L1102320" desc="证书查询接口">
+            <request from="" to="[OP_USER][CUST_CODE][APP_CODE]" />
+            <response from="[CERT_INFO]" to="[CERT_INFO]" />
+        </map>
+        
+        <map id="984" mapid="L1102317" desc="协议签署及合成PDF接口">
+            <request from="" to="[OP_USER][CUST_CODE][APP_CODE][TEMPL_CODE][CONTEXT][SEAL_PERSON][SEAL_LOCATION][SEAL_REASON][CERT_ENTITY]" />
+            <response from="[PDF_HASH][PDF_ID]" to="[PDF_HASH][PDF_ID]" />
+        </map>
+        
+        <map id="985" mapid="L1102314" desc="证书签名申请接口">
+            <request from="" to="[OP_USER][CUST_CODE][SIGN_TEXT][REQ_AUTH_INFO]" />
+            <response from="[ANS_AUTH_INFO]" to="[ANS_AUTH_INFO]" />
+        </map>
+        
+        <map id="986" mapid="L1102315" desc="证书请求双签名合成接口">
+            <request from="" to="[OP_USER][CUST_CODE][SIGN_TEXT][REQ_AUTH_INFO]" />
+            <response from="[ANS_AUTH_INFO][SIGNATURE]" to="[ANS_AUTH_INFO][SIGNATURE]" />
+        </map>
+        
+        <map id="987" mapid="L1102318" desc="合成外部签名并签章">
+            <request from="" to="[OP_USER][CUST_CODE][TEMPL_CODE][SIGNATURE][PDF_ID]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        
+        <map id="994" mapid="L1102034" desc="远程业务办理提交">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][VERSION][FACE_RECOGNITION_RATE]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        
+        <!-- add by jiangbin 20181127 for 证书 end-->
+
+        
+        <map id="988" mapid="L1160815" desc="证券衍生账户信息查询">
+            <request from="" to="[OP_USER][CUST_CODE][STKBD][TRDACCT]" />
+            <response from="[CUST_CODE][STKBD][TRDACCT][INT_ORG][SUBACCT_CODE][SUBACCT_TYPE][SUBACCT_STATUS][OPEN_DATE][CLOSE_DATE][SUBACCT][TOTAL_SCORE][OPT_TRDACCT_LVL]" to="[CUST_CODE][STKBD][TRDACCT][INT_ORG][SUBACCT_CODE][SUBACCT_TYPE][SUBACCT_STATUS][OPEN_DATE][CLOSE_DATE][SUBACCT][TOTAL_SCORE][OPT_TRDACCT_LVL]" />
+        </map>
+        
+        <map id="989" mapid="L1192267" desc="重点监管账户名单查询">
+            <request from="" to="[OP_USER][CUST_CODE][USER_NAME][ID_CODE][ID_TYPE][BIZ_NAME]" />
+            <response from="[CUST_CODE][MONITOR_CTRL_FLAG]" to="[CUST_CODE][MONITOR_CTRL_FLAG]" />
+        </map>
+        
+        <map id="990" mapid="L1102050" desc="禁入名单检查(两交所和中登黑名单)">
+            <request from="" to="[OP_USER][USER_NAME][ID_CODE][ID_TYPE]" />
+            <response from="[RESULT]" to="[RESULT]" />
+        </map>
+        
+        <map id="991" mapid="L1000016" desc="查询系统公共参数项">
+            <request from="" to="[OP_USER][TAB_CODE][REGKEY_ID][REGKEY_NAME]" />
+            <response from="[REGKEY_ID][REGKEY_NAME][REGKEY_VAL]" to="[REGKEY_ID][REGKEY_NAME][REGKEY_VAL]" />
+        </map>
+        
+        <!-- add by jiangbin 20181127 for 非现场销户 -->
+        <map id="993" mapid="L0001050" desc="非现场销户检查">
+            <request from="" to="[OP_USER][CUST_CODE][GENRPCLBMNO]" />
+            <response from="[CUST_CODE][CHECK_FLAG][RETURN_MSG]" to="[CUST_CODE][CHECK_FLAG][RETURN_MSG]" />
+        </map>
+        
+        <map id="995" mapid="L1102034" desc="提交非现场销户">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][VERSION][APPT_BIZ_TYPE][CLOSE_ACCT_CAUSE][CAUSE_EXP][STK_CLOSE_FLAG][FACE_RECOGNITION_RATE]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        
+        <map id="996" mapid="L1102520" desc="查询非现场销户预约表">
+            <request from="" to="[OP_USER][CUST_CODE][APPT_BIZ_TYPE]" />
+            <response from="[CUST_CODE][CUST_NAME][APPT_BIZ_TYPE][APPT_STATUS][APPT_DATE][EXP_DATE][APPT_REASON][APPT_REASON_EXP][REMARK]" 
+                      to="[CUST_CODE][CUST_NAME][APPT_BIZ_TYPE][APPT_STATUS][APPT_DATE][EXP_DATE][APPT_REASON][APPT_REASON_EXP][REMARK]" />
+        </map>
+        
+        <map id="997" mapid="L1102521" desc="设置非现场销户预约表">
+            <request from="" to="[OP_USER][CUST_CODE][APPT_BIZ_TYPE][CUACCT_CODE][EXP_DATE][APPT_REASON][APPT_REASON_EXP]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <map id="998" mapid="L1000016" desc="查询系统公共参数项">
+            <request from="" to="[OP_USER][TAB_CODE][REGKEY_ID][REGKEY_NAME]" />
+            <response from="[REGKEY_ID][REGKEY_NAME][REGKEY_VAL]" to="[REGKEY_ID][REGKEY_NAME][REGKEY_VAL]" />
+        </map>
+        
+        <map id="999" mapid="L1102316" desc="证书注销">
+            <request from="" to="[OP_USER][CUST_CODE][APP_CODE]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        
+        <map id="1000" mapid="L1102324" desc="查询证书校验状态">
+            <request from="" to="[OP_USER][CUST_CODE]" />
+            <response from="[CUST_CODE][CERT_SN][VERIFY_STATUS]" to="[CUST_CODE][CERT_SN][VERIFY_STATUS]" />
+        </map>
+        
+        <map id="1015" mapid="L1120019" desc="查询客户所属营业部是否支持网页回访激活">
+            <request from="" to="[OP_USER][INT_ORG][OPEN_BIZ_CFG][USER_TYPE]" />
+            <response from="[INT_ORG][OPEN_BIZ_CFG][CFG_VAL]" to="[INT_ORG][OPEN_BIZ_CFG][CFG_VAL]" />
+        </map>
+        
+        <map id="1016" mapid="L1102528" desc="查询信用账户科创板开通条件">
+            <request from="" to="[OP_USER][CUST_CODE][CUACCT_CODE][TRDACCT]" />
+            <response from="[SUCCESS_FLAG]" to="[SUCCESS_FLAG]" />
+        </map>
+        
+        <map id="1017" mapid="L2100407" desc="中登申报科创板权限">
+            <request from="" to="[OP_USER][CHK_STATUS][OPERATOR_TYPE][CUST_CODE][STKBD][TRDACCT_EXCLS][TRDACCT][ACCTBIZ_EXCODE][ACCTBIZ_CLS][PROPER_CLS][SIGN_CLS][SIGN_DATE][EFT_DATE][ACCT_OPENTYPE][INT_ORG]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="850" mapid="L1120155" desc="客户电子协议查询">
+            <request from="" to="[OP_USER][CUST_CODE][CONTRACT_CLS][VERSION][ID_TYPE][ID_CODE]" />
+            <response from="[SERIAL_NO][CONTRACT_CLS][CHANNEL][OP_SITE][CUST_CODE][ID_TYPE][ID_CODE][SIGN_TYPE][SIGN_DATE][SIGN_TIME][SIGN_EXINFO][SIGN_TEXT][VERSION][REMARK][VERIFY_TYPE][VERIFY_STATUS][CERT_SN]" to="[SERIAL_NO][CONTRACT_CLS][CHANNEL][OP_SITE][CUST_CODE][ID_TYPE][ID_CODE][SIGN_TYPE][SIGN_DATE][SIGN_TIME][SIGN_EXINFO][SIGN_TEXT][VERSION][REMARK][VERIFY_TYPE][VERIFY_STATUS][CERT_SN]" />
+        </map>
+        
+        <map id="851" mapid="L0001050" desc="查询客户信用账户匹配的证券账户">
+            <request from="" to="[OP_USER][GENRPCLBMNO][INT_ORG][MARKET][TRDACCT][CUST_CODE][STATUS][QRY_REC][POS_STR]" />
+            <response from="[INT_ORG][CUST_CODE][CUACCT_CODE][TRDACCT][CUACCT_CODE_SRC][TRDACCT_SRC][MARKET]" 
+                      to="[INT_ORG][CUST_CODE][CUACCT_CODE][TRDACCT][CUACCT_CODE_SRC][TRDACCT_SRC][MARKET]" />
+        </map>
+        
+        <!-- add by jiangbin 20190413 for 期权模拟账户 begin-->
+        <map id="852" mapid="L1120203" desc="查询是否已开通期权模拟账户">
+            <request from="" to="[OP_USER][INT_ORG][CUST_CODE][STKEX]" />
+            <response from="[USER_CODE][CUACCT_CODE][OPT_CUACCT_CODE][PWD_INIT]"   to="[USER_CODE][CUACCT_CODE][OPT_CUACCT_CODE][PWD_INIT]" />
+        </map>
+        
+        <map id="853" mapid="L1120201" desc="开通期权模拟账户">
+            <request from="" to="[OP_USER][INT_ORG][USER_CODE][USER_NAME][CUACCT_CODE][STKEX][STKBD][TRDACCT][ID_TYPE][ID_CODE][TRDACCT_TYPE][TRDACCT_EXCLS][MOBILE_TEL][BROKER_ID][BROKER_NAME][USER_TYPE][ID_ADDR][ID_ZIP_CODE][SEX][CITIZENSHIP][ADDRESS][ZIP_CODE][ID_EXP_DATE][BIRTHDAY][EDUCATION][OCCU_EXTYPE][INDUS_TYPE][CORP_EXTYPE][LEGAL_REP_EXTYPE][LEGAL_REP][ORG_ID_CODE][ORG_ID_EXP_DATE][CAPITAL_ATTR][LINKMAN][LINKMAN_ID_TYPE][LINKMAN_ID_CODE][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][SZORGTYPE][USER_FNAME]" />
+            <response from="[USER_CODE][CUACCT_CODE][OPT_CUACCT_CODE][PWD_INIT]"   to="[USER_CODE][CUACCT_CODE][OPT_CUACCT_CODE][PWD_INIT]" />
+        </map>
+        
+        <map id="854" mapid="L1120200" desc="期权模拟账户资格校验">
+            <request from="" to="[OP_USER][USER_CODE][STKEX]" />
+            <response from="[CHK_RST][USER_NAME][CUACCT_CODE][STKEX][STKBD][TRDACCT][ID_TYPE][ID_CODE][TRDACCT_TYPE][TRDACCT_EXCLS][MOBILE_TEL][USER_TYPE][ID_ADDR][ID_ZIP_CODE][SEX][CITIZENSHIP][ADDRESS][ZIP_CODE][ID_EXP_DATE][BIRTHDAY][EDUCATION][OCCU_EXTYPE][INDUS_TYPE][CORP_EXTYPE][LEGAL_REP_EXTYPE][LEGAL_REP][ORG_ID_CODE][ORG_ID_EXP_DATE][CAPITAL_ATTR][LINKMAN][LINKMAN_ID_TYPE][LINKMAN_ID_CODE][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][SZORGTYPE][USER_FNAME]"    to="[CHK_RST][USER_NAME][CUACCT_CODE][STKEX][STKBD][TRDACCT][ID_TYPE][ID_CODE][TRDACCT_TYPE][TRDACCT_EXCLS][MOBILE_TEL][USER_TYPE][ID_ADDR][ID_ZIP_CODE][SEX][CITIZENSHIP][ADDRESS][ZIP_CODE][ID_EXP_DATE][BIRTHDAY][EDUCATION][OCCU_EXTYPE][INDUS_TYPE][CORP_EXTYPE][LEGAL_REP_EXTYPE][LEGAL_REP][ORG_ID_CODE][ORG_ID_EXP_DATE][CAPITAL_ATTR][LINKMAN][LINKMAN_ID_TYPE][LINKMAN_ID_CODE][LEGAL_REP_ID_TYPE][LEGAL_REP_ID_CODE][SZORGTYPE][USER_FNAME]" />
+        </map>
+        <!-- add by jiangbin 20190413 for 期权模拟账户 end-->   
+        
+        <!-- add by jianghuib 20190416 for 个税递延养老基金 begin-->
+        <map id="1018" mapid="L1192322" desc="税优账户查询">
+            <request from="" to="[OP_USER][CUST_CODE]" />
+            <response from="[CUST_CODE][INT_ORG][CUST_NAME][CITIZENSHIP][ID_TYPE][ID_CODE][ID_EXP_DATE][TEL][MOBILE][EMAIL][FAX][ADDRESS][ZIP_CODE][INVEST_ACCT][WORK_UNIT][SOCIAL_CREDIT_CODE][TAX_NO][TAX_IDEN_CODE][BIND_AGMT_FLAG][IMG_SNOS][ACCT_STAT][REMARK]"
+                      to="[CUST_CODE][INT_ORG][CUST_NAME][CITIZENSHIP][ID_TYPE][ID_CODE][ID_EXP_DATE][TEL][MOBILE][EMAIL][FAX][ADDRESS][ZIP_CODE][INVEST_ACCT][WORK_UNIT][SOCIAL_CREDIT_CODE][TAX_NO][TAX_IDEN_CODE][BIND_AGMT_FLAG][IMG_SNOS][ACCT_STAT][REMARK]" />
+        </map>
+        
+        <map id="1019" mapid="L1192321" desc="税优账户维护">
+            <request from="" to="[OP_USER][OPER_TYPE][CUST_CODE][CUST_NAME][ID_TYPE][ID_CODE][ID_EXP_DATE][TEL][MOBILE][EMAIL][FAX][ADDRESS][ZIP_CODE][CITIZENSHIP][WORK_UNIT][SOCIAL_CREDIT_CODE][TAX_NO][TAX_IDEN_CODE][BIND_AGMT_FLAG][IMG_SNOS][INVEST_ACCT]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="1020" mapid="L1192323" desc="税优账户客户报税协议标志维护">
+            <request from="" to="[OP_USER][CUST_CODE][BIND_AGMT_FLAG][IMG_SNOS]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="1021" mapid="L1192324" desc="税优账户业务流水查询">
+            <request from="" to="[OP_USER][CUST_CODE][SERIAL_NO]" />
+            <response from="[SERIAL_NO][APP_DATE][UPD_TIME][BIZ_ORD_TYPE][CUST_CODE][CUST_NAME][CITIZENSHIP][INT_ORG][ID_TYPE][ID_CODE][ID_EXP_DATE][TEL][MOBILE_TEL][EMAIL][FAX][ADDRESS][ZIP_CODE][INVEST_ACCT][AVL_LIMIT][FRZ_LIMIT][SY_YEAR][SY_APP_STAT][CSDC_SNO][RET_CODE][RET_MSG]"
+                      to="[SERIAL_NO][APP_DATE][UPD_TIME][BIZ_ORD_TYPE][CUST_CODE][CUST_NAME][CITIZENSHIP][INT_ORG][ID_TYPE][ID_CODE][ID_EXP_DATE][TEL][MOBILE_TEL][EMAIL][FAX][ADDRESS][ZIP_CODE][INVEST_ACCT][AVL_LIMIT][FRZ_LIMIT][SY_YEAR][SY_APP_STAT][CSDC_SNO][RET_CODE][RET_MSG]" />
+        </map>
+        <!-- add by jianghuib 20190416 for 个税递延养老基金 end-->
+        
+        <!-- add by jianghuib 20190419 for 提交远程业务办理资料(小集合理财风险揭示书审核) begin-->
+        <map id="1022" mapid="L1102034" desc="提交远程业务办理资料">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][PRD_CODE][PRD_NAME][TA_CODE][CUACCT_CODE][AGMT_STR][VERSION]" />
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]"
+                      to="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]" />
+        </map>
+        <!-- add by jianghuib 20190419 for 提交远程业务办理资料(小集合理财风险揭示书审核) end-->
+        
+        <!-- add by fanzg 20190425 for 场外中登基金账户对应关系维护 begin-->
+        <map id="1023" mapid="L1102308" desc="基金账户与股东代码对应关系建立与解除">
+            <request from="" to="[OP_USER][OPERATOR_TYPE][CUST_CODE][TA_CODE][TA_TRDACCT][TA_ACCT_TYPE][STKBD][TRDACCT_EXCLS][TRDACCT]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+
+        <map id="1024" mapid="L1102309"  desc="查询基金可绑定股东">
+            <request from="" to="[OP_USER][CUST_CODE][TA_TRDACCT][TA_ACCT_TYPE]" />
+            <response from="[TA_TRDACCT][STKBD][TRDACCT_EXCLS][TRDACCT][TRDACCT_STATUS]" to="[TA_TRDACCT][STKBD][TRDACCT_EXCLS][TRDACCT][TRDACCT_STATUS]" />
+        </map>
+        <!-- by fanzg 20190425 for 场外中登基金账户对应关系维护 end-->
+        
+        <!-- add by jiangbin 20190425 for 场外中登基金账户对应关系维护 begin-->
+        <map id="1025" mapid="L2100306" desc="基金账户查询">
+            <request from="" to="[OP_USER][CUST_CODE][TA_CODE]" />
+            <response from="[CUST_CODE][CUACCT_CODE][INT_ORG][TA_CODE][OF_TRDACCT][OFACCT][OFACCT_STATUS][OPEN_DATE][BIND_TRDACCT][BIND_DATE]" to="[CUST_CODE][CUACCT_CODE][INT_ORG][TA_CODE][OF_TRDACCT][OFACCT][OFACCT_STATUS][OPEN_DATE][BIND_TRDACCT][BIND_DATE]" />
+        </map>
+
+        <map id="1026" mapid="L2100407" desc="证券账户业务信息操作(TA账户与场内证券账户)">
+            <request from="" to="[OP_USER][CHK_STATUS][OPERATOR_TYPE][CUST_CODE][STKBD][TRDACCT_EXCLS][TRDACCT][ACCTBIZ_EXCODE][ACCTBIZ_CLS][PROPER_CLS][SIGN_CLS][SIGN_DATE][EFT_DATE][ACCT_OPENTYPE][INT_ORG][TA_TRDACCT][TA_ACCT_TYPE]" />
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        
+        <map id="1027" mapid="L2100410" desc="证券账户业务信息查询(TA账户与场内证券账户)">
+            <request from="" to="[OP_USER][SERIAL_NO][ACCTBIZ_EXCODE]" />
+            <response from="[SERIAL_NO][ACCTBIZ_STATUS][YMT_CODE][YMT_STATUS][ID_TYPE][ID_CODE][TRDACCT][ACCT_TYPE][ACCT_STATUS][RELATION_FLAG][RTN_ERR_CODE][RETURN_MSG][TA_TRDACCT][TA_ACCT_TYPE][CUST_CODE]" to="[SERIAL_NO][ACCTBIZ_STATUS][YMT_CODE][YMT_STATUS][ID_TYPE][ID_CODE][TRDACCT][ACCT_TYPE][ACCT_STATUS][RELATION_FLAG][RTN_ERR_CODE][RETURN_MSG][TA_TRDACCT][TA_ACCT_TYPE][CUST_CODE]" />
+        </map>
+        <!-- by fanzg jiangbin for 场外中登基金账户对应关系维护 end-->
+        
+        <!-- add by jiangbin 20190524 for 失联名单及长期不使用名单维护 begin-->
+        <map id="1028" mapid="L1102333" desc="查询特殊客户标志信息">
+            <request from="" to="[OP_USER][INT_ORG][CUST_CODE][SPECIAL_FLAG_TYPE][BGN_DATE][END_DATE][PAGE_INDEX][PAGE_RECCNT]" />
+            <response from="[INT_ORG][CUST_CODE][SPECIAL_FLAG_TYPE][INPUT_DATE][INPUT_TIME][UPDATE_DATE][REMARK]" 
+                      to="[INT_ORG][CUST_CODE][SPECIAL_FLAG_TYPE][INPUT_DATE][INPUT_TIME][UPDATE_DATE][REMARK]" />
+        </map>
+        
+        <map id="1029" mapid="L1102332" desc="设置特殊客户标志信息">
+            <request from="" to="[OP_USER][OPERATOR_TYPE][INT_ORG][CUST_CODE][SPECIAL_FLAG_TYPE][REMARK]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        
+        <map id="1030" mapid="L1102335" desc="客户日志留痕独立接口">
+            <request from="" to="[OP_USER][INT_ORG][CUST_CODE][BIZ_CODE][BIZ_NAME][REMARK]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <!-- by jiangbin for 失联名单及长期不使用名单维护 end-->
+        
+        <!-- add by jiangbin 20190524 for 科创板权限取消 begin-->
+        <map id="1031" mapid="L0001050" desc="查询信用账户取消科创板允许条件">
+            <request from="" to="[OP_USER][GENRPCLBMNO][CUST_CODE][TRDACCT][STKBD]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <!-- by jiangbin for 科创板权限取消 end-->
+        
+        <!-- add by jiangbin 20190611 for 融资行权额度申请 begin-->
+        <map id="1032" mapid="L1102610" desc="信用黑名单数据查询(全市场)">
+            <request from="" to="[OP_USER][WYSFZH][WYGDDM][WYZQMC][WYXWDM]" />
+            <response from="[WYSFZH][WYGDDM][WYZQMC][WYXWDM][WYGDXM][WYZQMC]" to="[WYSFZH][WYGDDM][WYZQMC][WYXWDM][WYGDXM][WYZQMC]" />
+        </map>
+        <!-- add by jiangbin 20190611 for 融资行权额度申请 end-->
+        
+        <!-- add by jiangbin 20190716 for 客户已开权限及协议查询列表 begin-->
+        <map id="1033" mapid="L1102336" desc="客户已开权限及协议查询列表">
+            <request from="" to="[OP_USER][CUST_CODE]" />
+            <response from="[CUST_CODE][AGMT_CLS][AGMT_TYPE][AGMT_NAME][SIGN_DATE][VERSION][TRDACCT][TRDACCT_EXCLS][CUACCT_CODE]" to="[CUST_CODE][AGMT_CLS][AGMT_TYPE][AGMT_NAME][SIGN_DATE][VERSION][TRDACCT][TRDACCT_EXCLS][CUACCT_CODE]" />
+        </map>
+        <!-- add by jiangbin 20190716 for 客户已开权限及协议查询列表 end-->
+        
+        <!-- add by renjin 20190808 for 一人多户校验 begin-->
+        <map id="1034" mapid="L1102337" desc="客户手机使用情况查询接口">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][MOBILE_TEL]" />
+            <response from="[CHECK_FLAG][INT_ORG][CUST_CODE][ID_TYPE][ID_CODE][MOBILE_TEL]" 
+                      to="[CHECK_FLAG][INT_ORG][CUST_CODE][ID_TYPE][ID_CODE][MOBILE_TEL]" />
+        </map>
+        <map id="1035" mapid="L1102338" desc="查询客户手机核查结果接口">
+            <request from="" to="[OP_USER][ID_CODE][MOBILE_TEL][CUST_CODE]" />
+            <response from="[SERIAL_NO][ACCTBIZ_STATUS][RTN_ERR_CODE][RETURN_MSG]" 
+                      to="[SERIAL_NO][ACCTBIZ_STATUS][RTN_ERR_CODE][RETURN_MSG]" />
+        </map>
+        <map id="1036" mapid="L2100407" desc="证券账户业务信息操作(新)">
+            <request from="" to="[OP_USER][CHK_STATUS][OPERATOR_TYPE][ACCTBIZ_EXCODE][CUST_FNAME][ID_TYPE][ID_CODE][INT_ORG]
+                                 [ACCTBIZ_CLS][MOBILE_TEL]"/>
+                                 <response from="[SERIAL_NO]" to="[SERIAL_NO]" />
+        </map>
+        <!-- add by renjin 20190808 for 一人多户校验 end-->
+        
+        
+        <!-- add by jiangbin 20190825 for 业务办理一人多户 begin-->
+        <map id="1037" mapid="L1102252" desc="按三要素查询同一客户关系列表">
+            <request from="" to="[OP_USER][ID_TYPE][CUST_FNAME][ID_CODE]" />
+            <response from="[INT_ORG][STATUS][MULTI_CUST_ID][CUST_CODE]" to="[INT_ORG][STATUS][MULTI_CUST_ID][CUST_CODE]" />
+        </map>
+        <!-- add by jiangbin 20190825 for 业务办理一人多户 end-->
+        
+        <!-- add by jiangbin 20191015 for H股全流通开户 begin-->
+        <map id="1038" mapid="L1000003" desc="银证业务交易配置">
+            <request from="" to="[OP_USER][F_FUNCTION][TAB_CODE][DD_ID][INT_ORG][OPENTMPL_CFG]" />
+            <response from="[DD_ITEM][DD_ITEM_NAME][CURRENCY][INT_RATE_SN]" to="[DD_ITEM][DD_ITEM_NAME][CURRENCY][INT_RATE_SN]" />
+        </map>
+        
+        <map id="1039" mapid="L1202001" desc="开通货币币种">
+            <request from="" to="[OP_USER][CUACCT_CODE][CURRENCY][INT_RATE_SN][REMARK][USER_CODE][INT_ORG][FUND_TYPE][USER_TYPE][EXT_ORG][CUACCT_ATTR][CUACCT_LVL][CUACCT_GRP]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <!-- add by jiangbin 20190825 for 业务办理一人多户 end-->
+        
+        <!-- add by jiangbin 20191112 for orc一人多户 begin-->
+        <map id="1040" mapid="L1102617" desc="按三要素查询客户列表">
+            <request from="" to="[OP_USER][ID_TYPE][ID_CODE][USER_FNAME][CUST_CODE]" />
+            <response from="[USER_CODE][INT_ORG][ORG_NAME][MOBILE_TEL]" to="[USER_CODE][INT_ORG][ORG_NAME][MOBILE_TEL]" />
+        </map>
+        
+        <map id="1041" mapid="L1102619" desc="查询非现场开户拓展信息表">
+            <request from="" to="[OP_USER][SERIAL_NO]" />
+            <response from="[SAME_CUST_LIST]" to="[SAME_CUST_LIST]" />
+        </map>
+        
+        <map id="1042" mapid="L1102618" desc="新增非现场开户拓展信息">
+            <request from="" to="[OP_USER][SERIAL_NO][SAME_CUST_LIST]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <!-- add by jiangbin 20191112 for orc一人多户 end-->
+        
+        <!-- add by jiangbin 20191212  begin-->
+        <map id="1043" mapid="L1102331" desc="查询远程业务控制白名单">
+            <request from="" to="[OP_USER][CUST_CODE][NS_BIZ]" />
+            <response from="[INT_ORG][CUST_CODE][NS_BIZ][NS_CTRL_TYPE][EXP_DATE][REMARK]" to="[INT_ORG][CUST_CODE][NS_BIZ][NS_CTRL_TYPE][EXP_DATE][REMARK]" />
+        </map>
+        <!-- add by jiangbin 20191212  end-->
+        
+        <!-- add by jiangbin 20191219 for 股转 begin-->
+        <map id="1044" mapid="L1102325" desc="股东权限查询(新)接口">
+            <request from="" to="[OP_USER][CUST_CODE][CUACCT_CODE][STKBD][TRDACCT][CUST_AGMT_TYPE]" />
+            <response from="[CUST_CODE][CUACCT_CODE][STKBD][TRDACCT][CUST_AGMT_TYPE][EFT_DATE][EXP_DATE][UPD_DATE]" to="[CUST_CODE][CUACCT_CODE][STKBD][TRDACCT][CUST_AGMT_TYPE][EFT_DATE][EXP_DATE][UPD_DATE]" />
+        </map>
+        
+        <map id="1045" mapid="L1190037" desc="股转适当性管理信息查询">
+            <request from="" to="[OP_USER][INT_ORG][CUST_CODE][TRDACCT][ACCT_TYPE]" />
+            <response from="[INT_ORG][CUST_CODE][TRDACCT][ACCT_TYPE][SIGN_DATE][RPT_STATUS][APPT_DATE][REMARK]" to="[INT_ORG][CUST_CODE][TRDACCT][ACCT_TYPE][SIGN_DATE][RPT_STATUS][APPT_DATE][REMARK]" />
+        </map>
+        
+        <map id="1046" mapid="L1120170" desc="客户适当性匹配规则查询">
+            <request from="" to="[OP_USER][MATCH_BIZ_TYPE][INVESTOR_PROFTYPE][SURVEY_CLS]" />
+            <response from="[MATCH_BIZ_TYPE][INVEST_TYPE][INVEST_LIMIT][RISKTYPE][INVESTOR_PROFTYPE][FUND_TYPE][FUND_AMT][EFT_DUR]" to="[MATCH_BIZ_TYPE][INVEST_TYPE][INVEST_LIMIT][RISKTYPE][INVESTOR_PROFTYPE][FUND_TYPE][FUND_AMT][EFT_DUR]" />
+        </map>
+        <!-- add by jiangbin 20191219 for 股转  end-->
+        
+        <!-- add by jiangbin 20200220 for 场景证书 begin-->
+        <map id="1047" mapid="L1102322" desc="提交场景证书">
+            <request from="" to="[OP_USER][CUST_CODE][TEMPL_CODE][CONTEXT][SEAL_PERSON][SEAL_LOCATION][SEAL_REASON]" />
+            <response from="[msgok:1]" to="[~msgok]" />
+        </map>
+        <!-- add by jiangbin 20200220 for 场景证书  end-->
+        
+        <!-- add by jiangbin 20200316 for 知识测评 begin-->
+        <map id="1048" mapid="L1160122" desc="知识测评答案查询">
+            <request from="" to="[OP_USER][USER_ROLE][USER_CODE][SURVEY_SN]" />
+            <response from="[USER_ROLE][USER_CODE][SURVEY_SN][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE]" to="[USER_ROLE][USER_CODE][SURVEY_SN][SURVEY_SCORE][RATING_LVL][RATING_LVL_NAME][RATING_DATE]" />
+        </map>
+        <!-- add by jiangbin 20200316 for 知识测评  end-->
+        
+        <map id="1049" mapid="L1160012" desc="受益人查询">
+            <request from="" to="[OP_USER][USER_CODE][TAB_CODE][FLD_CODE][PKG_TYPE]" />
+            <response from="[USER_CODE][BENEFICIARY_OWNER][BENEFICIARY_NAME][BENEFICIARY_SFZH][BENEFICIARY_PHONE]" 
+                      to="[USER_CODE][BENEFICIARY_OWNER][BENEFICIARY_NAME][BENEFICIARY_SFZH][BENEFICIARY_PHONE]" />
+        </map>
+        
+        <map id="1050" mapid="L0001050" desc="查询沪市期权VTM续办流水">
+            <request from="" to="[OP_USER][GENRPCLBMNO][CUST_CODE][BUSI_CODE]" />
+            <response from="[VTM_B_SNO][SH_TRDACCT][OPT_TRDACCT_LVL]" 
+                      to="[VTM_B_SNO][SH_TRDACCT][OPT_TRDACCT_LVL]" />
+        </map>
+
+        <map id="1051" mapid="L0001050" desc="查询远程三方变更条件">
+            <request from="" to="[OP_USER][GENRPCLBMNO][CUST_CODE][CUACCT_CODE][BANK_CODE]" />
+            <response from="[custid]" 
+                      to="[custid]" />
+        </map>
+        
+        <map id="1052" mapid="L0001050" desc="两融销户条件检查">
+            <request from="" to="[OP_USER][GENRPCLBMNO][CUST_CODE][CUACCT_CODE]" />
+            <response from="[custid][fundbal][fundload][fundavl][intr][brokername][mobile]" 
+                      to="[custid][fundbal][fundload][fundavl][intr][brokername][mobile]" />
+        </map>
+
+        <map id="1053" mapid="L1102361" desc="查询理财电子协议列表">
+            <request from="" to="[OP_USER][CUST_CODE]" />
+            <response from="[CUST_CODE][BIZ_TYPE][PRO_CODE][BIZ_DATE][PRO_NAME]" 
+                      to="[CUST_CODE][BIZ_TYPE][PRO_CODE][BIZ_DATE][PRO_NAME]" />
+        </map>
+
+        <map id="1054" mapid="L1160821" desc="查询客户银证信息">
+            <request from="" to="[OP_USER][CUACCT_CODE][USER_CODE]" />
+            <response from="[USER_CODE][CUACCT_CODE][CUACCT_ATTR][CUACCT_CLS][CUACCT_LVL][CUACCT_STATUS][INT_ORG][MAIN_FLAG][CUACCT_EXT_ATTR][CURRENCY][EXT_ORG][BANK_ACCT][CONTRACT_STATUS]" 
+                      to="[USER_CODE][CUACCT_CODE][CUACCT_ATTR][CUACCT_CLS][CUACCT_LVL][CUACCT_STATUS][INT_ORG][MAIN_FLAG][CUACCT_EXT_ATTR][CURRENCY][EXT_ORG][BANK_ACCT][CONTRACT_STATUS]" />
+        </map>              
+        <map id="1055" mapid="L1160009" desc="用户数据管理">
+            <request from="" to="[OP_USER][USER_ID_TYPE][USER_ID][USER_ID_INFO][OBJ_USERID_TYPE][OBJ_USER_ID]" />
+            <response from="[USER_CODE][USER_ROLES][USER_NAME][STATUS]" 
+                      to="[USER_CODE][USER_ROLES][USER_NAME][STATUS]" />
+        </map>
+        <map id="1056" mapid="L0001050" desc="账户转交易(查询受限股转账户列表)">
+            <request from="" to="[OP_USER][CUST_CODE][GENRPCLBMNO]"/>
+            <response from="[CUST_CODE][STKBD][TRDACCT][STK_CODE]" 
+                      to="[CUST_CODE][STKBD][TRDACCT][STK_CODE]"/>
+        </map>
+        <map id="1057" mapid="L1102626" desc="维护客户业务拦截日志">
+            <request from="" to="[OP_USER][CUST_CODE][NS_BIZ][WHITE_TYPE]"/>
+            <response from="[SERIAL_NO]" to="[SERIAL_NO]"/>
+        </map>
+        <map id="1058" mapid="L1102629" desc="校验客户业务白名单">
+            <request from="" to="[OP_USER][CUST_CODE][NS_BIZ][WHITE_TYPE]"/>
+            <response from="[CHK_RST]" to="[CHK_RST]"/>
+        </map>
+        <map id="1059" mapid="L0001050" desc="客户变更为VIP节点条件校验查询(开通期权极速交易通道权限检查)">
+            <request from="" to="[OP_USER][CUST_CODE][GENRPCLBMNO]"/>
+            <response from="[ADJ_ENABLE][ERROR_MSG]" to="[ADJ_ENABLE][ERROR_MSG]"/>
+        </map>
+        <map id="1060" mapid="L1102631" desc="设置远程业务预约资料">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][OPT_TRDACCT_FLAG_SZ][OPT_TRDACCT_FLAG_SH][BROKER_CODE][BROKER_MOBILE][VERSION]"/>
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]" to="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]"/>
+        </map>
+        <map id="1061" mapid="L1102323" desc="股东权限签署(新)">
+            <request from="" to="[OP_USER][OPERATION_TYPE][CUST_CODE][CUACCT_CODE][STKBD][TRDACCT][CUST_AGMT_TYPE][EXP_DATE][EFT_DATE][OP_REMARK][FIRST_TRD_DATE][ASSET]"/>
+            <response from="[msgok:1]" to="[~msgok]"/>
+        </map>
+        <map id="1062" mapid="L1102325" desc="股东权限查询(新)">
+            <request from="" to="[OP_USER][CUST_CODE][CUACCT_CODE][STKBD][TRDACCT][CUST_AGMT_TYPE]"/>
+            <response from="[CUST_CODE][CUACCT_CODE][STKBD][TRDACCT][CUST_AGMT_TYPE][EXP_DATE][EFT_DATE][UPD_DATE]" to="[CUST_CODE][CUACCT_CODE][STKBD][TRDACCT][CUST_AGMT_TYPE][EXP_DATE][EFT_DATE][UPD_DATE]"/>
+        </map>
+        <map id="1063" mapid="L0001050" desc="客户银证信息查询(腾讯自选股)">
+            <request from="" to="[OP_USER][GENRPCLBMNO][moneytype][orgid][custid][fundid]" />
+            <response from="[custid][idtype][idno][fundid][moneytype][bankid][bankcode]"
+		      to="[custid][idtype][idno][fundid][moneytype][bankid][bankcode]" />
+        </map>
+        <map id="1064" mapid="L0001050" desc="查询系统内配置交易节点信息 L6050111">
+            <request from="" to="[OP_USER][GENRPCLBMNO][SUBSYS][SUBSYS_SN][NODE_TYPE][CUST_CODE]"/>
+            <response from="[SUBSYS][SUBSYS_SN][SUBSYS_STATUS][NODE_TYPE][THD__SUBSYS_SN][REMARK]" to="[SUBSYS][SUBSYS_SN][SUBSYS_STATUS][NODE_TYPE][THD__SUBSYS_SN][REMARK]"/>
+        </map>
+        <map id="1065" mapid="L1102034" desc="提交业务办理">
+            <request from="" to="[OP_USER][USER_CODE][INT_ORG][NS_BIZ][SERIAL_NO][STKACCT_SZ][STK_SUBACCT][STK_SUBACCT_SZ][STKBD][SUBSYS_SN][CUACCT_CODE][TRDACCT][SECUSZA_FLAG][SECUSHA_FLAG][SECUSHJ_FLAG][SECUSZJ_FLAG][REMARK][SECUSZG_FLAG][SECUSZG][FACE_RECOGNITION_RATE][ID_TYPE][ID_CODE][ID_EXP_DATE][USER_NAME][ID_ADDR][ID_ISS_AGCY][OCCU_TYPE][ADDRESS][ZIP_CODE][EDUCATION][NATIONALITY][EMAIL][ID_BEG_DATE][TRADE][BANK_FLAG][BENEFIT_FLAG][CONTROL_FLAG][TAX_FLAG][CREDIT_TYPE][CREDIT_TYPE_EXP][CORP_ADDR][CORP_ZIP_CODE][GEMOPEN_FLAG][LINKMAN][LINKMAN_MOBILE][LINKMAN_TEL][CONTRACT_FLAG][FUND_PWD][TRD_PWD][MOBIL][ID_FLAG][CUST_AGMT_LIST][CONTRACE_CLS][REASON][EXT_ORG1][BANK_ACCT1][CUACCT_CODE1][EXT_ORG2][BANK_ACCT2][CUACCT_CODE2][EXT_ORG3][BANK_ACCT3][CUACCT_CODE3][EXT_ORG4][BANK_ACCT4][CUACCT_CODE4][BANK_ACCT][BANK_ACCT_NEW][EXT_ORG][EXT_ORG_NEW][WORKPLACE][MOBILE_TEL][APPT_BIZ_TYPE][CLOSE_ACCT_CAUSE][CAUSE_EXP][STK_CLOSE_FLAG][CUST_ASSET][FIRST_TRD_DATE][PRO_ACCT_TYPE][APPLY_TYPE][CONTRACT_CLS][OPT_TRDACCT_LVL][VERSION][SECUSZGB_FLAG][SECUSZGB]"/>
+            <response from="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]"
+                      to="[NS_BIZ][SERIAL_NO][USER_CODE][USER_ROLE][INT_ORG]" />
+        </map>
+        <map id="1066" mapid="L0001050" desc="客户银证信息信息查询">
+            <request from="" to="[OP_USER][GENRPCLBMNO][orgid][custid][fundid][moneytype]"/>
+            <response from="[custid][custlname][idtype][idno][fundid][moneytype][bankid][bankcode]" to="[custid][custlname][idtype][idno][fundid][moneytype][bankid][bankcode]"/>
+        </map>
+        <map id="1067" mapid="L0001050" desc="查询客户期权所属交易单元 L6050110">
+            <request from="" to="[OP_USER][GENRPCLBMNO][ACCT_TYPE][ACCT_ID]"/>
+            <response from="[CUST_CODE][CUACCT_CODE][INT_ORG][SUBSYS_SN][ACCT_TYPE][ACCT_ID][SUBSYS_SN_ADJ]" to="[CUST_CODE][CUACCT_CODE][INT_ORG][SUBSYS_SN][ACCT_TYPE][ACCT_ID][SUBSYS_SN_ADJ]"/>
+        </map>
+        <map id="1068" mapid="L1102635" desc="查询客户期权所属交易单元 L1102635">
+            <request from="" to="[OP_USER][CUST_CODE][SERIAL_NO][INT_ORG][NS_BIZ]"/>
+            <response from="[SERIAL_NO][NS_BIZ]" to="[SERIAL_NO][NS_BIZ]"/>
+        </map>
+        <!-- add by renjin 20200925 for 腾讯自选股-->
+        <map id="1069" mapid="L0001050" desc="客户银证信息查询(腾讯自选股)">
+            <request from="" to="[OP_USER][GENRPCLBMNO][moneytype][orgid][custid][fundid]" />
+            <response from="[custid][idtype][idno][fundid][moneytype][bankid][bankcode]"
+                      to="[custid][idtype][idno][fundid][moneytype][bankid][bankcode]" />
+        </map>
+    </ConvertMaps>
+</ENOTradeDefine>

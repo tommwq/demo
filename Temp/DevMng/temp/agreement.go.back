@@ -1,0 +1,54 @@
+package main
+
+import (
+	"database/sql"
+	"log"
+
+	"golang.org/x/text/encoding/simplifiedchinese"
+
+	_ "github.com/denisenkom/go-mssqldb"
+)
+
+func main() {
+	dsn := "sqlserver://sa:Guosendsqa123@172.24.141.162:1433?database=kbssacct"
+	db, err := sql.Open("sqlserver", dsn)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = db.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	rows, err := db.Query("SELECT SERIAL_NO,CONTRACT,CONTRACT_TEXT from CONTRACT")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	decoder := simplifiedchinese.GBK.NewDecoder()
+
+	for rows.Next() {
+		serialNo := ""
+		contract := make([]byte, 0, 8192)
+		contractText := make([]byte, 0, 8192)
+		if err = rows.Scan(&serialNo, &contract, &contractText); err != nil {
+			log.Fatal(err)
+		}
+		utf8, err := decoder.Bytes(contractText)
+		if err != nil {
+			log.Fatal(err)
+		}
+		// log.Println(serialNo, string(utf8))
+
+		utf8, err = decoder.Bytes(contract)
+		if err != nil {
+			log.Fatal(err)
+		}
+		if len(utf8) < 200 {
+			log.Println(serialNo, string(utf8))
+		}
+	}
+}

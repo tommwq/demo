@@ -35,6 +35,41 @@ function updateLBMTableMapping(lbmTableMappings) {
     }
 }
 
+function updateJZTradeXML(jztrade) {
+    let mapping = {};
+    for (let x of jztrade.ConvertMaps.Map) {
+        mapping[x.ID] = x;
+    }
+    
+    let jztradeSelect = document.getElementById("jztrade-select");
+    let jztradeUl = document.getElementById("jztrade-ul");
+
+    jztradeSelect.innerHTML = "";
+    jztradeUl.innerHTML = "";
+
+    jztradeSelect.addEventListener('change', (e) => {
+        let mfunc = jztradeSelect.selectedOptions[0].value;
+        let m = mapping[mfunc];
+
+        jztradeUl.innerHTML = `
+<table>
+<tr><td>伊诺MFUNC</td><td>${m.ID}</td></tr>
+<tr><td>KCBP接口</td><td>${m.MapID}</td></tr>
+<tr><td>说明</td><td>${m.Description}</td></tr>
+<tr><td>入参</td><td>${m.Request.To}</td></tr>
+<tr><td>出参</td><td>${m.Response.To}</td></tr>
+</table>
+`;
+    });
+
+    for (let mfunc in mapping) {
+        let op = document.createElement("option");
+        op.textContent = mfunc;
+        op.value = mfunc;
+        jztradeSelect.appendChild(op);
+    }
+}
+
 function listLBMTableMapping() {
     axios.get('/api/LBMTableMapping')
         .then(response => {
@@ -50,5 +85,22 @@ function listLBMTableMapping() {
         });
 }
 
+function getJZTradeXML() {
+    axios.get('/api/JZTradeXML')
+        .then(response => {
+            let data = response.data;
+            if (data.error != "") {
+                console.log(data.err);
+                return;
+            }
 
-listLBMTableMapping()
+            updateJZTradeXML(data.payload);
+        }).catch(error => {
+            console.log(error);
+        });
+}
+
+window.onload = () => {
+    listLBMTableMapping();
+    getJZTradeXML();
+};
