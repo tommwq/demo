@@ -1,0 +1,36 @@
+# -*- mode: org -*-
+
+#+startup: showeverything
+#+options: ^:nil
+#+todo: todo(t) in-action(i@/!) delegate(e@/!) delay(y@/!) | done(d@/!) canceled(c@/!)
+
+#+title: 一种使用Web Component进行Web开发的方法
+#+date: 2020年10月07日
+
+- 使用Web Component开发组件。
+- 使用<template>标签编写Web Component界面。
+- 将<template>标签置于<head>标签和<body>标签之间。
+- Web Component组件的类采用PascalCase方式命名，对应的<template>标签的id为Web Component组件类名对应的KebabCase方式命名，并增加-template后缀。
+- 数据保存在Web Component组件的html属性中，属性名采用data-前缀。如果属性是Javascript对象，将对象转换为JSON字符串，作为属性值。
+- Web Component内部的标签，其属性或innerHTML/textContent可以采用类似“<!--#XYZ-->”的属性模板，其中XYZ是Web Component的html属性名。
+- 数据更新通过自定义事件通知服务器，document对象负责接收自定义事件，并通知服务器进行数据。
+- 容器或根组件只维护集合，不维护集合中的具体元素。具体元素由其对应的组件维护。
+- 组件样式写在<template>标签中。
+
+优点：
+- 充分利用浏览器自身功能。
+- 框架简单，体积小。
+- 模块化开发。
+- 将ui和逻辑分离。
+- 简化代码开发。
+- 大部分现代浏览器都支持。
+- 样式隔离。避免全局样式。
+缺点：
+- 老版本浏览器不支持。
+- 框架只提供了基础功能。
+
+后续可以做的：
+- 将<template>保存到独立的文件中，在打包时插入html文件。
+- 使用ES6模块。
+
+

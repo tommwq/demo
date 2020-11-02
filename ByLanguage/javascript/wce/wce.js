@@ -37,40 +37,49 @@ class Text {
     }
 }
 
-/**
- * Web组件
- */
+
 class Component extends HTMLElement {
-    static observerCallback(mutations, observer) {
-        for (let mutation of mutations) {
-            if (mutation.target instanceof Component && mutation.type == "attributes") {
-                mutation.target.update(mutation.attributeName);
-            }
-        }
-    }
 
     static define(componentClass) {
         customElements.define(Text.pascalToKebab(componentClass.name), componentClass);
+    }
+    
+    static descendants(node) {
+        let result = [];
+        if (node instanceof Node) {
+            for (let c of node.children) {
+                result.push(c);
+            }
+            for (let c of node.children) {
+                for (let d of Component.descendants(c)) {
+                    result.push(d);
+                }
+            }
+        }
+        return result;
     }
     
     constructor() {
         super();
 
         this.attributeSlots = {}; // componentAttribute: {element: X, elementAttribute: Y}
-
-        let observer = new MutationObserver(Component.observerCallback);
-        observer.observe(this, {
-            attributes: true,
-            childList: false,
-            subtree: false
-        });
-        this.observer = observer;        
     }
 
-    update(attributeName) {
+    connectedCallback() {
+        this.append(this.createContent());
+    }
+
+    disconnectedCallback() {
+    }
+
+    attributeChangedCallback(attributeName, oldValue, newValue) {
+        this.update(attributeName, oldValue, newValue);
+    }
+
+    update(attributeName, oldValue, newValue) {
         if (attributeName in this.attributeSlots) {
             for (let slot of this.attributeSlots[attributeName]) {
-                slot.element[slot.elementAttribute] = this.getAttribute(attributeName);
+                slot.element[slot.elementAttribute] = newValue;
             }
         }
     }
@@ -87,21 +96,38 @@ class Component extends HTMLElement {
         return Text.pascalToKebab(this.componentName()).concat("-template");
     }
 
+    static removeAllChildren(element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
+
     createContent() {
         let template = document.getElementById(this.componentTemplateId());
-        let content= template.content.cloneNode(true);
-        let re = /<!--#([a-zA-Z0-9]*)-->/g;
-        
-        for (let c of content.children) {
+        let content = template.content.cloneNode(true);
+
+        for (let c of Component.descendants(content)) {
             let attrs = c.getAttributeNames();
             attrs.push("innerHTML");
             for (let attr of attrs) {
                 if (attr == "class") {
                     attr = "className";
                 }
-                
-                let result = re.exec(c[attr]);
-                console.log(attr, c[attr]);
+
+                let value = c[attr];
+                let result;
+                let re = /^<!--#([a-zA-Z0-9-]*)-->$/g;
+
+                if (attr == "href") {
+                    let realValue = unescape(value);
+                    let pos = window.location.href.lastIndexOf("/");
+                    if (pos != -1) {
+                        realValue = realValue.substring(pos + 1);
+                    }
+                    value = realValue;
+                }
+
+                result = re.exec(value);
                 if (result == null) {
                     continue;
                 }
@@ -110,7 +136,6 @@ class Component extends HTMLElement {
                     element: c,
                     elementAttribute: attr
                 };
-                console.log(slot, componentAttribute);
                 if (componentAttribute in this.attributeSlots) {
                     this.attributeSlots[componentAttribute].push(slot);
                 } else {
@@ -119,55 +144,19 @@ class Component extends HTMLElement {
             }
         }
 
-        // for (let c of content.children) {
-        //     let html = c.innerHTML;
-        //     if (!html.startsWith("<!--#") || !html.endsWith("-->")) {
-        //         continue;
-        //     }
-        //     let attribute = html.substring(5, html.length - 3);
-        //     let slot = {
-        //         element: c,
-        //         elementAttribute: "textContent"
-        //     };
-        
-        //     if (attribute in this.attributeSlots) {
-        //         this.attributeSlots[attribute].push(slot);
-        //     } else {
-        //         this.attributeSlots[attribute] = [slot];
-        //     }
-        // }
-        
         for (let name of this.getAttributeNames()) {
-            this.update(name);
+            this.update(name, "", this.getAttribute(name));
         }
 
         return content;
     }
 
     child(id) {
-        return this.children.namedItem(id);
-    }
-
-    release() {
-        this.observer.disconnect();
-    }
-}
-
-
-class InputCard extends Component {
-    
-    constructor() {
-        super();
-        this.appendChild(this.createContent());
-        saveButton.addEventListener('click', () => this.setAttribute("text", input.value));
-    }
-
-    update(attributeName) {
-        super.update(attributeName);
+        let children = this.querySelector("#" + id);
+        if (children instanceof HTMLCollection) {
+            return children.item(children.length - 1);
+        } else {
+            return children;
+        }
     }
 }
-
-
-window.onload = () => {
-    Component.define(InputCard);
-};
