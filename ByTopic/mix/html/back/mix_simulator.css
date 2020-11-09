@@ -1,0 +1,43 @@
+div.word {
+    display: flex;
+    border: 1px solid black;
+    width: 10ch;
+    justify-content: "space-between";
+    margin: 2px;
+}
+
+span.word {
+    width: 2ch;
+}
+
+div.register {
+    display: flex;
+}
+
+span.register-name {
+    width: 8ch;
+    padding-right: 2ch;
+}
+
+span.memory-address {
+    width: 4ch;
+    padding-right: 1ch;
+    text-align: right;
+}
+
+div.memory {
+    display: flex;
+}
+
+div.left-panel {
+    width: 200px;
+    float: left;
+}
+
+div.right-panel {
+    width: 200px;
+    margin: 20px;
+    overflow: scroll;
+    height: 200px;
+}
+

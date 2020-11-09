@@ -1,0 +1,35 @@
+自底向上，逐渐整理规划。
+
+* todo 修改测试环境、实验室环境服务器时间。
+* todo 查看测试环境、实验室环境服务器时间。
+* todo 按照手机号/资金账号查找接口调用情况。
+* todo 解析jztrade.xml，记录接口调用情况。
+* todo 解析gstrade.xml，记录接口。
+* todo 解析dll，记录接口和数据表关联。
+* todo 解析dll，记录错误消息和数据表关联。
+* todo 将InterfaceManagement代码合并到DevMng。
+* todo 录入接口数据
+* todo 增加搜索接口
+* todo 展示接口
+
+
+
+搜索范围：
+中台日志、jzTrade日志、kbssacct日志、run日志。
+
+
+手机号
+资金账号
+流水号
+
+显示：
+手机号、资金账号、日期、平台（h5\ios\android）、url、功能、trace id
+
+日志格式：
+biz
+debug
+其他
+要支持不同格式的日志。
+
+要将请求和应答关联起来。
+查看应答时间。

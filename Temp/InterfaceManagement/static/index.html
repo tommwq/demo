@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css" />
+    <meta charset="utf-8"/>
+    <script src="axios.min.js"></script>
+  </head>
+  <body>
+    <div id="edit_panel">
+      <button id="add">添加</button>
+      <dialog id="dialog">
+        <div id="dialog-interface-type"></div>
+        <div id="dialog-interface"></div>
+        <div id="dialog-parameter"></div>
+        <button id="dialog-add-param">添加参数</button>
+        <div>
+          <button id="dialog-confirm">确认</button>
+          <button id="dialog-cancel">取消</button>
+        </div>
+      </dialog>
+      <dialog id="dialog_back">
+        <table class="dialog">
+          <tr>
+            <td>接口类型</td>
+            <td>
+              <select id="select-interface-type">
+                <!-- todo 改为通过接口返回 -->
+                <!-- <option name="LBM" selected="selected">LBM</option> -->
+                <!-- <option name="TC">TC</option> -->
+                <!-- <option name="url">URL</option> -->
+              </select>
+            </td>
+          </tr>
+          <tr><td>接口描述</td><td><input type="text" id="dialog-description"/></td></tr>
+          <tr><td id="dialog-label-url-service-label"></td><td><input type="text" id="dialog-label-url-service"/></td></tr>
+          
+          <tr><td id="dialog-function-class-mfunc-label"></td><td><input type="text" id="dialog-function-class-mfunc"/></td></tr>
+          <tr><td id="dialog-sfunc-label"></td><td><input type="text" id="dialog-sfunc"/></td></tr>
+        </table>
+        <div>
+          <span>参数</span>
+          <table id="dialog-parameter">
+          </table>
+          <button id="dialog-add-param">添加参数</button>
+        </div>
+        <div>
+          <button id="dialog-confirm">确认</button>
+          <button id="dialog-cancel">取消</button>
+        </div>
+      </dialog>
+    </div>
+    <div id="main">
+      加载中
+    </div>
+    <div id="data-dict-panel">
+    </div>
+    <script src="component.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

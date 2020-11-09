@@ -1,0 +1,12 @@
+div#lbm-table-mapping-div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+select#lbm-select {
+    font-size: large;
+}
+
+ul#table-ul {
+    list-style-type: none;
+}

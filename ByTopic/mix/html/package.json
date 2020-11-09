@@ -1,0 +1,12 @@
+{
+    "name": "mix_simulator",
+    "version": "0.1.0",
+    "description": "",
+    "main": "main.js",
+    "type": "module",
+    "author": "tommwq",
+    "license": "ISC",
+    "devDependencies": {
+        "jest": "^26.4.2"
+    }
+}
