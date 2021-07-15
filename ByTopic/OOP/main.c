@@ -13,10 +13,12 @@ int main() {
     AS_INTERFACE(struct StudentInterface, student)->destroy(student);
 
     CheatStudent_class_init();
-    struct Student *cheat_student = CREATE_DERIVED_INSTANCE(struct Student*, CheatStudent_create);
+    struct CheatStudent *cheat_student = CREATE_DERIVED_INSTANCE(struct Student*, CheatStudent_create);
     AS_INTERFACE(struct StudentInterface, cheat_student)->set_name(cheat_student, "Bob");
     AS_INTERFACE(struct StudentInterface, cheat_student)->print_name(cheat_student);
     AS_INTERFACE(struct StudentInterface, cheat_student)->set_score(cheat_student, 90);
+    AS_INTERFACE(struct StudentInterface, cheat_student)->print_score(cheat_student);
+    AS_INTERFACE(struct CheatStudentInterface, cheat_student)->cheat(cheat_student);
     AS_INTERFACE(struct StudentInterface, cheat_student)->print_score(cheat_student);
     AS_INTERFACE(struct StudentInterface, cheat_student)->destroy(cheat_student);
     
